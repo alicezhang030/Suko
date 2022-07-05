@@ -1,0 +1,6 @@
+framework module Pods_Suko {
+  umbrella header "Pods-Suko-umbrella.h"
+
+  export *
+  module * { export * }
+}

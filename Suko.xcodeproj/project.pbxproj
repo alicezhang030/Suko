@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04BE850B21E0A267B73ED193 /* Pods_Suko_SukoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */; };
+		454265194B292261FEA79B26 /* Pods_Suko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C92483A9CFE228320363049 /* Pods_Suko.framework */; };
+		530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530400FB286D2FA800B63138 /* SUKAPIManager.m */; };
 		5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5E7286B676800E9D894 /* AppDelegate.m */; };
 		5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5EA286B676800E9D894 /* SceneDelegate.m */; };
-		5397F5EE286B676800E9D894 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5ED286B676800E9D894 /* ViewController.m */; };
 		5397F5F1286B676800E9D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5EF286B676800E9D894 /* Main.storyboard */; };
 		5397F5F3286B676900E9D894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F2286B676900E9D894 /* Assets.xcassets */; };
 		5397F5F6286B676900E9D894 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F4286B676900E9D894 /* LaunchScreen.storyboard */; };
 		5397F5F9286B676900E9D894 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5F8286B676900E9D894 /* main.m */; };
-		5397F603286B676900E9D894 /* SukoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F602286B676900E9D894 /* SukoTests.m */; };
-		5397F60D286B676900E9D894 /* SukoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F60C286B676900E9D894 /* SukoUITests.m */; };
-		5397F60F286B676900E9D894 /* SukoUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F60E286B676900E9D894 /* SukoUITestsLaunchTests.m */; };
+		53D893C2286D30DF009C584C /* SUKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D893C1286D30DF009C584C /* SUKHomeViewController.m */; };
+		F44E3E9609C45EF18E4508DE /* Pods_SukoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,23 +38,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C92483A9CFE228320363049 /* Pods_Suko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Suko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A6C4AD7AD13F42728021244 /* Pods-Suko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko.debug.xcconfig"; path = "Target Support Files/Pods-Suko/Pods-Suko.debug.xcconfig"; sourceTree = "<group>"; };
+		530400FA286D2FA800B63138 /* SUKAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAPIManager.h; sourceTree = "<group>"; };
+		530400FB286D2FA800B63138 /* SUKAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAPIManager.m; sourceTree = "<group>"; };
 		5397F5E3286B676800E9D894 /* Suko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F5E6286B676800E9D894 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5397F5E7286B676800E9D894 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5397F5E9286B676800E9D894 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		5397F5EA286B676800E9D894 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		5397F5EC286B676800E9D894 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5397F5ED286B676800E9D894 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5397F5F0286B676800E9D894 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5397F5F2286B676900E9D894 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5397F5F5286B676900E9D894 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5397F5F7286B676900E9D894 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5397F5F8286B676900E9D894 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5397F5FE286B676900E9D894 /* SukoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5397F602286B676900E9D894 /* SukoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SukoTests.m; sourceTree = "<group>"; };
 		5397F608286B676900E9D894 /* SukoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5397F60C286B676900E9D894 /* SukoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SukoUITests.m; sourceTree = "<group>"; };
-		5397F60E286B676900E9D894 /* SukoUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SukoUITestsLaunchTests.m; sourceTree = "<group>"; };
+		53D893C0286D30DF009C584C /* SUKHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKHomeViewController.h; sourceTree = "<group>"; };
+		53D893C1286D30DF009C584C /* SUKHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeViewController.m; sourceTree = "<group>"; };
+		85AA59F7210F419DD51460CD /* Pods-Suko-SukoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko-SukoUITests.debug.xcconfig"; path = "Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Suko_SukoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B661CD64106E019F4756CBA6 /* Pods-SukoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SukoTests.debug.xcconfig"; path = "Target Support Files/Pods-SukoTests/Pods-SukoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SukoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0F5DD2926412499C9DD7A8C /* Pods-Suko.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko.release.xcconfig"; path = "Target Support Files/Pods-Suko/Pods-Suko.release.xcconfig"; sourceTree = "<group>"; };
+		E775DE9441CA0D7440095B2C /* Pods-SukoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SukoTests.release.xcconfig"; path = "Target Support Files/Pods-SukoTests/Pods-SukoTests.release.xcconfig"; sourceTree = "<group>"; };
+		ED9042470AE56E75211DC361 /* Pods-Suko-SukoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko-SukoUITests.release.xcconfig"; path = "Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				454265194B292261FEA79B26 /* Pods_Suko.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44E3E9609C45EF18E4508DE /* Pods_SukoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,19 +86,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04BE850B21E0A267B73ED193 /* Pods_Suko_SukoUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5336424E286BD9CF00F3D270 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				53D893C0286D30DF009C584C /* SUKHomeViewController.h */,
+				53D893C1286D30DF009C584C /* SUKHomeViewController.m */,
+			);
+			path = "View Controller";
+			sourceTree = "<group>";
+		};
 		5397F5DA286B676800E9D894 = {
 			isa = PBXGroup;
 			children = (
 				5397F5E5286B676800E9D894 /* Suko */,
-				5397F601286B676900E9D894 /* SukoTests */,
-				5397F60B286B676900E9D894 /* SukoUITests */,
 				5397F5E4286B676800E9D894 /* Products */,
+				53CAF86E0161FDDE4AC07BD5 /* Pods */,
+				6965F46BD519FBC257AD662C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,12 +125,12 @@
 		5397F5E5286B676800E9D894 /* Suko */ = {
 			isa = PBXGroup;
 			children = (
+				5336424E286BD9CF00F3D270 /* View Controller */,
+				5397F61B286B67D100E9D894 /* API */,
 				5397F5E6286B676800E9D894 /* AppDelegate.h */,
 				5397F5E7286B676800E9D894 /* AppDelegate.m */,
 				5397F5E9286B676800E9D894 /* SceneDelegate.h */,
 				5397F5EA286B676800E9D894 /* SceneDelegate.m */,
-				5397F5EC286B676800E9D894 /* ViewController.h */,
-				5397F5ED286B676800E9D894 /* ViewController.m */,
 				5397F5EF286B676800E9D894 /* Main.storyboard */,
 				5397F5F2286B676900E9D894 /* Assets.xcassets */,
 				5397F5F4286B676900E9D894 /* LaunchScreen.storyboard */,
@@ -119,21 +140,36 @@
 			path = Suko;
 			sourceTree = "<group>";
 		};
-		5397F601286B676900E9D894 /* SukoTests */ = {
+		5397F61B286B67D100E9D894 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				5397F602286B676900E9D894 /* SukoTests.m */,
+				530400FA286D2FA800B63138 /* SUKAPIManager.h */,
+				530400FB286D2FA800B63138 /* SUKAPIManager.m */,
 			);
-			path = SukoTests;
+			path = API;
 			sourceTree = "<group>";
 		};
-		5397F60B286B676900E9D894 /* SukoUITests */ = {
+		53CAF86E0161FDDE4AC07BD5 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5397F60C286B676900E9D894 /* SukoUITests.m */,
-				5397F60E286B676900E9D894 /* SukoUITestsLaunchTests.m */,
+				4A6C4AD7AD13F42728021244 /* Pods-Suko.debug.xcconfig */,
+				D0F5DD2926412499C9DD7A8C /* Pods-Suko.release.xcconfig */,
+				85AA59F7210F419DD51460CD /* Pods-Suko-SukoUITests.debug.xcconfig */,
+				ED9042470AE56E75211DC361 /* Pods-Suko-SukoUITests.release.xcconfig */,
+				B661CD64106E019F4756CBA6 /* Pods-SukoTests.debug.xcconfig */,
+				E775DE9441CA0D7440095B2C /* Pods-SukoTests.release.xcconfig */,
 			);
-			path = SukoUITests;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		6965F46BD519FBC257AD662C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C92483A9CFE228320363049 /* Pods_Suko.framework */,
+				8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */,
+				BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,9 +179,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5397F612286B676900E9D894 /* Build configuration list for PBXNativeTarget "Suko" */;
 			buildPhases = (
+				14798220529C1B7BDD27A419 /* [CP] Check Pods Manifest.lock */,
 				5397F5DF286B676800E9D894 /* Sources */,
 				5397F5E0286B676800E9D894 /* Frameworks */,
 				5397F5E1286B676800E9D894 /* Resources */,
+				CC5F7CEC34C5D268D898D2CB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,6 +198,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5397F615286B676900E9D894 /* Build configuration list for PBXNativeTarget "SukoTests" */;
 			buildPhases = (
+				815132C9CE0F062FC11F3730 /* [CP] Check Pods Manifest.lock */,
 				5397F5FA286B676900E9D894 /* Sources */,
 				5397F5FB286B676900E9D894 /* Frameworks */,
 				5397F5FC286B676900E9D894 /* Resources */,
@@ -178,9 +217,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5397F618286B676900E9D894 /* Build configuration list for PBXNativeTarget "SukoUITests" */;
 			buildPhases = (
+				9A11F9D5A516E0E7B1E5E369 /* [CP] Check Pods Manifest.lock */,
 				5397F604286B676900E9D894 /* Sources */,
 				5397F605286B676900E9D894 /* Frameworks */,
 				5397F606286B676900E9D894 /* Resources */,
+				84D5107C97109F4AEE65BA29 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -261,15 +302,119 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		14798220529C1B7BDD27A419 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Suko-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		815132C9CE0F062FC11F3730 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SukoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84D5107C97109F4AEE65BA29 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A11F9D5A516E0E7B1E5E369 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Suko-SukoUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC5F7CEC34C5D268D898D2CB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Suko/Pods-Suko-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Suko/Pods-Suko-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Suko/Pods-Suko-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5397F5DF286B676800E9D894 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5397F5EE286B676800E9D894 /* ViewController.m in Sources */,
 				5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */,
 				5397F5F9286B676900E9D894 /* main.m in Sources */,
+				530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
+				53D893C2286D30DF009C584C /* SUKHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +422,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5397F603286B676900E9D894 /* SukoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,8 +429,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5397F60F286B676900E9D894 /* SukoUITestsLaunchTests.m in Sources */,
-				5397F60D286B676900E9D894 /* SukoUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +579,7 @@
 		};
 		5397F613286B676900E9D894 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A6C4AD7AD13F42728021244 /* Pods-Suko.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -464,6 +607,7 @@
 		};
 		5397F614286B676900E9D894 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0F5DD2926412499C9DD7A8C /* Pods-Suko.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -491,6 +635,7 @@
 		};
 		5397F616286B676900E9D894 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B661CD64106E019F4756CBA6 /* Pods-SukoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -509,6 +654,7 @@
 		};
 		5397F617286B676900E9D894 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E775DE9441CA0D7440095B2C /* Pods-SukoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -527,6 +673,7 @@
 		};
 		5397F619286B676900E9D894 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85AA59F7210F419DD51460CD /* Pods-Suko-SukoUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -543,6 +690,7 @@
 		};
 		5397F61A286B676900E9D894 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED9042470AE56E75211DC361 /* Pods-Suko-SukoUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
