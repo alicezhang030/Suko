@@ -34,13 +34,11 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
 /*
     Default: returns 25 animes
  */
-- (void)fetchTopAnime:(void(^)(NSArray *animes, NSError *error))completion {
+- (void)fetchTopAnime:(NSDictionary *) params completion:(void(^)(NSArray *animes, NSError *error))completion {
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/top/anime"];
-    NSDictionary *params = @{@"type": @"tv"};
+    //NSDictionary *params = @{@"type": @"tv"};
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
         NSDictionary *dataDictionary = responseObject;
         NSArray *animeDictionaries = dataDictionary[@"data"];
         

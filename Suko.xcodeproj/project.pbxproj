@@ -10,13 +10,15 @@
 		04BE850B21E0A267B73ED193 /* Pods_Suko_SukoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */; };
 		454265194B292261FEA79B26 /* Pods_Suko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C92483A9CFE228320363049 /* Pods_Suko.framework */; };
 		530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530400FB286D2FA800B63138 /* SUKAPIManager.m */; };
+		531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A042874C14B002E80C4 /* SUKHomeViewController.m */; };
+		531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A072874C57A002E80C4 /* SUKHomeTableViewCell.m */; };
+		531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A0A2874D849002E80C4 /* SUKHomeCollectionViewCell.m */; };
 		5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5E7286B676800E9D894 /* AppDelegate.m */; };
 		5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5EA286B676800E9D894 /* SceneDelegate.m */; };
 		5397F5F1286B676800E9D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5EF286B676800E9D894 /* Main.storyboard */; };
 		5397F5F3286B676900E9D894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F2286B676900E9D894 /* Assets.xcassets */; };
 		5397F5F6286B676900E9D894 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F4286B676900E9D894 /* LaunchScreen.storyboard */; };
 		5397F5F9286B676900E9D894 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5F8286B676900E9D894 /* main.m */; };
-		53D893C2286D30DF009C584C /* SUKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D893C1286D30DF009C584C /* SUKHomeViewController.m */; };
 		F44E3E9609C45EF18E4508DE /* Pods_SukoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +44,12 @@
 		4A6C4AD7AD13F42728021244 /* Pods-Suko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko.debug.xcconfig"; path = "Target Support Files/Pods-Suko/Pods-Suko.debug.xcconfig"; sourceTree = "<group>"; };
 		530400FA286D2FA800B63138 /* SUKAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAPIManager.h; sourceTree = "<group>"; };
 		530400FB286D2FA800B63138 /* SUKAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAPIManager.m; sourceTree = "<group>"; };
+		531C3A032874C14B002E80C4 /* SUKHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKHomeViewController.h; sourceTree = "<group>"; };
+		531C3A042874C14B002E80C4 /* SUKHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeViewController.m; sourceTree = "<group>"; };
+		531C3A062874C57A002E80C4 /* SUKHomeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKHomeTableViewCell.h; sourceTree = "<group>"; };
+		531C3A072874C57A002E80C4 /* SUKHomeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeTableViewCell.m; sourceTree = "<group>"; };
+		531C3A092874D849002E80C4 /* SUKHomeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKHomeCollectionViewCell.h; sourceTree = "<group>"; };
+		531C3A0A2874D849002E80C4 /* SUKHomeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeCollectionViewCell.m; sourceTree = "<group>"; };
 		5397F5E3286B676800E9D894 /* Suko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F5E6286B676800E9D894 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5397F5E7286B676800E9D894 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -54,8 +62,6 @@
 		5397F5F8286B676900E9D894 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5397F5FE286B676900E9D894 /* SukoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F608286B676900E9D894 /* SukoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		53D893C0286D30DF009C584C /* SUKHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKHomeViewController.h; sourceTree = "<group>"; };
-		53D893C1286D30DF009C584C /* SUKHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeViewController.m; sourceTree = "<group>"; };
 		85AA59F7210F419DD51460CD /* Pods-Suko-SukoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko-SukoUITests.debug.xcconfig"; path = "Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Suko_SukoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B661CD64106E019F4756CBA6 /* Pods-SukoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SukoTests.debug.xcconfig"; path = "Target Support Files/Pods-SukoTests/Pods-SukoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -93,11 +99,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		531C39F62874A0BB002E80C4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				531C3A062874C57A002E80C4 /* SUKHomeTableViewCell.h */,
+				531C3A072874C57A002E80C4 /* SUKHomeTableViewCell.m */,
+				531C3A092874D849002E80C4 /* SUKHomeCollectionViewCell.h */,
+				531C3A0A2874D849002E80C4 /* SUKHomeCollectionViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		5336424E286BD9CF00F3D270 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				53D893C0286D30DF009C584C /* SUKHomeViewController.h */,
-				53D893C1286D30DF009C584C /* SUKHomeViewController.m */,
+				531C3A032874C14B002E80C4 /* SUKHomeViewController.h */,
+				531C3A042874C14B002E80C4 /* SUKHomeViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -125,6 +142,7 @@
 		5397F5E5286B676800E9D894 /* Suko */ = {
 			isa = PBXGroup;
 			children = (
+				531C39F62874A0BB002E80C4 /* Cells */,
 				5336424E286BD9CF00F3D270 /* View Controller */,
 				5397F61B286B67D100E9D894 /* API */,
 				5397F5E6286B676800E9D894 /* AppDelegate.h */,
@@ -411,10 +429,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */,
+				531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */,
+				531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */,
+				531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */,
 				5397F5F9286B676900E9D894 /* main.m in Sources */,
 				530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
-				53D893C2286D30DF009C584C /* SUKHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
