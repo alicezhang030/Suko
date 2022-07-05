@@ -9,6 +9,7 @@
 #import "SUKAPIManager.h"
 #import "SUKHomeTableViewCell.h"
 #import "SUKHomeCollectionViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface SUKHomeViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -81,9 +82,15 @@
     
     //TODO: move this into a "set" method in SUKHomeCollectionViewCell
     cell.animeTitleLabel.text = collectionViewArray[indexPath.item][@"title_english"];
+    NSString *animePosterURLString = collectionViewArray[indexPath.item][@"images"][@"jpg"][@"large_image_url"];
+    NSURL *url = [NSURL URLWithString:animePosterURLString];
+    if (url != nil) {
+        [cell.animePosterImageView setImageWithURL:url];
+    }
     
     return cell;
 }
+
 
 /*
 #pragma mark - Navigation

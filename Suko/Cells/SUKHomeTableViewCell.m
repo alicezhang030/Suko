@@ -22,6 +22,7 @@
     if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
     
     // Set up horizontal CollectionView
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.sectionInset = UIEdgeInsetsMake(10, 10, 9, 10);
     layout.itemSize = CGSizeMake(158, 217);

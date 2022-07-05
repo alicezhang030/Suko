@@ -110,6 +110,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		531C3A0C2874F0A3002E80C4 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		5336424E286BD9CF00F3D270 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +149,7 @@
 		5397F5E5286B676800E9D894 /* Suko */ = {
 			isa = PBXGroup;
 			children = (
+				531C3A0C2874F0A3002E80C4 /* Layout */,
 				531C39F62874A0BB002E80C4 /* Cells */,
 				5336424E286BD9CF00F3D270 /* View Controller */,
 				5397F61B286B67D100E9D894 /* API */,

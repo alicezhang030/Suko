@@ -10,6 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKHomeCollectionViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *animePosterImageView;
 @property (weak, nonatomic) IBOutlet UILabel *animeTitleLabel;
 
 @end
