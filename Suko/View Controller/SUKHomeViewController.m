@@ -22,9 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //TODO: make sure top displays before genre
     [self fetchTopAnime];
-    [self fetchPopularAnime];
-    [self fetchGenreList];
+    [self fetchGenreAnime];
     
     // Set up TableView
     self.tableView.delegate = self;
@@ -35,7 +35,7 @@
 #pragma mark - Fetching Data
 
 - (void) fetchTopAnime {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @10};
+    NSDictionary *params = @{@"type": @"tv", @"limit": @5};
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
     
     [[SUKAPIManager shared] fetchAnime:@"/top/anime" params:params completion:^(NSArray *anime, NSError *error) {
@@ -47,7 +47,13 @@
             }
             
             [mutableArray addObject:topAnimeArray];
-            self.arrayOfAnime = [NSArray arrayWithArray:mutableArray];
+            
+            if(self.arrayOfAnime == nil) {
+                self.arrayOfAnime = [NSArray arrayWithArray:mutableArray];
+            } else {
+                self.arrayOfAnime = [self.arrayOfAnime arrayByAddingObjectsFromArray:[NSArray arrayWithArray:mutableArray]];
+            }
+            
             [self.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -55,8 +61,8 @@
     }];
 }
 
-- (void) fetchPopularAnime {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @10, @"genre":@25};
+- (void) fetchGenreAnime {
+    NSDictionary *params = @{@"type": @"tv", @"limit": @5, @"genres":@25};
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
     
     [[SUKAPIManager shared] fetchAnime:@"/anime" params:params completion:^(NSArray *anime, NSError *error) {
@@ -125,7 +131,9 @@
     NSArray *collectionViewArray = self.arrayOfAnime[[(SUKHomeCollectionView *)collectionView indexPath].row];
     
     //TODO: move this into a "set" method in SUKHomeCollectionViewCell
-    cell.animeTitleLabel.text = collectionViewArray[indexPath.item][@"title_english"];
+    NSString *title = collectionViewArray[indexPath.item][@"title"];
+    cell.animeTitleLabel.text = [[title componentsSeparatedByString:@"\\"] objectAtIndex:0];
+    
     NSString *animePosterURLString = collectionViewArray[indexPath.item][@"images"][@"jpg"][@"large_image_url"];
     NSURL *url = [NSURL URLWithString:animePosterURLString];
     if (url != nil) {

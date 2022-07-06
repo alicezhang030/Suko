@@ -28,6 +28,11 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
 - (instancetype)init {
     self = [super init];
     self.manager = [AFHTTPSessionManager manager];
+    
+    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
+    [serializer setRemovesKeysWithNullValues:YES]; //turn NULL to nil
+    [self.manager setResponseSerializer:serializer];
+    
     return self;
 }
 
