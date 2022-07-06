@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *arrayOfAnime;
 
+// TODO: Change arrayOfAnime to NSDictionary
+// TODO: Change array of anime to Models
+
 @end
 
 @implementation SUKHomeViewController
@@ -34,16 +37,12 @@ const BOOL displayGenre = YES;
 #pragma mark - Fetching Data
 
 - (void) fetchTopAnime {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @5};
+    NSDictionary *params = @{@"type": @"tv", @"limit": @10};
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
     
     [[SUKAPIManager shared] fetchAnime:@"/top/anime" params:params completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
-            NSMutableArray *topAnimeArray = [NSMutableArray arrayWithCapacity:10];
-            
-            for(int i = 0; i < [anime count]; i++) {
-               [topAnimeArray addObject:anime[i]];
-            }
+            NSMutableArray *topAnimeArray = (NSMutableArray *) anime;
             
             [mutableArray addObject:topAnimeArray];
             
@@ -54,7 +53,7 @@ const BOOL displayGenre = YES;
             }
             
             if(displayGenre) {
-                [self fetchGenreAnime: @27];
+                [self fetchGenreAnime: @25];
             }
             
             [self.tableView reloadData];
@@ -65,18 +64,14 @@ const BOOL displayGenre = YES;
 }
 
 - (void) fetchGenreAnime: (NSNumber *) genre {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @5, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
+    NSDictionary *params = @{@"type": @"tv", @"limit": @10, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
     
     [[SUKAPIManager shared] fetchAnime:@"/anime" params:params completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
-            NSMutableArray *topAnimeArray = [NSMutableArray arrayWithCapacity:[anime count]];
+            NSMutableArray *topGenreArray = (NSMutableArray *) anime;
             
-            for(int i = 0; i < [anime count]; i++) {
-               [topAnimeArray addObject:anime[i]];
-            }
-            
-            [mutableArray addObject:topAnimeArray];
+            [mutableArray addObject:topGenreArray];
             
             if(self.arrayOfAnime == nil) {
                 self.arrayOfAnime = [NSArray arrayWithArray:mutableArray];
@@ -108,7 +103,7 @@ const BOOL displayGenre = YES;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *) indexPath {
-    return 300;
+    return 360;
 }
 
 #pragma mark - CollectionView

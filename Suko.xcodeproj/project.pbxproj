@@ -110,11 +110,11 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		531C3A0C2874F0A3002E80C4 /* Layout */ = {
+		532AB02E28764F0500114DBA /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Layout;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		5336424E286BD9CF00F3D270 /* View Controller */ = {
@@ -149,7 +149,7 @@
 		5397F5E5286B676800E9D894 /* Suko */ = {
 			isa = PBXGroup;
 			children = (
-				531C3A0C2874F0A3002E80C4 /* Layout */,
+				532AB02E28764F0500114DBA /* Model */,
 				531C39F62874A0BB002E80C4 /* Cells */,
 				5336424E286BD9CF00F3D270 /* View Controller */,
 				5397F61B286B67D100E9D894 /* API */,

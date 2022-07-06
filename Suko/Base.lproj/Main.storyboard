@@ -21,30 +21,30 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKHomeTableViewCell" rowHeight="312" id="Iar-LH-7bZ" customClass="SUKHomeTableViewCell">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="312"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKHomeTableViewCell" rowHeight="329" id="Iar-LH-7bZ" customClass="SUKHomeTableViewCell">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="329"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Iar-LH-7bZ" id="f1y-jE-JGf">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="312"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="329"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BYv-5s-MCS" customClass="SUKHomeCollectionView">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="312"/>
+                                                    <rect key="frame" x="20" y="37" width="374" height="281"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GmA-lZ-2kB">
-                                                        <size key="itemSize" width="185" height="277"/>
-                                                        <size key="estimatedItemSize" width="185" height="285"/>
+                                                        <size key="itemSize" width="185" height="255"/>
+                                                        <size key="estimatedItemSize" width="185" height="277"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SUKHomeCollectionViewCell" id="476-Qa-y2w" customClass="SUKHomeCollectionViewCell">
-                                                            <rect key="frame" x="0.0" y="17.5" width="185" height="277"/>
+                                                            <rect key="frame" x="0.0" y="13" width="185" height="255"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="GLQ-Dp-I2R">
-                                                                <rect key="frame" x="0.0" y="0.0" width="185" height="277"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="185" height="255"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CWS-86-omw">
@@ -71,7 +71,7 @@
                                                                     <constraint firstItem="sZj-uM-5lc" firstAttribute="top" secondItem="CWS-86-omw" secondAttribute="bottom" constant="8" symbolic="YES" id="odh-5q-5qT"/>
                                                                 </constraints>
                                                             </collectionViewCellContentView>
-                                                            <size key="customSize" width="185" height="277"/>
+                                                            <size key="customSize" width="185" height="255"/>
                                                             <connections>
                                                                 <outlet property="animePosterImageView" destination="CWS-86-omw" id="UGl-YF-inm"/>
                                                                 <outlet property="animeTitleLabel" destination="sZj-uM-5lc" id="tky-go-uUw"/>
@@ -79,6 +79,13 @@
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cA4-32-SX7">
+                                                    <rect key="frame" x="20" y="7" width="41.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
