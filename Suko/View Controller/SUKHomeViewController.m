@@ -18,13 +18,12 @@
 @end
 
 @implementation SUKHomeViewController
+const BOOL displayGenre = YES;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //TODO: make sure top displays before genre
     [self fetchTopAnime];
-    [self fetchGenreAnime];
     
     // Set up TableView
     self.tableView.delegate = self;
@@ -54,6 +53,10 @@
                 self.arrayOfAnime = [self.arrayOfAnime arrayByAddingObjectsFromArray:[NSArray arrayWithArray:mutableArray]];
             }
             
+            if(displayGenre) {
+                [self fetchGenreAnime: @27];
+            }
+            
             [self.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -61,8 +64,8 @@
     }];
 }
 
-- (void) fetchGenreAnime {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @5, @"genres":@25};
+- (void) fetchGenreAnime: (NSNumber *) genre {
+    NSDictionary *params = @{@"type": @"tv", @"limit": @5, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
     
     [[SUKAPIManager shared] fetchAnime:@"/anime" params:params completion:^(NSArray *anime, NSError *error) {
@@ -82,16 +85,6 @@
             }
             
             [self.tableView reloadData];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
-}
-
-- (void) fetchGenreList {
-    [[SUKAPIManager shared] fetchGenreList:^(NSArray *anime, NSError *error) {
-        if (anime != nil) {
-            NSArray *arr = anime;
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
