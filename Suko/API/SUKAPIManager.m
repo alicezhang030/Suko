@@ -34,9 +34,8 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
 /*
     Default: returns 25 animes
  */
-- (void)fetchTopAnime:(NSDictionary *) params completion:(void(^)(NSArray *animes, NSError *error))completion {
-    NSString *fullURLString = [baseURLString stringByAppendingString:@"/top/anime"];
-    //NSDictionary *params = @{@"type": @"tv"};
+- (void)fetchAnime:(NSString *) path params:(NSDictionary *) params completion:(void(^)(NSArray *animes, NSError *error))completion {
+    NSString *fullURLString = [baseURLString stringByAppendingString:path];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
@@ -47,5 +46,32 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
         NSLog(@"Error: %@", error);
     }];
 }
+
+- (void)fetchGenreList:(void(^)(NSArray *animes, NSError *error))completion {
+    NSString *fullURLString = [baseURLString stringByAppendingString:@"/genres/anime"];
+    
+    [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSDictionary *dataDictionary = responseObject;
+        NSArray *genreList = dataDictionary[@"data"];
+        
+        completion(genreList, nil);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+/*
+- (void)fetchAnimeByGenre:(NSString *) genre params:(NSDictionary *) params completion:(void(^)(NSArray *animes, NSError *error))completion {
+    
+    NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
+    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSDictionary *dataDictionary = responseObject;
+        NSArray *animeDictionaries = dataDictionary[@"data"];
+        
+        completion(animeDictionaries, nil);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}*/
 
 @end

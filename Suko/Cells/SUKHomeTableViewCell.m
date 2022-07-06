@@ -18,25 +18,7 @@
     [super awakeFromNib];
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
-    
-    // Set up horizontal CollectionView
-    
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(10, 10, 9, 10);
-    layout.itemSize = CGSizeMake(158, 217);
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    
-    /*
-    [self.collectionView registerClass: [SUKHomeCollectionViewCell class] forCellWithReuseIdentifier:HomeCollectionViewCellIdentifier];
-    
-    [self.contentView addSubview:self.collectionView];*/
-    
-    return self;
-}
-
-// Adjust the side of the collection view to fill the cell in
+// Adjusts the collection view so that it fills the entire horizontal space
 -(void)layoutSubviews{
     [super layoutSubviews];
     self.collectionView.frame = self.contentView.bounds;

@@ -23,6 +23,8 @@
     [super viewDidLoad];
     
     [self fetchTopAnime];
+    [self fetchPopularAnime];
+    [self fetchGenreList];
     
     // Set up TableView
     self.tableView.delegate = self;
@@ -30,14 +32,15 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
+#pragma mark - Fetching Data
+
 - (void) fetchTopAnime {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @6};
+    NSDictionary *params = @{@"type": @"tv", @"limit": @10};
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
     
-    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:6];
-    
-    [[SUKAPIManager shared] fetchTopAnime:params completion:^(NSArray *anime, NSError *error) {
+    [[SUKAPIManager shared] fetchAnime:@"/top/anime" params:params completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
-            NSMutableArray *topAnimeArray = [NSMutableArray arrayWithCapacity:6];
+            NSMutableArray *topAnimeArray = [NSMutableArray arrayWithCapacity:10];
             
             for(int i = 0; i < [anime count]; i++) {
                [topAnimeArray addObject:anime[i]];
@@ -52,7 +55,44 @@
     }];
 }
 
-#pragma mark - UITableViewDataSource Methods
+- (void) fetchPopularAnime {
+    NSDictionary *params = @{@"type": @"tv", @"limit": @10, @"genre":@25};
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
+    
+    [[SUKAPIManager shared] fetchAnime:@"/anime" params:params completion:^(NSArray *anime, NSError *error) {
+        if (anime != nil) {
+            NSMutableArray *topAnimeArray = [NSMutableArray arrayWithCapacity:[anime count]];
+            
+            for(int i = 0; i < [anime count]; i++) {
+               [topAnimeArray addObject:anime[i]];
+            }
+            
+            [mutableArray addObject:topAnimeArray];
+            
+            if(self.arrayOfAnime == nil) {
+                self.arrayOfAnime = [NSArray arrayWithArray:mutableArray];
+            } else {
+                self.arrayOfAnime = [self.arrayOfAnime arrayByAddingObjectsFromArray:[NSArray arrayWithArray:mutableArray]];
+            }
+            
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+}
+
+- (void) fetchGenreList {
+    [[SUKAPIManager shared] fetchGenreList:^(NSArray *anime, NSError *error) {
+        if (anime != nil) {
+            NSArray *arr = anime;
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+}
+
+#pragma mark - TableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.arrayOfAnime.count;
@@ -72,7 +112,7 @@
     return 300;
 }
 
-#pragma mark - UICollectionViewDataSource Methods
+#pragma mark - CollectionView
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     NSArray *collectionViewArray = self.arrayOfAnime[[(SUKHomeCollectionView *)collectionView indexPath].row];
