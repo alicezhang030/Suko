@@ -6,6 +6,8 @@ target 'Suko' do
   use_frameworks!
 
   # Pods for Suko
+  pod 'Parse'
+  pod 'Parse/UI'
   pod 'AFNetworking'
 
   target 'SukoTests' do

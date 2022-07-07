@@ -17,7 +17,6 @@
 @property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
 @property (nonatomic, strong) NSMutableArray *headerTitlesBesidesTopAnime;
 
-// TODO: Change arrayOfAnime to NSDictionary
 // TODO: Change array of anime to Models
 
 @end
@@ -86,13 +85,13 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     [[SUKAPIManager shared] fetchGenreList:^(NSArray *genres, NSError *error) {
         if (genres != nil) {
             for(NSDictionary *genreDict in genres) {
-                NSNumber *malId = [genreDict valueForKey:@"mal_id"];
-                int malIdInt = [malId intValue];
-                NSString *malIdString = [NSString stringWithFormat:@"%d", malIdInt];
+                NSNumber *malID = [genreDict valueForKey:@"mal_id"];
+                int malIDInt = [malID intValue];
+                NSString *malIDString = [NSString stringWithFormat:@"%d", malIDInt];
                 
                 NSString *genreName = [genreDict valueForKey:@"name"];
                 
-                [self.dictOfGenres setObject:genreName forKey:malIdString];
+                [self.dictOfGenres setObject:genreName forKey:malIDString];
             }
             
             [self fetchGenreAnime:@25];
@@ -122,7 +121,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *) indexPath {
-    return 307;
+    return 305;
 }
 
 #pragma mark - CollectionView

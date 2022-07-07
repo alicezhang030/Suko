@@ -13,6 +13,7 @@
 		531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A042874C14B002E80C4 /* SUKHomeViewController.m */; };
 		531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A072874C57A002E80C4 /* SUKHomeTableViewCell.m */; };
 		531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A0A2874D849002E80C4 /* SUKHomeCollectionViewCell.m */; };
+		532AB031287752DC00114DBA /* Anime.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AB030287752DC00114DBA /* Anime.m */; };
 		5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5E7286B676800E9D894 /* AppDelegate.m */; };
 		5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5EA286B676800E9D894 /* SceneDelegate.m */; };
 		5397F5F1286B676800E9D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5EF286B676800E9D894 /* Main.storyboard */; };
@@ -50,6 +51,8 @@
 		531C3A072874C57A002E80C4 /* SUKHomeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeTableViewCell.m; sourceTree = "<group>"; };
 		531C3A092874D849002E80C4 /* SUKHomeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKHomeCollectionViewCell.h; sourceTree = "<group>"; };
 		531C3A0A2874D849002E80C4 /* SUKHomeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeCollectionViewCell.m; sourceTree = "<group>"; };
+		532AB02F287752DC00114DBA /* Anime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Anime.h; sourceTree = "<group>"; };
+		532AB030287752DC00114DBA /* Anime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Anime.m; sourceTree = "<group>"; };
 		5397F5E3286B676800E9D894 /* Suko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F5E6286B676800E9D894 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5397F5E7286B676800E9D894 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 		532AB02E28764F0500114DBA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				532AB02F287752DC00114DBA /* Anime.h */,
+				532AB030287752DC00114DBA /* Anime.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -440,6 +445,7 @@
 				531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */,
 				531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */,
 				531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */,
+				532AB031287752DC00114DBA /* Anime.m in Sources */,
 				5397F5F9286B676900E9D894 /* main.m in Sources */,
 				530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
