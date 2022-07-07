@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @end
 
-static NSString *HomeCollectionViewCellIdentifier = @"SUKHomeCollectionViewCell";
-
 @interface SUKHomeTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet SUKHomeCollectionView *collectionView;
 

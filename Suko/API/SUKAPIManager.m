@@ -52,13 +52,12 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
     }];
 }
 
-- (void)fetchGenreList:(void(^)(NSArray *animes, NSError *error))completion {
+- (void)fetchGenreList:(void(^)(NSArray *genres, NSError *error))completion {
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/genres/anime"];
     
     [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray *genreList = dataDictionary[@"data"];
-        
         completion(genreList, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);

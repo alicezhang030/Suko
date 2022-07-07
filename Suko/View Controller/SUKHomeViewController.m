@@ -13,7 +13,8 @@
 
 @interface SUKHomeViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *arrayOfAnime;
+@property (nonatomic, strong) NSMutableDictionary *dictionaryOfAnime;
+@property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
 
 // TODO: Change arrayOfAnime to NSDictionary
 // TODO: Change array of anime to Models
@@ -22,11 +23,17 @@
 
 @implementation SUKHomeViewController
 const BOOL displayGenre = YES;
+const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
+    self.dictOfGenres = [[NSMutableDictionary alloc] init];
+    
     [self fetchTopAnime];
+    [self fetchGenreList];
+    //[self fetchGenreAnime:@25];
     
     // Set up TableView
     self.tableView.delegate = self;
@@ -36,26 +43,26 @@ const BOOL displayGenre = YES;
 
 #pragma mark - Fetching Data
 
+/*
++(NSDictionary*)getConstGenreList {
+    static NSDictionary *dictOfGenres = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        inst = @{
+            @"key1": @"value1",
+            @"key2": @"value2",
+            @"key3": @"value3"
+        };
+    });
+    return inst;
+}*/
+
 - (void) fetchTopAnime {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @10};
-    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
+    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
     
     [[SUKAPIManager shared] fetchAnime:@"/top/anime" params:params completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
-            NSMutableArray *topAnimeArray = (NSMutableArray *) anime;
-            
-            [mutableArray addObject:topAnimeArray];
-            
-            if(self.arrayOfAnime == nil) {
-                self.arrayOfAnime = [NSArray arrayWithArray:mutableArray];
-            } else {
-                self.arrayOfAnime = [self.arrayOfAnime arrayByAddingObjectsFromArray:[NSArray arrayWithArray:mutableArray]];
-            }
-            
-            if(displayGenre) {
-                [self fetchGenreAnime: @25];
-            }
-            
+            [self.dictionaryOfAnime setObject:anime forKey:@"Top Anime"];
             [self.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -64,22 +71,34 @@ const BOOL displayGenre = YES;
 }
 
 - (void) fetchGenreAnime: (NSNumber *) genre {
-    NSDictionary *params = @{@"type": @"tv", @"limit": @10, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
-    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:10];
+    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
     
     [[SUKAPIManager shared] fetchAnime:@"/anime" params:params completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
-            NSMutableArray *topGenreArray = (NSMutableArray *) anime;
-            
-            [mutableArray addObject:topGenreArray];
-            
-            if(self.arrayOfAnime == nil) {
-                self.arrayOfAnime = [NSArray arrayWithArray:mutableArray];
-            } else {
-                self.arrayOfAnime = [self.arrayOfAnime arrayByAddingObjectsFromArray:[NSArray arrayWithArray:mutableArray]];
+            if(self.dictOfGenres != nil) {
+                NSString *malID = [genre stringValue];
+                NSLog(@"%@", [self.dictOfGenres objectForKey:malID]);
+            }
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+}
+
+- (void) fetchGenreList {
+    [[SUKAPIManager shared] fetchGenreList:^(NSArray *genres, NSError *error) {
+        if (genres != nil) {
+            for(NSDictionary *genreDict in genres) {
+                NSNumber *malId = [genreDict valueForKey:@"mal_id"];
+                int malIdInt = [malId intValue];
+                NSString *malIdString = [NSString stringWithFormat:@"%d", malIdInt];
+                
+                NSString *genreName = [genreDict valueForKey:@"name"];
+                
+                [self.dictOfGenres setObject:genreName forKey:malIdString];
             }
             
-            [self.tableView reloadData];
+            [self fetchGenreAnime:@25];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -89,7 +108,7 @@ const BOOL displayGenre = YES;
 #pragma mark - TableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.arrayOfAnime.count;
+    return [self.dictionaryOfAnime count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -109,14 +128,25 @@ const BOOL displayGenre = YES;
 #pragma mark - CollectionView
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSArray *collectionViewArray = self.arrayOfAnime[[(SUKHomeCollectionView *)collectionView indexPath].row];
-    return collectionViewArray.count;
+    NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
+    return [self retriveDataForIndexPathRow:row].count;
+    
+    /*
+    NSArray *topAiringAnime = self.dictionaryOfAnime[@"Top Airing Anime"];
+    return [self retriveDataForIndexPath: [(SUKHomeCollectionView *)collectionView indexPath].row];*/
+    
+    /*
+    if(row == 0) {
+        NSArray *topAiringAnime = self.dictionaryOfAnime[@"Top Airing Anime"];
+        return topAiringAnime.count;
+    }*/
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    SUKHomeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:HomeCollectionViewCellIdentifier forIndexPath:indexPath];
+    SUKHomeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SUKHomeCollectionViewCell" forIndexPath:indexPath];
     
-    NSArray *collectionViewArray = self.arrayOfAnime[[(SUKHomeCollectionView *)collectionView indexPath].row];
+    NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
+    NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row];
     
     //TODO: move this into a "set" method in SUKHomeCollectionViewCell
     NSString *title = collectionViewArray[indexPath.item][@"title"];
@@ -129,6 +159,10 @@ const BOOL displayGenre = YES;
     }
     
     return cell;
+}
+
+- (NSArray *) retriveDataForIndexPathRow: (NSInteger) indexPathRow {
+    return self.dictionaryOfAnime[@"Top Anime"];
 }
 
 

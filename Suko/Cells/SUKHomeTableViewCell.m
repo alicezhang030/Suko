@@ -9,7 +9,6 @@
 #import "SUKHomeCollectionViewCell.h"
 
 @implementation SUKHomeCollectionView
-
 @end
 
 @implementation SUKHomeTableViewCell
