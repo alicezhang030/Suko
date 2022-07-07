@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dictionaryOfAnime;
 @property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
+@property (nonatomic, strong) NSMutableArray *headerTitlesBesidesTopAnime;
 
 // TODO: Change arrayOfAnime to NSDictionary
 // TODO: Change array of anime to Models
@@ -30,6 +31,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     
     self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
     self.dictOfGenres = [[NSMutableDictionary alloc] init];
+    self.headerTitlesBesidesTopAnime = [[NSMutableArray alloc] init];
     
     [self fetchTopAnime];
     [self fetchGenreList];
@@ -43,26 +45,13 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 
 #pragma mark - Fetching Data
 
-/*
-+(NSDictionary*)getConstGenreList {
-    static NSDictionary *dictOfGenres = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        inst = @{
-            @"key1": @"value1",
-            @"key2": @"value2",
-            @"key3": @"value3"
-        };
-    });
-    return inst;
-}*/
-
 - (void) fetchTopAnime {
     NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
     
     [[SUKAPIManager shared] fetchAnime:@"/top/anime" params:params completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
-            [self.dictionaryOfAnime setObject:anime forKey:@"Top Anime"];
+            NSString *title = @"Top Anime";
+            [self.dictionaryOfAnime setObject:anime forKey:title];
             [self.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -77,7 +66,15 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
         if (anime != nil) {
             if(self.dictOfGenres != nil) {
                 NSString *malID = [genre stringValue];
-                NSLog(@"%@", [self.dictOfGenres objectForKey:malID]);
+                NSString *correspondingGenre = [self.dictOfGenres objectForKey:malID];
+                NSString *title = [[@"Most Popular "
+                                    stringByAppendingString:correspondingGenre]
+                                    stringByAppendingString:@" Anime"];
+                
+                [self.headerTitlesBesidesTopAnime addObject:title];
+                
+                [self.dictionaryOfAnime setObject:anime forKey:title];
+                [self.tableView reloadData];
             }
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -114,6 +111,9 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"SUKHomeTableViewCell";
     SUKHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    NSString *headerTitle = [self retriveDataForIndexPathRow:indexPath.row][@"header"];
+    cell.rowHeaderLabel.text = headerTitle;    
     return cell;
 }
 
@@ -122,14 +122,15 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *) indexPath {
-    return 360;
+    return 307;
 }
 
 #pragma mark - CollectionView
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
-    return [self retriveDataForIndexPathRow:row].count;
+    NSArray *animeData = [self retriveDataForIndexPathRow:row][@"anime"];
+    return animeData.count;
     
     /*
     NSArray *topAiringAnime = self.dictionaryOfAnime[@"Top Airing Anime"];
@@ -146,7 +147,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     SUKHomeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SUKHomeCollectionViewCell" forIndexPath:indexPath];
     
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
-    NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row];
+    NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
     
     //TODO: move this into a "set" method in SUKHomeCollectionViewCell
     NSString *title = collectionViewArray[indexPath.item][@"title"];
@@ -161,8 +162,19 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     return cell;
 }
 
-- (NSArray *) retriveDataForIndexPathRow: (NSInteger) indexPathRow {
-    return self.dictionaryOfAnime[@"Top Anime"];
+- (NSMutableDictionary *) retriveDataForIndexPathRow: (NSInteger) indexPathRow {
+    NSMutableDictionary *rowData = [[NSMutableDictionary alloc] init];
+    
+    if(indexPathRow == 0) {
+        [rowData setObject:@"Top Anime" forKey:@"header"];
+        [rowData setObject:self.dictionaryOfAnime[@"Top Anime"] forKey:@"anime"];
+    } else {
+        NSString *title = self.headerTitlesBesidesTopAnime[indexPathRow - 1];
+        [rowData setObject:title forKey:@"header"];
+        [rowData setObject:self.dictionaryOfAnime[title] forKey:@"anime"];
+    }
+    
+    return rowData;
 }
 
 

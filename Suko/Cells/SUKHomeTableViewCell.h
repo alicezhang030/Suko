@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKHomeTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet SUKHomeCollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UILabel *rowHeaderLabel;
 
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath;
 @end
