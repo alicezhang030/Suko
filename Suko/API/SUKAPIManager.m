@@ -7,6 +7,7 @@
 
 #import "SUKAPIManager.h"
 #import "AFNetworking.h"
+#import "Anime.h"
 
 static NSString * const baseURLString = @"https://api.jikan.moe/v4";
 
@@ -15,6 +16,7 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
 @end
 
 @implementation SUKAPIManager
+const NSNumber *knumOfAnimeDisplayedPerRow = @2;
 
 + (instancetype)shared {
     static SUKAPIManager *sharedManager = nil;
@@ -36,14 +38,31 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
     return self;
 }
 
-- (void)fetchAnime:(NSString *) path params:(NSDictionary *) params completion:(void(^)(NSArray *animes, NSError *error))completion {
-    NSString *fullURLString = [baseURLString stringByAppendingString:path];
+- (void)fetchGenreAnime:(NSString *) genre completion:(void(^)(NSArray *genres, NSError *error))completion {
+    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
+    NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray *animeDictionaries = dataDictionary[@"data"];
+        NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
+        NSArray *arrOfAnimeObjs = [Anime animesWithArray:arrOfAnimeDictionaries]; // array indices each contain an Anime object
         
-        completion(animeDictionaries, nil);
+        completion(arrOfAnimeObjs, nil);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)fetchTopAnime:(void(^)(NSArray *genres, NSError *error))completion {
+    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
+    NSString *fullURLString = [baseURLString stringByAppendingString:@"/top/anime"];
+    
+    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSDictionary *dataDictionary = responseObject;
+        NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
+        NSArray *arrOfAnimeObjs = [Anime animesWithArray:arrOfAnimeDictionaries]; // array indices each contain an Anime object
+        
+        completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];

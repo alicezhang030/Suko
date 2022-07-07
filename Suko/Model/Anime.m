@@ -20,6 +20,8 @@
         NSString *titleWithMALFormatting = dictionary[@"title"];
         self.title = [[titleWithMALFormatting componentsSeparatedByString:@"\\"] objectAtIndex:0];
         
+        self.posterURL = dictionary[@"images"][@"jpg"][@"large_image_url"];
+        
         self.synopsis = dictionary[@"synopsis"];
         self.genres = dictionary[@"genres"];
         
@@ -30,6 +32,15 @@
     }
     
     return self;
+}
+
++ (NSMutableArray *)animesWithArray:(NSArray *)dictionaries {
+    NSMutableArray *animes = [NSMutableArray array];
+    for (NSDictionary *dictionary in dictionaries) {
+        Anime *anime = [[Anime alloc] initWithDictionary:dictionary];
+        [animes addObject:anime];
+    }
+    return animes;
 }
 
 @end
