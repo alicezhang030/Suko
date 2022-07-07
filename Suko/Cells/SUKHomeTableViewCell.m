@@ -17,12 +17,6 @@
     [super awakeFromNib];
 }
 
-// Adjusts the collection view so that it fills the entire horizontal space
--(void)layoutSubviews{
-    [super layoutSubviews];
-    self.collectionView.frame = self.contentView.bounds;
-}
-
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath{
     self.collectionView.dataSource = dataSourceDelegate;
     self.collectionView.delegate = dataSourceDelegate;

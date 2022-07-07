@@ -131,16 +131,6 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
     NSArray *animeData = [self retriveDataForIndexPathRow:row][@"anime"];
     return animeData.count;
-    
-    /*
-    NSArray *topAiringAnime = self.dictionaryOfAnime[@"Top Airing Anime"];
-    return [self retriveDataForIndexPath: [(SUKHomeCollectionView *)collectionView indexPath].row];*/
-    
-    /*
-    if(row == 0) {
-        NSArray *topAiringAnime = self.dictionaryOfAnime[@"Top Airing Anime"];
-        return topAiringAnime.count;
-    }*/
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -176,16 +166,5 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     
     return rowData;
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

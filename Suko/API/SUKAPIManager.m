@@ -36,9 +36,6 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
     return self;
 }
 
-/*
-    Default: returns 25 animes
- */
 - (void)fetchAnime:(NSString *) path params:(NSDictionary *) params completion:(void(^)(NSArray *animes, NSError *error))completion {
     NSString *fullURLString = [baseURLString stringByAppendingString:path];
     
@@ -63,19 +60,5 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
         NSLog(@"Error: %@", error);
     }];
 }
-
-/*
-- (void)fetchAnimeByGenre:(NSString *) genre params:(NSDictionary *) params completion:(void(^)(NSArray *animes, NSError *error))completion {
-    
-    NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
-    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSDictionary *dataDictionary = responseObject;
-        NSArray *animeDictionaries = dataDictionary[@"data"];
-        
-        completion(animeDictionaries, nil);
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-}*/
 
 @end

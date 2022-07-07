@@ -28,9 +28,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="307"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BYv-5s-MCS" customClass="SUKHomeCollectionView">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cA4-32-SX7">
+                                                    <rect key="frame" x="20" y="7" width="42" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BYv-5s-MCS" customClass="SUKHomeCollectionView">
                                                     <rect key="frame" x="20" y="37" width="374" height="257"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GmA-lZ-2kB">
                                                         <size key="itemSize" width="185" height="255"/>
@@ -79,15 +84,13 @@
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cA4-32-SX7">
-                                                    <rect key="frame" x="20" y="7" width="42" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="cA4-32-SX7" firstAttribute="leading" secondItem="f1y-jE-JGf" secondAttribute="leading" constant="20" symbolic="YES" id="5ff-iu-nLs"/>
+                                                <constraint firstAttribute="trailing" secondItem="BYv-5s-MCS" secondAttribute="trailing" constant="20" symbolic="YES" id="CiN-LL-nGA"/>
+                                                <constraint firstItem="BYv-5s-MCS" firstAttribute="leading" secondItem="f1y-jE-JGf" secondAttribute="leading" constant="20" symbolic="YES" id="Nzj-YO-4EH"/>
+                                                <constraint firstItem="BYv-5s-MCS" firstAttribute="top" secondItem="cA4-32-SX7" secondAttribute="bottom" constant="9.5" id="fG4-M0-Gl7"/>
+                                                <constraint firstAttribute="bottom" secondItem="BYv-5s-MCS" secondAttribute="bottom" constant="13" id="kLo-Lf-qnA"/>
                                                 <constraint firstItem="cA4-32-SX7" firstAttribute="top" secondItem="f1y-jE-JGf" secondAttribute="top" constant="7" id="m2Y-MJ-VUQ"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cA4-32-SX7" secondAttribute="trailing" constant="8" id="pQ1-IK-vxy"/>
                                             </constraints>
