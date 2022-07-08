@@ -11,8 +11,9 @@
 #import "SUKHomeCollectionViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "Anime.h"
+#import "SUKAnimeListViewController.h"
 
-@interface SUKHomeViewController ()
+@interface SUKHomeViewController () <SUKHomeTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dictionaryOfAnime;
 @property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
@@ -37,6 +38,23 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+#pragma mark - Navigation
+
+- (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *) cell {
+    NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
+    [senderDict setObject:cell.rowHeaderLabel forKey:@"title"];
+    [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
+    [self performSegueWithIdentifier:@"SeeAllSegue" sender:senderDict];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"SeeAllSegue"]) {
+        SUKAnimeListViewController *animeListVC = [segue destinationViewController];
+        animeListVC.listTitle = sender[@"title"];
+        animeListVC.arrOfAnime = sender[@"anime"];
+    }
 }
 
 #pragma mark - Fetching Data using SUKAPIManager
@@ -110,9 +128,14 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"SUKHomeTableViewCell";
     SUKHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.delegate = self;
     
     NSString *headerTitle = [self retriveDataForIndexPathRow:indexPath.row][@"header"];
-    cell.rowHeaderLabel.text = headerTitle;    
+    cell.rowHeaderLabel.text = headerTitle;
+    
+    NSArray *animeData = [self retriveDataForIndexPathRow:indexPath.row][@"anime"];
+    cell.arrOfAnime = animeData;
+    
     return cell;
 }
 
@@ -139,14 +162,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
     Anime *animeToDisplay =  collectionViewArray[indexPath.item];
     
-    cell.animeTitleLabel.text = animeToDisplay.title;
-    
-    NSString *animePosterURLString = animeToDisplay.posterURL;
-    NSURL *url = [NSURL URLWithString:animePosterURLString];
-    if (url != nil) {
-        [cell.animePosterImageView setImageWithURL:url];
-    }
-    
+    [cell setAnime:animeToDisplay];
     return cell;
 }
 
