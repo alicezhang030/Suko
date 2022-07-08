@@ -10,7 +10,7 @@
 #import "SUKHomeTableViewCell.h"
 #import "SUKHomeCollectionViewCell.h"
 #import "UIImageView+AFNetworking.h"
-#import "Anime.h"
+#import "SUKAnime.h"
 #import "SUKAnimeListViewController.h"
 #import "SUKDetailsViewController.h"
 
@@ -166,7 +166,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
     NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
-    Anime *animeToDisplay =  collectionViewArray[indexPath.item];
+    SUKAnime *animeToDisplay =  collectionViewArray[indexPath.item];
     
     [cell setAnime:animeToDisplay];
     return cell;
@@ -175,7 +175,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
     NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
-    Anime *animeToDisplay =  collectionViewArray[indexPath.item];
+    SUKAnime *animeToDisplay =  collectionViewArray[indexPath.item];
     
     [self performSegueWithIdentifier:@"CollectionToDetailsSegue" sender:animeToDisplay];
 }

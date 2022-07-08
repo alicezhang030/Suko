@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Anime.h"
+#import "SUKAnime.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *animePosterImageView;
 @property (weak, nonatomic) IBOutlet UILabel *animeTitleLabel;
 
-@property (strong, nonatomic) Anime *anime;
+@property (strong, nonatomic) SUKAnime *anime;
 
 @end
 

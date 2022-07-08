@@ -9,7 +9,7 @@
 #import "Parse/PFImageView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Anime : NSObject
+@interface SUKAnime : NSObject
 
 @property (nonatomic) int malID; // MyAnimeList ID
 @property (nonatomic) NSString *title; // The title of the anime (ex. "One Piece")

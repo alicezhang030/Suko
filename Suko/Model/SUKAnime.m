@@ -5,9 +5,9 @@
 //  Created by Alice Zhang on 7/7/22.
 //
 
-#import "Anime.h"
+#import "SUKAnime.h"
 
-@implementation Anime
+@implementation SUKAnime
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
@@ -37,7 +37,7 @@
 + (NSMutableArray *)animesWithArray:(NSArray *)dictionaries {
     NSMutableArray *animes = [NSMutableArray array];
     for (NSDictionary *dictionary in dictionaries) {
-        Anime *anime = [[Anime alloc] initWithDictionary:dictionary];
+        SUKAnime *anime = [[SUKAnime alloc] initWithDictionary:dictionary];
         [animes addObject:anime];
     }
     return animes;

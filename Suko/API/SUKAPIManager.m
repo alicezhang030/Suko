@@ -7,7 +7,7 @@
 
 #import "SUKAPIManager.h"
 #import "AFNetworking.h"
-#import "Anime.h"
+#import "SUKAnime.h"
 
 static NSString * const baseURLString = @"https://api.jikan.moe/v4";
 
@@ -45,7 +45,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
-        NSArray *arrOfAnimeObjs = [Anime animesWithArray:arrOfAnimeDictionaries]; // array indices each contain an Anime object
+        NSArray *arrOfAnimeObjs = [SUKAnime animesWithArray:arrOfAnimeDictionaries]; // array indices each contain an Anime object
         
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
@@ -60,7 +60,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
-        NSArray *arrOfAnimeObjs = [Anime animesWithArray:arrOfAnimeDictionaries]; // array indices each contain an Anime object
+        NSArray *arrOfAnimeObjs = [SUKAnime animesWithArray:arrOfAnimeDictionaries]; // array indices each contain an Anime object
         
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {

@@ -6,13 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Anime.h"
+#import "SUKAnime.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKAnimeListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSString *listTitle; // the title of the list
-@property (nonatomic, strong) NSArray<Anime*> *arrOfAnime; // the animes to display
+@property (nonatomic, strong) NSArray<SUKAnime*> *arrOfAnime; // the animes to display
 
 @end
 

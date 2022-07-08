@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Anime.h"
+#import "SUKAnime.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface SUKHomeTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet SUKHomeCollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet SUKHomeCollectionView *collectionView; 
 @property (weak, nonatomic) IBOutlet UILabel *rowHeaderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *seeAllLabel;
-@property (nonatomic, strong) NSArray<Anime*> *arrOfAnime; // the animes being displayed in this cell's collection view
+@property (nonatomic, strong) NSArray<SUKAnime*> *arrOfAnime; // the animes being displayed in this cell's collection view
 @property (nonatomic, weak) id<SUKHomeTableViewCellDelegate> delegate;
 
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath;

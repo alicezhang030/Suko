@@ -9,7 +9,7 @@
 #import "SUKAPIManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "SUKAnimeListTableViewCell.h"
-#import "Anime.h"
+#import "SUKAnime.h"
 #import "SUKDetailsViewController.h"
 
 @interface SUKAnimeListViewController ()
@@ -42,7 +42,7 @@
     static NSString *cellIdentifier = @"SUKAnimeListTableViewCell";
     SUKAnimeListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    Anime *animeToDisplay = self.arrOfAnime[indexPath.row];
+    SUKAnime *animeToDisplay = self.arrOfAnime[indexPath.row];
     
     cell.titleLabel.text = animeToDisplay.title;
     
@@ -64,7 +64,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString: @"DetailsSegue"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKAnimeListTableViewCell*) sender];
-        Anime *dataToPass = self.arrOfAnime[indexPath.row];
+        SUKAnime *dataToPass = self.arrOfAnime[indexPath.row];
         SUKDetailsViewController *detailVC = [segue destinationViewController];
         detailVC.animeToDisplay = dataToPass;
     }

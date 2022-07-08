@@ -6,12 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Anime.h"
+#import "SUKAnime.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKDetailsViewController : UIViewController
-@property (nonatomic, strong) Anime *animeToDisplay;
+@property (nonatomic, strong) SUKAnime *animeToDisplay;
 
 @end
 

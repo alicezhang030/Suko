@@ -10,7 +10,7 @@
 
 @implementation SUKHomeCollectionViewCell
 
-- (void)setAnime:(Anime *)anime {
+- (void)setAnime:(SUKAnime *)anime {
     _anime = anime;
     self.animeTitleLabel.text = anime.title;
     
