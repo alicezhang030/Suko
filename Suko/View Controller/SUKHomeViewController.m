@@ -107,6 +107,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
                 [self.dictionaryOfAnime setObject:anime forKey:title];
                 
                 if([genres count] != 0) {
+                    [NSThread sleepForTimeInterval:0.5];
                     [self genreAnime:genres];
                 } else {
                     [self.tableView reloadData];

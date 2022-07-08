@@ -11,6 +11,7 @@
 #import "SUKLoginViewController.h"
 
 @interface SUKSignUpViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
