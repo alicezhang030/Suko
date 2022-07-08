@@ -127,6 +127,7 @@
                     <connections>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
                         <segue destination="OiV-xg-5bj" kind="show" identifier="SeeAllSegue" id="4vs-CO-2P5"/>
+                        <segue destination="7E0-o4-0mw" kind="show" identifier="CollectionToDetailsSegue" id="wz9-h9-cFl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -312,6 +313,9 @@
             <point key="canvasLocation" x="18.840579710144929" y="75"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wz9-h9-cFl"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

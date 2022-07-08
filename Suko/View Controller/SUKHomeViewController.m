@@ -12,6 +12,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "Anime.h"
 #import "SUKAnimeListViewController.h"
+#import "SUKDetailsViewController.h"
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -54,6 +55,11 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         animeListVC.listTitle = sender[@"title"];
         animeListVC.arrOfAnime = sender[@"anime"];
+    }
+
+    if([segue.identifier isEqualToString:@"CollectionToDetailsSegue"]) {
+        SUKDetailsViewController *detailsVC = [segue destinationViewController];
+        detailsVC.animeToDisplay = sender;
     }
 }
 
@@ -164,6 +170,16 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     
     [cell setAnime:animeToDisplay];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
+    NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
+    Anime *animeToDisplay =  collectionViewArray[indexPath.item];
+    
+    [self performSegueWithIdentifier:@"CollectionToDetailsSegue" sender:animeToDisplay];
+    
+    NSLog(@"Clicked on collection view");
 }
 
 - (NSMutableDictionary *) retriveDataForIndexPathRow: (NSInteger) indexPathRow {
