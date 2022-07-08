@@ -14,6 +14,7 @@
 		531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A072874C57A002E80C4 /* SUKHomeTableViewCell.m */; };
 		531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A0A2874D849002E80C4 /* SUKHomeCollectionViewCell.m */; };
 		532AB031287752DC00114DBA /* Anime.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AB030287752DC00114DBA /* Anime.m */; };
+		535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535AE83F28789530007D6059 /* SUKDetailsViewController.m */; };
 		5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5E7286B676800E9D894 /* AppDelegate.m */; };
 		5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5EA286B676800E9D894 /* SceneDelegate.m */; };
 		5397F5F1286B676800E9D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5EF286B676800E9D894 /* Main.storyboard */; };
@@ -55,6 +56,8 @@
 		531C3A0A2874D849002E80C4 /* SUKHomeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKHomeCollectionViewCell.m; sourceTree = "<group>"; };
 		532AB02F287752DC00114DBA /* Anime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Anime.h; sourceTree = "<group>"; };
 		532AB030287752DC00114DBA /* Anime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Anime.m; sourceTree = "<group>"; };
+		535AE83E28789530007D6059 /* SUKDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKDetailsViewController.h; sourceTree = "<group>"; };
+		535AE83F28789530007D6059 /* SUKDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKDetailsViewController.m; sourceTree = "<group>"; };
 		5397F5E3286B676800E9D894 /* Suko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F5E6286B676800E9D894 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5397F5E7286B676800E9D894 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -137,6 +140,8 @@
 				531C3A042874C14B002E80C4 /* SUKHomeViewController.m */,
 				53B3301E28779B070013F404 /* SUKAnimeListViewController.h */,
 				53B3301F28779B070013F404 /* SUKAnimeListViewController.m */,
+				535AE83E28789530007D6059 /* SUKDetailsViewController.h */,
+				535AE83F28789530007D6059 /* SUKDetailsViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */,
 				5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */,
 				53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */,
 				531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */,

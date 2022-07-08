@@ -10,6 +10,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "SUKAnimeListTableViewCell.h"
 #import "Anime.h"
+#import "SUKDetailsViewController.h"
 
 @interface SUKAnimeListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -74,14 +75,17 @@
     return cell;
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString: @"DetailsSegue"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKAnimeListTableViewCell*) sender];
+        Anime *dataToPass = self.arrOfAnime[indexPath.row];
+        SUKDetailsViewController *detailVC = [segue destinationViewController];
+        detailVC.animeToDisplay = dataToPass;
+    }
 }
-*/
+
 
 @end
