@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SUKHomeViewController" sceneMemberID="viewController">
@@ -123,7 +123,7 @@
                             <constraint firstAttribute="bottom" secondItem="IqB-dM-fLm" secondAttribute="bottom" id="wFg-is-X2E"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Xl2-2N-nJo"/>
+                    <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo"/>
                     <connections>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
                         <segue destination="OiV-xg-5bj" kind="show" identifier="SeeAllSegue" id="4vs-CO-2P5"/>
