@@ -178,8 +178,6 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     Anime *animeToDisplay =  collectionViewArray[indexPath.item];
     
     [self performSegueWithIdentifier:@"CollectionToDetailsSegue" sender:animeToDisplay];
-    
-    NSLog(@"Clicked on collection view");
 }
 
 - (NSMutableDictionary *) retriveDataForIndexPathRow: (NSInteger) indexPathRow {

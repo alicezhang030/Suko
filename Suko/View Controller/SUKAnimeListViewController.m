@@ -32,23 +32,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
-#pragma mark - Fetching Data using SUKAPIManager -- To Be Deleted Once I Start Passing Data In
-
-
-/*
-- (void) topAnime {
-    [[SUKAPIManager shared] fetchTopAnime:^(NSArray *anime, NSError *error) {
-        if (anime != nil) {
-            NSString *title = @"Top Anime";
-            [self.arrOfAnime setObject:title forKey:@"header"];
-            [self.arrOfAnime setObject:anime forKey:@"anime"];
-            [self.tableView reloadData];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
-}*/
-
 #pragma mark - TableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
