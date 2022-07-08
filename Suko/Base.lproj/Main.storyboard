@@ -78,8 +78,8 @@
                                                             </collectionViewCellContentView>
                                                             <size key="customSize" width="185" height="252"/>
                                                             <connections>
-                                                                <outlet property="animePosterImageView" destination="CWS-86-omw" id="UGl-YF-inm"/>
-                                                                <outlet property="animeTitleLabel" destination="sZj-uM-5lc" id="tky-go-uUw"/>
+                                                                <outlet property="posterView" destination="CWS-86-omw" id="UGl-YF-inm"/>
+                                                                <outlet property="titleLabel" destination="sZj-uM-5lc" id="tky-go-uUw"/>
                                                             </connections>
                                                         </collectionViewCell>
                                                     </cells>
@@ -284,8 +284,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="iaH-4a-IiM"/>
                     <connections>
-                        <outlet property="epLabel" destination="im5-Xr-Rx9" id="b84-yg-0f9"/>
-                        <outlet property="posterImage" destination="fzg-U7-dPu" id="BeR-HI-BWy"/>
+                        <outlet property="numOfEpLabel" destination="im5-Xr-Rx9" id="b84-yg-0f9"/>
+                        <outlet property="posterView" destination="fzg-U7-dPu" id="BeR-HI-BWy"/>
                         <outlet property="synopsisLabel" destination="khO-lT-ojw" id="I7B-QK-DAj"/>
                         <outlet property="titleLabel" destination="cSR-fR-6AB" id="C1N-xq-ZpK"/>
                     </connections>

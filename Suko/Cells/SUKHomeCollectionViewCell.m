@@ -12,12 +12,12 @@
 
 - (void)setAnime:(SUKAnime *)anime {
     _anime = anime;
-    self.animeTitleLabel.text = anime.title;
+    self.titleLabel.text = anime.title;
     
     NSString *animePosterURLString = anime.posterURL;
     NSURL *url = [NSURL URLWithString:animePosterURLString];
     if (url != nil) {
-        [self.animePosterImageView setImageWithURL:url];
+        [self.posterView setImageWithURL:url];
     }
 }
 

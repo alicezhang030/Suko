@@ -9,9 +9,9 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface SUKDetailsViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *posterImage;
+@property (weak, nonatomic) IBOutlet UIImageView *posterView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *epLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numOfEpLabel;
 @property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
 
 @end
@@ -24,14 +24,14 @@
     NSString *animePosterURLString = self.animeToDisplay.posterURL;
     NSURL *url = [NSURL URLWithString:animePosterURLString];
     if(url != nil) {
-        [self.posterImage setImageWithURL:url];
+        [self.posterView setImageWithURL:url];
     }
     
     self.titleLabel.text = self.animeToDisplay.title;
     self.synopsisLabel.text = self.animeToDisplay.synopsis;
     
     NSString *numOfEpString = [NSString stringWithFormat:@"%d", self.animeToDisplay.episodes];
-    self.epLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
+    self.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
 }
 
 /*

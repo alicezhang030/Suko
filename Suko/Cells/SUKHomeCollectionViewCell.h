@@ -10,11 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * Custom CollectionViewCell that displays an anime's poster and title
+ */
 @interface SUKHomeCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *animePosterImageView;
-@property (weak, nonatomic) IBOutlet UILabel *animeTitleLabel;
-
+/** The anime being displayed by this cell */
 @property (strong, nonatomic) SUKAnime *anime;
+/** The ImageView used to display the anime's poster */
+@property (weak, nonatomic) IBOutlet UIImageView *posterView;
+/** The label displaying the anime's title */
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end
 
