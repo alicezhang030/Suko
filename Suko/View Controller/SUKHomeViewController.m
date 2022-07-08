@@ -13,6 +13,8 @@
 #import "SUKAnime.h"
 #import "SUKAnimeListViewController.h"
 #import "SUKDetailsViewController.h"
+#import "SUKLoginViewController.h"
+#import "Parse/Parse.h"
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -61,6 +63,17 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
         SUKDetailsViewController *detailsVC = [segue destinationViewController];
         detailsVC.animeToDisplay = sender;
     }
+}
+
+- (IBAction)didTapLogout:(id)sender {
+    NSLog(@"User tapped log out");
+    
+    // Reset view to the log in screen
+    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
+        self.view.window.rootViewController = loginVC;
+    }];
 }
 
 #pragma mark - Fetching Data using SUKAPIManager

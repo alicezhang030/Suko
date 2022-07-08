@@ -174,7 +174,13 @@
                             <constraint firstAttribute="bottom" secondItem="IqB-dM-fLm" secondAttribute="bottom" id="wFg-is-X2E"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo"/>
+                    <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="5L3-Ai-gBe">
+                            <connections>
+                                <action selector="didTapLogout:" destination="BYZ-38-t0r" id="Jnk-qR-Uqs"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
                         <segue destination="OiV-xg-5bj" kind="show" identifier="SeeAllSegue" id="4vs-CO-2P5"/>
@@ -348,7 +354,7 @@
         <!--Sign Up View Controller-->
         <scene sceneID="iHq-nf-Sbb">
             <objects>
-                <viewController id="p77-45-rhG" customClass="SUKSignUpViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpVC" id="p77-45-rhG" customClass="SUKSignUpViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bL8-nv-elK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -389,14 +395,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IpS-ig-cRZ">
-                                <rect key="frame" x="208" y="622" width="78" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Login">
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
-                                </buttonConfiguration>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22R-0i-JK4">
                                 <rect key="frame" x="50" y="558" width="286" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -408,6 +406,17 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="tapSignUpButton:" destination="p77-45-rhG" eventType="touchUpInside" id="aNh-En-UD7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IpS-ig-cRZ">
+                                <rect key="frame" x="208" y="613" width="78" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Login">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="tapLogInButton:" destination="p77-45-rhG" eventType="touchUpInside" id="OQJ-EU-RgR"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -422,7 +431,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NIc-af-H2l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="134.78260869565219" y="-682.36607142857144"/>
+            <point key="canvasLocation" x="149" y="-682"/>
         </scene>
         <!--Home-->
         <scene sceneID="JKN-Kf-Ijr">
@@ -447,7 +456,7 @@
         <!--Login View Controller-->
         <scene sceneID="o3g-g3-3OV">
             <objects>
-                <viewController id="Abl-mF-E38" customClass="SUKLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="Abl-mF-E38" customClass="SUKLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1ya-7S-NYw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -489,6 +498,9 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Sign Up">
                                     <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tapSignupButton:" destination="Abl-mF-E38" eventType="touchUpInside" id="TxV-Bq-N0V"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dap-DN-ANR">
                                 <rect key="frame" x="50" y="507" width="286" height="34"/>
@@ -499,11 +511,19 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Login">
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="14"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tapLoginButton:" destination="Abl-mF-E38" eventType="touchUpInside" id="kpr-GC-M9P"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="s2N-lb-1aC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="PWo-SC-5xp"/>
+                    <connections>
+                        <outlet property="passwordField" destination="dsM-7U-0b4" id="BDx-ix-gXa"/>
+                        <outlet property="usernameField" destination="xa2-UJ-eT1" id="Uhw-bK-S5i"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vi9-gI-JTX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

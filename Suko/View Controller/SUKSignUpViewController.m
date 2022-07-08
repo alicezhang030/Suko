@@ -8,6 +8,7 @@
 #import "SUKSignUpViewController.h"
 #import "Parse/Parse.h"
 #import "SUKHomeViewController.h"
+#import "SUKLoginViewController.h"
 
 @interface SUKSignUpViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
@@ -20,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)tapSignUpButton:(id)sender {
@@ -44,9 +44,14 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             SUKHomeViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKTabController"];
             self.view.window.rootViewController = homeVC;
-            //[self performSegueWithIdentifier:@"loginSignUpSegue" sender:nil];
         }
     }];
+}
+
+- (IBAction)tapLogInButton:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
+    self.view.window.rootViewController = loginVC;
 }
 
 - (void) checkEmptyField {
