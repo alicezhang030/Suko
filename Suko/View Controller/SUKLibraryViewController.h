@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SUKLibraryViewController : UIViewController
+@interface SUKLibraryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end
 

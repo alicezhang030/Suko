@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="2816" y="149"/>
         </scene>
-        <!--View Controller-->
+        <!--Library-->
         <scene sceneID="Mg0-QW-T1y">
             <objects>
-                <viewController id="fDl-Wd-3wq" sceneMemberID="viewController">
+                <viewController id="fDl-Wd-3wq" customClass="SUKLibraryViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="u5Q-M9-Wzf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,12 +37,42 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKLibraryTableViewCell" rowHeight="83" id="9T3-5w-jV5" customClass="SUKLibraryTableViewCell">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="83"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9T3-5w-jV5" id="Wsv-KD-cvn">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9B-LX-VHW">
+                                                    <rect key="frame" x="20" y="31" width="74" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="x9B-LX-VHW" firstAttribute="top" secondItem="Wsv-KD-cvn" secondAttribute="top" constant="31" id="RDW-82-ZOM"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="x9B-LX-VHW" secondAttribute="trailing" constant="40" id="Yjs-TO-G9c"/>
+                                                <constraint firstAttribute="bottom" secondItem="x9B-LX-VHW" secondAttribute="bottom" constant="31" id="jdu-xh-e5U"/>
+                                                <constraint firstItem="x9B-LX-VHW" firstAttribute="leading" secondItem="Wsv-KD-cvn" secondAttribute="leading" constant="20" symbolic="YES" id="sYp-Z5-jme"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="listTitleLabel" destination="x9B-LX-VHW" id="bCz-Qn-kYj"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Tas-gM-geB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="SR4-Xh-3k6"/>
+                    <navigationItem key="navigationItem" title="Library" id="SR4-Xh-3k6"/>
+                    <connections>
+                        <outlet property="tableView" destination="FS1-BX-d26" id="WJD-ha-UM8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VNR-ut-uil" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

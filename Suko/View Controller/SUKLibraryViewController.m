@@ -6,8 +6,11 @@
 //
 
 #import "SUKLibraryViewController.h"
+#import "SUKLibraryTableViewCell.h"
 
 @interface SUKLibraryViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *lists;
 
 @end
 
@@ -15,7 +18,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    // Set up TableView
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.lists = [@[@"Want to Watch", @"Watching", @"Watched"] mutableCopy];
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.lists count];
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *cellIdentifier = @"SUKLibraryTableViewCell";
+    SUKLibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.listTitleLabel.text = self.lists[indexPath.row];
+    return cell;
 }
 
 /*
