@@ -44,7 +44,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 
 - (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *) cell {
     NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
-    [senderDict setObject:cell.rowHeaderLabel forKey:@"title"];
+    [senderDict setObject:cell.rowHeaderLabel.text forKey:@"title"];
     [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
     [self performSegueWithIdentifier:@"SeeAllSegue" sender:senderDict];
 }

@@ -23,6 +23,8 @@
         
     //[self topAnime];
     
+    self.navigationItem.title = self.listTitle;
+    
     // Set up TableView
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
