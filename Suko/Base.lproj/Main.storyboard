@@ -288,7 +288,9 @@
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fzg-U7-dPu">
                                             <rect key="frame" x="110" y="8" width="200" height="200"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="fzg-U7-dPu" secondAttribute="height" multiplier="1:1" id="xZD-s9-Lsh"/>
+                                                <constraint firstAttribute="width" constant="200" id="Y5L-sg-9PT"/>
+                                                <constraint firstAttribute="width" secondItem="fzg-U7-dPu" secondAttribute="height" multiplier="1:1" id="fV6-Nj-03l"/>
+                                                <constraint firstAttribute="height" constant="200" id="r3P-gd-DIX"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anime title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSR-fR-6AB">
