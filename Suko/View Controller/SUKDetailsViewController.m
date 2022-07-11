@@ -39,6 +39,14 @@
     self.listOptions = @[@"Remove from lists", @"Want to Watch", @"Watching", @"Watched"];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+
+  if (self.isMovingFromParentViewController) {
+      [self.dropdownMenu closeAllComponentsAnimated:YES];
+  }
+}
+
 #pragma mark - MKDropdownMenuDataSource
 
 - (NSInteger)numberOfComponentsInDropdownMenu:(MKDropdownMenu *)dropdownMenu {
