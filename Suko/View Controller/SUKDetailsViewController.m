@@ -37,6 +37,7 @@
     self.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
     
     self.listOptions = @[@"Remove from lists", @"Want to Watch", @"Watching", @"Watched"];
+    self.dropdownMenu.backgroundDimmingOpacity = 0.00;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
