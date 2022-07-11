@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *numOfEpLabel;
 @property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
 
+@property (strong, nonatomic) NSArray<NSString *> *listOptions;
+
 @end
 
 @implementation SUKDetailsViewController
@@ -32,7 +34,34 @@
     
     NSString *numOfEpString = [NSString stringWithFormat:@"%d", self.animeToDisplay.episodes];
     self.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
+    
+    self.listOptions = @[@"Want to Watch", @"Watching", @"Watched"];
 }
+
+#pragma mark - MKDropdownMenuDataSource
+
+- (NSInteger)numberOfComponentsInDropdownMenu:(MKDropdownMenu *)dropdownMenu {
+    return 1;
+}
+
+- (NSInteger)dropdownMenu:(MKDropdownMenu *)dropdownMenu numberOfRowsInComponent:(NSInteger)component {
+    return self.listOptions.count;
+}
+
+#pragma mark - MKDropdownMenuDelegate
+
+- (NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForComponent:(NSInteger)component {
+    return @"Add to list";
+}
+- (NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return self.listOptions[row];
+}
+
+- (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+}
+
+#pragma mark - MKDropdownMenuDelegate
+
 
 /*
 #pragma mark - Navigation

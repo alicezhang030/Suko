@@ -9,6 +9,7 @@ target 'Suko' do
   pod 'Parse'
   pod 'Parse/UI'
   pod 'AFNetworking'
+  pod 'MKDropdownMenu'
 
   target 'SukoTests' do
     inherit! :search_paths

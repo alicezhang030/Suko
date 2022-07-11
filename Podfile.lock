@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
   - Bolts/Tasks (1.9.1)
+  - MKDropdownMenu (1.4)
   - Parse (1.19.3):
     - Parse/Core (= 1.19.3)
   - Parse/Core (1.19.3):
@@ -24,6 +25,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - MKDropdownMenu
   - Parse
   - Parse/UI
 
@@ -31,13 +33,15 @@ SPEC REPOS:
   trunk:
     - AFNetworking
     - Bolts
+    - MKDropdownMenu
     - Parse
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
+  MKDropdownMenu: 269df4a41d21a1db684ce8bc709befe419fc5bae
   Parse: 0abb63a0ff6fa34a3f64b81d595a294e2ece143a
 
-PODFILE CHECKSUM: 1901d7e5ca770207afbe3f385a79b6c02f3f78e6
+PODFILE CHECKSUM: 1c7f20874edbd1322781bd92287755e416464324
 
 COCOAPODS: 1.11.3
