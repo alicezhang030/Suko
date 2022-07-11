@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Parse/PFImageView.h"
+#import <Parse/Parse.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKAnime : NSObject

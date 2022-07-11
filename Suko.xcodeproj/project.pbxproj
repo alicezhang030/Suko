@@ -23,6 +23,7 @@
 		5397F5F3286B676900E9D894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F2286B676900E9D894 /* Assets.xcassets */; };
 		5397F5F6286B676900E9D894 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F4286B676900E9D894 /* LaunchScreen.storyboard */; };
 		5397F5F9286B676900E9D894 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5F8286B676900E9D894 /* main.m */; };
+		53A08B4F287C88AC00678FA4 /* SUKUsersLists.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A08B4E287C88AC00678FA4 /* SUKUsersLists.m */; };
 		53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B3301F28779B070013F404 /* SUKAnimeListViewController.m */; };
 		53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B330252877A31E0013F404 /* SUKAnimeListTableViewCell.m */; };
 		53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */; };
@@ -78,6 +79,8 @@
 		5397F5F8286B676900E9D894 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5397F5FE286B676900E9D894 /* SukoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F608286B676900E9D894 /* SukoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		53A08B4D287C88AC00678FA4 /* SUKUsersLists.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKUsersLists.h; sourceTree = "<group>"; };
+		53A08B4E287C88AC00678FA4 /* SUKUsersLists.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKUsersLists.m; sourceTree = "<group>"; };
 		53B3301E28779B070013F404 /* SUKAnimeListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAnimeListViewController.h; sourceTree = "<group>"; };
 		53B3301F28779B070013F404 /* SUKAnimeListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnimeListViewController.m; sourceTree = "<group>"; };
 		53B330242877A31E0013F404 /* SUKAnimeListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAnimeListTableViewCell.h; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 			children = (
 				532AB02F287752DC00114DBA /* SUKAnime.h */,
 				532AB030287752DC00114DBA /* SUKAnime.m */,
+				53A08B4D287C88AC00678FA4 /* SUKUsersLists.h */,
+				53A08B4E287C88AC00678FA4 /* SUKUsersLists.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -484,6 +489,7 @@
 				531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */,
 				531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */,
 				531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */,
+				53A08B4F287C88AC00678FA4 /* SUKUsersLists.m in Sources */,
 				532AB031287752DC00114DBA /* SUKAnime.m in Sources */,
 				5397F5F9286B676900E9D894 /* main.m in Sources */,
 				530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */,

@@ -35,7 +35,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     self.headerTitlesBesidesTopAnime = [[NSMutableArray alloc] init];
     
     [self topAnime];
-    //[self genreList];
+    [self genreList];
     
     // Set up TableView
     self.tableView.delegate = self;
@@ -107,7 +107,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
                 [self.dictionaryOfAnime setObject:anime forKey:title];
                 
                 if([genres count] != 0) {
-                    [NSThread sleepForTimeInterval:0.5];
+                    [NSThread sleepForTimeInterval:1.0];
                     [self genreAnime:genres];
                 } else {
                     [self.tableView reloadData];
