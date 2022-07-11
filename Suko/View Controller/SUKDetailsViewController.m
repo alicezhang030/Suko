@@ -7,6 +7,7 @@
 
 #import "SUKDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "SUKUsersLists.h"
 
 @interface SUKDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
@@ -58,6 +59,13 @@
 }
 
 - (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    [SUKUsersLists postUsersLists:[PFUser currentUser] defaultList:row malId:[NSNumber numberWithInt:self.animeToDisplay.malID] withCompletion:^(BOOL succeeded, NSError * error) {
+        if (succeeded) {
+            NSLog(@"The SUKUsersLists was uploaded!");
+        } else {
+            NSLog(@"Problem uploading the Like: %@", error.localizedDescription);
+        }
+    }];
 }
 
 #pragma mark - MKDropdownMenuDelegate

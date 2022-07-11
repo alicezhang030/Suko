@@ -23,21 +23,24 @@
     
     // Set up the columns
     newUsersList.user = user;
-    newUsersList.wantToWatchArr = [[NSArray init] alloc];
-    newUsersList.watchingArr = [[NSArray init] alloc];
-    newUsersList.watchedArr = [[NSArray init] alloc];
+    newUsersList.wantToWatchArr = [[NSArray alloc] init];
+    newUsersList.watchingArr = [[NSArray alloc] init];
+    newUsersList.watchedArr = [[NSArray alloc] init];
     
     // Add anime to list
-    NSMutableArray *listWithAnimeAdded = [[NSMutableArray init] alloc];
+    NSMutableArray *listWithAnimeAdded = [[NSMutableArray alloc] init];
     [listWithAnimeAdded addObject:malId];
     
     switch(list) {
         case DefaultListsWantToWatch:
             newUsersList.wantToWatchArr = [listWithAnimeAdded copy];
+            break;
         case DefaultListsWatching:
             newUsersList.watchingArr = [listWithAnimeAdded copy];
+            break;
         case DefaultListsWatched:
             newUsersList.watchedArr = [listWithAnimeAdded copy];
+            break;
     }
     
     // Save to database

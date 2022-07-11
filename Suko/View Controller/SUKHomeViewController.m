@@ -35,7 +35,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     self.headerTitlesBesidesTopAnime = [[NSMutableArray alloc] init];
     
     [self topAnime];
-    [self genreList];
+    //[self genreList];
     
     // Set up TableView
     self.tableView.delegate = self;
