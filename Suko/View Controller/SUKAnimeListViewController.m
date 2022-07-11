@@ -11,6 +11,7 @@
 #import "SUKAnimeListTableViewCell.h"
 #import "SUKAnime.h"
 #import "SUKDetailsViewController.h"
+#import "SUKUsersLists.h"
 
 @interface SUKAnimeListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

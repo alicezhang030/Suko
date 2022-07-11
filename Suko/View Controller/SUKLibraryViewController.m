@@ -28,8 +28,10 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    [self updateDictionaryOfAnime];
-    
+    [self updateDictionaryOfAnime:DefaultLibraryListsWantToWatch];
+    [self updateDictionaryOfAnime:DefaultLibraryListsWatching];
+    [self updateDictionaryOfAnime:DefaultLibraryListsWatched];
+        
     self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
     [self.dictionaryOfAnime setObject: [NSMutableArray array] forKey:@"Want to Watch"];
     [self.dictionaryOfAnime setObject: [NSMutableArray array] forKey:@"Watching"];
@@ -54,7 +56,7 @@
 
 #pragma mark - Fetch Data
 
-- (void) updateDictionaryOfAnime {
+- (void) updateDictionaryOfAnime:(DefaultLibraryLists) listTitle {
     PFQuery *query = [PFQuery queryWithClassName:@"SUKUsersLists"];
     [query whereKey:@"user" equalTo:[PFUser currentUser]];
     
@@ -67,34 +69,45 @@
 
             SUKUsersLists *usersListObj = [usersLists objectAtIndex:0];
             
-            for(NSNumber *malID in usersListObj.wantToWatchArr) {
-                [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                     if (anime != nil) {
-                         [[self.dictionaryOfAnime objectForKey:@"Want to Watch"] addObject:anime];
-                     } else {
-                         NSLog(@"%@", error.localizedDescription);
-                     }
-                 }];
-            }
-            
-            for(NSNumber *malID in usersListObj.watchingArr) {
-                [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                     if (anime != nil) {
-                         [[self.dictionaryOfAnime objectForKey:@"Watching"] addObject:anime];
-                     } else {
-                         NSLog(@"%@", error.localizedDescription);
-                     }
-                 }];
-            }
-            
-            for(NSNumber *malID in usersListObj.watchedArr) {
-                [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                     if (anime != nil) {
-                         [[self.dictionaryOfAnime objectForKey:@"Watched"] addObject:anime];
-                     } else {
-                         NSLog(@"%@", error.localizedDescription);
-                     }
-                 }];
+            switch(listTitle) {
+                case DefaultLibraryListsWantToWatch:
+                    for(NSNumber *malID in usersListObj.wantToWatchArr) {
+                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+                             if (anime != nil) {
+                                 [[self.dictionaryOfAnime objectForKey:@"Want to Watch"] addObject:anime];
+                             } else {
+                                 NSLog(@"%@", error.localizedDescription);
+                             }
+                         }];
+                        [NSThread sleepForTimeInterval:0.5];
+                    }
+                    break;
+                case DefaultLibraryListsWatching:
+                    for(NSNumber *malID in usersListObj.watchingArr) {
+                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+                             if (anime != nil) {
+                                 [[self.dictionaryOfAnime objectForKey:@"Watching"] addObject:anime];
+                             } else {
+                                 NSLog(@"%@", error.localizedDescription);
+                             }
+                         }];
+                        [NSThread sleepForTimeInterval:0.5];
+                    }
+                    break;
+                case DefaultLibraryListsWatched:
+                    for(NSNumber *malID in usersListObj.watchedArr) {
+                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+                             if (anime != nil) {
+                                 [[self.dictionaryOfAnime objectForKey:@"Watched"] addObject:anime];
+                             } else {
+                                 NSLog(@"%@", error.localizedDescription);
+                             }
+                         }];
+                        [NSThread sleepForTimeInterval:0.5];
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         
@@ -116,6 +129,15 @@
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;
         animeListVC.listTitle = cell.listTitleLabel.text;
+        
+        if([cell.listTitleLabel.text.lowercaseString containsString:@"want"]) {
+            [self updateDictionaryOfAnime:DefaultLibraryListsWantToWatch];
+        } else if ([cell.listTitleLabel.text.lowercaseString isEqualToString:@"watching"]){
+            [self updateDictionaryOfAnime:DefaultLibraryListsWatching];
+        } else if ([cell.listTitleLabel.text.lowercaseString isEqualToString:@"watched"]){
+            [self updateDictionaryOfAnime:DefaultLibraryListsWatched];
+        }
+        
         animeListVC.arrOfAnime = [self.dictionaryOfAnime objectForKey:cell.listTitleLabel.text];
     }
 }
