@@ -36,7 +36,7 @@
     NSString *numOfEpString = [NSString stringWithFormat:@"%d", self.animeToDisplay.episodes];
     self.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
     
-    self.listOptions = @[@"Want to Watch", @"Watching", @"Watched"];
+    self.listOptions = @[@"Remove from lists", @"Want to Watch", @"Watching", @"Watched"];
 }
 
 #pragma mark - MKDropdownMenuDataSource

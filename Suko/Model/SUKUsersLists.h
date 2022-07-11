@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *watchingArr;
 @property (nonatomic, strong) NSArray *watchedArr;
 
-typedef NS_ENUM(NSInteger, DefaultLists) {DefaultListsWantToWatch, DefaultListsWatching, DefaultListsWatched};
+typedef NS_ENUM(NSInteger, DefaultLists) {DefaultListsRemoveFromLists, DefaultListsWantToWatch, DefaultListsWatching, DefaultListsWatched};
 
 + (void) postUsersLists: (PFUser * _Nullable) user defaultList:(DefaultLists) list malId:(NSNumber *) malId withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
