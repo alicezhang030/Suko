@@ -100,6 +100,8 @@
                         }
                         
                         break;
+                    default:
+                        break;
                 }
      
                 [usersListObj saveInBackgroundWithBlock: completion];
@@ -128,6 +130,8 @@
                          break;
                      case DefaultListsWatched:
                          newUsersList.watchedArr = [listWithAnimeAdded copy];
+                         break;
+                     default:
                          break;
                  }
      
