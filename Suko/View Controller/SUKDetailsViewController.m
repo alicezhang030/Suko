@@ -62,6 +62,7 @@
     [SUKUsersLists postUsersLists:[PFUser currentUser] defaultList:row malId:[NSNumber numberWithInt:self.animeToDisplay.malID] withCompletion:^(BOOL succeeded, NSError * error) {
         if (succeeded) {
             NSLog(@"The SUKUsersLists was uploaded!");
+            [dropdownMenu closeAllComponentsAnimated:YES];
         } else {
             NSLog(@"Problem uploading the Like: %@", error.localizedDescription);
         }
