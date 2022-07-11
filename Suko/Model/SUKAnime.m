@@ -34,13 +34,18 @@
     return self;
 }
 
-+ (NSMutableArray *)animesWithArray:(NSArray *)dictionaries {
++ (NSMutableArray *)animesWithArrayOfDictionaries:(NSArray *)dictionaries {
     NSMutableArray *animes = [NSMutableArray array];
     for (NSDictionary *dictionary in dictionaries) {
         SUKAnime *anime = [[SUKAnime alloc] initWithDictionary:dictionary];
         [animes addObject:anime];
     }
     return animes;
+}
+
++ (SUKAnime *)animeWithDictionary:(NSDictionary *)dictionary {
+    SUKAnime *anime = [[SUKAnime alloc] initWithDictionary:dictionary];
+    return anime;
 }
 
 @end

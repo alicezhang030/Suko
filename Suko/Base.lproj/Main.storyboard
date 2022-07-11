@@ -61,6 +61,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="listTitleLabel" destination="x9B-LX-VHW" id="bCz-Qn-kYj"/>
+                                            <segue destination="OiV-xg-5bj" kind="show" identifier="LibraryToListSegue" id="nWa-C7-G7C"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -697,6 +698,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="iPf-X4-auV"/>
+        <segue reference="nWa-C7-G7C"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

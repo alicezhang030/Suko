@@ -20,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int episodes; // Episode count
 @property (nonatomic) NSString *status; // Airing status ("Finished Airing," "Currently Airing," "Not yet aired")
 
-+ (NSMutableArray *)animesWithArray:(NSArray *)dictionaries;
++ (NSMutableArray *)animesWithArrayOfDictionaries:(NSArray *)dictionaries;
++ (SUKAnime *)animeWithDictionary:(NSDictionary *)dictionary;
 
 @end
 
