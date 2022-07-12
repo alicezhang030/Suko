@@ -8,6 +8,7 @@
 #import "SUKProfileViewController.h"
 #import "Parse/Parse.h"
 #import "Parse/PFImageView.h"
+#import "SUKLoginViewController.h"
 
 @interface SUKProfileViewController () 
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
@@ -29,6 +30,17 @@
     
     // Load the username
     self.usernameLabel.text = [@"@" stringByAppendingString:[PFUser currentUser].username];
+}
+
+- (IBAction)tapLogout:(id)sender {
+    NSLog(@"User tapped log out");
+    
+    // Reset view to the log in screen
+    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
+        self.view.window.rootViewController = loginVC;
+    }];
 }
 
 /*

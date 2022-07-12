@@ -55,6 +55,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="EuC-Kn-hy3">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="OfW-CJ-JW6">
+                            <connections>
+                                <action selector="tapLogout:" destination="LTY-O6-4Iu" id="nP5-V3-Dbp"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="UeA-3h-Reo">
                             <connections>
                                 <segue destination="aGw-4m-89v" kind="presentation" id="wk9-p8-JYu"/>
@@ -87,7 +92,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="wzE-hc-k6P" customClass="PFImageView">
-                                            <rect key="frame" x="124" y="193" width="165" height="165"/>
+                                            <rect key="frame" x="124.5" y="193" width="165" height="165"/>
                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="165" id="VUM-Lh-85k"/>
@@ -103,7 +108,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-RX-vw9">
-                                            <rect key="frame" x="149" y="366" width="115.5" height="31"/>
+                                            <rect key="frame" x="149.5" y="366" width="115.5" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="pIN-wt-EuK"/>
                                             </constraints>
@@ -341,13 +346,7 @@
                             <constraint firstAttribute="bottom" secondItem="IqB-dM-fLm" secondAttribute="bottom" id="wFg-is-X2E"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="5L3-Ai-gBe">
-                            <connections>
-                                <action selector="didTapLogout:" destination="BYZ-38-t0r" id="Jnk-qR-Uqs"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo"/>
                     <connections>
                         <outlet property="spinner" destination="Y0o-p9-vyC" id="iTX-bk-Ms5"/>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
@@ -869,7 +868,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPf-X4-auV"/>
+        <segue reference="wz9-h9-cFl"/>
         <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
