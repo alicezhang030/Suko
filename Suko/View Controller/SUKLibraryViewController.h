@@ -11,7 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKLibraryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-typedef NS_ENUM(NSInteger, DefaultLibraryLists) {DefaultLibraryListsWantToWatch, DefaultLibraryListsWatching, DefaultLibraryListsWatched};
+//typedef NS_ENUM(NSInteger, DefaultLibraryLists) {DefaultLibraryListsWantToWatch, DefaultLibraryListsWatching, DefaultLibraryListsWatched};
+
 
 @end
 

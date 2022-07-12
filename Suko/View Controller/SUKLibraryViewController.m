@@ -28,9 +28,10 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
+    /*
     [self updateDictionaryOfAnime:DefaultLibraryListsWantToWatch];
     [self updateDictionaryOfAnime:DefaultLibraryListsWatching];
-    [self updateDictionaryOfAnime:DefaultLibraryListsWatched];
+    [self updateDictionaryOfAnime:DefaultLibraryListsWatched];*/
         
     self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
     [self.dictionaryOfAnime setObject: [NSMutableArray array] forKey:@"Want to Watch"];
@@ -54,68 +55,6 @@
     return cell;
 }
 
-#pragma mark - Fetch Data
-
-- (void) updateDictionaryOfAnime:(DefaultLibraryLists) listTitle {
-    PFQuery *query = [PFQuery queryWithClassName:@"SUKUsersLists"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser]];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKUsersLists*> *usersLists, NSError *error) {
-        if(usersLists.count > 1) {
-            NSLog(@"More than one entry for this user in the database");
-        } else if (usersLists.count == 1) {
-            /* User has added at least 1 thing to a list before
-             Lists could still be empty if user removed everything from lists */
-
-            SUKUsersLists *usersListObj = [usersLists objectAtIndex:0];
-            
-            switch(listTitle) {
-                case DefaultLibraryListsWantToWatch:
-                    for(NSNumber *malID in usersListObj.wantToWatchArr) {
-                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                             if (anime != nil) {
-                                 [[self.dictionaryOfAnime objectForKey:@"Want to Watch"] addObject:anime];
-                             } else {
-                                 NSLog(@"%@", error.localizedDescription);
-                             }
-                         }];
-                        [NSThread sleepForTimeInterval:0.5];
-                    }
-                    break;
-                case DefaultLibraryListsWatching:
-                    for(NSNumber *malID in usersListObj.watchingArr) {
-                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                             if (anime != nil) {
-                                 [[self.dictionaryOfAnime objectForKey:@"Watching"] addObject:anime];
-                             } else {
-                                 NSLog(@"%@", error.localizedDescription);
-                             }
-                         }];
-                        [NSThread sleepForTimeInterval:0.5];
-                    }
-                    break;
-                case DefaultLibraryListsWatched:
-                    for(NSNumber *malID in usersListObj.watchedArr) {
-                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                             if (anime != nil) {
-                                 [[self.dictionaryOfAnime objectForKey:@"Watched"] addObject:anime];
-                             } else {
-                                 NSLog(@"%@", error.localizedDescription);
-                             }
-                         }];
-                        [NSThread sleepForTimeInterval:0.5];
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        
-        /* Don't need to take care of the case where user hasn't added anything to a list yet
-           because the dictionary already has empty arrays as default */
-    }];
-}
-
 #pragma mark - Navigation
 
 - (void)segueSUKHomeTableViewCell:(SUKLibraryTableViewCell *) cell {
@@ -129,16 +68,7 @@
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;
         animeListVC.listTitle = cell.listTitleLabel.text;
-        
-        if([cell.listTitleLabel.text.lowercaseString containsString:@"want"]) {
-            [self updateDictionaryOfAnime:DefaultLibraryListsWantToWatch];
-        } else if ([cell.listTitleLabel.text.lowercaseString isEqualToString:@"watching"]){
-            [self updateDictionaryOfAnime:DefaultLibraryListsWatching];
-        } else if ([cell.listTitleLabel.text.lowercaseString isEqualToString:@"watched"]){
-            [self updateDictionaryOfAnime:DefaultLibraryListsWatched];
-        }
-        
-        animeListVC.arrOfAnime = [self.dictionaryOfAnime objectForKey:cell.listTitleLabel.text];
+        animeListVC.arrOfAnime = [NSMutableArray array];
     }
 }
 
