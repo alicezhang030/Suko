@@ -9,7 +9,7 @@
 #import "Parse/Parse.h"
 #import "Parse/PFImageView.h"
 
-@interface SUKProfileViewController ()
+@interface SUKProfileViewController () 
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
