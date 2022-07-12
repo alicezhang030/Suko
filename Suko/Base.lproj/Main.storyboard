@@ -202,6 +202,10 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="Y0o-p9-vyC">
+                                <rect key="frame" x="0.0" y="517" width="414" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -220,6 +224,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="spinner" destination="Y0o-p9-vyC" id="iTX-bk-Ms5"/>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
                         <segue destination="OiV-xg-5bj" kind="show" identifier="SeeAllSegue" id="4vs-CO-2P5"/>
                         <segue destination="7E0-o4-0mw" kind="show" identifier="CollectionToDetailsSegue" id="wz9-h9-cFl"/>
@@ -702,8 +707,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPf-X4-auV"/>
-        <segue reference="nWa-C7-G7C"/>
+        <segue reference="wz9-h9-cFl"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

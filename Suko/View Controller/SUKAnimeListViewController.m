@@ -32,10 +32,10 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.spinner.hidesWhenStopped = YES;
+    [self.spinner startAnimating];
     
     if([self.listTitle.lowercaseString isEqualToString:@"want to watch"]) {
         [self updateDictionaryOfAnime:DefaultLibraryListsWantToWatch];
-        [self.spinner startAnimating];
     } else if ([self.listTitle.lowercaseString isEqualToString:@"watching"]){
         [self updateDictionaryOfAnime:DefaultLibraryListsWatching];
         [self.spinner startAnimating];

@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSMutableDictionary *dictionaryOfAnime;
 @property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
 @property (nonatomic, strong) NSMutableArray *headerTitlesBesidesTopAnime;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -33,6 +34,9 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
     self.dictOfGenres = [[NSMutableDictionary alloc] init];
     self.headerTitlesBesidesTopAnime = [[NSMutableArray alloc] init];
+    
+    self.spinner.hidesWhenStopped = YES;
+    [self.spinner startAnimating];
     
     [self topAnime];
     [self genreList];
@@ -79,10 +83,12 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 #pragma mark - Fetching Data using SUKAPIManager
 
 - (void) topAnime {
+    [self.spinner startAnimating];
     [[SUKAPIManager shared] fetchTopAnime:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
             NSString *title = @"Top Anime";
             [self.dictionaryOfAnime setObject:anime forKey:title];
+            [self.spinner stopAnimating];
             [self.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -91,6 +97,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 }
 
 - (void) genreAnime: (NSMutableArray *) genres {
+    [self.spinner startAnimating];
     NSString *genre = [genres lastObject];
     [genres removeLastObject];
     
@@ -110,6 +117,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
                     [NSThread sleepForTimeInterval:1.0];
                     [self genreAnime:genres];
                 } else {
+                    [self.spinner stopAnimating];
                     [self.tableView reloadData];
                 }
             }
