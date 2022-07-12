@@ -27,11 +27,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    /*
-    [self updateDictionaryOfAnime:DefaultLibraryListsWantToWatch];
-    [self updateDictionaryOfAnime:DefaultLibraryListsWatching];
-    [self updateDictionaryOfAnime:DefaultLibraryListsWatched];*/
         
     self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
     [self.dictionaryOfAnime setObject: [NSMutableArray array] forKey:@"Want to Watch"];

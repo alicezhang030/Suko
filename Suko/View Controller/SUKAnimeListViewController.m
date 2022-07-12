@@ -15,6 +15,7 @@
 
 @interface SUKAnimeListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -30,12 +31,19 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
+    self.spinner.hidesWhenStopped = YES;
+    
     if([self.listTitle.lowercaseString isEqualToString:@"want to watch"]) {
         [self updateDictionaryOfAnime:DefaultLibraryListsWantToWatch];
+        [self.spinner startAnimating];
     } else if ([self.listTitle.lowercaseString isEqualToString:@"watching"]){
         [self updateDictionaryOfAnime:DefaultLibraryListsWatching];
+        [self.spinner startAnimating];
     } else if ([self.listTitle.lowercaseString isEqualToString:@"watched"]){
         [self updateDictionaryOfAnime:DefaultLibraryListsWatched];
+        [self.spinner startAnimating];
+    } else {
+        [self.spinner stopAnimating];
     }
 }
  
@@ -51,42 +59,66 @@
                         
             switch(listTitle) {
                 case DefaultLibraryListsWantToWatch:
-                    for(NSNumber *malID in usersListObj.wantToWatchArr) {
-                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                             if (anime != nil) {
-                                 [self.arrOfAnime addObject:anime];
-                                 [self.tableView reloadData];
-                             } else {
-                                 NSLog(@"%@", error.localizedDescription);
-                             }
-                         }];
-                        [NSThread sleepForTimeInterval:0.4];
+                    if(usersListObj.wantToWatchArr.count == 0) {
+                        [self.spinner stopAnimating];
+                    } else {
+                        for(int i = 0; i < usersListObj.wantToWatchArr.count; i++) {
+                            NSNumber *malID = [usersListObj.wantToWatchArr objectAtIndex:i];
+                            [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+                                 if (anime != nil) {
+                                     [self.arrOfAnime addObject:anime];
+                                     [self.tableView reloadData];
+                                     if(i == usersListObj.wantToWatchArr.count - 1) {
+                                         [self.spinner stopAnimating];
+                                     }
+                                 } else {
+                                     NSLog(@"%@", error.localizedDescription);
+                                 }
+                             }];
+                            [NSThread sleepForTimeInterval:0.4];
+                        }
                     }
                     break;
                 case DefaultLibraryListsWatching:
-                    for(NSNumber *malID in usersListObj.watchingArr) {
-                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                             if (anime != nil) {
-                                 [self.arrOfAnime addObject:anime];
-                                 [self.tableView reloadData];
-                             } else {
-                                 NSLog(@"%@", error.localizedDescription);
-                             }
-                         }];
-                        [NSThread sleepForTimeInterval:0.4];
+                    if(usersListObj.watchingArr.count == 0) {
+                        [self.spinner stopAnimating];
+                    } else {
+                        for(int i = 0; i < usersListObj.watchingArr.count; i++) {
+                            NSNumber *malID = [usersListObj.watchingArr objectAtIndex:i];
+                            [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+                                 if (anime != nil) {
+                                     [self.arrOfAnime addObject:anime];
+                                     [self.tableView reloadData];
+                                     if(i == usersListObj.watchingArr.count - 1) {
+                                         [self.spinner stopAnimating];
+                                     }
+                                 } else {
+                                     NSLog(@"%@", error.localizedDescription);
+                                 }
+                             }];
+                            [NSThread sleepForTimeInterval:0.4];
+                        }
                     }
                     break;
                 case DefaultLibraryListsWatched:
-                    for(NSNumber *malID in usersListObj.watchedArr) {
-                        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-                             if (anime != nil) {
-                                 [self.arrOfAnime addObject:anime];
-                                 [self.tableView reloadData];
-                             } else {
-                                 NSLog(@"%@", error.localizedDescription);
-                             }
-                         }];
-                        [NSThread sleepForTimeInterval:0.4];
+                    if(usersListObj.watchedArr.count == 0) {
+                        [self.spinner stopAnimating];
+                    } else {
+                        for(int i = 0; i < usersListObj.watchedArr.count; i++) {
+                            NSNumber *malID = [usersListObj.watchedArr objectAtIndex:i];
+                            [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+                                 if (anime != nil) {
+                                     [self.arrOfAnime addObject:anime];
+                                     [self.tableView reloadData];
+                                     if(i == usersListObj.watchedArr.count - 1) {
+                                         [self.spinner stopAnimating];
+                                     }
+                                 } else {
+                                     NSLog(@"%@", error.localizedDescription);
+                                 }
+                             }];
+                            [NSThread sleepForTimeInterval:0.4];
+                        }
                     }
                     break;
                 default:
