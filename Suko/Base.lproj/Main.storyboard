@@ -802,7 +802,6 @@
         <!--Profile-->
         <scene sceneID="P6z-Rk-Hcs">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qAU-zT-XI1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eKG-vh-ve4" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" id="McF-Vb-bbC"/>
                     <toolbarItems/>
@@ -815,6 +814,7 @@
                         <segue destination="LTY-O6-4Iu" kind="relationship" relationship="rootViewController" id="J1i-Sh-H1r"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qAU-zT-XI1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2815.9420289855075" y="148.66071428571428"/>
         </scene>
@@ -839,7 +839,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="nWa-C7-G7C"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

@@ -40,7 +40,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     
     [self topAnime];
     //[self genreList];
-    
+        
     // Set up TableView
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
