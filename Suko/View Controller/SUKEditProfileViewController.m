@@ -64,6 +64,7 @@
     
     // Upload image to database
     [PFUser currentUser][@"profile_image"] = imageFile;
+    [[PFUser currentUser] saveInBackground];
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];

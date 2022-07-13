@@ -9,8 +9,9 @@
 #import "Parse/Parse.h"
 #import "Parse/PFImageView.h"
 #import "SUKLoginViewController.h"
+#import "SUKEditProfileViewController.h"
 
-@interface SUKProfileViewController () 
+@interface SUKProfileViewController ()
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
@@ -20,7 +21,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self loadContents];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadContents];
+}
+
+-(void) loadContents {
     // Load the user profile image
     self.profileImageView.file = [PFUser currentUser][@"profile_image"];
     [self.profileImageView loadInBackground];
