@@ -41,7 +41,23 @@
     [PFUser currentUser][@"current_coordinates"] = point;
     [[PFUser currentUser] saveInBackground];
     
+    [self nearestUsers];
+    
     [self.locationManager stopUpdatingLocation];
+}
+
+- (void) nearestUsers {
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query includeKey:@"current_coordinates"];
+    [query whereKey:@"current_coordinates" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:2.0];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
+        for(PFUser *user in users) {
+            if([user.objectId isEqualToString:[PFUser currentUser].objectId]) {
+                // Do something with the nearest users
+            }
+        }
+    }];
 }
 
 @end
