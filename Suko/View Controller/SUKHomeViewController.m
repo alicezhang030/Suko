@@ -16,12 +16,13 @@
 #import "SUKLoginViewController.h"
 #import "Parse/Parse.h"
 
-@interface SUKHomeViewController () <SUKHomeTableViewCellDelegate>
+@interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchResultsUpdating>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dictionaryOfAnime;
 @property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
 @property (nonatomic, strong) NSMutableArray *headerTitlesBesidesTopAnime;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (strong, nonatomic) UISearchController *searchController;
 
 @end
 
@@ -40,6 +41,20 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     
     [self topAnime];
     //[self genreList];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SUKAnimeListViewController *listVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKAnimeListViewController"];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:listVC];
+    self.searchController.searchResultsUpdater = self;
+    
+    self.searchController.delegate = self;
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self; // Monitor when the search button is tapped.
+        
+    [self.searchController.searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
     
     [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:@"Spy" completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {

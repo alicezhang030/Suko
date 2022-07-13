@@ -331,7 +331,7 @@
         <!--Anime List View Controller-->
         <scene sceneID="hcA-iH-LxJ">
             <objects>
-                <viewController id="OiV-xg-5bj" customClass="SUKAnimeListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SUKAnimeListViewController" id="OiV-xg-5bj" customClass="SUKAnimeListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DxL-8I-dJJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -838,7 +838,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wz9-h9-cFl"/>
+        <segue reference="iPf-X4-auV"/>
         <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
