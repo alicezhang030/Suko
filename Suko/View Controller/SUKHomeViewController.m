@@ -23,7 +23,6 @@
 @property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
 @property (nonatomic, strong) NSMutableArray *headerTitlesBesidesTopAnime;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-//@property (strong, nonatomic) UISearchController *searchController;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

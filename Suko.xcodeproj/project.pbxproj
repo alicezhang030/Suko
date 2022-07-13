@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		04BE850B21E0A267B73ED193 /* Pods_Suko_SukoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */; };
 		454265194B292261FEA79B26 /* Pods_Suko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C92483A9CFE228320363049 /* Pods_Suko.framework */; };
+		5302D388287F7A280009018D /* SUKPhotoMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5302D387287F7A280009018D /* SUKPhotoMapViewController.m */; };
+		5302D38A287F7AB20009018D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5302D389287F7AB20009018D /* MapKit.framework */; };
 		530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530400FB286D2FA800B63138 /* SUKAPIManager.m */; };
 		531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A042874C14B002E80C4 /* SUKHomeViewController.m */; };
 		531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C3A072874C57A002E80C4 /* SUKHomeTableViewCell.m */; };
@@ -53,6 +55,9 @@
 /* Begin PBXFileReference section */
 		2C92483A9CFE228320363049 /* Pods_Suko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Suko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A6C4AD7AD13F42728021244 /* Pods-Suko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko.debug.xcconfig"; path = "Target Support Files/Pods-Suko/Pods-Suko.debug.xcconfig"; sourceTree = "<group>"; };
+		5302D386287F7A280009018D /* SUKPhotoMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKPhotoMapViewController.h; sourceTree = "<group>"; };
+		5302D387287F7A280009018D /* SUKPhotoMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKPhotoMapViewController.m; sourceTree = "<group>"; };
+		5302D389287F7AB20009018D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		530400FA286D2FA800B63138 /* SUKAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAPIManager.h; sourceTree = "<group>"; };
 		530400FB286D2FA800B63138 /* SUKAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAPIManager.m; sourceTree = "<group>"; };
 		531C3A032874C14B002E80C4 /* SUKHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKHomeViewController.h; sourceTree = "<group>"; };
@@ -109,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5302D38A287F7AB20009018D /* MapKit.framework in Frameworks */,
 				454265194B292261FEA79B26 /* Pods_Suko.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +183,8 @@
 				53A9751F287DF9B400D163BF /* SUKProfileViewController.m */,
 				53A97521287DFCF900D163BF /* SUKEditProfileViewController.h */,
 				53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */,
+				5302D386287F7A280009018D /* SUKPhotoMapViewController.h */,
+				5302D387287F7A280009018D /* SUKPhotoMapViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -246,6 +254,7 @@
 		6965F46BD519FBC257AD662C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5302D389287F7AB20009018D /* MapKit.framework */,
 				2C92483A9CFE228320363049 /* Pods_Suko.framework */,
 				8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */,
 				BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */,
@@ -507,6 +516,7 @@
 				53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */,
 				53A97520287DF9B400D163BF /* SUKProfileViewController.m in Sources */,
 				53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */,
+				5302D388287F7A280009018D /* SUKPhotoMapViewController.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
 				53291ED62878C6DF00B12469 /* SUKLoginViewController.m in Sources */,
 			);
