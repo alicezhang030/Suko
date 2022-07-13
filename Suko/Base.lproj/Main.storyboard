@@ -239,9 +239,17 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IqB-dM-fLm">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="d03-rZ-Tgk">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="BYZ-38-t0r" id="MLq-zI-GlP"/>
+                                    </connections>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKHomeTableViewCell" rowHeight="301" id="Iar-LH-7bZ" customClass="SUKHomeTableViewCell">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="301"/>
+                                        <rect key="frame" x="0.0" y="88.5" width="414" height="301"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Iar-LH-7bZ" id="f1y-jE-JGf">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="301"/>
@@ -348,9 +356,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo"/>
                     <connections>
+                        <outlet property="searchBar" destination="d03-rZ-Tgk" id="Dhd-UU-09r"/>
                         <outlet property="spinner" destination="Y0o-p9-vyC" id="iTX-bk-Ms5"/>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
-                        <segue destination="OiV-xg-5bj" kind="show" identifier="SeeAllSegue" id="4vs-CO-2P5"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="HomeToDetailsSegue" id="4vs-CO-2P5"/>
                         <segue destination="7E0-o4-0mw" kind="show" identifier="CollectionToDetailsSegue" id="wz9-h9-cFl"/>
                     </connections>
                 </viewController>
@@ -868,7 +877,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPf-X4-auV"/>
+        <segue reference="wz9-h9-cFl"/>
         <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>

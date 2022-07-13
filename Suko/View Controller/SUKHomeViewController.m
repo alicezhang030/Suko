@@ -16,13 +16,14 @@
 #import "SUKLoginViewController.h"
 #import "Parse/Parse.h"
 
-@interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchResultsUpdating>
+@interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dictionaryOfAnime;
 @property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
 @property (nonatomic, strong) NSMutableArray *headerTitlesBesidesTopAnime;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (strong, nonatomic) UISearchController *searchController;
+//@property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -42,6 +43,10 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     [self topAnime];
     //[self genreList];
     
+    //setting up search bar
+    //self.searchBar.delegate = self;
+    
+    /*
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SUKAnimeListViewController *listVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKAnimeListViewController"];
     
@@ -55,14 +60,16 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     [self.searchController.searchBar sizeToFit];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
+    self.definesPresentationContext = true;*/
     
+    /*
     [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:@"Spy" completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
             NSLog(@"%@", anime);
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
-    }];
+    }];*/
         
     // Set up TableView
     self.tableView.delegate = self;
@@ -72,15 +79,31 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 
 #pragma mark - Navigation
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSString *searchText = searchBar.text;
+    
+    [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:searchText completion:^(NSArray *anime, NSError *error) {
+        if (anime != nil) {
+            NSLog(@"%@", anime);
+             NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
+             [senderDict setObject:@"Results" forKey:@"title"];
+             [senderDict setObject:anime forKey:@"anime"];
+             [self performSegueWithIdentifier:@"HomeToDetailsSegue" sender:senderDict];
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+}
+
 - (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *) cell {
     NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
     [senderDict setObject:cell.rowHeaderLabel.text forKey:@"title"];
     [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
-    [self performSegueWithIdentifier:@"SeeAllSegue" sender:senderDict];
+    [self performSegueWithIdentifier:@"HomeToDetailsSegue" sender:senderDict];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"SeeAllSegue"]) {
+    if([segue.identifier isEqualToString:@"HomeToDetailsSegue"]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         animeListVC.listTitle = sender[@"title"];
         animeListVC.arrOfAnime = sender[@"anime"];
