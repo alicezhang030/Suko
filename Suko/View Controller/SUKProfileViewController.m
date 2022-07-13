@@ -21,6 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if(self.userToDisplay == nil) {
+        self.userToDisplay = [PFUser currentUser];
+    }
+    
     [self loadContents];
 }
 
@@ -31,14 +36,14 @@
 
 -(void) loadContents {
     // Load the user profile image
-    self.profileImageView.file = [PFUser currentUser][@"profile_image"];
+    self.profileImageView.file = self.userToDisplay[@"profile_image"];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
     
     // Load the username
-    self.usernameLabel.text = [@"@" stringByAppendingString:[PFUser currentUser].username];
+    self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
 }
 
 - (IBAction)tapLogout:(id)sender {
@@ -50,6 +55,15 @@
         SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
         self.view.window.rootViewController = loginVC;
     }];
+}
+
+//EditProfileSegue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"EditProfileSegue"]) {
+        SUKEditProfileViewController *editVC = [segue destinationViewController];
+        editVC.userToDisplay = self.userToDisplay;
+    }
 }
 
 @end

@@ -6,11 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SUKEditProfileViewController.h"
+#import "Parse/PFUser.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKProfileViewController : UIViewController
+@property (nonatomic, strong) PFUser *userToDisplay;
+
 @end
 
 NS_ASSUME_NONNULL_END
