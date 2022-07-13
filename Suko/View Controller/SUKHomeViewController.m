@@ -39,9 +39,9 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     [self.spinner startAnimating];
     
     [self topAnime];
-    [self genreList];
+    //[self genreList];
     
-    [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:@"One Piece" completion:^(NSArray *anime, NSError *error) {
+    [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:@"Spy" completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
             NSLog(@"%@", anime);
         } else {

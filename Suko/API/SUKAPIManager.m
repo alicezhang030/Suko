@@ -103,7 +103,20 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
+        NSArray<NSDictionary*> *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
+        
+        // Currently, Jikan API returns data that has been deleted by MyAnimeList already
+        // Ex. If you search "One Piece," you will receive 3 One Piece's, and only one of them has a valid URL and with information filled
+        // I noticed that invalid data has a popularity field of 0, so this is my workaround for now.
+        NSMutableArray<NSDictionary*> *arrOfAnimeDictionariesMutable = [NSMutableArray array];
+        for(NSDictionary *animeDictionary in arrOfAnimeDictionaries) {
+            if([animeDictionary[@"popularity"] intValue] != 0){
+                [arrOfAnimeDictionariesMutable addObject:animeDictionary];
+            }
+        }
+        
+        arrOfAnimeDictionaries = (NSArray*)arrOfAnimeDictionariesMutable;
+        
         NSArray *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
         
         completion(arrOfAnimeObjs, nil);
