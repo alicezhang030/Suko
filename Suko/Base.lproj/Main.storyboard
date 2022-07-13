@@ -246,6 +246,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="QRU-T7-4wG"/>
+                    <connections>
+                        <outlet property="mapView" destination="9YL-om-FxK" id="plp-0V-Uk4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5i-u6-4FT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
