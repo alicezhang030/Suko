@@ -39,7 +39,7 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     [self.spinner startAnimating];
     
     [self topAnime];
-    //[self genreList];
+    [self genreList];
         
     // Set up TableView
     self.tableView.delegate = self;

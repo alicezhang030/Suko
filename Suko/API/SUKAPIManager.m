@@ -55,8 +55,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-
-- (void)fetchGenreAnime:(NSString *) genre completion:(void(^)(NSArray *genres, NSError *error))completion {
+- (void)fetchGenreAnime:(NSString *) genre completion:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion {
     NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
     
@@ -71,7 +70,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)fetchTopAnime:(void(^)(NSArray *genres, NSError *error))completion {
+- (void)fetchTopAnime:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion {
     NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/top/anime"];
     
