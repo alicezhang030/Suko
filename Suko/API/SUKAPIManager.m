@@ -16,7 +16,7 @@ static NSString * const baseURLString = @"https://api.jikan.moe/v4";
 @end
 
 @implementation SUKAPIManager
-const NSNumber *knumOfAnimeDisplayedPerRow = @5;
+const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 
 + (instancetype)shared {
     static SUKAPIManager *sharedManager = nil;

@@ -15,6 +15,7 @@
 #import "SUKDetailsViewController.h"
 #import "SUKLoginViewController.h"
 #import "Parse/Parse.h"
+#include <stdlib.h>
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -28,7 +29,6 @@
 @end
 
 @implementation SUKHomeViewController
-const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -157,17 +157,32 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 - (void) genreList {
     [[SUKAPIManager shared] fetchGenreList:^(NSArray<NSString*> *genres, NSError *error) {
         if (genres != nil) {
+            int maxID = 0;
+            NSMutableArray *arrOfIDs = [[NSMutableArray alloc] init];
+            
             for(NSDictionary *genreDict in genres) {
                 NSNumber *malID = [genreDict valueForKey:@"mal_id"];
                 int malIDInt = [malID intValue];
+                
+                if(malIDInt > maxID) {
+                    maxID = malIDInt;
+                }
+                
                 NSString *malIDString = [NSString stringWithFormat:@"%d", malIDInt];
+                [arrOfIDs addObject:malIDString];
                 
                 NSString *genreName = [genreDict valueForKey:@"name"];
                 
                 [self.dictOfGenres setObject:genreName forKey:malIDString];
             }
             
-            NSMutableArray *genres = [@[@"25", @"27"] mutableCopy];
+            int randomGenre1 = arc4random_uniform((int)self.dictOfGenres.count);
+            int randomGenre2 = arc4random_uniform((int)self.dictOfGenres.count);
+            while(randomGenre2 == randomGenre1) { // Make sure the two genres are not the same
+                randomGenre2 = arc4random_uniform((int)self.dictOfGenres.count);
+            }
+            
+            NSMutableArray *genres = [@[arrOfIDs[randomGenre1], arrOfIDs[randomGenre2]] mutableCopy];
             [self genreAnime:genres];
         } else {
             NSLog(@"%@", error.localizedDescription);
