@@ -221,7 +221,7 @@
                     <connections>
                         <segue destination="c6R-OE-lJ4" kind="relationship" relationship="viewControllers" id="d9I-wO-VdB"/>
                         <segue destination="j5o-zL-op4" kind="relationship" relationship="viewControllers" id="QjY-Hk-JFp"/>
-                        <segue destination="SFY-Kq-Lxh" kind="relationship" relationship="viewControllers" id="lyy-Hk-Xbb"/>
+                        <segue destination="BNw-RU-AiO" kind="relationship" relationship="viewControllers" id="lyy-Hk-Xbb"/>
                         <segue destination="eKG-vh-ve4" kind="relationship" relationship="viewControllers" id="Du6-yJ-5Mh"/>
                     </connections>
                 </tabBarController>
@@ -229,7 +229,7 @@
             </objects>
             <point key="canvasLocation" x="1925" y="-155"/>
         </scene>
-        <!--Map-->
+        <!--Photo Map View Controller-->
         <scene sceneID="3Iw-JQ-08M">
             <objects>
                 <viewController id="SFY-Kq-Lxh" customClass="SUKPhotoMapViewController" sceneMemberID="viewController">
@@ -238,7 +238,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9YL-om-FxK">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                             </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Sog-Ve-FEc"/>
@@ -250,14 +250,15 @@
                             <constraint firstItem="9YL-om-FxK" firstAttribute="leading" secondItem="Sog-Ve-FEc" secondAttribute="leading" id="hYW-Jo-z3l"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" id="QRU-T7-4wG"/>
+                    <navigationItem key="navigationItem" id="rAa-I5-w5h"/>
                     <connections>
                         <outlet property="mapView" destination="9YL-om-FxK" id="plp-0V-Uk4"/>
+                        <segue destination="LTY-O6-4Iu" kind="show" identifier="MapToProfileSegue" id="TOk-oL-xuz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5i-u6-4FT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2815.9420289855075" y="113.83928571428571"/>
+            <point key="canvasLocation" x="3726.0869565217395" y="113.83928571428571"/>
         </scene>
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
@@ -906,10 +907,30 @@
             </objects>
             <point key="canvasLocation" x="4570" y="897"/>
         </scene>
+        <!--Map-->
+        <scene sceneID="6xB-Hb-In6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BNw-RU-AiO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" id="QRU-T7-4wG"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="s08-6d-eLD">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="SFY-Kq-Lxh" kind="relationship" relationship="rootViewController" id="cOv-tg-5V7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IHH-My-FVZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2815.9420289855075" y="113.83928571428571"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="wz9-h9-cFl"/>
         <segue reference="4vs-CO-2P5"/>
+        <segue reference="TOk-oL-xuz"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

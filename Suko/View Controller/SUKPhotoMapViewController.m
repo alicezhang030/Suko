@@ -10,7 +10,7 @@
 #import "Parse/PFGeoPoint.h"
 #import "Parse/Parse.h"
 
-@interface SUKPhotoMapViewController () <CLLocationManagerDelegate>
+@interface SUKPhotoMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
@@ -20,6 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.mapView.delegate = self;
     
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
@@ -35,7 +37,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.currentUserLocation = [locations lastObject];
     
-    MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.1, 0.1));
+    MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
     [self.mapView setRegion:currentUserRegion animated:false];
     
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentUserLocation];
@@ -58,7 +60,6 @@
                 NSLog(@"%@", user.username);
                 [self.nearestUsersArr addObject:user];
                 
-                
                 MKPointAnnotation *annotation = [MKPointAnnotation new];
                 PFGeoPoint *user_coordinates = user[@"current_coordinates"];
                 annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
@@ -68,6 +69,13 @@
             }
         }
     }];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    NSLog(@"Selected");
+    //MapToProfileSegue
+    //[self performSegueWithIdentifier:@"MapToProfileSegue" sender:];
+
 }
 
 @end
