@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, DefaultLists) {DefaultListsRemoveFromLists, DefaultListsWantToWatch, DefaultListsWatching, DefaultListsWatched};
 
-+ (void) postUsersLists: (PFUser * _Nullable) user defaultList:(DefaultLists) list malId:(NSNumber *) malId withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) postUsersLists: (PFUser * _Nullable) user defaultList:(DefaultLists) list malId:(NSNumber *) malID withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 

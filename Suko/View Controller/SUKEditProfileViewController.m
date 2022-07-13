@@ -64,7 +64,6 @@
     
     // Upload image to database
     [PFUser currentUser][@"profile_image"] = imageFile;
-    [[PFUser currentUser] saveInBackground];
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -72,6 +71,7 @@
 
 - (IBAction)saveProfile:(id)sender {
     [PFUser currentUser][@"username"] = self.usernameTextField.text;
+    [[PFUser currentUser] saveInBackground];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
