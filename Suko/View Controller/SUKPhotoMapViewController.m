@@ -7,12 +7,13 @@
 
 #import "SUKPhotoMapViewController.h"
 #import <MapKit/MapKit.h>
-#import "Parse/PFGeoPoint.h";
+#import "Parse/PFGeoPoint.h"
 #import "Parse/Parse.h"
 
 @interface SUKPhotoMapViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
+@property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
 @end
 
 @implementation SUKPhotoMapViewController
@@ -55,6 +56,15 @@
         for(PFUser *user in users) {
             if(![user.objectId isEqualToString:[PFUser currentUser].objectId]) {
                 NSLog(@"%@", user.username);
+                [self.nearestUsersArr addObject:user];
+                
+                
+                MKPointAnnotation *annotation = [MKPointAnnotation new];
+                PFGeoPoint *user_coordinates = user[@"current_coordinates"];
+                annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
+                annotation.title = user.username;
+                [self.mapView addAnnotation:annotation];
+                
             }
         }
     }];
