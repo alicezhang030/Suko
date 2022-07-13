@@ -39,7 +39,7 @@ Suko allows users to discover new anime and keep track of the anime they want to
 MVP:
 - [x] User can create a new account and login.
 - [x] User can see non-tailored anime recommendations on the home page.
-- [ ] User can search for an anime.
+- [x] User can search for an anime.
 - [x] User can mark an anime as want-to-watch, watching, or watched.
 - [x] User can view and edit their profile.
 
