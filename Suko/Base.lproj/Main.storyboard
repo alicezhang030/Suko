@@ -42,9 +42,10 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="nIz-5C-cgt" firstAttribute="centerX" secondItem="G1b-Kf-ufx" secondAttribute="centerX" id="Bwr-4d-bjS"/>
                                         <constraint firstItem="nIz-5C-cgt" firstAttribute="top" secondItem="G1b-Kf-ufx" secondAttribute="bottom" constant="15" id="Ksp-oE-QUO"/>
-                                        <constraint firstItem="G1b-Kf-ufx" firstAttribute="centerX" secondItem="jIW-Zj-xa6" secondAttribute="centerX" id="PVV-VD-pqL"/>
-                                        <constraint firstItem="nIz-5C-cgt" firstAttribute="centerX" secondItem="jIW-Zj-xa6" secondAttribute="centerX" id="eWJ-sQ-pI8"/>
+                                        <constraint firstItem="G1b-Kf-ufx" firstAttribute="leading" secondItem="jIW-Zj-xa6" secondAttribute="leading" constant="142" id="eGc-gf-m9H"/>
+                                        <constraint firstAttribute="trailing" secondItem="G1b-Kf-ufx" secondAttribute="trailing" constant="142" id="pnG-0Z-dye"/>
                                         <constraint firstItem="G1b-Kf-ufx" firstAttribute="top" secondItem="jIW-Zj-xa6" secondAttribute="top" constant="31" id="zJ2-Q0-rdJ"/>
                                     </constraints>
                                 </view>
@@ -54,6 +55,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="EuC-Kn-hy3">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="OfW-CJ-JW6">
+                            <connections>
+                                <action selector="tapLogout:" destination="LTY-O6-4Iu" id="nP5-V3-Dbp"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="UeA-3h-Reo">
                             <connections>
                                 <segue destination="aGw-4m-89v" kind="presentation" id="wk9-p8-JYu"/>
@@ -78,32 +84,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bkA-7Y-joh">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="786"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="aEQ-j4-xIM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="851"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="791"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="wzE-hc-k6P">
-                                            <rect key="frame" x="125" y="246" width="165" height="165"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="wzE-hc-k6P" customClass="PFImageView">
+                                            <rect key="frame" x="124.5" y="193" width="165" height="165"/>
                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="165" id="VUM-Lh-85k"/>
+                                                <constraint firstAttribute="height" constant="165" id="n9p-U5-O3W"/>
+                                            </constraints>
                                         </imageView>
-                                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LM0-cE-AQG">
-                                            <rect key="frame" x="105" y="473" width="204" height="34"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LM0-cE-AQG">
+                                            <rect key="frame" x="105" y="420" width="204" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="204" id="6No-4t-KG5"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-RX-vw9">
-                                            <rect key="frame" x="116" y="419" width="183" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-RX-vw9">
+                                            <rect key="frame" x="149.5" y="366" width="115.5" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="31" id="pIN-wt-EuK"/>
+                                            </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="Change photo"/>
+                                            <connections>
+                                                <action selector="tapChangePhoto:" destination="OYb-2x-7NJ" eventType="touchUpInside" id="CaI-Je-zgK"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="LM0-cE-AQG" secondAttribute="bottom" constant="337" id="Fbo-0t-ezA"/>
+                                        <constraint firstItem="4wh-RX-vw9" firstAttribute="centerX" secondItem="aEQ-j4-xIM" secondAttribute="centerX" id="NRV-zX-71C"/>
+                                        <constraint firstItem="4wh-RX-vw9" firstAttribute="top" secondItem="wzE-hc-k6P" secondAttribute="bottom" constant="8" symbolic="YES" id="OZW-DZ-9CE"/>
+                                        <constraint firstItem="LM0-cE-AQG" firstAttribute="centerX" secondItem="aEQ-j4-xIM" secondAttribute="centerX" id="UXq-hi-unq"/>
+                                        <constraint firstItem="LM0-cE-AQG" firstAttribute="top" secondItem="4wh-RX-vw9" secondAttribute="bottom" constant="23" id="cg8-Rm-7Nf"/>
+                                        <constraint firstItem="wzE-hc-k6P" firstAttribute="centerX" secondItem="aEQ-j4-xIM" secondAttribute="centerX" id="hiK-hZ-gUn"/>
+                                    </constraints>
                                 </view>
                             </tableView>
                         </subviews>
@@ -111,9 +135,21 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" id="VkB-cV-wOU">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="0GW-MF-q05"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="BLF-ht-xQs"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="0GW-MF-q05">
+                            <connections>
+                                <action selector="cancelEditProfile:" destination="OYb-2x-7NJ" id="cph-zN-hkk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="BLF-ht-xQs">
+                            <connections>
+                                <action selector="saveProfile:" destination="OYb-2x-7NJ" id="E8n-Nx-Nkz"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="profileImageView" destination="wzE-hc-k6P" id="fMf-0R-Fo1"/>
+                        <outlet property="usernameTextField" destination="LM0-cE-AQG" id="Qn2-6a-X2n"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nkm-Xk-kam" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -310,13 +346,7 @@
                             <constraint firstAttribute="bottom" secondItem="IqB-dM-fLm" secondAttribute="bottom" id="wFg-is-X2E"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="5L3-Ai-gBe">
-                            <connections>
-                                <action selector="didTapLogout:" destination="BYZ-38-t0r" id="Jnk-qR-Uqs"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo"/>
                     <connections>
                         <outlet property="spinner" destination="Y0o-p9-vyC" id="iTX-bk-Ms5"/>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>

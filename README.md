@@ -117,4 +117,3 @@ https://www.figma.com/file/VEcbEb136UlVuK9X9XaAOR/suko-app-showcase?node-id=0%3A
 ## Credits
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
 - [MKDropdownMenu](https://github.com/maxkonovalov/MKDropdownMenu) - dropdown menu for iOS
-
