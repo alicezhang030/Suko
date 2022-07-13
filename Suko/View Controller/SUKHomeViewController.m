@@ -41,35 +41,11 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     [self.spinner startAnimating];
     
     [self topAnime];
-    //[self genreList];
+    [self genreList];
     
     //setting up search bar
-    //self.searchBar.delegate = self;
-    
-    /*
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    SUKAnimeListViewController *listVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKAnimeListViewController"];
-    
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:listVC];
-    self.searchController.searchResultsUpdater = self;
-    
-    self.searchController.delegate = self;
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.searchBar.delegate = self; // Monitor when the search button is tapped.
-        
-    [self.searchController.searchBar sizeToFit];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
-    
-    self.definesPresentationContext = true;*/
-    
-    /*
-    [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:@"Spy" completion:^(NSArray *anime, NSError *error) {
-        if (anime != nil) {
-            NSLog(@"%@", anime);
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];*/
+    self.searchBar.delegate = self;
+    self.searchBar.showsCancelButton = true;
         
     // Set up TableView
     self.tableView.delegate = self;
@@ -79,16 +55,22 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
 
 #pragma mark - Navigation
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder]; // Dismiss the keyboard
+    searchBar.text = @""; // Reset the search bar text
+}
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder]; // Dismiss the keyboard
     NSString *searchText = searchBar.text;
+    searchBar.text = @""; // Reset the search bar text
     
     [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:searchText completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
-            NSLog(@"%@", anime);
-             NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
-             [senderDict setObject:@"Results" forKey:@"title"];
-             [senderDict setObject:anime forKey:@"anime"];
-             [self performSegueWithIdentifier:@"HomeToDetailsSegue" sender:senderDict];
+            NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
+            [senderDict setObject:@"Results" forKey:@"title"];
+            [senderDict setObject:anime forKey:@"anime"];
+            [self performSegueWithIdentifier:@"HomeToDetailsSegue" sender:senderDict];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
