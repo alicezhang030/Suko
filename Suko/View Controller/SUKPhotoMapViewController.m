@@ -53,8 +53,8 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
         for(PFUser *user in users) {
-            if([user.objectId isEqualToString:[PFUser currentUser].objectId]) {
-                // Do something with the nearest users
+            if(![user.objectId isEqualToString:[PFUser currentUser].objectId]) {
+                NSLog(@"%@", user.username);
             }
         }
     }];
