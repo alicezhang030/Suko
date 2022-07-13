@@ -57,11 +57,10 @@
     }];
 }
 
-//EditProfileSegue
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"EditProfileSegue"]) {
-        SUKEditProfileViewController *editVC = [segue destinationViewController];
+    if([segue.identifier isEqualToString:@"ProfileToEditProfileSegue"]) {
+        UINavigationController *navController = segue.destinationViewController;
+        SUKEditProfileViewController *editVC =  (SUKEditProfileViewController*)navController.topViewController;
         editVC.userToDisplay = self.userToDisplay;
     }
 }
