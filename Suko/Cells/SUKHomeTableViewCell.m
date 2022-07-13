@@ -25,7 +25,6 @@
 }
 
 - (void) didTapSeeAll:(UITapGestureRecognizer *)sender{
-    NSLog(@"Did tap see all");
     [self.delegate segueSUKHomeTableViewCell:self];
 }
 

@@ -53,7 +53,7 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKUsersLists*> *usersLists, NSError *error) {
         if(usersLists.count > 1) {
-            NSLog(@"More than one entry for this user in the database");
+            NSLog(@"Error: More than one entry for this user in the database");
         } else if (usersLists.count == 1) {
             SUKUsersLists *usersListObj = [usersLists objectAtIndex:0];
                         

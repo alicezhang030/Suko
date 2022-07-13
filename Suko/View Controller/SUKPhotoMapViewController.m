@@ -7,6 +7,8 @@
 
 #import "SUKPhotoMapViewController.h"
 #import <MapKit/MapKit.h>
+#import "Parse/PFGeoPoint.h";
+#import "Parse/Parse.h"
 
 @interface SUKPhotoMapViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -27,11 +29,6 @@
         [self.locationManager requestWhenInUseAuthorization];
 
     [self.locationManager startUpdatingLocation];
-    
-    if(self.currentUserLocation != nil) {
-        MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.1, 0.1));
-        [self.mapView setRegion:currentUserRegion animated:false];
-    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
@@ -39,6 +36,10 @@
     
     MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.1, 0.1));
     [self.mapView setRegion:currentUserRegion animated:false];
+    
+    PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentUserLocation];
+    [PFUser currentUser][@"current_coordinates"] = point;
+    [[PFUser currentUser] saveInBackground];
     
     [self.locationManager stopUpdatingLocation];
 }

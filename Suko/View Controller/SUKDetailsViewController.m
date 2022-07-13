@@ -73,7 +73,7 @@
             NSLog(@"The SUKUsersLists was uploaded!");
             [dropdownMenu closeAllComponentsAnimated:YES];
         } else {
-            NSLog(@"Problem uploading the Like: %@", error.localizedDescription);
+            NSLog(@"Problem uploading: %@", error.localizedDescription);
         }
     }];
 }

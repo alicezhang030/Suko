@@ -97,10 +97,9 @@
 }
 
 - (IBAction)didTapLogout:(id)sender {
-    NSLog(@"User tapped log out");
-    
     // Reset view to the log in screen
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        NSLog(@"User log out");
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
         self.view.window.rootViewController = loginVC;
