@@ -40,6 +40,14 @@ const NSArray *kArrOfGenresToDisplay = @[@25, @27];
     
     [self topAnime];
     [self genreList];
+    
+    [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:@"One Piece" completion:^(NSArray *anime, NSError *error) {
+        if (anime != nil) {
+            NSLog(@"%@", anime);
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
         
     // Set up TableView
     self.tableView.delegate = self;

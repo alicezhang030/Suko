@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchTopAnime:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion;
 - (void)fetchGenreAnime:(NSString *) genre completion:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion;
 - (void)fetchGenreList:(void(^)(NSArray *genres, NSError *error))completion;
+- (void)fetchAnimeSearchBySearchQuery:(NSString *) query completion:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion;
 
 @end
 

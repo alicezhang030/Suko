@@ -97,4 +97,19 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
+- (void)fetchAnimeSearchBySearchQuery:(NSString *) query completion:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion {
+    NSDictionary *params = @{@"q": query, @"type": @"tv", @"sort": @"desc"};
+    NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
+    
+    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSDictionary *dataDictionary = responseObject;
+        NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
+        NSArray *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
+        
+        completion(arrOfAnimeObjs, nil);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 @end
