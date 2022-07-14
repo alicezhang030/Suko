@@ -925,9 +925,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6jk-8y-maN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6jk-8y-maN">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="eq7-jM-ydI">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="215"/>
@@ -951,9 +950,8 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="As9-yp-YfS" firstAttribute="top" secondItem="hwD-m2-jRY" secondAttribute="bottom" constant="15" id="GKn-hw-b8h"/>
-                                        <constraint firstAttribute="trailing" secondItem="hwD-m2-jRY" secondAttribute="trailing" constant="142" id="VFg-fc-geT"/>
+                                        <constraint firstItem="hwD-m2-jRY" firstAttribute="centerX" secondItem="eq7-jM-ydI" secondAttribute="centerX" id="baT-fO-QLG"/>
                                         <constraint firstItem="hwD-m2-jRY" firstAttribute="top" secondItem="eq7-jM-ydI" secondAttribute="top" constant="31" id="e8t-Ts-EFh"/>
-                                        <constraint firstItem="hwD-m2-jRY" firstAttribute="leading" secondItem="eq7-jM-ydI" secondAttribute="leading" constant="142" id="hRf-9H-ukN"/>
                                         <constraint firstItem="As9-yp-YfS" firstAttribute="centerX" secondItem="hwD-m2-jRY" secondAttribute="centerX" id="m6d-dg-UhL"/>
                                     </constraints>
                                 </view>
@@ -989,6 +987,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SV0-oh-zSC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="6jk-8y-maN" secondAttribute="bottom" id="Igc-K3-2tb"/>
+                            <constraint firstItem="6jk-8y-maN" firstAttribute="leading" secondItem="SV0-oh-zSC" secondAttribute="leading" id="IzZ-fU-FWM"/>
+                            <constraint firstItem="6jk-8y-maN" firstAttribute="trailing" secondItem="SV0-oh-zSC" secondAttribute="trailing" id="b3t-Yp-y6c"/>
+                            <constraint firstItem="6jk-8y-maN" firstAttribute="top" secondItem="bO2-YK-lIK" secondAttribute="top" id="zBi-co-TtR"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DuZ-OK-kbY"/>
                     <connections>
@@ -1041,7 +1045,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="iPf-X4-auV"/>
-        <segue reference="SdT-Vd-rNh"/>
+        <segue reference="VNx-ey-fbx"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
