@@ -14,7 +14,6 @@
 @interface SUKLibraryViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *listTitles;
-@property (nonatomic, strong) NSMutableDictionary<NSString*, NSMutableArray*> *dictionaryOfAnime;
 
 @end
 
@@ -27,11 +26,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-        
-    self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
-    [self.dictionaryOfAnime setObject: [NSMutableArray array] forKey:@"Want to Watch"];
-    [self.dictionaryOfAnime setObject: [NSMutableArray array] forKey:@"Watching"];
-    [self.dictionaryOfAnime setObject: [NSMutableArray array] forKey:@"Watched"];
     
     self.listTitles = [@[@"Want to Watch", @"Watching", @"Watched"] mutableCopy];
 }
@@ -39,7 +33,7 @@
 #pragma mark - TableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.dictionaryOfAnime count];
+    return [self.listTitles count];
 }
 
 
@@ -51,12 +45,6 @@
 }
 
 #pragma mark - Navigation
-
-- (void)segueSUKHomeTableViewCell:(SUKLibraryTableViewCell *) cell {
-    NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
-    [senderDict setObject:cell.listTitleLabel.text forKey:@"title"];
-    [senderDict setObject:[self.dictionaryOfAnime objectForKey:cell.listTitleLabel.text] forKey:@"anime"];
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"LibraryToListSegue"]) {
