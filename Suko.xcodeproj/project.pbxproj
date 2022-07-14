@@ -30,6 +30,7 @@
 		53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */; };
 		53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B3301F28779B070013F404 /* SUKAnimeListViewController.m */; };
 		53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B330252877A31E0013F404 /* SUKAnimeListTableViewCell.m */; };
+		53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */; };
 		53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */; };
 		53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */; };
 		F44E3E9609C45EF18E4508DE /* Pods_SukoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */; };
@@ -96,6 +97,8 @@
 		53B3301F28779B070013F404 /* SUKAnimeListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnimeListViewController.m; sourceTree = "<group>"; };
 		53B330242877A31E0013F404 /* SUKAnimeListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAnimeListTableViewCell.h; sourceTree = "<group>"; };
 		53B330252877A31E0013F404 /* SUKAnimeListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnimeListTableViewCell.m; sourceTree = "<group>"; };
+		53CCA6E828808E5900B217F5 /* SUKNotCurrentUserProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKNotCurrentUserProfileViewController.h; sourceTree = "<group>"; };
+		53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKNotCurrentUserProfileViewController.m; sourceTree = "<group>"; };
 		53E0D78D2878F72F00CFCF91 /* SUKLibraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryViewController.h; sourceTree = "<group>"; };
 		53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKLibraryViewController.m; sourceTree = "<group>"; };
 		53E0D7902878FAD900CFCF91 /* SUKLibraryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryTableViewCell.h; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */,
 				5302D386287F7A280009018D /* SUKPhotoMapViewController.h */,
 				5302D387287F7A280009018D /* SUKPhotoMapViewController.m */,
+				53CCA6E828808E5900B217F5 /* SUKNotCurrentUserProfileViewController.h */,
+				53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -501,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */,
+				53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */,
 				53291ED32878C6C900B12469 /* SUKSignUpViewController.m in Sources */,
 				535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */,
 				5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */,

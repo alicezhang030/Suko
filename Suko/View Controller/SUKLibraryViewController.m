@@ -13,7 +13,7 @@
 
 @interface SUKLibraryViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *listTitles;
+@property (nonatomic, strong) NSArray *listTitles;
 
 @end
 
@@ -27,7 +27,7 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.listTitles = [@[@"Want to Watch", @"Watching", @"Watched"] mutableCopy];
+    self.listTitles = @[@"Want to Watch", @"Watching", @"Watched"];
 }
 
 #pragma mark - TableView
