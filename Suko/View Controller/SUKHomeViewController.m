@@ -153,25 +153,28 @@
 }
 
 - (void) genreList {
-    [[SUKAPIManager shared] fetchGenreList:^(NSArray<NSString*> *genres, NSError *error) {
+    NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
+    [[SUKAPIManager shared] fetchGenreList:^(NSArray *genres, NSError *error) {
         if (genres != nil) {
             int maxID = 0;
             NSMutableArray *arrOfIDs = [[NSMutableArray alloc] init];
-            
+                        
             for(NSDictionary *genreDict in genres) {
-                NSNumber *malID = [genreDict valueForKey:@"mal_id"];
-                int malIDInt = [malID intValue];
-                
-                if(malIDInt > maxID) {
-                    maxID = malIDInt;
+                if(![genresToNotConsider containsObject:[genreDict valueForKey:@"name"]]) {
+                    NSNumber *malID = [genreDict valueForKey:@"mal_id"];
+                    int malIDInt = [malID intValue];
+                    
+                    if(malIDInt > maxID) {
+                        maxID = malIDInt;
+                    }
+                    
+                    NSString *malIDString = [NSString stringWithFormat:@"%d", malIDInt];
+                    [arrOfIDs addObject:malIDString];
+                    
+                    NSString *genreName = [genreDict valueForKey:@"name"];
+                    
+                    [self.dictOfGenres setObject:genreName forKey:malIDString];
                 }
-                
-                NSString *malIDString = [NSString stringWithFormat:@"%d", malIDInt];
-                [arrOfIDs addObject:malIDString];
-                
-                NSString *genreName = [genreDict valueForKey:@"name"];
-                
-                [self.dictOfGenres setObject:genreName forKey:malIDString];
             }
             
             int randomGenre1 = arc4random_uniform((int)self.dictOfGenres.count);
