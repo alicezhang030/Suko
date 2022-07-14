@@ -27,7 +27,7 @@ Suko allows users to discover new anime and keep track of the anime they want to
         - Search for an anime,
         - Mark an anime as want to watch, watching, or watched.
     - V2 (Ambiguous Problems) should allow users to
-        - See what users near them are watching,
+        - See what users near them are watching and create events,
         - Take a quiz and receive anime recommendations based on their selections
 
 ## Product Spec
@@ -44,7 +44,7 @@ MVP:
 - [x] User can view and edit their profile.
 
 Ambiguous Problems:
-- [ ] User can see on a map what users near them are watching.
+- [ ] User can see on a map what users near them are watching and create events with the others
 - [ ] Users can take a quiz and receive anime recommendations based on their selections.
 
 **Optional Nice-to-have Stories**
