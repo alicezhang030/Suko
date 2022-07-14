@@ -63,6 +63,7 @@
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;
         animeListVC.listTitle = cell.listTitleLabel.text;
+        animeListVC.userToDisplay = [PFUser currentUser];
         animeListVC.arrOfAnime = [NSMutableArray array];
     }
 }

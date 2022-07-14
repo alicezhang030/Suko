@@ -49,7 +49,7 @@
  
 - (void) updateDictionaryOfAnime:(DefaultLibraryLists) listTitle {
     PFQuery *query = [PFQuery queryWithClassName:@"SUKUsersLists"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    [query whereKey:@"user" equalTo:self.userToDisplay];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKUsersLists*> *usersLists, NSError *error) {
         if(usersLists.count > 1) {
@@ -122,8 +122,12 @@
                     }
                     break;
                 default:
+                    [self.spinner stopAnimating];
                     break;
             }
+        } else {
+            [self.spinner stopAnimating];
+            NSLog(@"This user hasn't added anything to any list before");
         }
     }];
     NSLog(@"%@", self.arrOfAnime);

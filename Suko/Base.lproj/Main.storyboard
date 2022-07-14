@@ -49,6 +49,33 @@
                                         <constraint firstItem="G1b-Kf-ufx" firstAttribute="top" secondItem="jIW-Zj-xa6" secondAttribute="top" constant="31" id="zJ2-Q0-rdJ"/>
                                     </constraints>
                                 </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKLibraryTableViewCell" rowHeight="83" id="UQs-yA-UO4" customClass="SUKLibraryTableViewCell">
+                                        <rect key="frame" x="0.0" y="259.5" width="414" height="83"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UQs-yA-UO4" id="rfk-Dz-KVt">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ha9-1g-jMt">
+                                                    <rect key="frame" x="20" y="31" width="74" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Ha9-1g-jMt" secondAttribute="bottom" constant="31" id="976-pI-KhC"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ha9-1g-jMt" secondAttribute="trailing" constant="40" id="Iwr-LX-wTH"/>
+                                                <constraint firstItem="Ha9-1g-jMt" firstAttribute="top" secondItem="rfk-Dz-KVt" secondAttribute="top" constant="31" id="Rfq-vK-bVe"/>
+                                                <constraint firstItem="Ha9-1g-jMt" firstAttribute="leading" secondItem="rfk-Dz-KVt" secondAttribute="leading" constant="20" symbolic="YES" id="mcA-MN-g75"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="listTitleLabel" destination="Ha9-1g-jMt" id="kRr-gQ-ONm"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="agY-7B-VhT"/>
@@ -924,7 +951,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="4vs-CO-2P5"/>
+        <segue reference="nWa-C7-G7C"/>
         <segue reference="TOk-oL-xuz"/>
     </inferredMetricsTieBreakers>
     <resources>
