@@ -9,7 +9,7 @@
 #import <MapKit/MapKit.h>
 #import "Parse/PFGeoPoint.h"
 #import "Parse/Parse.h"
-#import "SUKProfileViewController.h"
+#import "SUKNotCurrentUserProfileViewController.h"
 
 @interface SUKPhotoMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -82,15 +82,15 @@
             NSLog(@"Error: More than one user with the username");
         } else {
             [self.mapView deselectAnnotation:view.annotation animated:YES];
-            [self performSegueWithIdentifier:@"MapToProfileSegue" sender:[users lastObject]];
+            [self performSegueWithIdentifier:@"MapToNotCurrentUserProfileSegue" sender:[users lastObject]];
         }
     }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"MapToProfileSegue"]) {
-        SUKProfileViewController *profileVC = [segue destinationViewController];
-        profileVC.userToDisplay = sender;
+    if([segue.identifier isEqualToString:@"MapToNotCurrentUserProfileSegue"]) {
+        SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
+        notCurrentUserprofileVC.userToDisplay = sender;
     }
 }
 

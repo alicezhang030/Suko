@@ -277,7 +277,7 @@
                     <navigationItem key="navigationItem" id="rAa-I5-w5h"/>
                     <connections>
                         <outlet property="mapView" destination="9YL-om-FxK" id="plp-0V-Uk4"/>
-                        <segue destination="LTY-O6-4Iu" kind="show" identifier="MapToProfileSegue" id="TOk-oL-xuz"/>
+                        <segue destination="561-x0-24T" kind="show" identifier="MapToNotCurrentUserProfileSegue" id="Nbh-Mj-j20"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5i-u6-4FT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -913,10 +913,10 @@
             </objects>
             <point key="canvasLocation" x="2816" y="897"/>
         </scene>
-        <!--View Controller-->
+        <!--Not Current User Profile View Controller-->
         <scene sceneID="Wvu-Ib-w6H">
             <objects>
-                <viewController id="561-x0-24T" sceneMemberID="viewController">
+                <viewController id="561-x0-24T" customClass="SUKNotCurrentUserProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bO2-YK-lIK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -931,7 +931,7 @@
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="hwD-m2-jRY" customClass="PFImageView">
                                             <rect key="frame" x="142" y="31" width="130" height="130"/>
-                                            <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="1" green="0.6705882353" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="130" id="8qz-72-zhG"/>
                                                 <constraint firstAttribute="width" constant="130" id="hgW-y2-Rxq"/>
@@ -977,6 +977,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="listTitleLabel" destination="C64-fN-gTL" id="b7K-py-5yA"/>
+                                            <segue destination="OiV-xg-5bj" kind="show" identifier="NotCurrentUserProfileToListSegue" id="VNx-ey-fbx"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -985,10 +986,16 @@
                         <viewLayoutGuide key="safeArea" id="SV0-oh-zSC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="DuZ-OK-kbY"/>
+                    <connections>
+                        <outlet property="profileImageView" destination="hwD-m2-jRY" id="dym-nT-Vsc"/>
+                        <outlet property="tableView" destination="6jk-8y-maN" id="bsZ-xa-0Hp"/>
+                        <outlet property="usernameLabel" destination="As9-yp-YfS" id="6hl-0h-Bo6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dod-X2-2Ix" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2816" y="1649"/>
+            <point key="canvasLocation" x="4570" y="114"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eZE-Wo-aLo">
@@ -1030,8 +1037,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="SdT-Vd-rNh"/>
-        <segue reference="TOk-oL-xuz"/>
+        <segue reference="VNx-ey-fbx"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

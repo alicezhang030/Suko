@@ -28,10 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if(self.userToDisplay == nil) {
-        self.userToDisplay = [PFUser currentUser];
-    }
-    
     // Set up TableView
     self.listTitles = @[@"Want to Watch", @"Watching", @"Watched"];
     self.tableView.delegate = self;
@@ -43,14 +39,6 @@
     [currentRightBarItemsMutable addObject:self.logoutButton];
     self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];
     
-    // Hides log out and edit buttons if the user being displayed is not the current user
-    if(![self.userToDisplay.objectId isEqualToString:[PFUser currentUser].objectId]) {
-        for(UIBarButtonItem *rightButton in self.navigationItem.rightBarButtonItems) {
-            rightButton.tintColor = [UIColor clearColor];
-            rightButton.enabled = NO;
-        }
-    }
-    
     [self loadContents];
 }
 
@@ -61,14 +49,14 @@
 
 -(void) loadContents {
     // Load the user profile image
-    self.profileImageView.file = self.userToDisplay[@"profile_image"];
+    self.profileImageView.file = [PFUser currentUser][@"profile_image"];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
     
     // Load the username
-    self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
+    self.usernameLabel.text = [@"@" stringByAppendingString:[PFUser currentUser].username];
 }
 
 #pragma mark - TableView
@@ -99,7 +87,6 @@
     if([segue.identifier isEqualToString:@"ProfileToEditProfileSegue"]) {
         UINavigationController *navController = segue.destinationViewController;
         SUKEditProfileViewController *editVC =  (SUKEditProfileViewController*)navController.topViewController;
-        editVC.userToDisplay = self.userToDisplay;
     }
     
     if([segue.identifier isEqualToString:@"ProfileToListSegue"]) {

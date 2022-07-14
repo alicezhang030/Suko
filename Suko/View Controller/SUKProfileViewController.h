@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKProfileViewController : UIViewController
-@property (nonatomic, strong) PFUser *userToDisplay;
 
 @end
 

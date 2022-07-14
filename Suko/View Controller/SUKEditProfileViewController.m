@@ -25,10 +25,10 @@
 
 - (void) loadViewContents {
     // Load username
-    self.usernameTextField.text = self.userToDisplay.username;
+    self.usernameTextField.text = [PFUser currentUser].username;
     
     // Load the user profile image
-    self.profileImageView.file = self.userToDisplay[@"profile_image"];
+    self.profileImageView.file = [PFUser currentUser][@"profile_image"];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
@@ -63,15 +63,15 @@
     PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
     
     // Upload image to database
-    self.userToDisplay[@"profile_image"] = imageFile;
+    [PFUser currentUser][@"profile_image"] = imageFile;
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)saveProfile:(id)sender {
-    self.userToDisplay[@"username"] = self.usernameTextField.text;
-    [self.userToDisplay saveInBackground];
+    [PFUser currentUser][@"username"] = self.usernameTextField.text;
+    [[PFUser currentUser] saveInBackground];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
