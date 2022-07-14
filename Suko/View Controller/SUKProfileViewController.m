@@ -32,6 +32,14 @@
     [currentRightBarItemsMutable addObject:self.logoutButton];
     self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];
     
+    // Hides the log out and edit buttons if the user being displayed is not the current user
+    if(![self.userToDisplay.objectId isEqualToString:[PFUser currentUser].objectId]) {
+        for(UIBarButtonItem *rightButton in self.navigationItem.rightBarButtonItems) {
+            rightButton.tintColor = [UIColor clearColor];
+            rightButton.enabled = NO;
+        }
+    }
+    
     [self loadContents];
 }
 
