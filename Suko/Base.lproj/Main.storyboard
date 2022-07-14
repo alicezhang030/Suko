@@ -17,9 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-UH-8cJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-UH-8cJ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="jIW-Zj-xa6">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="215"/>
@@ -44,8 +43,7 @@
                                     <constraints>
                                         <constraint firstItem="nIz-5C-cgt" firstAttribute="centerX" secondItem="G1b-Kf-ufx" secondAttribute="centerX" id="Bwr-4d-bjS"/>
                                         <constraint firstItem="nIz-5C-cgt" firstAttribute="top" secondItem="G1b-Kf-ufx" secondAttribute="bottom" constant="15" id="Ksp-oE-QUO"/>
-                                        <constraint firstItem="G1b-Kf-ufx" firstAttribute="leading" secondItem="jIW-Zj-xa6" secondAttribute="leading" constant="142" id="eGc-gf-m9H"/>
-                                        <constraint firstAttribute="trailing" secondItem="G1b-Kf-ufx" secondAttribute="trailing" constant="142" id="pnG-0Z-dye"/>
+                                        <constraint firstItem="G1b-Kf-ufx" firstAttribute="centerX" secondItem="jIW-Zj-xa6" secondAttribute="centerX" id="On9-zi-LYl"/>
                                         <constraint firstItem="G1b-Kf-ufx" firstAttribute="top" secondItem="jIW-Zj-xa6" secondAttribute="top" constant="31" id="zJ2-Q0-rdJ"/>
                                     </constraints>
                                 </view>
@@ -81,6 +79,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="agY-7B-VhT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="M9b-UH-8cJ" firstAttribute="trailing" secondItem="agY-7B-VhT" secondAttribute="trailing" id="628-LW-b57"/>
+                            <constraint firstAttribute="bottom" secondItem="M9b-UH-8cJ" secondAttribute="bottom" id="GVP-dg-zGM"/>
+                            <constraint firstItem="M9b-UH-8cJ" firstAttribute="leading" secondItem="agY-7B-VhT" secondAttribute="leading" id="IBc-zW-phJ"/>
+                            <constraint firstItem="M9b-UH-8cJ" firstAttribute="top" secondItem="RRH-Mj-178" secondAttribute="top" id="QqB-hf-whq"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EuC-Kn-hy3">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="UeA-3h-Reo">
@@ -132,7 +136,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-RX-vw9">
-                                            <rect key="frame" x="149.5" y="366" width="115.5" height="31"/>
+                                            <rect key="frame" x="149.5" y="366" width="115" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="pIN-wt-EuK"/>
                                             </constraints>
@@ -1036,8 +1040,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wz9-h9-cFl"/>
-        <segue reference="VNx-ey-fbx"/>
+        <segue reference="iPf-X4-auV"/>
+        <segue reference="SdT-Vd-rNh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

@@ -11,7 +11,7 @@
 #import "SUKUsersLists.h"
 #import "SUKAPIManager.h"
 
-@interface SUKLibraryViewController ()
+@interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *listTitles;
 
