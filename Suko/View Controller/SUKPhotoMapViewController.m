@@ -9,11 +9,13 @@
 #import <MapKit/MapKit.h>
 #import "Parse/PFGeoPoint.h"
 #import "Parse/Parse.h"
+#import "SUKProfileViewController.h"
 
 @interface SUKPhotoMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
+@property (nonatomic, strong) PFUser *userToDisplay;
 @end
 
 @implementation SUKPhotoMapViewController
@@ -72,10 +74,30 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    NSLog(@"Selected");
-    //MapToProfileSegue
-    //[self performSegueWithIdentifier:@"MapToProfileSegue" sender:];
+    NSString *title = view.annotation.title;
+    NSLog(@"%@", title);
+    [self performSegueWithIdentifier:@"MapToProfileSegue" sender:title];
+}
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"MapToProfileSegue"]) {
+        // Fetch user from database
+        PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+        [query whereKey:@"username" equalTo:sender];
+        
+        [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
+            if(users.count > 1) {
+                NSLog(@"Error: More than one user with the username");
+            } else {
+                self.userToDisplay = [users lastObject];
+            }
+        }];
+        
+        SUKProfileViewController *profileVC = [segue destinationViewController];
+        profileVC.userToDisplay = self.userToDisplay;
+        
+        //profileVC.userToDisplay = sender;
+    }
 }
 
 @end
