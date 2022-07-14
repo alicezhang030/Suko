@@ -15,7 +15,6 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
-@property (nonatomic, strong) PFUser *userToDisplay;
 @end
 
 @implementation SUKPhotoMapViewController
@@ -59,7 +58,6 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
         for(PFUser *user in users) {
             if(![user.objectId isEqualToString:[PFUser currentUser].objectId]) {
-                NSLog(@"%@", user.username);
                 [self.nearestUsersArr addObject:user];
                 
                 MKPointAnnotation *annotation = [MKPointAnnotation new];
@@ -75,28 +73,24 @@
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     NSString *title = view.annotation.title;
-    NSLog(@"%@", title);
-    [self performSegueWithIdentifier:@"MapToProfileSegue" sender:title];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"username" equalTo:title];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
+        if(users.count > 1) {
+            NSLog(@"Error: More than one user with the username");
+        } else {
+            [self.mapView deselectAnnotation:view.annotation animated:YES];
+            [self performSegueWithIdentifier:@"MapToProfileSegue" sender:[users lastObject]];
+        }
+    }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"MapToProfileSegue"]) {
-        // Fetch user from database
-        PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-        [query whereKey:@"username" equalTo:sender];
-        
-        [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
-            if(users.count > 1) {
-                NSLog(@"Error: More than one user with the username");
-            } else {
-                self.userToDisplay = [users lastObject];
-            }
-        }];
-        
         SUKProfileViewController *profileVC = [segue destinationViewController];
-        profileVC.userToDisplay = self.userToDisplay;
-        
-        //profileVC.userToDisplay = sender;
+        profileVC.userToDisplay = sender;
     }
 }
 

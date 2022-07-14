@@ -14,6 +14,7 @@
 @interface SUKProfileViewController ()
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (nonatomic, strong) UIBarButtonItem *logoutButton;
 
 @end
 
@@ -25,6 +26,11 @@
     if(self.userToDisplay == nil) {
         self.userToDisplay = [PFUser currentUser];
     }
+    
+    self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(tapLogout)];
+    NSMutableArray* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
+    [currentRightBarItemsMutable addObject:self.logoutButton];
+    self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];
     
     [self loadContents];
 }
@@ -46,7 +52,7 @@
     self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
 }
 
-- (IBAction)tapLogout:(id)sender {
+-(void) tapLogout {
     NSLog(@"User tapped log out");
     
     // Reset view to the log in screen

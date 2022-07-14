@@ -55,11 +55,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="EuC-Kn-hy3">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="OfW-CJ-JW6">
-                            <connections>
-                                <action selector="tapLogout:" destination="LTY-O6-4Iu" id="nP5-V3-Dbp"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="UeA-3h-Reo">
                             <connections>
                                 <segue destination="aGw-4m-89v" kind="presentation" identifier="ProfileToEditProfileSegue" id="wk9-p8-JYu"/>
