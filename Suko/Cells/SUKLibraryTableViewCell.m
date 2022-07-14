@@ -12,7 +12,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    //remove the gray highlight after you select a cell
+    // Remove the gray highlight after you select a cell
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 

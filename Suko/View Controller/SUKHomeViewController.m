@@ -42,7 +42,7 @@
     [self topAnime];
     [self genreList];
     
-    //setting up search bar
+    // Setting up search bar
     self.searchBar.delegate = self;
     self.searchBar.showsCancelButton = true;
         

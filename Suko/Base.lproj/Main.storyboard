@@ -564,7 +564,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Synopsis" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khO-lT-ojw">
-                                            <rect key="frame" x="26" y="413" width="69" height="20.5"/>
+                                            <rect key="frame" x="26" y="413" width="368" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -586,7 +586,7 @@
                                         <constraint firstItem="fzg-U7-dPu" firstAttribute="leading" secondItem="nup-ec-92t" secondAttribute="leading" constant="110" id="baz-Nk-vwK"/>
                                         <constraint firstItem="rbN-mW-lx4" firstAttribute="centerX" secondItem="nup-ec-92t" secondAttribute="centerX" id="brp-Jk-HpU"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cSR-fR-6AB" secondAttribute="trailing" constant="40" id="c40-OQ-rZw"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="khO-lT-ojw" secondAttribute="trailing" constant="20" id="cIc-nJ-iOI"/>
+                                        <constraint firstAttribute="trailing" secondItem="khO-lT-ojw" secondAttribute="trailing" constant="20" id="cIc-nJ-iOI"/>
                                         <constraint firstItem="fzg-U7-dPu" firstAttribute="top" secondItem="nup-ec-92t" secondAttribute="top" constant="8" id="h2E-1R-wJ6"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rPP-SA-lsa" secondAttribute="trailing" constant="40" id="hbi-bE-jxN"/>
                                         <constraint firstItem="rPP-SA-lsa" firstAttribute="top" secondItem="rbN-mW-lx4" secondAttribute="bottom" constant="43" id="meF-iM-Amg"/>
