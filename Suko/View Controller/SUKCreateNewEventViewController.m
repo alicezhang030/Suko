@@ -7,6 +7,7 @@
 
 #import "SUKCreateNewEventViewController.h"
 #import "SUKEvent.h"
+#import "SUKUserMapViewController.h"
 
 @interface SUKCreateNewEventViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *eventNameTextField;
@@ -58,11 +59,14 @@
         [SUKEvent postEvent:self.eventNameTextField.text eventLocation:self.locationTextField.text date:(NSDate *) self.timeDatePicker.date usersMilesAway:milesAway withCompletion:^(BOOL succeeded, NSError * error) {
             if (succeeded) {
                 NSLog(@"The event was uploaded!");
+                
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                SUKUserMapViewController *mapVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKUserMapViewController"];
+                self.view.window.rootViewController = mapVC;
             } else {
                 NSLog(@"Problem uploading the event: %@", error.localizedDescription);
             }
         }];
-        
     }
 }
 

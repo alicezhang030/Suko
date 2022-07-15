@@ -5,19 +5,19 @@
 //  Created by Alice Zhang on 7/13/22.
 //
 
-#import "SUKPhotoMapViewController.h"
+#import "SUKUserMapViewController.h"
 #import <MapKit/MapKit.h>
 #import "Parse/PFGeoPoint.h"
 #import "Parse/Parse.h"
 #import "SUKNotCurrentUserProfileViewController.h"
 
-@interface SUKPhotoMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
+@interface SUKUserMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
 @end
 
-@implementation SUKPhotoMapViewController
+@implementation SUKUserMapViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

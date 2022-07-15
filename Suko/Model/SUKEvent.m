@@ -28,6 +28,19 @@
     newEvent.milesAway = miles;
     
     [newEvent saveInBackgroundWithBlock: completion];
+    
+    // Fetch the users within that radius and notify them about this invitation
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query includeKey:@"current_coordinates"];
+    [query whereKey:@"current_coordinates" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:[miles doubleValue]];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
+        for(PFUser *user in users) {
+            if(![user.objectId isEqualToString:[PFUser currentUser].objectId]) {
+                // Send them a notification about this invitation
+            }
+        }
+    }];
 }
 
 

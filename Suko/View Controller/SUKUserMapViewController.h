@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SUKPhotoMapViewController : UIViewController
+@interface SUKUserMapViewController : UIViewController
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end

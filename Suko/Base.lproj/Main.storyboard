@@ -262,10 +262,10 @@
             </objects>
             <point key="canvasLocation" x="1925" y="-155"/>
         </scene>
-        <!--Photo Map View Controller-->
+        <!--User Map View Controller-->
         <scene sceneID="3Iw-JQ-08M">
             <objects>
-                <viewController id="SFY-Kq-Lxh" customClass="SUKPhotoMapViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SUKUserMapViewController" id="SFY-Kq-Lxh" customClass="SUKUserMapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pQR-zw-pxZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1016,22 +1016,6 @@
             </objects>
             <point key="canvasLocation" x="4570" y="114"/>
         </scene>
-        <!--New Event-->
-        <scene sceneID="Thw-VW-tBT">
-            <objects>
-                <viewController id="Wss-Tq-S78" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hmg-qX-Vee">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Tbg-xt-0VK"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="New Event" id="gkx-KR-nnM"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="giU-q8-vd7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5405.7971014492759" y="113.83928571428571"/>
-        </scene>
         <!--Create New Event View Controller-->
         <scene sceneID="doL-Gr-Js4">
             <objects>
@@ -1169,7 +1153,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AhY-JT-QeO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6331.884057971015" y="105.80357142857143"/>
+            <point key="canvasLocation" x="5359" y="114"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eZE-Wo-aLo">
