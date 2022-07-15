@@ -20,6 +20,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+}
+
+-(void)dismissKeyboard{
+    [self.eventNameTextField resignFirstResponder];
+    [self.locationTextField resignFirstResponder];
+    [self.usersMileAwayTextField resignFirstResponder];
 }
 
 - (IBAction)tapPostButton:(id)sender {
@@ -27,7 +36,25 @@
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber *milesAway = [formatter numberFromString:self.usersMileAwayTextField.text];
     
-    if(milesAway != nil) {
+    if([self.eventNameTextField.text isEqual:@""] || [self.locationTextField.text isEqual:@""] || [self.usersMileAwayTextField.text isEqual:@""] || milesAway == nil) {
+        
+        NSString *title = @"All fields required";
+        NSString *message = @"Please enter an event name, location, and radius and try again.";
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                    message:message
+                                    preferredStyle:(UIAlertControllerStyleAlert)];
+        // Create an OK action
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                 style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {}];
+        
+        // Add the OK action to the alert controller
+        [alert addAction:okAction];
+        
+        // Present the alert
+        [self presentViewController:alert animated:YES completion:^{}];
+    } else {
         [SUKEvent postEvent:self.eventNameTextField.text eventLocation:self.locationTextField.text date:(NSDate *) self.timeDatePicker.date usersMilesAway:milesAway withCompletion:^(BOOL succeeded, NSError * error) {
             if (succeeded) {
                 NSLog(@"The event was uploaded!");
@@ -35,6 +62,7 @@
                 NSLog(@"Problem uploading the event: %@", error.localizedDescription);
             }
         }];
+        
     }
 }
 
