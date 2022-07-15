@@ -33,6 +33,8 @@
 		53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */; };
 		53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */; };
 		53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */; };
+		53E1CDFF2881C80B00186E36 /* SUKCreateNewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */; };
+		53E1CE022881C8D400186E36 /* SUKEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E1CE012881C8D400186E36 /* SUKEvent.m */; };
 		F44E3E9609C45EF18E4508DE /* Pods_SukoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +105,10 @@
 		53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKLibraryViewController.m; sourceTree = "<group>"; };
 		53E0D7902878FAD900CFCF91 /* SUKLibraryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryTableViewCell.h; sourceTree = "<group>"; };
 		53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKLibraryTableViewCell.m; sourceTree = "<group>"; };
+		53E1CDFD2881C80B00186E36 /* SUKCreateNewEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKCreateNewEventViewController.h; sourceTree = "<group>"; };
+		53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKCreateNewEventViewController.m; sourceTree = "<group>"; };
+		53E1CE002881C8D400186E36 /* SUKEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKEvent.h; sourceTree = "<group>"; };
+		53E1CE012881C8D400186E36 /* SUKEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKEvent.m; sourceTree = "<group>"; };
 		85AA59F7210F419DD51460CD /* Pods-Suko-SukoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko-SukoUITests.debug.xcconfig"; path = "Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Suko_SukoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B661CD64106E019F4756CBA6 /* Pods-SukoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SukoTests.debug.xcconfig"; path = "Target Support Files/Pods-SukoTests/Pods-SukoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +169,8 @@
 				532AB030287752DC00114DBA /* SUKAnime.m */,
 				53A08B4D287C88AC00678FA4 /* SUKUsersLists.h */,
 				53A08B4E287C88AC00678FA4 /* SUKUsersLists.m */,
+				53E1CE002881C8D400186E36 /* SUKEvent.h */,
+				53E1CE012881C8D400186E36 /* SUKEvent.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,6 +198,8 @@
 				5302D387287F7A280009018D /* SUKPhotoMapViewController.m */,
 				53CCA6E828808E5900B217F5 /* SUKNotCurrentUserProfileViewController.h */,
 				53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */,
+				53E1CDFD2881C80B00186E36 /* SUKCreateNewEventViewController.h */,
+				53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -513,6 +523,7 @@
 				53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */,
 				53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */,
 				531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */,
+				53E1CDFF2881C80B00186E36 /* SUKCreateNewEventViewController.m in Sources */,
 				531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */,
 				531C3A082874C57A002E80C4 /* SUKHomeTableViewCell.m in Sources */,
 				53A08B4F287C88AC00678FA4 /* SUKUsersLists.m in Sources */,
@@ -522,6 +533,7 @@
 				53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */,
 				53A97520287DF9B400D163BF /* SUKProfileViewController.m in Sources */,
 				53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */,
+				53E1CE022881C8D400186E36 /* SUKEvent.m in Sources */,
 				5302D388287F7A280009018D /* SUKPhotoMapViewController.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
 				53291ED62878C6DF00B12469 /* SUKLoginViewController.m in Sources */,
