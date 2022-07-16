@@ -14,7 +14,6 @@
 
 @interface SUKAnimeListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 

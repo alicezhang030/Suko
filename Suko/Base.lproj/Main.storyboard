@@ -498,10 +498,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="D7j-dw-4AC">
-                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IvK-Z4-S0e"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -514,7 +510,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="nmB-EQ-Y6W"/>
                     <connections>
-                        <outlet property="spinner" destination="D7j-dw-4AC" id="lMx-sI-g8l"/>
                         <outlet property="tableView" destination="XVl-nz-EZC" id="phc-6I-2I0"/>
                     </connections>
                 </viewController>
@@ -1194,8 +1189,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPf-X4-auV"/>
-        <segue reference="4HA-N7-CeT"/>
+        <segue reference="wz9-h9-cFl"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
