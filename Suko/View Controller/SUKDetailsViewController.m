@@ -7,7 +7,6 @@
 
 #import "SUKDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
-#import "SUKUsersLists.h"
 
 @interface SUKDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
@@ -68,15 +67,32 @@
 }
 
 - (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    [SUKUsersLists postUsersLists:[PFUser currentUser] defaultList:row malId:[NSNumber numberWithInt:self.animeToDisplay.malID] withCompletion:^(BOOL succeeded, NSError * error) {
-        if (succeeded) {
-            NSLog(@"The SUKUsersLists was uploaded!");
-            [dropdownMenu closeAllComponentsAnimated:YES];
-        } else {
-            NSLog(@"Problem uploading: %@", error.localizedDescription);
+    NSMutableArray<NSMutableArray*> *currentAllData = [PFUser currentUser][@"list_data"];
+    NSNumber *malID = [NSNumber numberWithInt:self.animeToDisplay.malID];
+    
+    if(row == 0) { // User clicked on "remove from lists"
+        
+        for(int i = 0; i < [currentAllData count]; i++) {
+            // row - 1 because row 0 is "Remove from List"
+            if([currentAllData[i] containsObject:malID]) {
+                [currentAllData[i] removeObject:malID];
+                break;
+            }
         }
-    }];
+        
+    } else {
+        for(int i = 0; i < [currentAllData count]; i++) {
+            // row - 1 because row 0 is "Remove from List"
+            if(i != row - 1 && [currentAllData[i] containsObject:malID]) {
+                [currentAllData[i] removeObject:malID];
+                break;
+            }
+        }
+        
+        [currentAllData[row-1] addObject:malID];
+        [PFUser currentUser][@"list_data"] = currentAllData;
+        [[PFUser currentUser] saveInBackground];
+    }
 }
-
 
 @end

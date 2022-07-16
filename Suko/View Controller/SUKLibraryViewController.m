@@ -8,12 +8,12 @@
 #import "SUKLibraryViewController.h"
 #import "SUKLibraryTableViewCell.h"
 #import "SUKAnimeListViewController.h"
-#import "SUKUsersLists.h"
 #import "SUKAPIManager.h"
 
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *listTitles;
+@property (nonatomic, strong) NSMutableArray *animeToPass;
 
 @end
 
@@ -27,7 +27,8 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.listTitles = @[@"Want to Watch", @"Watching", @"Watched"];
+    self.listTitles = [PFUser currentUser][@"list_titles"];
+    self.animeToPass = [NSMutableArray array];
 }
 
 #pragma mark - TableView
@@ -44,15 +45,43 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.animeToPass removeAllObjects];
+    NSArray *arrOfMalID = [PFUser currentUser][@"list_data"][indexPath.row];
+    
+    if(arrOfMalID.count == 0) {
+        [self performSegueWithIdentifier:@"LibraryToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+    }
+    
+    for(int i = 0; i < arrOfMalID.count; i++) {
+        NSNumber *malID = [arrOfMalID objectAtIndex:i];
+        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+             if (anime != nil) {
+                     [self.animeToPass addObject:anime];
+                 
+                 if(i == arrOfMalID.count - 1) {
+                     [self performSegueWithIdentifier:@"LibraryToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+                 }
+             } else {
+                 NSLog(@"%@", error.localizedDescription);
+             }
+         }];
+        
+        [NSThread sleepForTimeInterval:0.4];
+    }
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"LibraryToListSegue"]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
+        
         SUKLibraryTableViewCell *cell = sender;
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.userToDisplay = [PFUser currentUser];
-        animeListVC.arrOfAnime = [NSMutableArray array];
+        
+        animeListVC.arrOfAnime = self.animeToPass;
     }
 }
 

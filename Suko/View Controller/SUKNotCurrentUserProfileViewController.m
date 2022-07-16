@@ -9,12 +9,15 @@
 #import "Parse/PFImageView.h"
 #import "SUKLibraryTableViewCell.h"
 #import "SUKAnimeListViewController.h"
+#import "SUKAPIManager.h"
 
 @interface SUKNotCurrentUserProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) NSArray *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *animeToPass;
+
 
 @end
 
@@ -24,10 +27,12 @@
     [super viewDidLoad];
     
     // Set up TableView
-    self.listTitles = @[@"Want to Watch", @"Watching", @"Watched"];
+    self.listTitles = [PFUser currentUser][@"list_titles"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.animeToPass = [NSMutableArray array];
     
     [self loadContents];
 }
@@ -57,6 +62,30 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.animeToPass removeAllObjects];
+    NSArray *arrOfMalID = [PFUser currentUser][@"list_data"][indexPath.row];
+    
+    if(arrOfMalID.count == 0) {
+        [self performSegueWithIdentifier:@"NotCurrentUserProfileToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+    }
+    
+    for(int i = 0; i < arrOfMalID.count; i++) {
+        NSNumber *malID = [arrOfMalID objectAtIndex:i];
+        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+             if (anime != nil) {
+                 [self.animeToPass addObject:anime];
+                 if(i == arrOfMalID.count - 1) {
+                     [self performSegueWithIdentifier:@"NotCurrentUserProfileToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+                 }
+             } else {
+                 NSLog(@"%@", error.localizedDescription);
+             }
+         }];
+        
+        [NSThread sleepForTimeInterval:0.4];
+    }
+}
 
 #pragma mark - Navigation
 
@@ -66,7 +95,7 @@
         SUKLibraryTableViewCell *cell = sender;
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.userToDisplay = self.userToDisplay;
-        animeListVC.arrOfAnime = [NSMutableArray array];
+        animeListVC.arrOfAnime = self.animeToPass;
     }
 }
 

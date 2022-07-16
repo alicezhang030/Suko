@@ -42,6 +42,16 @@
     newUser.username = self.usernameField.text;
     newUser.password = self.passwordField.text;
     
+    newUser[@"list_titles"] = [NSMutableArray array];
+    [newUser[@"list_titles"] addObject:@"Want to Watch"];
+    [newUser[@"list_titles"] addObject:@"Watching"];
+    [newUser[@"list_titles"] addObject:@"Watched"];
+    
+    newUser[@"list_data"] = [NSMutableArray array];
+    for(int i = 0; i < [newUser[@"list_titles"] count]; i++) {
+        [newUser[@"list_data"] addObject:[NSMutableArray array]];
+    }
+    
     [self checkEmptyField];
     
     // Call sign up function on the object
