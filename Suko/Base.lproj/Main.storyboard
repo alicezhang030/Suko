@@ -71,7 +71,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="listTitleLabel" destination="Ha9-1g-jMt" id="kRr-gQ-ONm"/>
-                                            <segue destination="OiV-xg-5bj" kind="show" identifier="ProfileToListSegue" id="SdT-Vd-rNh"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -97,6 +96,7 @@
                         <outlet property="profileImageView" destination="G1b-Kf-ufx" id="koj-AC-l1C"/>
                         <outlet property="tableView" destination="M9b-UH-8cJ" id="DpS-ha-5DR"/>
                         <outlet property="usernameLabel" destination="nIz-5C-cgt" id="G0L-Zk-0En"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="ProfileToListSegue" id="ITB-sL-bRA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8PJ-ND-Qg3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -218,7 +218,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="listTitleLabel" destination="x9B-LX-VHW" id="bCz-Qn-kYj"/>
-                                            <segue destination="OiV-xg-5bj" kind="show" identifier="LibraryToListSegue" id="nWa-C7-G7C"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -236,6 +235,7 @@
                     <navigationItem key="navigationItem" title="Library" id="SR4-Xh-3k6"/>
                     <connections>
                         <outlet property="tableView" destination="FS1-BX-d26" id="WJD-ha-UM8"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="LibraryToListSegue" id="YIN-xz-oBj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VNR-ut-uil" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -990,7 +990,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="listTitleLabel" destination="C64-fN-gTL" id="b7K-py-5yA"/>
-                                            <segue destination="OiV-xg-5bj" kind="show" identifier="NotCurrentUserProfileToListSegue" id="VNx-ey-fbx"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1010,6 +1009,7 @@
                         <outlet property="profileImageView" destination="hwD-m2-jRY" id="dym-nT-Vsc"/>
                         <outlet property="tableView" destination="6jk-8y-maN" id="bsZ-xa-0Hp"/>
                         <outlet property="usernameLabel" destination="As9-yp-YfS" id="6hl-0h-Bo6"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="NotCurrentUserProfileToListSegue" id="4HA-N7-CeT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dod-X2-2Ix" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1194,8 +1194,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wz9-h9-cFl"/>
-        <segue reference="4vs-CO-2P5"/>
+        <segue reference="iPf-X4-auV"/>
+        <segue reference="4HA-N7-CeT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
