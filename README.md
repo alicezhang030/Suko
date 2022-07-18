@@ -52,10 +52,10 @@ Ambiguous Problems:
 - [ ] User can reply to anime reviews.
 - [ ] Users can create custom lists.
 - [ ] Users can set privacy settings for lists (i.e. visible to the public or not).
-- [ ] User can friend/unfriend other users.
+- [x] User can follow other users.
 - [ ] User can share anime to other users in-app.
-- [ ] Users can follow their friends' anime lists.
-- [ ] User can post a recommendation request, and their friends can submit recommendations.
+- [ ] Users can follow public anime lists.
+- [ ] User can post a recommendation request, and others can submit recommendations.
 
 ### 2. Screen Archetypes
 
