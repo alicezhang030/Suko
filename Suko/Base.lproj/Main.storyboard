@@ -1012,6 +1012,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="DuZ-OK-kbY"/>
                     <connections>
+                        <outlet property="followButton" destination="Si9-Sf-957" id="8jJ-AU-XfH"/>
                         <outlet property="profileImageView" destination="hwD-m2-jRY" id="dym-nT-Vsc"/>
                         <outlet property="tableView" destination="6jk-8y-maN" id="bsZ-xa-0Hp"/>
                         <outlet property="usernameLabel" destination="As9-yp-YfS" id="6hl-0h-Bo6"/>

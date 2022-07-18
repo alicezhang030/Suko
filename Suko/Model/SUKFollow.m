@@ -26,4 +26,14 @@
     [newFollow saveInBackgroundWithBlock: completion];
 }
 
++ (void) deleteFollow: (SUKFollow * _Nullable) follow {
+    [follow deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded) {
+            NSLog(@"Successfully deleted the follow");
+        } else {
+            NSLog(@"Failed to delete the follow: %@", error.localizedDescription);
+        }
+    }];
+}
+
 @end

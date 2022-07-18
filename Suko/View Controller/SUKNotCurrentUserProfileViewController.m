@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *animeToPass;
+@property (weak, nonatomic) IBOutlet UIButton *followButton;
 
 
 @end
@@ -48,29 +49,45 @@
     
     // Load the username
     self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"SUKFollow"];
+    [query whereKey:@"follower" equalTo:[PFUser currentUser]];
+    [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow*> *follows, NSError *error) {
+        if([follows count] > 1) {
+            NSLog(@"Error: More than one follow relationship between current user and user being displayed");
+        } else if([follows count] == 1) {
+            [self.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        } else {
+            [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        }
+    }];
 }
 
 - (IBAction)tapFollowButton:(id)sender {
-    [SUKFollow postFollow:[PFUser currentUser] userBeingFollowed:self.userToDisplay withCompletion:^(BOOL succeeded, NSError * error) {
-        if (succeeded) {
-            NSLog(@"The follow was uploaded!");
+    // Check if current user is already following self.userToDisplay
+    PFQuery *query = [PFQuery queryWithClassName:@"SUKFollow"];
+    [query whereKey:@"follower" equalTo:[PFUser currentUser]];
+    [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow*> *follows, NSError *error) {
+        if([follows count] > 1) {
+            NSLog(@"Error: More than one follow relationship between current user and user being displayed");
+        } else if([follows count] == 1) {
+            [SUKFollow deleteFollow:[follows lastObject]];
+            [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
         } else {
-            NSLog(@"Problem uploading the event: %@", error.localizedDescription);
+            [SUKFollow postFollow:[PFUser currentUser] userBeingFollowed:self.userToDisplay withCompletion:^(BOOL succeeded, NSError * error) {
+                if (succeeded) {
+                    NSLog(@"The follow was uploaded!");
+                    [self.followButton setTitle:@"Following" forState:UIControlStateNormal];
+                } else {
+                    NSLog(@"Problem uploading the event: %@", error.localizedDescription);
+                }
+            }];
         }
     }];
-    
-    
-    /*
-    NSMutableArray *currentFollowers = [self.userToDisplay[@"follower_arr"] mutableCopy];
-    if([currentFollowers containsObject:[PFUser currentUser].objectId]) {
-        [currentFollowers removeObject:[PFUser currentUser].objectId];
-        self.userToDisplay[@"follower_arr"] = [currentFollowers copy];
-        [self.userToDisplay saveInBackground];
-    } else {
-        [currentFollowers addObject:[PFUser currentUser].objectId];
-        self.userToDisplay[@"follower_arr"] = [currentFollowers copy];
-        [self.userToDisplay saveInBackground];
-    }*/
 }
 
 #pragma mark - TableView
