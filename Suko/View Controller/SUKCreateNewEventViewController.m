@@ -60,9 +60,7 @@
             if (succeeded) {
                 NSLog(@"The event was uploaded!");
                 
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                SUKUserMapViewController *mapVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKUserMapViewController"];
-                self.view.window.rootViewController = mapVC;
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 NSLog(@"Problem uploading the event: %@", error.localizedDescription);
             }
