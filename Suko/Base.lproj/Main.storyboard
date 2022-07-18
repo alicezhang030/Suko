@@ -485,7 +485,7 @@
                                             <constraints>
                                                 <constraint firstItem="rn4-NC-VBa" firstAttribute="leading" secondItem="nN4-Tc-BA6" secondAttribute="leading" constant="20" symbolic="YES" id="EAu-54-vcJ"/>
                                                 <constraint firstItem="SO8-K1-sel" firstAttribute="top" secondItem="Z4K-9j-Ojt" secondAttribute="bottom" constant="4" id="H6g-V1-AKu"/>
-                                                <constraint firstAttribute="bottom" secondItem="rn4-NC-VBa" secondAttribute="bottom" constant="18" id="PVr-xJ-nUR"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rn4-NC-VBa" secondAttribute="bottom" constant="10" id="PVr-xJ-nUR"/>
                                                 <constraint firstItem="rn4-NC-VBa" firstAttribute="top" secondItem="nN4-Tc-BA6" secondAttribute="top" constant="18" id="dP8-pQ-HRk"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Z4K-9j-Ojt" secondAttribute="trailing" constant="40" id="kLe-0b-Pfc"/>
                                                 <constraint firstItem="Z4K-9j-Ojt" firstAttribute="top" secondItem="nN4-Tc-BA6" secondAttribute="top" constant="61" id="kiT-WN-oxU"/>
@@ -1208,7 +1208,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wz9-h9-cFl"/>
+        <segue reference="iPf-X4-auV"/>
         <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
