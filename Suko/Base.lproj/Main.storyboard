@@ -111,9 +111,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bkA-7Y-joh">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bkA-7Y-joh">
                                 <rect key="frame" x="0.0" y="56" width="414" height="786"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="aEQ-j4-xIM">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="791"/>
@@ -161,6 +160,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lDY-g4-I56"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bkA-7Y-joh" firstAttribute="bottom" secondItem="lDY-g4-I56" secondAttribute="bottom" id="5DA-lI-njy"/>
+                            <constraint firstItem="bkA-7Y-joh" firstAttribute="leading" secondItem="lDY-g4-I56" secondAttribute="leading" id="QSP-Za-HN2"/>
+                            <constraint firstItem="bkA-7Y-joh" firstAttribute="trailing" secondItem="lDY-g4-I56" secondAttribute="trailing" id="dXP-M1-eB4"/>
+                            <constraint firstItem="bkA-7Y-joh" firstAttribute="top" secondItem="lDY-g4-I56" secondAttribute="top" id="hFU-nd-sHN"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" id="VkB-cV-wOU">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="0GW-MF-q05">
@@ -1204,7 +1209,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="4HA-N7-CeT"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
