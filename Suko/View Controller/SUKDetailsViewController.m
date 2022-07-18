@@ -71,7 +71,6 @@
     NSNumber *malID = [NSNumber numberWithInt:self.animeToDisplay.malID];
     
     if(row == 0) { // User clicked on "remove from lists"
-        
         for(int i = 0; i < [currentAllData count]; i++) {
             // row - 1 because row 0 is "Remove from List"
             if([currentAllData[i] containsObject:malID]) {
@@ -79,7 +78,7 @@
                 break;
             }
         }
-        
+        [self.dropdownMenu closeAllComponentsAnimated:YES];
     } else {
         for(int i = 0; i < [currentAllData count]; i++) {
             // row - 1 because row 0 is "Remove from List"
@@ -92,6 +91,7 @@
         [currentAllData[row-1] addObject:malID];
         [PFUser currentUser][@"list_data"] = currentAllData;
         [[PFUser currentUser] saveInBackground];
+        [self.dropdownMenu closeAllComponentsAnimated:YES];
     }
 }
 

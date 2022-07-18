@@ -13,6 +13,7 @@
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *listTitles;
+@property (nonatomic, strong) NSMutableSet *animeToPassMalID;
 @property (nonatomic, strong) NSMutableArray *animeToPass;
 
 @end
@@ -29,6 +30,7 @@
     
     self.listTitles = [PFUser currentUser][@"list_titles"];
     self.animeToPass = [NSMutableArray array];
+    self.animeToPassMalID = [NSMutableSet set];
 }
 
 #pragma mark - TableView
@@ -47,6 +49,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.animeToPass removeAllObjects];
+    [self.animeToPassMalID removeAllObjects];
     NSArray *arrOfMalID = [PFUser currentUser][@"list_data"][indexPath.row];
     
     if(arrOfMalID.count == 0) {
@@ -55,19 +58,23 @@
     
     for(int i = 0; i < arrOfMalID.count; i++) {
         NSNumber *malID = [arrOfMalID objectAtIndex:i];
-        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-             if (anime != nil) {
-                     [self.animeToPass addObject:anime];
-                 
-                 if(i == arrOfMalID.count - 1) {
-                     [self performSegueWithIdentifier:@"LibraryToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-                 }
-             } else {
-                 NSLog(@"%@", error.localizedDescription);
-             }
-         }];
         
-        [NSThread sleepForTimeInterval:0.4];
+        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+            if (anime != nil) {
+                if(![self.animeToPassMalID containsObject:malID]) {
+                    [self.animeToPassMalID addObject:malID];
+                    [self.animeToPass addObject:anime];
+                }
+                
+                if(i == arrOfMalID.count - 1) {
+                    [self performSegueWithIdentifier:@"LibraryToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+                }
+            } else {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];
+        
+        [NSThread sleepForTimeInterval:0.8];
     }
 }
 
@@ -81,7 +88,7 @@
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.userToDisplay = [PFUser currentUser];
         
-        animeListVC.arrOfAnime = self.animeToPass;
+        animeListVC.arrOfAnime = [self.animeToPass copy];
     }
 }
 

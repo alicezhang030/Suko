@@ -64,7 +64,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.animeToPass removeAllObjects];
-    NSArray *arrOfMalID = [PFUser currentUser][@"list_data"][indexPath.row];
+    NSArray *arrOfMalID = self.userToDisplay[@"list_data"][indexPath.row];
     
     if(arrOfMalID.count == 0) {
         [self performSegueWithIdentifier:@"NotCurrentUserProfileToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
