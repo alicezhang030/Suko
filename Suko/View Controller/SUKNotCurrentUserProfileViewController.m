@@ -10,6 +10,7 @@
 #import "SUKLibraryTableViewCell.h"
 #import "SUKAnimeListViewController.h"
 #import "SUKAPIManager.h"
+#import "SUKFollow.h"
 
 @interface SUKNotCurrentUserProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
@@ -47,6 +48,29 @@
     
     // Load the username
     self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
+}
+
+- (IBAction)tapFollowButton:(id)sender {
+    [SUKFollow postFollow:[PFUser currentUser] userBeingFollowed:self.userToDisplay withCompletion:^(BOOL succeeded, NSError * error) {
+        if (succeeded) {
+            NSLog(@"The follow was uploaded!");
+        } else {
+            NSLog(@"Problem uploading the event: %@", error.localizedDescription);
+        }
+    }];
+    
+    
+    /*
+    NSMutableArray *currentFollowers = [self.userToDisplay[@"follower_arr"] mutableCopy];
+    if([currentFollowers containsObject:[PFUser currentUser].objectId]) {
+        [currentFollowers removeObject:[PFUser currentUser].objectId];
+        self.userToDisplay[@"follower_arr"] = [currentFollowers copy];
+        [self.userToDisplay saveInBackground];
+    } else {
+        [currentFollowers addObject:[PFUser currentUser].objectId];
+        self.userToDisplay[@"follower_arr"] = [currentFollowers copy];
+        [self.userToDisplay saveInBackground];
+    }*/
 }
 
 #pragma mark - TableView

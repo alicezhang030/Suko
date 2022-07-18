@@ -47,6 +47,8 @@
     [newUser[@"list_titles"] addObject:@"Watching"];
     [newUser[@"list_titles"] addObject:@"Watched"];
     
+    newUser[@"follower_arr"] = [[NSArray alloc] init];
+    
     newUser[@"list_data"] = [NSMutableArray array];
     for(int i = 0; i < [newUser[@"list_titles"] count]; i++) {
         [newUser[@"list_data"] addObject:[NSMutableArray array]];

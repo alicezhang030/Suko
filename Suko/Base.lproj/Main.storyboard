@@ -935,7 +935,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="eq7-jM-ydI">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="215"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="267"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="hwD-m2-jRY" customClass="PFImageView">
@@ -952,6 +952,17 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Si9-Sf-957">
+                                            <rect key="frame" x="142" y="218" width="130" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.76078431369999999" green="0.56470588239999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Follow"/>
+                                            <connections>
+                                                <action selector="tapFollowButton:" destination="561-x0-24T" eventType="touchUpInside" id="Dc0-zX-9gz"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
@@ -963,7 +974,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKLibraryTableViewCell" rowHeight="83" id="t4h-eB-9fQ" customClass="SUKLibraryTableViewCell">
-                                        <rect key="frame" x="0.0" y="259.5" width="414" height="83"/>
+                                        <rect key="frame" x="0.0" y="311.5" width="414" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t4h-eB-9fQ" id="lgU-4E-CxL">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
@@ -1009,7 +1020,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dod-X2-2Ix" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4570" y="114"/>
+            <point key="canvasLocation" x="4569.5652173913049" y="113.83928571428571"/>
         </scene>
         <!--Create New Event View Controller-->
         <scene sceneID="doL-Gr-Js4">
@@ -1190,7 +1201,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="4vs-CO-2P5"/>
+        <segue reference="4HA-N7-CeT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

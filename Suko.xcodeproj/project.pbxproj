@@ -29,6 +29,7 @@
 		53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */; };
 		53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B3301F28779B070013F404 /* SUKAnimeListViewController.m */; };
 		53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B330252877A31E0013F404 /* SUKAnimeListTableViewCell.m */; };
+		53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C81C8A2885D46500092A46 /* SUKFollow.m */; };
 		53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */; };
 		53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */; };
 		53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */; };
@@ -96,6 +97,8 @@
 		53B3301F28779B070013F404 /* SUKAnimeListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnimeListViewController.m; sourceTree = "<group>"; };
 		53B330242877A31E0013F404 /* SUKAnimeListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAnimeListTableViewCell.h; sourceTree = "<group>"; };
 		53B330252877A31E0013F404 /* SUKAnimeListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnimeListTableViewCell.m; sourceTree = "<group>"; };
+		53C81C892885D46500092A46 /* SUKFollow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKFollow.h; sourceTree = "<group>"; };
+		53C81C8A2885D46500092A46 /* SUKFollow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKFollow.m; sourceTree = "<group>"; };
 		53CCA6E828808E5900B217F5 /* SUKNotCurrentUserProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKNotCurrentUserProfileViewController.h; sourceTree = "<group>"; };
 		53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKNotCurrentUserProfileViewController.m; sourceTree = "<group>"; };
 		53E0D78D2878F72F00CFCF91 /* SUKLibraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryViewController.h; sourceTree = "<group>"; };
@@ -166,6 +169,8 @@
 				532AB030287752DC00114DBA /* SUKAnime.m */,
 				53E1CE002881C8D400186E36 /* SUKEvent.h */,
 				53E1CE012881C8D400186E36 /* SUKEvent.m */,
+				53C81C892885D46500092A46 /* SUKFollow.h */,
+				53C81C8A2885D46500092A46 /* SUKFollow.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -530,6 +535,7 @@
 				53E1CE022881C8D400186E36 /* SUKEvent.m in Sources */,
 				5302D388287F7A280009018D /* SUKUserMapViewController.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
+				53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */,
 				53291ED62878C6DF00B12469 /* SUKLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
