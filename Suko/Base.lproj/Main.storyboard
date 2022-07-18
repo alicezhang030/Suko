@@ -223,6 +223,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="listTitleLabel" destination="x9B-LX-VHW" id="bCz-Qn-kYj"/>
+                                            <segue destination="OiV-xg-5bj" kind="show" identifier="LibraryToListSegue" id="Doc-Tj-pnS"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -240,12 +241,11 @@
                     <navigationItem key="navigationItem" title="Library" id="SR4-Xh-3k6"/>
                     <connections>
                         <outlet property="tableView" destination="FS1-BX-d26" id="WJD-ha-UM8"/>
-                        <segue destination="OiV-xg-5bj" kind="show" identifier="LibraryToListSegue" id="YIN-xz-oBj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VNR-ut-uil" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3726.0869565217395" y="-585.26785714285711"/>
+            <point key="canvasLocation" x="3609" y="-585"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wcX-ga-lzD">
@@ -503,6 +503,10 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="6x9-O9-7d8">
+                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IvK-Z4-S0e"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -515,6 +519,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="nmB-EQ-Y6W"/>
                     <connections>
+                        <outlet property="spinner" destination="6x9-O9-7d8" id="B1z-UC-4na"/>
                         <outlet property="tableView" destination="XVl-nz-EZC" id="phc-6I-2I0"/>
                     </connections>
                 </viewController>
@@ -1209,7 +1214,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="iPf-X4-auV"/>
-        <segue reference="4vs-CO-2P5"/>
+        <segue reference="Doc-Tj-pnS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

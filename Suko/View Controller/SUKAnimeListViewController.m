@@ -14,6 +14,7 @@
 
 @interface SUKAnimeListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -28,6 +29,38 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.spinner.hidesWhenStopped = YES;
+    [self.spinner startAnimating];
+    
+    if([self.arrOfAnime count] == 0 && self.arrOfAnimeMALID != nil){
+        [self assignArrOfAnimeWithArrOfMALID];
+    } else {
+        [self.spinner stopAnimating];
+    }
+}
+
+-(void) assignArrOfAnimeWithArrOfMALID {
+    for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
+        NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
+        
+        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+            if (anime != nil) {
+                NSMutableArray *currentArrOfAnime = [self.arrOfAnime mutableCopy];
+                [currentArrOfAnime addObject:anime];
+                self.arrOfAnime = [currentArrOfAnime copy];
+                [self.tableView reloadData];
+                
+                if(i == self.arrOfAnimeMALID.count - 1) {
+                    [self.spinner stopAnimating];
+                }
+            } else {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];
+        
+        [NSThread sleepForTimeInterval:10.0];
+    }
 }
  
 #pragma mark - TableView
