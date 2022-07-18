@@ -13,9 +13,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numOfEpLabel;
 @property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
+@property (weak, nonatomic) IBOutlet MKDropdownMenu *dropdownMenu;
 
 @property (strong, nonatomic) NSArray<NSString *> *listOptions;
-
 @end
 
 @implementation SUKDetailsViewController
@@ -37,6 +37,9 @@
     
     self.listOptions = @[@"Remove from lists", @"Want to Watch", @"Watching", @"Watched"];
     self.dropdownMenu.backgroundDimmingOpacity = 0.00;
+    self.dropdownMenu.dropdownCornerRadius = 4.0;
+    self.dropdownMenu.layer.cornerRadius = 4;
+    self.dropdownMenu.layer.masksToBounds = true;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

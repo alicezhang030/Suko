@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKDetailsViewController : UIViewController
 @property (nonatomic, strong) SUKAnime *animeToDisplay;
-@property (weak, nonatomic) IBOutlet MKDropdownMenu *dropdownMenu;
 
 @end
 
