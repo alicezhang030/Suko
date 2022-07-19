@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) NSArray *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *animeToPass;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 
 
@@ -33,9 +32,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    self.animeToPass = [NSMutableArray array];
-    
+        
     [self loadContents];
 }
 
@@ -106,40 +103,17 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.animeToPass removeAllObjects];
-    NSArray *arrOfMalID = self.userToDisplay[@"list_data"][indexPath.row];
-    
-    if(arrOfMalID.count == 0) {
-        [self performSegueWithIdentifier:@"NotCurrentUserProfileToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-    }
-    
-    for(int i = 0; i < arrOfMalID.count; i++) {
-        NSNumber *malID = [arrOfMalID objectAtIndex:i];
-        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-             if (anime != nil) {
-                 [self.animeToPass addObject:anime];
-                 if(i == arrOfMalID.count - 1) {
-                     [self performSegueWithIdentifier:@"NotCurrentUserProfileToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-                 }
-             } else {
-                 NSLog(@"%@", error.localizedDescription);
-             }
-         }];
-        
-        [NSThread sleepForTimeInterval:0.4];
-    }
-}
-
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"NotCurrentUserProfileToListSegue"]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.userToDisplay = self.userToDisplay;
-        animeListVC.arrOfAnime = self.animeToPass;
+        animeListVC.arrOfAnimeMALID = self.userToDisplay[@"list_data"][indexPath.row];
+        animeListVC.arrOfAnime = [NSMutableArray array];
     }
 }
 

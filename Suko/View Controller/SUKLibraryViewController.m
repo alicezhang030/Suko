@@ -13,8 +13,6 @@
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *listTitles;
-@property (nonatomic, strong) NSMutableSet *animeToPassMalID;
-@property (nonatomic, strong) NSMutableArray *animeToPass;
 
 @end
 
@@ -29,8 +27,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.listTitles = [PFUser currentUser][@"list_titles"];
-    self.animeToPass = [NSMutableArray array];
-    self.animeToPassMalID = [NSMutableSet set];
 }
 
 #pragma mark - TableView

@@ -20,7 +20,6 @@
 @property (nonatomic, strong) UIBarButtonItem *logoutButton;
 @property (nonatomic, strong) NSArray *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *animeToPass;
 
 @end
 
@@ -39,9 +38,7 @@
     NSMutableArray* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
     [currentRightBarItemsMutable addObject:self.logoutButton];
     self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];
-    
-    self.animeToPass = [NSMutableArray array];
-    
+        
     [self loadContents];
 }
 
@@ -86,43 +83,21 @@
     }];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.animeToPass removeAllObjects];
-    NSArray *arrOfMalID = [PFUser currentUser][@"list_data"][indexPath.row];
-    
-    if(arrOfMalID.count == 0) {
-        [self performSegueWithIdentifier:@"ProfileToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-    }
-    
-    for(int i = 0; i < arrOfMalID.count; i++) {
-        NSNumber *malID = [arrOfMalID objectAtIndex:i];
-        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
-             if (anime != nil) {
-                 [self.animeToPass addObject:anime];
-                 if(i == arrOfMalID.count - 1) {
-                     [self performSegueWithIdentifier:@"ProfileToListSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-                 }
-             } else {
-                 NSLog(@"%@", error.localizedDescription);
-             }
-         }];
-        
-        [NSThread sleepForTimeInterval:0.4];
-    }
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    /* Commented out code
     if([segue.identifier isEqualToString:@"ProfileToEditProfileSegue"]) {
         UINavigationController *navController = segue.destinationViewController;
         SUKEditProfileViewController *editVC =  (SUKEditProfileViewController*)navController.topViewController;
-    }
+    }*/
     
     if([segue.identifier isEqualToString:@"ProfileToListSegue"]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.userToDisplay = [PFUser currentUser];
-        animeListVC.arrOfAnime = self.animeToPass;
+        animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
+        animeListVC.arrOfAnime = [NSMutableArray array];
     }
 }
 
