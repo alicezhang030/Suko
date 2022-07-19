@@ -84,12 +84,6 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    /* Commented out code
-    if([segue.identifier isEqualToString:@"ProfileToEditProfileSegue"]) {
-        UINavigationController *navController = segue.destinationViewController;
-        SUKEditProfileViewController *editVC =  (SUKEditProfileViewController*)navController.topViewController;
-    }*/
-    
     if([segue.identifier isEqualToString:@"ProfileToListSegue"]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;

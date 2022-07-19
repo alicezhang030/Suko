@@ -10,12 +10,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKEvent : PFObject<PFSubclassing>
-@property (nonatomic, strong) NSString *eventName;
-@property (nonatomic, strong) NSString *locationName;
-@property (nonatomic, strong) NSDate *dateOfEvent;
-@property (nonatomic, strong) NSNumber *milesAway;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) PFGeoPoint *location;
+@property (nonatomic, strong) NSDate *date;
 
-+ (void) postEvent:(NSString *) eventName eventLocation:(NSString *) eventLocation date:(NSDate *) date usersMilesAway:(NSNumber *) miles withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString*) eventDescription eventLocation:(CLLocation *) eventLocation eventDate:(NSDate *) date withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 

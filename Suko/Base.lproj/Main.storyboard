@@ -1168,13 +1168,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="KHe-xm-1Kl">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="KHe-xm-1Kl">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gno-HF-dN0">
+                                <rect key="frame" x="147" y="656" width="120" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="tCo-Ti-t4p"/>
+                                    <constraint firstAttribute="height" constant="61" id="wHJ-fx-Dhg"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Confirm">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="1" green="0.6705882353" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="16"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="pressConfirm:" destination="VUh-PW-aEg" eventType="touchUpInside" id="2VN-MN-ufL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nXp-ro-5Di"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gno-HF-dN0" firstAttribute="top" secondItem="nXp-ro-5Di" secondAttribute="top" constant="568" id="0Q8-xi-aX1"/>
+                            <constraint firstItem="KHe-xm-1Kl" firstAttribute="bottom" secondItem="nXp-ro-5Di" secondAttribute="bottom" id="Be7-1e-Ym7"/>
+                            <constraint firstAttribute="trailing" secondItem="KHe-xm-1Kl" secondAttribute="trailing" id="Qkr-ga-azW"/>
+                            <constraint firstItem="KHe-xm-1Kl" firstAttribute="top" secondItem="nXp-ro-5Di" secondAttribute="top" id="TAb-89-DtP"/>
+                            <constraint firstItem="nXp-ro-5Di" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gno-HF-dN0" secondAttribute="bottom" constant="10" id="aV4-Nt-ir1"/>
+                            <constraint firstItem="gno-HF-dN0" firstAttribute="leading" secondItem="nXp-ro-5Di" secondAttribute="leading" constant="147" id="i6r-X2-g2p"/>
+                            <constraint firstItem="KHe-xm-1Kl" firstAttribute="leading" secondItem="JnN-nX-Lfd" secondAttribute="leading" id="jHt-s4-UC8"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lEF-xh-hPM"/>
                     <connections>

@@ -6,6 +6,7 @@
 //
 
 #import "SUKChooseEventLocationViewController.h"
+#import "SUKEvent.h"
 
 @interface SUKChooseEventLocationViewController ()
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -16,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+        
     MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
     [self.mapView setRegion:currentUserRegion animated:false];
     
@@ -42,14 +43,37 @@
     [self.mapView addAnnotation:annotation];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)pressConfirm:(id)sender {
+    if([self.mapView.annotations count] == 0) {
+        NSString *title = @"Location required";
+        NSString *message = @"Please long hold on the map to select a location for your event and try again.";
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:message
+                                                                preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {}];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
+    } else if([self.mapView.annotations count] > 1) {
+        NSLog(@"Error: more than one annotation on map");
+    } else {
+        id<MKAnnotation> eventLocationAnnotation = [self.mapView.annotations lastObject];
+        CLLocationCoordinate2D eventCoordinate = eventLocationAnnotation.coordinate;
+        CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:eventCoordinate.latitude longitude:eventCoordinate.longitude];
+        
+        [SUKEvent postEventWithName:self.eventName eventDescription:self.eventDescription eventLocation:eventLocation eventDate:self.eventDate withCompletion:^(BOOL succeeded, NSError * error) {
+            if (succeeded) {
+                NSLog(@"The event was uploaded!");
+                
+                NSArray *viewControllers = [self.navigationController viewControllers];
+                [self.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original map VC
+            } else {
+                NSLog(@"Problem uploading the event: %@", error.localizedDescription);
+            }
+        }];
+    }
 }
-*/
 
 @end

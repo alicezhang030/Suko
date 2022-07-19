@@ -36,44 +36,26 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"CreateNewEventToChooseEventLocationSegue"]) {
-        SUKChooseEventLocationViewController *chooseLocationVC = [segue destinationViewController];
-        chooseLocationVC.currentUserLocation = self.currentUserLocation;
+        if([self.eventNameTextField.text isEqual:@""] || [self.eventDescriptionTextView.text isEqual:@""]) {
+            NSString *title = @"All fields required";
+            NSString *message = @"Please enter an event name and an event description and try again.";
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                           message:message
+                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * _Nonnull action) {}];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:^{}];
+        } else {
+            SUKChooseEventLocationViewController *chooseLocationVC = [segue destinationViewController];
+            chooseLocationVC.currentUserLocation = self.currentUserLocation;
+            chooseLocationVC.eventName = self.eventNameTextField.text;
+            chooseLocationVC.eventDescription = self.eventDescriptionTextView.text;
+            chooseLocationVC.eventDate = self.timeDatePicker.date;
+        }
     }
 }
-
-/*
-NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-formatter.numberStyle = NSNumberFormatterDecimalStyle;
-NSNumber *milesAway = [formatter numberFromString:self.usersMileAwayTextField.text];
-
-if([self.eventNameTextField.text isEqual:@""] || [self.locationTextField.text isEqual:@""] || [self.usersMileAwayTextField.text isEqual:@""] || milesAway == nil) {
-    
-    NSString *title = @"All fields required";
-    NSString *message = @"Please enter an event name, location, and radius and try again.";
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                message:message
-                                preferredStyle:(UIAlertControllerStyleAlert)];
-    // Create an OK action
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                             style:UIAlertActionStyleDefault
-                                             handler:^(UIAlertAction * _Nonnull action) {}];
-    
-    // Add the OK action to the alert controller
-    [alert addAction:okAction];
-    
-    // Present the alert
-    [self presentViewController:alert animated:YES completion:^{}];
-} else {
-    [SUKEvent postEvent:self.eventNameTextField.text eventLocation:self.locationTextField.text date:(NSDate *) self.timeDatePicker.date usersMilesAway:milesAway withCompletion:^(BOOL succeeded, NSError * error) {
-        if (succeeded) {
-            NSLog(@"The event was uploaded!");
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        } else {
-            NSLog(@"Problem uploading the event: %@", error.localizedDescription);
-        }
-    }];
-}*/
 
 @end
