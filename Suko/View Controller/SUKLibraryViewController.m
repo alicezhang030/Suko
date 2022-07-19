@@ -52,15 +52,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"LibraryToListSegue"]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
-        
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.userToDisplay = [PFUser currentUser];
-        
-        animeListVC.arrOfAnimeMALID = @[@185, @43608];
-        //[PFUser currentUser][@"list_data"][indexPath.row];
-        animeListVC.arrOfAnime = [[NSArray alloc] init];
+        animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
+        animeListVC.arrOfAnime = [NSMutableArray array];
     }
 }
 

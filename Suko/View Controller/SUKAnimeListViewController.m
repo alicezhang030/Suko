@@ -33,14 +33,19 @@
     self.spinner.hidesWhenStopped = YES;
     [self.spinner startAnimating];
     
-    if([self.arrOfAnime count] == 0 && self.arrOfAnimeMALID != nil){
-        [self assignArrOfAnimeWithArrOfMALID];
+    if([self.arrOfAnime count] == 0 && self.arrOfAnimeMALID != nil && self.arrOfAnimeMALID.count > 0){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self updateArrOfAnime];
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self.spinner stopAnimating];
+            });
+        });
     } else {
         [self.spinner stopAnimating];
     }
 }
 
--(void) assignArrOfAnimeWithArrOfMALID {
+-(void) updateArrOfAnime {
     for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
         NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
         
@@ -50,16 +55,12 @@
                 [currentArrOfAnime addObject:anime];
                 self.arrOfAnime = [currentArrOfAnime copy];
                 [self.tableView reloadData];
-                
-                if(i == self.arrOfAnimeMALID.count - 1) {
-                    [self.spinner stopAnimating];
-                }
             } else {
                 NSLog(@"%@", error.localizedDescription);
             }
         }];
         
-        [NSThread sleepForTimeInterval:10.0];
+        [NSThread sleepForTimeInterval:0.7];
     }
 }
  
