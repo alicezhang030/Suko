@@ -10,6 +10,7 @@
 #import "Parse/PFGeoPoint.h"
 #import "Parse/Parse.h"
 #import "SUKNotCurrentUserProfileViewController.h"
+#import "SUKCreateNewEventViewController.h"
 
 @interface SUKUserMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -91,6 +92,11 @@
     if([segue.identifier isEqualToString:@"MapToNotCurrentUserProfileSegue"]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
+    }
+
+    if([segue.identifier isEqualToString:@"UserMapToCreateEventFormSegue"]) {
+        SUKCreateNewEventViewController *newEventFormVC = [segue destinationViewController];
+        newEventFormVC.currentUserLocation = self.currentUserLocation;
     }
 }
 

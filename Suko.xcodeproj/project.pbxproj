@@ -27,6 +27,7 @@
 		5397F5F9286B676900E9D894 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5F8286B676900E9D894 /* main.m */; };
 		53A97520287DF9B400D163BF /* SUKProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A9751F287DF9B400D163BF /* SUKProfileViewController.m */; };
 		53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */; };
+		53ABF51A288717F00015F1DB /* SUKChooseEventLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABF519288717F00015F1DB /* SUKChooseEventLocationViewController.m */; };
 		53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B3301F28779B070013F404 /* SUKAnimeListViewController.m */; };
 		53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B330252877A31E0013F404 /* SUKAnimeListTableViewCell.m */; };
 		53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C81C8A2885D46500092A46 /* SUKFollow.m */; };
@@ -93,6 +94,8 @@
 		53A9751F287DF9B400D163BF /* SUKProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKProfileViewController.m; sourceTree = "<group>"; };
 		53A97521287DFCF900D163BF /* SUKEditProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKEditProfileViewController.h; sourceTree = "<group>"; };
 		53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKEditProfileViewController.m; sourceTree = "<group>"; };
+		53ABF518288717F00015F1DB /* SUKChooseEventLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKChooseEventLocationViewController.h; sourceTree = "<group>"; };
+		53ABF519288717F00015F1DB /* SUKChooseEventLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKChooseEventLocationViewController.m; sourceTree = "<group>"; };
 		53B3301E28779B070013F404 /* SUKAnimeListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAnimeListViewController.h; sourceTree = "<group>"; };
 		53B3301F28779B070013F404 /* SUKAnimeListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnimeListViewController.m; sourceTree = "<group>"; };
 		53B330242877A31E0013F404 /* SUKAnimeListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAnimeListTableViewCell.h; sourceTree = "<group>"; };
@@ -200,6 +203,8 @@
 				53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */,
 				53E1CDFD2881C80B00186E36 /* SUKCreateNewEventViewController.h */,
 				53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */,
+				53ABF518288717F00015F1DB /* SUKChooseEventLocationViewController.h */,
+				53ABF519288717F00015F1DB /* SUKChooseEventLocationViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -522,6 +527,7 @@
 				5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */,
 				53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */,
 				53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */,
+				53ABF51A288717F00015F1DB /* SUKChooseEventLocationViewController.m in Sources */,
 				531C3A0B2874D849002E80C4 /* SUKHomeCollectionViewCell.m in Sources */,
 				53E1CDFF2881C80B00186E36 /* SUKCreateNewEventViewController.m in Sources */,
 				531C3A052874C14B002E80C4 /* SUKHomeViewController.m in Sources */,

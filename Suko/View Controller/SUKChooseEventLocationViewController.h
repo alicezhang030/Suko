@@ -1,8 +1,8 @@
 //
-//  SUKCreateNewEventViewController.h
+//  SUKChooseEventLocationViewController.h
 //  Suko
 //
-//  Created by Alice Zhang on 7/15/22.
+//  Created by Alice Zhang on 7/19/22.
 //
 
 #import <UIKit/UIKit.h>
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SUKCreateNewEventViewController : UIViewController
+@interface SUKChooseEventLocationViewController : UIViewController
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 
 @end
