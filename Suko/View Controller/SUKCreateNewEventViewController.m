@@ -50,7 +50,6 @@
             [self presentViewController:alert animated:YES completion:^{}];
         } else {
             SUKChooseEventLocationViewController *chooseLocationVC = [segue destinationViewController];
-            chooseLocationVC.currentUserLocation = self.currentUserLocation;
             chooseLocationVC.eventName = self.eventNameTextField.text;
             chooseLocationVC.eventDescription = self.eventDescriptionTextView.text;
             chooseLocationVC.eventDate = self.timeDatePicker.date;

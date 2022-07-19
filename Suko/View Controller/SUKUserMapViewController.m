@@ -13,6 +13,7 @@
 #import "SUKCreateNewEventViewController.h"
 
 @interface SUKUserMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
@@ -92,11 +93,6 @@
     if([segue.identifier isEqualToString:@"MapToNotCurrentUserProfileSegue"]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
-    }
-
-    if([segue.identifier isEqualToString:@"UserMapToCreateEventFormSegue"]) {
-        SUKCreateNewEventViewController *newEventFormVC = [segue destinationViewController];
-        newEventFormVC.currentUserLocation = self.currentUserLocation;
     }
 }
 

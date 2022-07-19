@@ -8,7 +8,9 @@
 #import "SUKChooseEventLocationViewController.h"
 #import "SUKEvent.h"
 
-@interface SUKChooseEventLocationViewController ()
+@interface SUKChooseEventLocationViewController () <CLLocationManagerDelegate>
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
@@ -17,14 +19,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
-    MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
-    [self.mapView setRegion:currentUserRegion animated:false];
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        [self.locationManager requestWhenInUseAuthorization];
+
+    [self.locationManager startUpdatingLocation];
+
     
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
                                                  initWithTarget:self
                                                          action:@selector(handleLongPress:)];
     [self.mapView addGestureRecognizer:longPressRecognizer];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    self.currentUserLocation = [locations lastObject];
+    
+    MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
+    [self.mapView setRegion:currentUserRegion animated:false];
+    
+    PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentUserLocation];
+    [PFUser currentUser][@"current_coordinates"] = point;
+    [[PFUser currentUser] saveInBackground];
+    
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)sender {

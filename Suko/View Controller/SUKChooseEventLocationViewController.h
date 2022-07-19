@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKChooseEventLocationViewController : UIViewController
-@property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSString *eventName;
 @property (nonatomic, strong) NSString *eventDescription;
 @property (nonatomic, strong) NSDate *eventDate;

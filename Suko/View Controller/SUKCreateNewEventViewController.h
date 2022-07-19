@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKCreateNewEventViewController : UIViewController
-@property (nonatomic, strong) CLLocation *currentUserLocation;
 
 @end
 

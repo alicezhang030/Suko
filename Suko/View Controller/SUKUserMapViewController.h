@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKUserMapViewController : UIViewController
-@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
