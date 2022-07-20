@@ -1102,7 +1102,7 @@
                                         <connections>
                                             <outlet property="dateLabel" destination="uV8-LG-DKP" id="1iT-GL-0Ig"/>
                                             <outlet property="eventNameLabel" destination="zNF-RK-n0r" id="VkP-nR-6DI"/>
-                                            <outlet property="userProfileImage" destination="1Xx-vi-fAy" id="9Vk-Pq-chX"/>
+                                            <outlet property="profileImageView" destination="1Xx-vi-fAy" id="9Vk-Pq-chX"/>
                                             <outlet property="usernameLabel" destination="xtp-VG-za1" id="lKV-g1-j3z"/>
                                             <segue destination="oIa-nP-6pt" kind="show" identifier="BrowseEventsToEventDetailsSegue" id="Ny8-eA-9as"/>
                                         </connections>
@@ -1457,8 +1457,8 @@
                         <outlet property="dateLabel" destination="sjt-Wp-IyL" id="D0D-wo-J9c"/>
                         <outlet property="decriptionLabel" destination="2ut-5u-oQ8" id="QEN-BO-dBG"/>
                         <outlet property="eventNameLabel" destination="SAG-ES-okg" id="tFv-G4-eK9"/>
+                        <outlet property="profileImageView" destination="YYc-p2-EMY" id="Ksy-9R-dBp"/>
                         <outlet property="registerButton" destination="0TZ-Zo-6mI" id="Ilc-6W-idO"/>
-                        <outlet property="userProfileImage" destination="YYc-p2-EMY" id="Ksy-9R-dBp"/>
                         <outlet property="usernameLabel" destination="ngn-le-IGH" id="t5g-eD-LC0"/>
                     </connections>
                 </viewController>

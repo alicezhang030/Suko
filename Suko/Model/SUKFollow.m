@@ -16,7 +16,7 @@
     return @"SUKFollow";
 }
 
-+ (void) postFollow:(PFUser*) follower userBeingFollowed:(PFUser*) followed withCompletion: (PFBooleanResultBlock  _Nullable)completion {
++ (void) postFollowWithFollower:(PFUser*) follower userBeingFollowed:(PFUser*) followed withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     SUKFollow *newFollow = [SUKFollow new];
     
     // Set up the columns

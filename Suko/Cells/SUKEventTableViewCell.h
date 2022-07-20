@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SUKEventTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) SUKEvent *event;
-@property (weak, nonatomic) IBOutlet PFImageView *userProfileImage;
+@property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;

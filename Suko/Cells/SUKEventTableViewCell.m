@@ -34,11 +34,11 @@
     [eventPoster fetchIfNeeded];
     self.usernameLabel.text = eventPoster.username;
     
-    self.userProfileImage.file = eventPoster[@"profile_image"];
-    [self.userProfileImage loadInBackground];
-    self.userProfileImage.layer.cornerRadius = self.userProfileImage.frame.size.height /2;
-    self.userProfileImage.layer.masksToBounds = YES;
-    self.userProfileImage.layer.borderWidth = 0;
+    self.profileImageView.file = eventPoster[@"profile_image"];
+    [self.profileImageView loadInBackground];
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+    self.profileImageView.layer.masksToBounds = YES;
+    self.profileImageView.layer.borderWidth = 0;
 }
 
 @end

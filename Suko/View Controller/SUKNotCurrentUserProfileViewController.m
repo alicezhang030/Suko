@@ -78,7 +78,7 @@
             [SUKFollow deleteFollow:[follows lastObject]];
             [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
         } else {
-            [SUKFollow postFollow:[PFUser currentUser] userBeingFollowed:self.userToDisplay withCompletion:^(BOOL succeeded, NSError * error) {
+            [SUKFollow postFollowWithFollower:[PFUser currentUser] userBeingFollowed:self.userToDisplay withCompletion:^(BOOL succeeded, NSError * error) {
                 if (succeeded) {
                     NSLog(@"The follow was uploaded!");
                     [self.followButton setTitle:@"Following" forState:UIControlStateNormal];
