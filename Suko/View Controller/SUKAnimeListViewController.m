@@ -24,8 +24,7 @@
     [super viewDidLoad];
 
     self.navigationItem.title = self.listTitle;
-    
-    // Set up TableView
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;

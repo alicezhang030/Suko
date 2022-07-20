@@ -63,21 +63,24 @@
                                 stringByAppendingString:@" - "]
                                stringByAppendingString:[dateFormatter stringFromDate:event.endTime]];
         
-        PFUser *eventPoster = event.postedBy;
-        [eventPoster fetchIfNeeded];
-        self.usernameLabel.text = eventPoster.username;
-        
-        self.profileImageView.file = eventPoster[@"profile_image"];
-        [self.profileImageView loadInBackground];
-        self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-        self.profileImageView.layer.masksToBounds = YES;
-        self.profileImageView.layer.borderWidth = 0;
-        
-        if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
-            [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
-        } else {
-            [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
-        }
+        [event.postedBy fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if(object != nil) {
+                PFUser *eventPoster = (PFUser *) object;
+                self.usernameLabel.text = eventPoster.username;
+                
+                self.profileImageView.file = eventPoster[@"profile_image"];
+                [self.profileImageView loadInBackground];
+                self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+                self.profileImageView.layer.masksToBounds = YES;
+                self.profileImageView.layer.borderWidth = 0;
+                
+                if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
+                    [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
+                } else {
+                    [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
+                }
+            }
+        }];
     }];
 }
 

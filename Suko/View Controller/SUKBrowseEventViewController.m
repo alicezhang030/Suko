@@ -133,7 +133,6 @@
     SUKBrowseEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKBrowseEventTableViewCell"];
     SUKEvent *eventToDisplay = self.arrOfEvents[indexPath.row];
     [cell setEvent:eventToDisplay];
-    cell.poster = eventToDisplay.postedBy;
     return cell;
 }
 

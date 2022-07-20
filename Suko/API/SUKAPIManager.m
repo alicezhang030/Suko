@@ -32,7 +32,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     self.manager = [AFHTTPSessionManager manager];
     
     AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
-    [serializer setRemovesKeysWithNullValues:YES]; //turn NULL to nil
+    [serializer setRemovesKeysWithNullValues:YES]; // Turn NULL to nil
     [self.manager setResponseSerializer:serializer];
     
     return self;

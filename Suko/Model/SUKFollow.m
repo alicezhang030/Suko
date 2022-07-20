@@ -19,7 +19,6 @@
 + (void) postFollowWithFollower:(PFUser*) follower userBeingFollowed:(PFUser*) followed withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     SUKFollow *newFollow = [SUKFollow new];
     
-    // Set up the columns
     newFollow.follower = follower;
     newFollow.userBeingFollowed = followed;
     

@@ -16,9 +16,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone; // Remove the gray highlight after you select a cell
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    // Add tap gesture recognizer to the see all label so that when a user taps, the app segue
     UITapGestureRecognizer *seeAllTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapSeeAll:)];
     [self.seeAllLabel addGestureRecognizer:seeAllTapGestureRecognizer];
     [self.seeAllLabel setUserInteractionEnabled:YES];

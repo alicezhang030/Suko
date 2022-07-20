@@ -42,11 +42,9 @@
     [self topAnime];
     [self genreList];
     
-    // Setting up search bar
     self.searchBar.delegate = self;
     self.searchBar.showsCancelButton = true;
-        
-    // Set up TableView
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -55,14 +53,14 @@
 #pragma mark - Navigation
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    [searchBar resignFirstResponder]; // Dismiss the keyboard
-    searchBar.text = @""; // Reset the search bar text
+    [searchBar resignFirstResponder];
+    searchBar.text = @"";
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder]; // Dismiss the keyboard
+    [searchBar resignFirstResponder];
     NSString *searchText = searchBar.text;
-    searchBar.text = @""; // Reset the search bar text
+    searchBar.text = @"";
     
     [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:searchText completion:^(NSArray *anime, NSError *error) {
         if (anime != nil) {
@@ -97,7 +95,6 @@
 }
 
 - (IBAction)didTapLogout:(id)sender {
-    // Reset view to the log in screen
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         NSLog(@"User log out");
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -179,7 +176,7 @@
             
             int randomGenre1 = arc4random_uniform((int)self.dictOfGenres.count);
             int randomGenre2 = arc4random_uniform((int)self.dictOfGenres.count);
-            while(randomGenre2 == randomGenre1) { // Make sure the two genres are not the same
+            while(randomGenre2 == randomGenre1) { 
                 randomGenre2 = arc4random_uniform((int)self.dictOfGenres.count);
             }
             

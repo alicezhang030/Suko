@@ -115,7 +115,6 @@
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.userToDisplay = self.userToDisplay;
         animeListVC.arrOfAnimeMALID = self.userToDisplay[@"list_data"][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray array];
     }

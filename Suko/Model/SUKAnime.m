@@ -16,7 +16,7 @@
         NSNumber *malIDNSNumber = dictionary[@"mal_id"];
         self.malID = [malIDNSNumber intValue];
         
-        // MyAnimeList formats titles weirdly occasionally with "\" at the end, so we need to remove the formatting
+        // MyAnimeList formats titles occasionally with "\" at the end, so need to remove the formatting
         NSString *titleWithMALFormatting = dictionary[@"title"];
         self.title = [[titleWithMALFormatting componentsSeparatedByString:@"\\"] objectAtIndex:0];
         
