@@ -1131,6 +1131,10 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="M0l-T9-9PQ">
+                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kRc-2x-ysI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1151,6 +1155,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="discoverRegisteredSegmentedControl" destination="T80-LS-hV3" id="qmX-pd-BVn"/>
+                        <outlet property="spinner" destination="M0l-T9-9PQ" id="zqY-73-Bu3"/>
                         <outlet property="tableView" destination="k0i-jF-q1u" id="Peb-dw-x74"/>
                         <segue destination="561-x0-24T" kind="show" identifier="BrowseEventToNotCurrentUserProfileSegue" id="DYo-a4-zd2"/>
                     </connections>
@@ -1465,6 +1470,10 @@
                                     </constraints>
                                 </view>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="qSu-q4-779">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3Iw-Yh-6iN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1483,6 +1492,7 @@
                         <outlet property="eventNameLabel" destination="SAG-ES-okg" id="tFv-G4-eK9"/>
                         <outlet property="profileImageView" destination="YYc-p2-EMY" id="Ksy-9R-dBp"/>
                         <outlet property="registerButton" destination="0TZ-Zo-6mI" id="Ilc-6W-idO"/>
+                        <outlet property="spinner" destination="qSu-q4-779" id="4Hv-W6-xf4"/>
                         <outlet property="usernameLabel" destination="ngn-le-IGH" id="t5g-eD-LC0"/>
                         <segue destination="561-x0-24T" kind="show" identifier="EventDetailsToNotCurrentUserProfileSegue" id="rpV-XQ-NWa"/>
                     </connections>
@@ -1549,7 +1559,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="DYo-a4-zd2"/>
+        <segue reference="rpV-XQ-NWa"/>
         <segue reference="wz9-h9-cFl"/>
         <segue reference="EZ4-Jx-OHr"/>
     </inferredMetricsTieBreakers>

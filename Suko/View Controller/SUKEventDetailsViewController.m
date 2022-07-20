@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *decriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -36,6 +37,9 @@
     
     self.registerButton.layer.cornerRadius = 4;
     self.registerButton.layer.masksToBounds = true;
+    
+    self.spinner.hidesWhenStopped = YES;
+    [self.spinner startAnimating];
 }
 
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
@@ -85,6 +89,10 @@
                 } else {
                     [strongSelf.registerButton setTitle:@"Register" forState:UIControlStateNormal];
                 }
+                
+                [self.spinner stopAnimating];
+            } else {
+                NSLog(@"%@", error.localizedDescription);
             }
         }];
     }];

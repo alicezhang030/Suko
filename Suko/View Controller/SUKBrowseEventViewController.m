@@ -13,12 +13,13 @@
 #import "SUKNotCurrentUserProfileViewController.h"
 #import "Parse/Parse.h"
 
-@interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, SUKBrowseEventTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray<SUKEvent*> *arrOfEvents;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *discoverRegisteredSegmentedControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -46,10 +47,14 @@
         [self.locationManager requestWhenInUseAuthorization];
 
     [self.locationManager startUpdatingLocation];
+    
+    self.spinner.hidesWhenStopped = YES;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [self refreshData];
+
+    [self.spinner startAnimating];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
@@ -70,6 +75,14 @@
 
 - (IBAction)segmentChanged:(id)sender {
     [self refreshData];
+    [self.spinner startAnimating];
+}
+
+- (void)profileDoneLoading:(SUKBrowseEventTableViewCell *) cell {
+    NSInteger row = [self.tableView indexPathForCell:cell].row;
+    if(row == self.arrOfEvents.count - 1) {
+        [self.spinner stopAnimating];
+    }
 }
 
 - (void)browseEvents {
@@ -89,13 +102,16 @@
         if(events.count == 0) {
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            //[self.spinner stopAnimating]; Commented out code
         }
+        
         for(PFUser *event in events) {
             NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             [mutableArrOfEvents addObject:event];
             strongSelf.arrOfEvents = [mutableArrOfEvents copy];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            //[self.spinner stopAnimating]; Commented out code
         }
     }];
 }
@@ -118,6 +134,7 @@
         if(events.count == 0) {
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            //[self.spinner stopAnimating]; Commented out code
         }
         for(PFUser *event in events) {
             NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
@@ -125,6 +142,7 @@
             strongSelf.arrOfEvents = [mutableArrOfEvents copy];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            //[self.spinner stopAnimating]; Commented out code
         }
     }];
 }
@@ -139,6 +157,7 @@
     SUKBrowseEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKBrowseEventTableViewCell"];
     SUKEvent *eventToDisplay = self.arrOfEvents[indexPath.row];
     [cell setEvent:eventToDisplay];
+    cell.delegate = self;
     return cell;
 }
 
