@@ -1064,7 +1064,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKEventTableViewCell" rowHeight="128" id="ijO-jL-1gA" customClass="SUKEventTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKBrowseEventTableViewCell" rowHeight="128" id="ijO-jL-1gA" customClass="SUKBrowseEventTableViewCell">
                                         <rect key="frame" x="0.0" y="99.5" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ijO-jL-1gA" id="7YT-ny-vaO">
@@ -1152,6 +1152,7 @@
                     <connections>
                         <outlet property="discoverRegisteredSegmentedControl" destination="T80-LS-hV3" id="qmX-pd-BVn"/>
                         <outlet property="tableView" destination="k0i-jF-q1u" id="Peb-dw-x74"/>
+                        <segue destination="561-x0-24T" kind="show" identifier="BrowseEventToNotCurrentUserProfileSegue" id="DYo-a4-zd2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MkY-1D-dQ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1483,6 +1484,7 @@
                         <outlet property="profileImageView" destination="YYc-p2-EMY" id="Ksy-9R-dBp"/>
                         <outlet property="registerButton" destination="0TZ-Zo-6mI" id="Ilc-6W-idO"/>
                         <outlet property="usernameLabel" destination="ngn-le-IGH" id="t5g-eD-LC0"/>
+                        <segue destination="561-x0-24T" kind="show" identifier="EventDetailsToNotCurrentUserProfileSegue" id="rpV-XQ-NWa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dsK-AD-rKp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1547,8 +1549,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPf-X4-auV"/>
-        <segue reference="EZ4-Jx-OHr"/>
+        <segue reference="rpV-XQ-NWa"/>
+        <segue reference="wz9-h9-cFl"/>
+        <segue reference="tAG-hY-s6j"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

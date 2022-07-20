@@ -7,9 +7,11 @@
 
 #import "SUKBrowseEventViewController.h"
 #import "SUKEvent.h"
-#import "SUKEventTableViewCell.h"
+#import "SUKBrowseEventTableViewCell.h"
 #import "SUKEventDetailsViewController.h"
 #import <MapKit/MapKit.h>
+#import "SUKNotCurrentUserProfileViewController.h"
+#import "Parse/Parse.h"
 
 @interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -45,7 +47,7 @@
 
     [self.locationManager startUpdatingLocation];
     
-    [self browseEvents];
+    [self refreshData];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
@@ -128,16 +130,16 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    SUKEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKEventTableViewCell"];
+    SUKBrowseEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKBrowseEventTableViewCell"];
     SUKEvent *eventToDisplay = self.arrOfEvents[indexPath.row];
     [cell setEvent:eventToDisplay];
-    
+    cell.poster = eventToDisplay.postedBy;
     return cell;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"BrowseEventsToEventDetailsSegue"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKEventTableViewCell*) sender];
+        NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKBrowseEventTableViewCell*) sender];
         SUKEventDetailsViewController *eventDetailsVC = [segue destinationViewController];
         SUKEvent *event = self.arrOfEvents[indexPath.row];
         [eventDetailsVC setEvent:event];

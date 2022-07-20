@@ -1,14 +1,14 @@
 //
-//  SUKEventTableViewCell.m
+//  SUKBrowseEventTableViewCell.m
 //  Suko
 //
 //  Created by Alice Zhang on 7/19/22.
 //
 
-#import "SUKEventTableViewCell.h"
+#import "SUKBrowseEventTableViewCell.h"
 #import <Parse/Parse.h>
 
-@implementation SUKEventTableViewCell
+@implementation SUKBrowseEventTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -30,15 +30,17 @@
                             stringByAppendingString:@" - "]
                            stringByAppendingString:[formatter stringFromDate:event.endTime]];
     
-    PFUser *eventPoster = event.postedBy;
-    [eventPoster fetchIfNeeded];
-    self.usernameLabel.text = eventPoster.username;
-    
-    self.profileImageView.file = eventPoster[@"profile_image"];
-    [self.profileImageView loadInBackground];
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-    self.profileImageView.layer.masksToBounds = YES;
-    self.profileImageView.layer.borderWidth = 0;
+    [event.postedBy fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if(object != nil) {
+            PFUser *eventPoster = (PFUser *) object;
+            self.usernameLabel.text = eventPoster.username;
+            self.profileImageView.file = eventPoster[@"profile_image"];
+            [self.profileImageView loadInBackground];
+            self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+            self.profileImageView.layer.masksToBounds = YES;
+            self.profileImageView.layer.borderWidth = 0;
+        }
+    }];
 }
 
 @end

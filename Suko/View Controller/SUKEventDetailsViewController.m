@@ -9,6 +9,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Contacts/CNPostalAddressFormatter.h>
 #import <Parse/PFImageView.h>
+#import "SUKNotCurrentUserProfileViewController.h"
 
 @interface SUKEventDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
@@ -25,6 +26,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITapGestureRecognizer *profileImageTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profileImageView addGestureRecognizer:profileImageTapGestureRecognizer];
+    [self.profileImageView setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *usernameTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.usernameLabel setUserInteractionEnabled:YES];
+    [self.usernameLabel addGestureRecognizer:usernameTapGestureRecognizer];
+}
+
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self performSegueWithIdentifier:@"EventDetailsToNotCurrentUserProfileSegue" sender:self.event.postedBy];
 }
 
 - (void) setEvent:(SUKEvent*) event {
@@ -84,14 +96,14 @@
     [self.event saveInBackground];
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"EventDetailsToNotCurrentUserProfileSegue"]) {
+        SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
+        notCurrentUserprofileVC.userToDisplay = sender;
+    }
 }
-*/
 
 @end

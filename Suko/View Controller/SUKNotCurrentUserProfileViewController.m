@@ -47,8 +47,12 @@
     // Load the username
     self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
     
-    self.followButton.layer.cornerRadius = 4;
-    self.followButton.layer.masksToBounds = true;
+    if([self.userToDisplay.objectId isEqualToString:[PFUser currentUser].objectId]) {
+        [self.followButton removeFromSuperview];
+    } else {
+        self.followButton.layer.cornerRadius = 4;
+        self.followButton.layer.masksToBounds = true;
+    }
     
     PFQuery *query = [PFQuery queryWithClassName:@"SUKFollow"];
     [query whereKey:@"follower" equalTo:[PFUser currentUser]];
