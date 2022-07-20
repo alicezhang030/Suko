@@ -33,6 +33,9 @@
     UITapGestureRecognizer *usernameTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
     [self.usernameLabel setUserInteractionEnabled:YES];
     [self.usernameLabel addGestureRecognizer:usernameTapGestureRecognizer];
+    
+    self.registerButton.layer.cornerRadius = 4;
+    self.registerButton.layer.masksToBounds = true;
 }
 
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
