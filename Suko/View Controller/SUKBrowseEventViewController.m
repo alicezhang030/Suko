@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSArray<SUKEvent*> *arrOfEvents;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *discoverRegisteredSegmentedControl;
 
 @end
 
@@ -29,7 +30,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(events) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
     self.arrOfEvents = [[NSArray alloc] init];
@@ -44,7 +45,7 @@
 
     [self.locationManager startUpdatingLocation];
     
-    [self events];
+    [self browseEvents];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
@@ -55,7 +56,19 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-- (void)events {
+- (void) refreshData {
+    if(self.discoverRegisteredSegmentedControl.selectedSegmentIndex == 0) {
+        [self browseEvents];
+    } else {
+        [self registeredEvents];
+    }
+}
+
+- (IBAction)segmentChanged:(id)sender {
+    [self refreshData];
+}
+
+- (void)browseEvents {
     NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
     [mutableArrOfEvents removeAllObjects];
     self.arrOfEvents = mutableArrOfEvents;
@@ -67,6 +80,37 @@
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
+        if(events.count == 0) {
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }
+        for(PFUser *event in events) {
+            NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+            [mutableArrOfEvents addObject:event];
+            self.arrOfEvents = [mutableArrOfEvents copy];
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }
+    }];
+}
+
+- (void) registeredEvents {
+    NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+    [mutableArrOfEvents removeAllObjects];
+    self.arrOfEvents = mutableArrOfEvents;
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
+    [query includeKey:@"location"];
+    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:5.0];
+    [query whereKey:@"endTime" greaterThan:[NSDate now]];
+    NSString *currentUserID = [PFUser currentUser].objectId;
+    [query whereKey:@"attendees" containsAllObjectsInArray:@[currentUserID]];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
+        if(events.count == 0) {
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }
         for(PFUser *event in events) {
             NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             [mutableArrOfEvents addObject:event];

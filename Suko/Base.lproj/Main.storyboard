@@ -1041,9 +1041,31 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="k0i-jF-q1u">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="9UN-Ip-eNX">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="T80-LS-hV3">
+                                            <rect key="frame" x="0.0" y="12" width="414" height="32"/>
+                                            <segments>
+                                                <segment title="Discover"/>
+                                                <segment title="Registered"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="segmentChanged:" destination="SCL-JL-gSG" eventType="valueChanged" id="hQc-r6-1He"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="T80-LS-hV3" firstAttribute="leading" secondItem="9UN-Ip-eNX" secondAttribute="leading" id="0UB-Km-P8J"/>
+                                        <constraint firstItem="T80-LS-hV3" firstAttribute="centerY" secondItem="9UN-Ip-eNX" secondAttribute="centerY" id="2gj-Ub-cYh"/>
+                                        <constraint firstAttribute="trailing" secondItem="T80-LS-hV3" secondAttribute="trailing" id="cG5-gg-FDG"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKEventTableViewCell" rowHeight="128" id="ijO-jL-1gA" customClass="SUKEventTableViewCell">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="128"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ijO-jL-1gA" id="7YT-ny-vaO">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
@@ -1128,6 +1150,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="discoverRegisteredSegmentedControl" destination="T80-LS-hV3" id="qmX-pd-BVn"/>
                         <outlet property="tableView" destination="k0i-jF-q1u" id="Peb-dw-x74"/>
                     </connections>
                 </viewController>
@@ -1525,7 +1548,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="iPf-X4-auV"/>
-        <segue reference="tAG-hY-s6j"/>
+        <segue reference="EZ4-Jx-OHr"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
