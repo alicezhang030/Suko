@@ -13,11 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *eventDescription;
 @property (nonatomic, strong) PFGeoPoint *location;
-@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSDate *startTime;
+@property (nonatomic, strong) NSDate *endTime;
 @property (nonatomic, strong) PFUser *postedBy;
-@property (nonatomic, strong) NSArray<PFUser*> *attendees;
+@property (nonatomic, strong) NSArray<NSString*> *attendees;
 
-+ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString *) eventDescription eventLocation:(CLLocation *) eventLocation eventDate:(NSDate *) eventDate postedBy:(PFUser *) user withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString *) eventDescription eventLocation:(CLLocation *) eventLocation startTime:(NSDate *) startTime endTime:(NSDate *) endTime postedBy:(PFUser *) user withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 

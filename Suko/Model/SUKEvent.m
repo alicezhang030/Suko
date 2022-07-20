@@ -13,7 +13,8 @@
 @dynamic name;
 @dynamic eventDescription;
 @dynamic location;
-@dynamic date;
+@dynamic startTime;
+@dynamic endTime;
 @dynamic postedBy;
 @dynamic attendees;
 
@@ -21,13 +22,14 @@
     return @"SUKEvent";
 }
 
-+ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString *) eventDescription eventLocation:(CLLocation *) eventLocation eventDate:(NSDate *) eventDate postedBy:(PFUser *) user withCompletion: (PFBooleanResultBlock  _Nullable)completion {
++ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString *) eventDescription eventLocation:(CLLocation *) eventLocation startTime:(NSDate *) startTime endTime:(NSDate *) endTime postedBy:(PFUser *) user withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     SUKEvent *newEvent = [SUKEvent new];
     
     newEvent.name = eventName;
     newEvent.eventDescription = eventDescription;
     newEvent.location = [PFGeoPoint geoPointWithLocation:eventLocation];
-    newEvent.date = eventDate;
+    newEvent.startTime = startTime;
+    newEvent.endTime = endTime;
     newEvent.postedBy = user;
     newEvent.attendees = [[NSArray alloc] init];
     

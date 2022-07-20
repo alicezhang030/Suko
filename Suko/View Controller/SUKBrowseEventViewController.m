@@ -8,10 +8,14 @@
 #import "SUKBrowseEventViewController.h"
 #import "SUKEvent.h"
 #import "SUKEventTableViewCell.h"
+#import "SUKEventDetailsViewController.h"
+#import <MapKit/MapKit.h>
 
-@interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray<SUKEvent*> *arrOfEvents;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -26,7 +30,25 @@
     
     self.arrOfEvents = [[NSArray alloc] init];
     
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        [self.locationManager requestWhenInUseAuthorization];
+
+    [self.locationManager startUpdatingLocation];
+    
     [self events];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:[locations lastObject]];
+    [PFUser currentUser][@"current_coordinates"] = point;
+    [[PFUser currentUser] saveInBackground];
+    
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)events {
@@ -56,6 +78,15 @@
     [cell setEvent:eventToDisplay];
     
     return cell;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"BrowseEventsToEventDetailsSegue"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKEventTableViewCell*) sender];
+        SUKEventDetailsViewController *eventDetailsVC = [segue destinationViewController];
+        SUKEvent *event = self.arrOfEvents[indexPath.row];
+        [eventDetailsVC setEvent:event];
+    }
 }
 
 @end

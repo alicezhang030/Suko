@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -25,7 +26,9 @@
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"MM/dd/yyyy h:mm a";
-    self.dateLabel.text = [formatter stringFromDate:event.date];
+    self.dateLabel.text = [[[formatter stringFromDate:event.startTime]
+                            stringByAppendingString:@" - "]
+                           stringByAppendingString:[formatter stringFromDate:event.endTime]];
     
     PFUser *eventPoster = event.postedBy;
     [eventPoster fetchIfNeeded];

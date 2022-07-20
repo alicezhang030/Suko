@@ -13,7 +13,8 @@
 @interface SUKCreateNewEventViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *eventNameTextField;
 @property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
-@property (weak, nonatomic) IBOutlet UIDatePicker *timeDatePicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *startTimeDatePicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *endTimeDatePicker;
 
 @end
 
@@ -27,6 +28,16 @@
     
     self.eventDescriptionTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.eventDescriptionTextView.layer.borderWidth = 0.5;
+    
+    self.startTimeDatePicker.minimumDate = [NSDate new];
+    self.endTimeDatePicker.minimumDate = self.startTimeDatePicker.date;
+    
+    [self.startTimeDatePicker addTarget:self action:@selector(startDateChanged:)
+                  forControlEvents:UIControlEventValueChanged];
+}
+
+- (void) startDateChanged:(id)sender{
+    self.endTimeDatePicker.minimumDate = self.startTimeDatePicker.date;
 }
 
 -(void)dismissKeyboard{
@@ -52,7 +63,8 @@
             SUKChooseEventLocationViewController *chooseLocationVC = [segue destinationViewController];
             chooseLocationVC.eventName = self.eventNameTextField.text;
             chooseLocationVC.eventDescription = self.eventDescriptionTextView.text;
-            chooseLocationVC.eventDate = self.timeDatePicker.date;
+            chooseLocationVC.eventStartDate = self.startTimeDatePicker.date;
+            chooseLocationVC.eventEndDate = self.endTimeDatePicker.date;
         }
     }
 }

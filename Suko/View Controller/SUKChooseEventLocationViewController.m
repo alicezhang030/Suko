@@ -86,7 +86,7 @@
         CLLocationCoordinate2D eventCoordinate = eventLocationAnnotation.coordinate;
         CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:eventCoordinate.latitude longitude:eventCoordinate.longitude];
         
-        [SUKEvent postEventWithName:self.eventName eventDescription:self.eventDescription eventLocation:eventLocation eventDate:self.eventDate postedBy:[PFUser currentUser] withCompletion:^(BOOL succeeded, NSError * error) {
+        [SUKEvent postEventWithName:self.eventName eventDescription:self.eventDescription eventLocation:eventLocation startTime:self.eventStartDate endTime:self.eventEndDate postedBy:[PFUser currentUser] withCompletion:^(BOOL succeeded, NSError * error) {
             if (succeeded) {
                 NSLog(@"The event was uploaded!");
                 

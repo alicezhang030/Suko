@@ -19,6 +19,9 @@
 		53291ED62878C6DF00B12469 /* SUKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53291ED52878C6DF00B12469 /* SUKLoginViewController.m */; };
 		532AB031287752DC00114DBA /* SUKAnime.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AB030287752DC00114DBA /* SUKAnime.m */; };
 		535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535AE83F28789530007D6059 /* SUKDetailsViewController.m */; };
+		536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */; };
+		536AFC4F2887602500B01F95 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536AFC4E2887602500B01F95 /* CoreLocation.framework */; };
+		536AFC512887622300B01F95 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536AFC502887622300B01F95 /* Contacts.framework */; };
 		5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5E7286B676800E9D894 /* AppDelegate.m */; };
 		5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5EA286B676800E9D894 /* SceneDelegate.m */; };
 		5397F5F1286B676800E9D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5EF286B676800E9D894 /* Main.storyboard */; };
@@ -80,6 +83,10 @@
 		532AB030287752DC00114DBA /* SUKAnime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnime.m; sourceTree = "<group>"; };
 		535AE83E28789530007D6059 /* SUKDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKDetailsViewController.h; sourceTree = "<group>"; };
 		535AE83F28789530007D6059 /* SUKDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKDetailsViewController.m; sourceTree = "<group>"; };
+		536AFC4B28875E6E00B01F95 /* SUKEventDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKEventDetailsViewController.h; sourceTree = "<group>"; };
+		536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKEventDetailsViewController.m; sourceTree = "<group>"; };
+		536AFC4E2887602500B01F95 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		536AFC502887622300B01F95 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		5397F5E3286B676800E9D894 /* Suko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F5E6286B676800E9D894 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5397F5E7286B676800E9D894 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -132,6 +139,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				536AFC4F2887602500B01F95 /* CoreLocation.framework in Frameworks */,
+				536AFC512887622300B01F95 /* Contacts.framework in Frameworks */,
 				5302D38A287F7AB20009018D /* MapKit.framework in Frameworks */,
 				454265194B292261FEA79B26 /* Pods_Suko.framework in Frameworks */,
 			);
@@ -215,6 +224,8 @@
 				53ABF519288717F00015F1DB /* SUKChooseEventLocationViewController.m */,
 				53ABF51D28872F9D0015F1DB /* SUKBrowseEventViewController.h */,
 				53ABF51E28872F9D0015F1DB /* SUKBrowseEventViewController.m */,
+				536AFC4B28875E6E00B01F95 /* SUKEventDetailsViewController.h */,
+				536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -284,6 +295,8 @@
 		6965F46BD519FBC257AD662C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				536AFC502887622300B01F95 /* Contacts.framework */,
+				536AFC4E2887602500B01F95 /* CoreLocation.framework */,
 				5302D389287F7AB20009018D /* MapKit.framework */,
 				2C92483A9CFE228320363049 /* Pods_Suko.framework */,
 				8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */,
@@ -532,6 +545,7 @@
 			files = (
 				53ABF522288746DB0015F1DB /* SUKEventTableViewCell.m in Sources */,
 				53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */,
+				536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */,
 				53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */,
 				53291ED32878C6C900B12469 /* SUKSignUpViewController.m in Sources */,
 				535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */,
