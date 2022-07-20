@@ -46,7 +46,9 @@
         [self.locationManager requestWhenInUseAuthorization];
 
     [self.locationManager startUpdatingLocation];
-    
+}
+
+- (void) viewWillAppear:(BOOL)animated {
     [self refreshData];
 }
 
