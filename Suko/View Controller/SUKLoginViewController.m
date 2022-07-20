@@ -36,15 +36,17 @@
     
     [self checkEmptyField];
 
+    __weak __typeof(self) weakSelf = self;
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
             NSLog(@"User log in failed: %@", error.localizedDescription);
         } else {
+            __strong __typeof(self) strongSelf = weakSelf;
             NSLog(@"User logged in successfully");
             // Display view controller that needs to shown after successful login
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             SUKHomeViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKTabController"];
-            self.view.window.rootViewController = homeVC;
+            strongSelf.view.window.rootViewController = homeVC;
         }
     }];
 }

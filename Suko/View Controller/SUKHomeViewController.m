@@ -62,12 +62,15 @@
     NSString *searchText = searchBar.text;
     searchBar.text = @"";
     
+    __weak __typeof(self) weakSelf = self;
+    
     [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:searchText completion:^(NSArray *anime, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if (anime != nil) {
             NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
             [senderDict setObject:@"Results" forKey:@"title"];
             [senderDict setObject:anime forKey:@"anime"];
-            [self performSegueWithIdentifier:@"HomeToDetailsSegue" sender:senderDict];
+            [strongSelf performSegueWithIdentifier:@"HomeToListSegue" sender:senderDict];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -78,11 +81,11 @@
     NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
     [senderDict setObject:cell.rowHeaderLabel.text forKey:@"title"];
     [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
-    [self performSegueWithIdentifier:@"HomeToDetailsSegue" sender:senderDict];
+    [self performSegueWithIdentifier:@"HomeToListSegue" sender:senderDict];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"HomeToDetailsSegue"]) {
+    if([segue.identifier isEqualToString:@"HomeToListSegue"]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         animeListVC.listTitle = sender[@"title"];
         animeListVC.arrOfAnime = sender[@"anime"];
@@ -95,11 +98,13 @@
 }
 
 - (IBAction)didTapLogout:(id)sender {
+    __weak __typeof(self) weakSelf = self;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         NSLog(@"User log out");
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
-        self.view.window.rootViewController = loginVC;
+        strongSelf.view.window.rootViewController = loginVC;
     }];
 }
 
@@ -107,12 +112,14 @@
 
 - (void) topAnime {
     [self.spinner startAnimating];
+    __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchTopAnime:^(NSArray *anime, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if (anime != nil) {
             NSString *title = @"Top Anime";
-            [self.dictionaryOfAnime setObject:anime forKey:title];
-            [self.spinner stopAnimating];
-            [self.tableView reloadData];
+            [strongSelf.dictionaryOfAnime setObject:anime forKey:title];
+            [strongSelf.spinner stopAnimating];
+            [strongSelf.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -124,34 +131,39 @@
     NSString *genre = [genres lastObject];
     [genres removeLastObject];
     
+    __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchGenreAnime:genre completion:^(NSArray *anime, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if (anime != nil) {
-            if(self.dictOfGenres != nil) {
+            if(strongSelf.dictOfGenres != nil) {
                 NSString *correspondingGenre = [self.dictOfGenres objectForKey:genre];
                 NSString *title = [[@"Most Popular "
                                     stringByAppendingString:correspondingGenre]
                                     stringByAppendingString:@" Anime"];
                 
-                [self.headerTitlesBesidesTopAnime addObject:title];
+                [strongSelf.headerTitlesBesidesTopAnime addObject:title];
                 
-                [self.dictionaryOfAnime setObject:anime forKey:title];
+                [strongSelf.dictionaryOfAnime setObject:anime forKey:title];
                 
                 if([genres count] != 0) {
                     [NSThread sleepForTimeInterval:1.0];
-                    [self genreAnime:genres];
+                    [strongSelf genreAnime:genres];
                 } else {
-                    [self.spinner stopAnimating];
-                    [self.tableView reloadData];
+                    [strongSelf.spinner stopAnimating];
+                    [strongSelf.tableView reloadData];
                 }
             }
+        } else {
+            NSLog(@"%@", error.localizedDescription);
         }
-        NSLog(@"%@", error.localizedDescription);
     }];
 }
 
 - (void) genreList {
     NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
+    __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchGenreList:^(NSArray *genres, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if (genres != nil) {
             int maxID = 0;
             NSMutableArray *arrOfIDs = [[NSMutableArray alloc] init];
@@ -170,7 +182,7 @@
                     
                     NSString *genreName = [genreDict valueForKey:@"name"];
                     
-                    [self.dictOfGenres setObject:genreName forKey:malIDString];
+                    [strongSelf.dictOfGenres setObject:genreName forKey:malIDString];
                 }
             }
             
@@ -181,7 +193,7 @@
             }
             
             NSMutableArray *genres = [@[arrOfIDs[randomGenre1], arrOfIDs[randomGenre2]] mutableCopy];
-            [self genreAnime:genres];
+            [strongSelf genreAnime:genres];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }

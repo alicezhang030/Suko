@@ -48,39 +48,42 @@
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
     CLLocation *eventCoordinates = [[CLLocation alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
     
+    __weak __typeof(self) weakSelf = self;
     [geoCoder reverseGeocodeLocation:eventCoordinates completionHandler:^(NSArray<CLPlacemark *> * placemarks, NSError * error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         CNPostalAddressFormatter *addressFormatter = [[CNPostalAddressFormatter alloc] init];
         NSString *multiLineAddress = [addressFormatter stringFromPostalAddress:placemarks[0].postalAddress];
         NSArray *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
         NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];
 
-        self.addressLabel.text = singleLineAddress;
+        strongSelf.addressLabel.text = singleLineAddress;
         
-        self.eventNameLabel.text = event.name;
+        strongSelf.eventNameLabel.text = event.name;
         
-        self.decriptionLabel.text = event.eventDescription;
+        strongSelf.decriptionLabel.text = event.eventDescription;
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"MM/dd/yyyy h:mm a";
-        self.dateLabel.text = [[[dateFormatter stringFromDate:event.startTime]
+        strongSelf.dateLabel.text = [[[dateFormatter stringFromDate:event.startTime]
                                 stringByAppendingString:@" - "]
                                stringByAppendingString:[dateFormatter stringFromDate:event.endTime]];
         
         [event.postedBy fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            __strong __typeof(self) strongSelf = weakSelf;
             if(object != nil) {
                 PFUser *eventPoster = (PFUser *) object;
-                self.usernameLabel.text = eventPoster.username;
+                strongSelf.usernameLabel.text = eventPoster.username;
                 
-                self.profileImageView.file = eventPoster[@"profile_image"];
-                [self.profileImageView loadInBackground];
-                self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-                self.profileImageView.layer.masksToBounds = YES;
-                self.profileImageView.layer.borderWidth = 0;
+                strongSelf.profileImageView.file = eventPoster[@"profile_image"];
+                [strongSelf.profileImageView loadInBackground];
+                strongSelf.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+                strongSelf.profileImageView.layer.masksToBounds = YES;
+                strongSelf.profileImageView.layer.borderWidth = 0;
                 
-                if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
-                    [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
+                if([strongSelf.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
+                    [strongSelf.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
                 } else {
-                    [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
+                    [strongSelf.registerButton setTitle:@"Register" forState:UIControlStateNormal];
                 }
             }
         }];

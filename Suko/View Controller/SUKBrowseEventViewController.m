@@ -81,17 +81,19 @@
     [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:5.0];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
+    __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(events.count == 0) {
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
+            [strongSelf.tableView reloadData];
+            [strongSelf.refreshControl endRefreshing];
         }
         for(PFUser *event in events) {
             NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             [mutableArrOfEvents addObject:event];
-            self.arrOfEvents = [mutableArrOfEvents copy];
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
+            strongSelf.arrOfEvents = [mutableArrOfEvents copy];
+            [strongSelf.tableView reloadData];
+            [strongSelf.refreshControl endRefreshing];
         }
     }];
 }
@@ -108,17 +110,19 @@
     NSString *currentUserID = [PFUser currentUser].objectId;
     [query whereKey:@"attendees" containsAllObjectsInArray:@[currentUserID]];
     
+    __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(events.count == 0) {
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
+            [strongSelf.tableView reloadData];
+            [strongSelf.refreshControl endRefreshing];
         }
         for(PFUser *event in events) {
             NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             [mutableArrOfEvents addObject:event];
-            self.arrOfEvents = [mutableArrOfEvents copy];
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
+            strongSelf.arrOfEvents = [mutableArrOfEvents copy];
+            [strongSelf.tableView reloadData];
+            [strongSelf.refreshControl endRefreshing];
         }
     }];
 }

@@ -33,8 +33,10 @@
     [self.spinner startAnimating];
     
     if([self.arrOfAnime count] == 0 && self.arrOfAnimeMALID != nil && self.arrOfAnimeMALID.count > 0){
+        __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self updateArrOfAnime];
+            __strong __typeof(self) strongSelf = weakSelf;
+            [strongSelf updateArrOfAnime];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.spinner stopAnimating];
             });
@@ -48,12 +50,14 @@
     for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
         NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
         
+        __weak __typeof(self) weakSelf = self;
         [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+            __strong __typeof(self) strongSelf = weakSelf;
             if (anime != nil) {
                 NSMutableArray *currentArrOfAnime = [self.arrOfAnime mutableCopy];
                 [currentArrOfAnime addObject:anime];
-                self.arrOfAnime = [currentArrOfAnime copy];
-                [self.tableView reloadData];
+                strongSelf.arrOfAnime = [currentArrOfAnime copy];
+                [strongSelf.tableView reloadData];
             } else {
                 NSLog(@"%@", error.localizedDescription);
             }

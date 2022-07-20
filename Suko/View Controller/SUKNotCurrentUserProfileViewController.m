@@ -58,13 +58,15 @@
     [query whereKey:@"follower" equalTo:[PFUser currentUser]];
     [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
     
+    __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow*> *follows, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if([follows count] > 1) {
             NSLog(@"Error: More than one follow relationship between current user and user being displayed");
         } else if([follows count] == 1) {
-            [self.followButton setTitle:@"Following" forState:UIControlStateNormal];
+            [strongSelf.followButton setTitle:@"Following" forState:UIControlStateNormal];
         } else {
-            [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            [strongSelf.followButton setTitle:@"Follow" forState:UIControlStateNormal];
         }
     }];
 }
@@ -75,17 +77,20 @@
     [query whereKey:@"follower" equalTo:[PFUser currentUser]];
     [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
     
+    __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow*> *follows, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if([follows count] > 1) {
             NSLog(@"Error: More than one follow relationship between current user and user being displayed");
         } else if([follows count] == 1) {
             [SUKFollow deleteFollow:[follows lastObject]];
-            [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            [strongSelf.followButton setTitle:@"Follow" forState:UIControlStateNormal];
         } else {
             [SUKFollow postFollowWithFollower:[PFUser currentUser] userBeingFollowed:self.userToDisplay withCompletion:^(BOOL succeeded, NSError * error) {
+                __strong __typeof(self) strongSelf = weakSelf;
                 if (succeeded) {
                     NSLog(@"The follow was uploaded!");
-                    [self.followButton setTitle:@"Following" forState:UIControlStateNormal];
+                    [strongSelf.followButton setTitle:@"Following" forState:UIControlStateNormal];
                 } else {
                     NSLog(@"Problem uploading the event: %@", error.localizedDescription);
                 }

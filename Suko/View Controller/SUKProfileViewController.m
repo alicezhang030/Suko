@@ -75,11 +75,12 @@
 -(void) tapLogout {
     NSLog(@"User tapped log out");
     
-    // Reset view to the log in screen
+    __weak __typeof(self) weakSelf = self;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
-        self.view.window.rootViewController = loginVC;
+        strongSelf.view.window.rootViewController = loginVC;
     }];
 }
 
