@@ -15,7 +15,7 @@
 @interface SUKNotCurrentUserProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (nonatomic, strong) NSArray<NSString*> *listTitles;
+@property (nonatomic, strong) NSArray<NSString *> *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 
@@ -36,15 +36,13 @@
     [self loadContents];
 }
 
--(void) loadContents {
-    // Load the user profile image
+- (void)loadContents {
     self.profileImageView.file = self.userToDisplay[@"profile_image"];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
     
-    // Load the username
     self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
     
     if([self.userToDisplay.objectId isEqualToString:[PFUser currentUser].objectId]) {
@@ -59,7 +57,7 @@
     [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
     
     __weak __typeof(self) weakSelf = self;
-    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow*> *follows, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow *> *follows, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if([follows count] > 1) {
             NSLog(@"Error: More than one follow relationship between current user and user being displayed");
@@ -78,7 +76,7 @@
     [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
     
     __weak __typeof(self) weakSelf = self;
-    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow*> *follows, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow *> *follows, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if([follows count] > 1) {
             NSLog(@"Error: More than one follow relationship between current user and user being displayed");
@@ -101,11 +99,11 @@
 
 #pragma mark - TableView
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.listTitles count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"SUKLibraryTableViewCell";
     SUKLibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.listTitleLabel.text = self.listTitles[indexPath.row];

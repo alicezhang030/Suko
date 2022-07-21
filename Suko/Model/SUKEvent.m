@@ -22,7 +22,7 @@
     return @"SUKEvent";
 }
 
-+ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString *) eventDescription eventLocation:(CLLocation *) eventLocation startTime:(NSDate *) startTime endTime:(NSDate *) endTime postedBy:(PFUser *) user withCompletion: (PFBooleanResultBlock  _Nullable)completion {
++ (void)postEventWithName:(NSString *)eventName eventDescription:(NSString *)eventDescription eventLocation:(CLLocation *)eventLocation startTime:(NSDate *)startTime endTime:(NSDate *)endTime postedBy:(PFUser *)user withCompletion:(PFBooleanResultBlock  _Nullable)completion {
     SUKEvent *newEvent = [SUKEvent new];
     
     newEvent.name = eventName;

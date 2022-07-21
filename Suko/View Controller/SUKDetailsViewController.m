@@ -70,7 +70,7 @@
 }
 
 - (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSMutableArray<NSMutableArray*> *currentAllData = [PFUser currentUser][@"list_data"];
+    NSMutableArray<NSMutableArray *> *currentAllData = [PFUser currentUser][@"list_data"];
     NSNumber *malID = [NSNumber numberWithInt:self.animeToDisplay.malID];
     
     if(row == 0) { // User clicked on "remove from lists"

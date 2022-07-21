@@ -39,7 +39,7 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
     [self.locationManager startUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation*>*)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     self.currentUserLocation = [locations lastObject];
     
     MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
@@ -71,7 +71,6 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
                 annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
                 annotation.title = user.username;
                 [strongSelf.mapView addAnnotation:annotation];
-                
             }
         }
     }];

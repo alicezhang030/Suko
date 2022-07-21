@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** The user posting the event */
 @property (nonatomic, strong) PFUser *postedBy;
 /** The attendees of the event as represented by an array containing their user object IDs */
-@property (nonatomic, strong) NSArray<NSString*> *attendees;
+@property (nonatomic, strong) NSArray<NSString *> *attendees;
 
-+ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString *) eventDescription eventLocation:(CLLocation *) eventLocation startTime:(NSDate *) startTime endTime:(NSDate *) endTime postedBy:(PFUser *) user withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void)postEventWithName:(NSString *)eventName eventDescription:(NSString *)eventDescription eventLocation:(CLLocation *)eventLocation startTime:(NSDate *)startTime endTime:(NSDate *)endTime postedBy:(PFUser *)user withCompletion:(PFBooleanResultBlock  _Nullable)completion;
 
 @end
 

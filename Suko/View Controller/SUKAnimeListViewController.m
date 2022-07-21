@@ -46,15 +46,15 @@
     }
 }
 
--(void) updateArrOfAnime {
+- (void)updateArrOfAnime {
     for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
         NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
         
         __weak __typeof(self) weakSelf = self;
-        [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
+        [[SUKAPIManager shared] fetchAnimeWithID:malID completion:^(SUKAnime *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
             if (anime != nil) {
-                NSMutableArray<SUKAnime*> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
+                NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
                 [currentArrOfAnime addObject:anime];
                 strongSelf.arrOfAnime = [currentArrOfAnime copy];
                 [strongSelf.tableView reloadData];
@@ -69,11 +69,11 @@
  
 #pragma mark - TableView
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.arrOfAnime.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"SUKAnimeListTableViewCell";
     SUKAnimeListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -98,7 +98,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString: @"DetailsSegue"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKAnimeListTableViewCell*) sender];
+        NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKAnimeListTableViewCell *) sender];
         SUKAnime *dataToPass = self.arrOfAnime[indexPath.row];
         SUKDetailsViewController *detailVC = [segue destinationViewController];
         detailVC.animeToDisplay = dataToPass;

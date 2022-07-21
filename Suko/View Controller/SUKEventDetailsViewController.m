@@ -44,7 +44,7 @@ NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotC
     [self.spinner startAnimating];
 }
 
-- (void) setEvent:(SUKEvent*) event {
+- (void)setEvent:(SUKEvent *)event {
     _event = event;
     
     __weak __typeof(self) weakSelf = self;
@@ -85,7 +85,7 @@ NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotC
         __strong __typeof(self) strongSelf = weakSelf;
         CNPostalAddressFormatter *addressFormatter = [CNPostalAddressFormatter new];
         NSString *multiLineAddress = [addressFormatter stringFromPostalAddress:placemarks[0].postalAddress];
-        NSArray<NSString*> *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
+        NSArray<NSString *> *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
         NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];
 
         strongSelf.addressLabel.text = singleLineAddress;
@@ -95,7 +95,7 @@ NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotC
 }
 
 - (IBAction)tapRegister:(id)sender {
-    NSMutableArray<NSString*> *attendeesMutable = [self.event.attendees mutableCopy];
+    NSMutableArray<NSString *> *attendeesMutable = [self.event.attendees mutableCopy];
     
     if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
         [attendeesMutable removeObject:[PFUser currentUser].objectId];
@@ -112,7 +112,7 @@ NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotC
 
 #pragma mark - Navigation
 
-- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender {
     [self performSegueWithIdentifier:kEventDetailsToNotCurrentUserProfileSegue sender:self.event.postedBy];
 }
 

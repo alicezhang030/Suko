@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** The user who is being followed */
 @property (nonatomic, strong) PFUser *userBeingFollowed;
 
-+ (void) postFollowWithFollower:(PFUser*) follower userBeingFollowed:(PFUser*) followed withCompletion: (PFBooleanResultBlock  _Nullable)completion;
-+ (void) deleteFollow: (SUKFollow * _Nullable) follow;
++ (void)postFollowWithFollower:(PFUser *)follower userBeingFollowed:(PFUser *)followed withCompletion:(PFBooleanResultBlock  _Nullable)completion;
++ (void)deleteFollow:(SUKFollow * _Nullable)follow;
 
 @end
 

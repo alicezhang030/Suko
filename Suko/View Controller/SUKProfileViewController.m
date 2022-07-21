@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) UIBarButtonItem *logoutButton;
-@property (nonatomic, strong) NSArray<NSString*> *listTitles;
+@property (nonatomic, strong) NSArray<NSString *> *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -47,7 +47,7 @@
     [self loadContents];
 }
 
--(void) loadContents {
+- (void)loadContents {
     // Load the user profile image
     self.profileImageView.file = [PFUser currentUser][@"profile_image"];
     [self.profileImageView loadInBackground];
@@ -61,7 +61,7 @@
 
 #pragma mark - TableView
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.listTitles count];
 }
 
@@ -72,7 +72,7 @@
     return cell;
 }
 
--(void) tapLogout {
+- (void)tapLogout {
     NSLog(@"User tapped log out");
     
     __weak __typeof(self) weakSelf = self;

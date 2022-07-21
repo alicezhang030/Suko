@@ -23,11 +23,11 @@
     [self.seeAllLabel setUserInteractionEnabled:YES];
 }
 
-- (void) didTapSeeAll:(UITapGestureRecognizer *)sender{
+- (void)didTapSeeAll:(UITapGestureRecognizer *)sender {
     [self.delegate segueSUKHomeTableViewCell:self];
 }
 
-- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath{
+- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath {
     self.collectionView.dataSource = dataSourceDelegate;
     self.collectionView.delegate = dataSourceDelegate;
     self.collectionView.indexPath = indexPath;

@@ -19,7 +19,7 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void)setEvent:(SUKEvent*) event {
+- (void)setEvent:(SUKEvent *)event {
     _event = event;
     
     self.eventNameLabel.text = event.name;

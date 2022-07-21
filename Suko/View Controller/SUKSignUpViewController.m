@@ -27,7 +27,7 @@
     [self.view addGestureRecognizer:tap];
 }
 
--(void)dismissKeyboard{
+- (void)dismissKeyboard{
     [self.emailField resignFirstResponder];
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
@@ -77,7 +77,7 @@
     self.view.window.rootViewController = loginVC;
 }
 
-- (void) checkEmptyField {
+- (void)checkEmptyField {
     if([self.emailField.text isEqual:@""] || [self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
         
         NSString *title = @"All fields required";

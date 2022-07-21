@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** The title of the list being displayed */
 @property (nonatomic, strong) NSString *listTitle;
 /** Array of anime in the list, with each anime stored as a SUKAnime object */
-@property (nonatomic, strong) NSArray<SUKAnime*> *arrOfAnime;
+@property (nonatomic, strong) NSArray<SUKAnime *> *arrOfAnime;
 /** Array of anime in the list, with each anime stored as its MyAnimeList ID */
-@property (nonatomic, strong) NSArray<NSNumber*> *arrOfAnimeMALID;
+@property (nonatomic, strong) NSArray<NSNumber *> *arrOfAnimeMALID;
 
 @end
 

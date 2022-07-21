@@ -15,7 +15,7 @@
 
 @interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray<SUKEvent*> *arrOfEvents;
+@property (nonatomic, strong) NSArray<SUKEvent *> *arrOfEvents;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *discoverRegisteredSegmentedControl;
@@ -51,13 +51,13 @@
     self.spinner.hidesWhenStopped = YES;
 }
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [self refreshData];
 
     [self.spinner startAnimating];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation*>*)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:[locations lastObject]];
     [PFUser currentUser][@"current_coordinates"] = point;
     [[PFUser currentUser] saveInBackground];
@@ -65,7 +65,7 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-- (void) refreshData {
+- (void)refreshData {
     if(self.discoverRegisteredSegmentedControl.selectedSegmentIndex == 0) {
         [self browseEvents];
     } else {
@@ -79,7 +79,7 @@
 }
 
 - (void)browseEvents {
-    NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+    NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
     [mutableArrOfEvents removeAllObjects];
     self.arrOfEvents = mutableArrOfEvents;
     
@@ -98,7 +98,7 @@
             [strongSelf.refreshControl endRefreshing];
             [strongSelf.spinner stopAnimating];
         } else {
-            NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+            NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             for(SUKEvent *event in events) {
                 [mutableArrOfEvents addObject:event];
             }
@@ -110,7 +110,7 @@
     }];
 }
 
-- (void) registeredEvents {
+- (void)registeredEvents {
     NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
     [mutableArrOfEvents removeAllObjects];
     self.arrOfEvents = mutableArrOfEvents;
@@ -132,7 +132,7 @@
             [strongSelf.refreshControl endRefreshing];
             [strongSelf.spinner stopAnimating];
         } else {
-            NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+            NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             for(SUKEvent *event in events) {
                 [mutableArrOfEvents addObject:event];
             }
@@ -146,11 +146,11 @@
 
 #pragma mark - TableView
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.arrOfEvents.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SUKBrowseEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKBrowseEventTableViewCell"];
     [cell setEvent:self.arrOfEvents[indexPath.row]];
     return cell;
