@@ -94,10 +94,12 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if(events.count == 0) {
+            [strongSelf emptyTableView];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
             [strongSelf.spinner stopAnimating];
         } else {
+            [strongSelf restoreTableViewFromEmptyState];
             NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             for(SUKEvent *event in events) {
                 [mutableArrOfEvents addObject:event];
@@ -128,10 +130,12 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if(events.count == 0) {
+            [strongSelf emptyTableView];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
             [strongSelf.spinner stopAnimating];
         } else {
+            [strongSelf restoreTableViewFromEmptyState];
             NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             for(SUKEvent *event in events) {
                 [mutableArrOfEvents addObject:event];
@@ -155,6 +159,29 @@
     [cell setEvent:self.arrOfEvents[indexPath.row]];
     return cell;
 }
+
+- (void)emptyTableView {
+    UILabel *emptyListMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, self.tableView.bounds.size.width/2, self.tableView.bounds.size.height/2)];
+    emptyListMessageLabel.backgroundColor = [UIColor clearColor];
+    emptyListMessageLabel.textAlignment = NSTextAlignmentCenter;
+    emptyListMessageLabel.textColor = [UIColor blackColor];
+    emptyListMessageLabel.numberOfLines = 0;
+    emptyListMessageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    if(self.discoverRegisteredSegmentedControl.selectedSegmentIndex == 0) {
+        emptyListMessageLabel.text = @"No events within 5 miles of you.";
+    } else {
+        emptyListMessageLabel.text = @"No registered events yet.";
+    }
+    self.tableView.backgroundView = emptyListMessageLabel;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (void)restoreTableViewFromEmptyState {
+    self.tableView.backgroundView = nil;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+}
+
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"BrowseEventsToEventDetailsSegue"]) {

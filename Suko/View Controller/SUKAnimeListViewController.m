@@ -22,9 +22,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.navigationItem.title = self.listTitle;
-
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -38,17 +38,23 @@
             __strong __typeof(self) strongSelf = weakSelf;
             [strongSelf updateArrOfAnime];
             dispatch_sync(dispatch_get_main_queue(), ^{
+                if(self.arrOfAnime.count == 0) {
+                    [self emptyTableView];
+                }
                 [self.tableView reloadData];
                 [self.spinner stopAnimating];
             });
         });
     } else {
+        [self emptyTableView];
         [self.spinner stopAnimating];
     }
 }
 
 - (void)updateArrOfAnime {
     for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
+        [NSThread sleepForTimeInterval:1.0];
+        
         NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
         
         __weak __typeof(self) weakSelf = self;
@@ -62,11 +68,9 @@
                 NSLog(@"%@", error.localizedDescription);
             }
         }];
-        
-        [NSThread sleepForTimeInterval:0.7];
     }
 }
- 
+
 #pragma mark - TableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -89,10 +93,21 @@
     if (url != nil) {
         [cell.posterView setImageWithURL:url];
     }
-
+    
     return cell;
 }
 
+- (void)emptyTableView {
+    UILabel *emptyListMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, self.tableView.bounds.size.width/2, self.tableView.bounds.size.height/2)];
+    emptyListMessageLabel.backgroundColor = [UIColor clearColor];
+    emptyListMessageLabel.textAlignment = NSTextAlignmentCenter;
+    emptyListMessageLabel.textColor = [UIColor blackColor];
+    emptyListMessageLabel.numberOfLines = 0;
+    emptyListMessageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    emptyListMessageLabel.text = @"No anime in this list yet.";
+    self.tableView.backgroundView = emptyListMessageLabel;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
 
 #pragma mark - Navigation
 
