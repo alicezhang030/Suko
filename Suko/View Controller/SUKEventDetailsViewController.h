@@ -12,9 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKEventDetailsViewController : UIViewController
 @property (nonatomic, strong) SUKEvent *event;
-
-- (void) setEvent:(SUKEvent*) event withHost:(PFUser *) user;
-
 @end
 
 NS_ASSUME_NONNULL_END

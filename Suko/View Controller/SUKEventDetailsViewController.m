@@ -42,15 +42,41 @@
     [self.spinner startAnimating];
 }
 
-- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
-    [self performSegueWithIdentifier:@"EventDetailsToNotCurrentUserProfileSegue" sender:self.event.postedBy];
-}
-
 - (void) setEvent:(SUKEvent*) event {
     _event = event;
     
+    __weak __typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __strong __typeof(self) strongSelf = weakSelf;
+        [strongSelf setAddress];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            self.eventNameLabel.text = event.name;
+            self.decriptionLabel.text = event.eventDescription;
+            self.usernameLabel.text = event.postedBy.username;
+            self.profileImageView.file = event.postedBy[@"profile_image"];
+            [self.profileImageView loadInBackground];
+            self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+            self.profileImageView.layer.masksToBounds = YES;
+            self.profileImageView.layer.borderWidth = 0;
+            
+            if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
+                [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
+            } else {
+                [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
+            }
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"MM/dd/yyyy h:mm a";
+            self.dateLabel.text = [[[dateFormatter stringFromDate:event.startTime]
+                                    stringByAppendingString:@" - "]
+                                   stringByAppendingString:[dateFormatter stringFromDate:event.endTime]];
+        });
+    });
+}
+
+- (void)setAddress {
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-    CLLocation *eventCoordinates = [[CLLocation alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
+    CLLocation *eventCoordinates = [[CLLocation alloc] initWithLatitude:self.event.location.latitude longitude:self.event.location.longitude];
     
     __weak __typeof(self) weakSelf = self;
     [geoCoder reverseGeocodeLocation:eventCoordinates completionHandler:^(NSArray<CLPlacemark *> * placemarks, NSError * error) {
@@ -61,28 +87,6 @@
         NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];
 
         strongSelf.addressLabel.text = singleLineAddress;
-        strongSelf.eventNameLabel.text = event.name;
-        strongSelf.decriptionLabel.text = event.eventDescription;
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"MM/dd/yyyy h:mm a";
-        strongSelf.dateLabel.text = [[[dateFormatter stringFromDate:event.startTime]
-                                stringByAppendingString:@" - "]
-                               stringByAppendingString:[dateFormatter stringFromDate:event.endTime]];
-        
-        strongSelf.usernameLabel.text = event.postedBy.username;
-        
-        strongSelf.profileImageView.file = event.postedBy[@"profile_image"];
-        [strongSelf.profileImageView loadInBackground];
-        strongSelf.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-        strongSelf.profileImageView.layer.masksToBounds = YES;
-        strongSelf.profileImageView.layer.borderWidth = 0;
-        
-        if([strongSelf.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
-            [strongSelf.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
-        } else {
-            [strongSelf.registerButton setTitle:@"Register" forState:UIControlStateNormal];
-        }
         
         [strongSelf.spinner stopAnimating];
     }];
@@ -105,6 +109,10 @@
 
 
 #pragma mark - Navigation
+
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self performSegueWithIdentifier:@"EventDetailsToNotCurrentUserProfileSegue" sender:self.event.postedBy];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"EventDetailsToNotCurrentUserProfileSegue"]) {

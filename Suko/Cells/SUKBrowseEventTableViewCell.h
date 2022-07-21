@@ -11,8 +11,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol SUKBrowseEventTableViewCellDelegate;
-
 @interface SUKBrowseEventTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) SUKEvent *event;
@@ -20,13 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-
-@property (nonatomic, weak) id<SUKBrowseEventTableViewCellDelegate> delegate;
-
-@end
-
-@protocol SUKBrowseEventTableViewCellDelegate
-- (void)profileDoneLoading:(SUKBrowseEventTableViewCell *) cell;
 @end
 
 NS_ASSUME_NONNULL_END

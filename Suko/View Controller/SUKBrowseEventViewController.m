@@ -13,7 +13,7 @@
 #import "SUKNotCurrentUserProfileViewController.h"
 #import "Parse/Parse.h"
 
-@interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, SUKBrowseEventTableViewCellDelegate>
+@interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray<SUKEvent*> *arrOfEvents;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -78,13 +78,6 @@
     [self.spinner startAnimating];
 }
 
-- (void)profileDoneLoading:(SUKBrowseEventTableViewCell *) cell {
-    NSInteger row = [self.tableView indexPathForCell:cell].row;
-    if(row == self.arrOfEvents.count - 1) {
-        [self.spinner stopAnimating];
-    }
-}
-
 - (void)browseEvents {
     NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
     [mutableArrOfEvents removeAllObjects];
@@ -92,6 +85,7 @@
     
     // Default: sorted based on distance away from current coordinates
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
+    [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
     [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:5.0];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
@@ -102,6 +96,7 @@
         if(events.count == 0) {
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            [strongSelf.spinner stopAnimating];
         } else {
             NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             for(SUKEvent *event in events) {
@@ -110,6 +105,7 @@
             strongSelf.arrOfEvents = [mutableArrOfEvents copy];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            [strongSelf.spinner stopAnimating];
         }
     }];
 }
@@ -120,9 +116,11 @@
     self.arrOfEvents = mutableArrOfEvents;
     
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
+    [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
     [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:5.0];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
+    
     NSString *currentUserID = [PFUser currentUser].objectId;
     [query whereKey:@"attendees" containsAllObjectsInArray:@[currentUserID]];
     
@@ -132,6 +130,7 @@
         if(events.count == 0) {
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            [strongSelf.spinner stopAnimating];
         } else {
             NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
             for(SUKEvent *event in events) {
@@ -140,6 +139,7 @@
             strongSelf.arrOfEvents = [mutableArrOfEvents copy];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
+            [strongSelf.spinner stopAnimating];
         }
     }];
 }
@@ -153,7 +153,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SUKBrowseEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKBrowseEventTableViewCell"];
     [cell setEvent:self.arrOfEvents[indexPath.row]];
-    cell.delegate = self;
     return cell;
 }
 

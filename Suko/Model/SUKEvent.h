@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDate *endTime;
 /** The user posting the event */
 @property (nonatomic, strong) PFUser *postedBy;
+@property (nonatomic, strong) NSString *organizerID;
 /** The attendees of the event as represented by an array containing their user object IDs */
 @property (nonatomic, strong) NSArray<NSString*> *attendees;
 

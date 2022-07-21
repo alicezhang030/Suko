@@ -23,30 +23,18 @@
     _event = event;
     
     self.eventNameLabel.text = event.name;
+    self.usernameLabel.text = event.postedBy.username;
+    self.profileImageView.file = event.postedBy[@"profile_image"];
+    [self.profileImageView loadInBackground];
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+    self.profileImageView.layer.masksToBounds = YES;
+    self.profileImageView.layer.borderWidth = 0;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"MM/dd/yyyy h:mm a";
     self.dateLabel.text = [[[formatter stringFromDate:event.startTime]
                             stringByAppendingString:@" - "]
                            stringByAppendingString:[formatter stringFromDate:event.endTime]];
-    
-    __weak __typeof(self) weakSelf = self;
-    [event.postedBy fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        if(object != nil) {
-            PFUser *eventPoster = (PFUser *) object;
-            strongSelf.usernameLabel.text = eventPoster.username;
-            strongSelf.profileImageView.file = eventPoster[@"profile_image"];
-            [strongSelf.profileImageView loadInBackground];
-            strongSelf.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-            strongSelf.profileImageView.layer.masksToBounds = YES;
-            strongSelf.profileImageView.layer.borderWidth = 0;
-            
-            [strongSelf.delegate profileDoneLoading:self];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
 }
 
 @end
