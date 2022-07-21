@@ -22,7 +22,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     static SUKAPIManager *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc] init];
+        sharedManager = [self new];
     });
     return sharedManager;
 }

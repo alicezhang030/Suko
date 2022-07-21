@@ -17,7 +17,6 @@
 @dynamic endTime;
 @dynamic postedBy;
 @dynamic attendees;
-@dynamic organizerID;
 
 + (nonnull NSString *)parseClassName {
     return @"SUKEvent";
@@ -32,8 +31,7 @@
     newEvent.startTime = startTime;
     newEvent.endTime = endTime;
     newEvent.postedBy = user;
-    newEvent.organizerID = user.objectId;
-    newEvent.attendees = [[NSArray alloc] init];
+    newEvent.attendees = [NSArray new];
     
     [newEvent saveInBackgroundWithBlock: completion];
 }

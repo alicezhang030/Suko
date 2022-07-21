@@ -65,7 +65,7 @@
                 [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
             }
             
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            NSDateFormatter *dateFormatter = [NSDateFormatter new];
             dateFormatter.dateFormat = @"MM/dd/yyyy h:mm a";
             self.dateLabel.text = [[[dateFormatter stringFromDate:event.startTime]
                                     stringByAppendingString:@" - "]
@@ -75,13 +75,13 @@
 }
 
 - (void)setAddress {
-    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    CLGeocoder *geoCoder = [CLGeocoder new];
     CLLocation *eventCoordinates = [[CLLocation alloc] initWithLatitude:self.event.location.latitude longitude:self.event.location.longitude];
     
     __weak __typeof(self) weakSelf = self;
     [geoCoder reverseGeocodeLocation:eventCoordinates completionHandler:^(NSArray<CLPlacemark *> * placemarks, NSError * error) {
         __strong __typeof(self) strongSelf = weakSelf;
-        CNPostalAddressFormatter *addressFormatter = [[CNPostalAddressFormatter alloc] init];
+        CNPostalAddressFormatter *addressFormatter = [CNPostalAddressFormatter new];
         NSString *multiLineAddress = [addressFormatter stringFromPostalAddress:placemarks[0].postalAddress];
         NSArray<NSString*> *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
         NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];

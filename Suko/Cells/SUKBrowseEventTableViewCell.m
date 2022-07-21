@@ -30,7 +30,7 @@
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM/dd/yyyy h:mm a";
     self.dateLabel.text = [[[formatter stringFromDate:event.startTime]
                             stringByAppendingString:@" - "]

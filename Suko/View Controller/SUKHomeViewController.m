@@ -32,9 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.dictionaryOfAnime = [[NSMutableDictionary alloc] init];
-    self.dictOfGenres = [[NSMutableDictionary alloc] init];
-    self.headerTitlesBesidesTopAnime = [[NSMutableArray alloc] init];
+    self.dictionaryOfAnime = [NSMutableDictionary new];
+    self.dictOfGenres = [NSMutableDictionary new];
+    self.headerTitlesBesidesTopAnime = [NSMutableArray new];
     
     self.spinner.hidesWhenStopped = YES;
     [self.spinner startAnimating];
@@ -67,7 +67,7 @@
     [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:searchText completion:^(NSArray<SUKAnime*> *anime, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if (anime != nil) {
-            NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *senderDict = [NSMutableDictionary new];
             [senderDict setObject:@"Results" forKey:@"title"];
             [senderDict setObject:anime forKey:@"anime"];
             [strongSelf performSegueWithIdentifier:@"HomeToListSegue" sender:senderDict];
@@ -78,7 +78,7 @@
 }
 
 - (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *) cell {
-    NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *senderDict = [NSMutableDictionary new];
     [senderDict setObject:cell.rowHeaderLabel.text forKey:@"title"];
     [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
     [self performSegueWithIdentifier:@"HomeToListSegue" sender:senderDict];
@@ -166,7 +166,7 @@
         __strong __typeof(self) strongSelf = weakSelf;
         if (genres != nil) {
             int maxID = 0;
-            NSMutableArray<NSString*> *arrOfIDs = [[NSMutableArray alloc] init];
+            NSMutableArray<NSString*> *arrOfIDs = [NSMutableArray new];
                         
             for(NSDictionary *genreDict in genres) {
                 if(![genresToNotConsider containsObject:[genreDict valueForKey:@"name"]]) {
@@ -256,7 +256,7 @@
 }
 
 - (NSMutableDictionary *) retriveDataForIndexPathRow: (NSInteger) indexPathRow {
-    NSMutableDictionary *rowData = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *rowData = [NSMutableDictionary new];
     
     if(indexPathRow == 0) {
         [rowData setObject:@"Top Anime" forKey:@"header"];

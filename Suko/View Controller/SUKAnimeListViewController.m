@@ -81,7 +81,7 @@
     
     cell.titleLabel.text = animeToDisplay.title;
     
-    NSString *numOfEpString = [NSString stringWithFormat:@"%d", animeToDisplay.episodes];
+    NSString *numOfEpString = [NSString stringWithFormat:@"%d", animeToDisplay.numEpisodes];
     cell.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
     
     NSString *animePosterURLString = animeToDisplay.posterURL;

@@ -26,7 +26,7 @@
         self.status = dictionary[@"status"];
 
         NSNumber *episodesNSNumber = dictionary[@"episodes"];
-        self.episodes = [episodesNSNumber intValue];
+        self.numEpisodes = [episodesNSNumber intValue];
     }
     
     return self;

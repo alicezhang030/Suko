@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** The genres this anime fit into */
 @property (nonatomic) NSArray<NSDictionary*> *genres;
 /** Episode count */
-@property (nonatomic) int episodes;
+@property (nonatomic) int numEpisodes;
 /** Airing status ("Finished Airing," "Currently Airing," "Not yet aired")*/
 @property (nonatomic) NSString *status;
 

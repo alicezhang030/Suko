@@ -32,7 +32,7 @@
     self.titleLabel.text = self.animeToDisplay.title;
     self.synopsisLabel.text = self.animeToDisplay.synopsis;
     
-    NSString *numOfEpString = [NSString stringWithFormat:@"%d", self.animeToDisplay.episodes];
+    NSString *numOfEpString = [NSString stringWithFormat:@"%d", self.animeToDisplay.numEpisodes];
     self.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
     
     self.listOptions = @[@"Remove from lists", @"Want to Watch", @"Watching", @"Watched"];
