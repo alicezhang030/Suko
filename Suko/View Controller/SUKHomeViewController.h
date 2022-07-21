@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString *const kHomeToAnimeListSegueIdentifier;
 extern NSString *const kHomeCollectionCellToDetailsSegueIdentifier;
+extern NSNumber *const kNumOfRows;
 
 @end
 

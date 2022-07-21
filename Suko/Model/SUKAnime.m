@@ -33,7 +33,7 @@
 }
 
 + (NSMutableArray<SUKAnime *> *)animesWithArrayOfDictionaries:(NSArray<NSDictionary *> *)dictionaries {
-    NSMutableArray<SUKAnime *> *animes = [NSMutableArray array];
+    NSMutableArray<SUKAnime *> *animes = [NSMutableArray new];
     for (NSDictionary *dictionary in dictionaries) {
         SUKAnime *anime = [[SUKAnime alloc] initWithDictionary:dictionary];
         [animes addObject:anime];

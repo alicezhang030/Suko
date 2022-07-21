@@ -104,7 +104,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
         // Currently, Jikan API returns data that has been deleted by MyAnimeList already
         // Ex. If you search "One Piece," you will receive 3 One Piece's, and only one of them has a valid URL and with information filled
         // I noticed that invalid data has a popularity field of 0, so this is my workaround for now.
-        NSMutableArray<NSDictionary *> *arrOfAnimeDictionariesMutable = [NSMutableArray array];
+        NSMutableArray<NSDictionary *> *arrOfAnimeDictionariesMutable = [NSMutableArray new];
         for(NSDictionary *animeDictionary in arrOfAnimeDictionaries) {
             if([animeDictionary[@"popularity"] intValue] != 0){
                 [arrOfAnimeDictionariesMutable addObject:animeDictionary];

@@ -51,7 +51,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
-        animeListVC.arrOfAnime = [NSMutableArray array];
+        animeListVC.arrOfAnime = [NSMutableArray new];
     }
 }
 
