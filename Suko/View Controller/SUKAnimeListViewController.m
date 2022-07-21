@@ -38,6 +38,7 @@
             __strong __typeof(self) strongSelf = weakSelf;
             [strongSelf updateArrOfAnime];
             dispatch_sync(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
                 [self.spinner stopAnimating];
             });
         });
@@ -57,7 +58,6 @@
                 NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
                 [currentArrOfAnime addObject:anime];
                 strongSelf.arrOfAnime = [currentArrOfAnime copy];
-                [strongSelf.tableView reloadData];
             } else {
                 NSLog(@"%@", error.localizedDescription);
             }
