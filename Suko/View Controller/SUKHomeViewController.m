@@ -39,10 +39,9 @@ NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCe
     self.headerTitlesBesidesTopAnime = [NSMutableArray new];
     
     self.spinner.hidesWhenStopped = YES;
+    self.spinner.layer.cornerRadius = 10;
+    [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
     [self.spinner startAnimating];
-    
-    [self topAnime];
-    [self genreList];
     
     self.searchBar.delegate = self;
     self.searchBar.showsCancelButton = true;
@@ -50,6 +49,19 @@ NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCe
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    if(self.headerTitlesBesidesTopAnime.count < 2) {
+        [self topAnime];
+        NSNumber *numberOfGenres = [NSNumber numberWithInt:(2 - (int)self.headerTitlesBesidesTopAnime.count)];
+        [self genreList:numberOfGenres];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.spinner stopAnimating];
+    [[SUKAPIManager shared] cancelAllRequests];
 }
 
 #pragma mark - Navigation
@@ -120,7 +132,6 @@ NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCe
         if (anime != nil) {
             NSString *title = @"Top Anime";
             [strongSelf.dictOfAnime setObject:anime forKey:title];
-            [strongSelf.spinner stopAnimating];
             [strongSelf.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -130,38 +141,42 @@ NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCe
 
 - (void)genreAnime:(NSMutableArray<NSString *> *) genres {
     [self.spinner startAnimating];
-    NSString *genre = [genres lastObject];
-    [genres removeLastObject];
-    
-    __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchAnimeListWithGenre:genre completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        if (anime != nil) {
-            if(strongSelf.dictOfGenres != nil) {
-                NSString *correspondingGenre = [self.dictOfGenres objectForKey:genre];
-                NSString *title = [[@"Most Popular "
-                                    stringByAppendingString:correspondingGenre]
-                                   stringByAppendingString:@" Anime"];
-                
-                [strongSelf.headerTitlesBesidesTopAnime addObject:title];
-                
-                [strongSelf.dictOfAnime setObject:anime forKey:title];
-                
-                if([genres count] != 0) {
-                    [NSThread sleepForTimeInterval:1.0];
-                    [strongSelf genreAnime:genres];
-                } else {
-                    [strongSelf.spinner stopAnimating];
-                    [strongSelf.tableView reloadData];
+    if(genres.count > 0) {
+        NSString *genre = [genres lastObject];
+        [genres removeLastObject];
+        
+        [NSThread sleepForTimeInterval:1.0];
+        
+        __weak __typeof(self) weakSelf = self;
+        [[SUKAPIManager shared] fetchAnimeListWithGenre:genre completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            if (anime != nil) {
+                if(strongSelf.dictOfGenres != nil) {
+                    NSString *correspondingGenre = [self.dictOfGenres objectForKey:genre];
+                    NSString *title = [[@"Most Popular "
+                                        stringByAppendingString:correspondingGenre]
+                                       stringByAppendingString:@" Anime"];
+                    
+                    [strongSelf.headerTitlesBesidesTopAnime addObject:title];
+                    
+                    [strongSelf.dictOfAnime setObject:anime forKey:title];
+                    
+                    if([genres count] != 0) {
+                        [NSThread sleepForTimeInterval:1.0];
+                        [strongSelf genreAnime:genres];
+                    } else {
+                        [strongSelf.spinner stopAnimating];
+                        [strongSelf.tableView reloadData];
+                    }
                 }
+            } else {
+                NSLog(@"%@", error.localizedDescription);
             }
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
+        }];
+    }
 }
 
-- (void)genreList {
+- (void)genreList:(NSNumber *)numberOfLists {
     NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
     __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
@@ -188,13 +203,23 @@ NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCe
                 }
             }
             
+            NSMutableArray<NSString *> *genres = [NSMutableArray array];
+            
+            while(genres.count != [numberOfLists intValue]) {
+                int randomGenre = arc4random_uniform((int)self.dictOfGenres.count);
+                if(![genres containsObject:arrOfIDs[randomGenre]]) {
+                    [genres addObject:arrOfIDs[randomGenre]];
+                }
+            }
+            
+            /*
             int randomGenre1 = arc4random_uniform((int)self.dictOfGenres.count);
             int randomGenre2 = arc4random_uniform((int)self.dictOfGenres.count);
             while(randomGenre2 == randomGenre1) {
                 randomGenre2 = arc4random_uniform((int)self.dictOfGenres.count);
             }
             
-            NSMutableArray<NSString *> *genres = [@[arrOfIDs[randomGenre1], arrOfIDs[randomGenre2]] mutableCopy];
+            NSMutableArray<NSString *> *genres = [@[arrOfIDs[randomGenre1], arrOfIDs[randomGenre2]] mutableCopy];*/
             [strongSelf genreAnime:genres];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -227,7 +252,7 @@ NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCe
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 305;
+    return 310;
 }
 
 #pragma mark - CollectionView

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKAPIManager : NSObject
 + (instancetype)shared;
+- (void)cancelAllRequests;
 - (void)fetchAnimeWithID:(NSNumber *) malID completion:(void(^)(SUKAnime* anime, NSError *error))completion;
 - (void)fetchTopAnimeList:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion;
 - (void)fetchAnimeListWithGenre:(NSString *) genre completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion;

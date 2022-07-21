@@ -49,6 +49,8 @@
     [self.locationManager startUpdatingLocation];
     
     self.spinner.hidesWhenStopped = YES;
+    self.spinner.layer.cornerRadius = 10;
+    [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

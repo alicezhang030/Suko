@@ -337,7 +337,7 @@
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GmA-lZ-2kB">
                                                         <size key="itemSize" width="185" height="252"/>
-                                                        <size key="estimatedItemSize" width="185" height="277"/>
+                                                        <size key="estimatedItemSize" width="185" height="252"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -368,6 +368,7 @@
                                                                 <constraints>
                                                                     <constraint firstItem="CWS-86-omw" firstAttribute="top" secondItem="GLQ-Dp-I2R" secondAttribute="top" id="Np9-ka-mPj"/>
                                                                     <constraint firstAttribute="trailing" secondItem="CWS-86-omw" secondAttribute="trailing" id="RGn-Lq-mqp"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="sZj-uM-5lc" secondAttribute="bottom" constant="8" id="V5Y-1E-jOX"/>
                                                                     <constraint firstItem="sZj-uM-5lc" firstAttribute="leading" secondItem="GLQ-Dp-I2R" secondAttribute="leading" constant="8" id="clp-bq-sfd"/>
                                                                     <constraint firstItem="CWS-86-omw" firstAttribute="leading" secondItem="GLQ-Dp-I2R" secondAttribute="leading" id="kVE-mk-FcY"/>
                                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sZj-uM-5lc" secondAttribute="trailing" constant="8" id="naE-xi-qXI"/>
@@ -412,8 +413,10 @@
                                 </prototypes>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="Y0o-p9-vyC">
-                                <rect key="frame" x="0.0" y="517" width="414" height="39"/>
+                                <rect key="frame" x="183" y="526" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -499,8 +502,10 @@
                                 </prototypes>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="6x9-O9-7d8">
-                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="426" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IvK-Z4-S0e"/>
@@ -1132,8 +1137,10 @@
                                 </prototypes>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="M0l-T9-9PQ">
-                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="426" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kRc-2x-ysI"/>
@@ -1559,7 +1566,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rpV-XQ-NWa"/>
+        <segue reference="DYo-a4-zd2"/>
         <segue reference="wz9-h9-cFl"/>
         <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>

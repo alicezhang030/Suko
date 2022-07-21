@@ -38,6 +38,10 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     return self;
 }
 
+- (void)cancelAllRequests {
+    [self.manager.tasks makeObjectsPerformSelector:@selector(cancel)];
+}
+
 - (void)fetchAnimeWithID:(NSNumber *) malID completion:(void(^)(SUKAnime* anime, NSError *error))completion {
     NSString *malIDString = [NSString stringWithFormat:@"%d",[malID intValue]];
     NSDictionary *params = @{@"id": malID};

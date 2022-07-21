@@ -30,6 +30,8 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.spinner.hidesWhenStopped = YES;
+    self.spinner.layer.cornerRadius = 10;
+    [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
     [self.spinner startAnimating];
     
     if([self.arrOfAnime count] == 0 && self.arrOfAnimeMALID != nil && self.arrOfAnimeMALID.count > 0){
@@ -37,13 +39,6 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             __strong __typeof(self) strongSelf = weakSelf;
             [strongSelf updateArrOfAnime];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                if(self.arrOfAnime.count == 0) {
-                    [self emptyTableView];
-                }
-                [self.tableView reloadData];
-                [self.spinner stopAnimating];
-            });
         });
     } else {
         [self emptyTableView];
@@ -52,22 +47,31 @@
 }
 
 - (void)updateArrOfAnime {
-    for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
-        [NSThread sleepForTimeInterval:1.0];
+    if(self.arrOfAnimeMALID.count == 0) {
+        [self emptyTableView];
+    }
         
+    for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
         NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
         
         __weak __typeof(self) weakSelf = self;
         [[SUKAPIManager shared] fetchAnimeWithID:malID completion:^(SUKAnime *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
-            if (anime != nil) {
+            if (error == nil) {
                 NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
                 [currentArrOfAnime addObject:anime];
                 strongSelf.arrOfAnime = [currentArrOfAnime copy];
+                [strongSelf.tableView reloadData];
             } else {
                 NSLog(@"%@", error.localizedDescription);
             }
+            
+            if(i == strongSelf.arrOfAnimeMALID.count - 1) {
+                [strongSelf.spinner stopAnimating];
+            }
         }];
+        
+        [NSThread sleepForTimeInterval:1.2];
     }
 }
 
