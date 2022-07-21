@@ -24,10 +24,12 @@
 @property (nonatomic, strong) NSMutableArray<NSString*> *headerTitlesBesidesTopAnime;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-
 @end
 
 @implementation SUKHomeViewController
+
+NSString *const kHomeToAnimeListSegueIdentifier = @"HomeToAnimeListSegue";
+NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCellToDetailsSegue";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,7 +72,7 @@
             NSMutableDictionary *senderDict = [NSMutableDictionary new];
             [senderDict setObject:@"Results" forKey:@"title"];
             [senderDict setObject:anime forKey:@"anime"];
-            [strongSelf performSegueWithIdentifier:@"HomeToListSegue" sender:senderDict];
+            [strongSelf performSegueWithIdentifier:kHomeToAnimeListSegueIdentifier sender:senderDict];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -81,17 +83,17 @@
     NSMutableDictionary *senderDict = [NSMutableDictionary new];
     [senderDict setObject:cell.rowHeaderLabel.text forKey:@"title"];
     [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
-    [self performSegueWithIdentifier:@"HomeToListSegue" sender:senderDict];
+    [self performSegueWithIdentifier:kHomeToAnimeListSegueIdentifier sender:senderDict];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"HomeToListSegue"]) {
+    if([segue.identifier isEqualToString:kHomeToAnimeListSegueIdentifier]) {
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         animeListVC.listTitle = sender[@"title"];
         animeListVC.arrOfAnime = sender[@"anime"];
     }
 
-    if([segue.identifier isEqualToString:@"CollectionToDetailsSegue"]) {
+    if([segue.identifier isEqualToString:kHomeCollectionCellToDetailsSegueIdentifier]) {
         SUKDetailsViewController *detailsVC = [segue destinationViewController];
         detailsVC.animeToDisplay = sender;
     }
@@ -252,7 +254,7 @@
     NSArray<SUKAnime*> *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
     SUKAnime *animeToDisplay =  collectionViewArray[indexPath.item];
     
-    [self performSegueWithIdentifier:@"CollectionToDetailsSegue" sender:animeToDisplay];
+    [self performSegueWithIdentifier:kHomeCollectionCellToDetailsSegueIdentifier sender:animeToDisplay];
 }
 
 - (NSMutableDictionary *) retriveDataForIndexPathRow: (NSInteger) indexPathRow {

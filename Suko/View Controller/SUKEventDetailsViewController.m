@@ -25,6 +25,8 @@
 
 @implementation SUKEventDetailsViewController
 
+NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotCurrentUserProfileSegue";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -111,11 +113,11 @@
 #pragma mark - Navigation
 
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
-    [self performSegueWithIdentifier:@"EventDetailsToNotCurrentUserProfileSegue" sender:self.event.postedBy];
+    [self performSegueWithIdentifier:kEventDetailsToNotCurrentUserProfileSegue sender:self.event.postedBy];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"EventDetailsToNotCurrentUserProfileSegue"]) {
+    if([segue.identifier isEqualToString:kEventDetailsToNotCurrentUserProfileSegue]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
     }

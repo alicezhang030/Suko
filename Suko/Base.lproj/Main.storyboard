@@ -430,8 +430,8 @@
                         <outlet property="searchBar" destination="d03-rZ-Tgk" id="Dhd-UU-09r"/>
                         <outlet property="spinner" destination="Y0o-p9-vyC" id="iTX-bk-Ms5"/>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
-                        <segue destination="OiV-xg-5bj" kind="show" identifier="HomeToListSegue" id="4vs-CO-2P5"/>
-                        <segue destination="7E0-o4-0mw" kind="show" identifier="CollectionToDetailsSegue" id="wz9-h9-cFl"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="HomeToAnimeListSegue" id="4vs-CO-2P5"/>
+                        <segue destination="7E0-o4-0mw" kind="show" identifier="HomeCollectionCellToDetailsSegue" id="wz9-h9-cFl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1561,7 +1561,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="rpV-XQ-NWa"/>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="EZ4-Jx-OHr"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

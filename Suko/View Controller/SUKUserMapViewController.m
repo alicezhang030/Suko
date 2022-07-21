@@ -21,6 +21,8 @@
 
 @implementation SUKUserMapViewController
 
+NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUserProfileSegue";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -88,13 +90,13 @@
             NSLog(@"Error: More than one user with the username");
         } else {
             [strongSelf.mapView deselectAnnotation:view.annotation animated:YES];
-            [strongSelf performSegueWithIdentifier:@"MapToNotCurrentUserProfileSegue" sender:[users lastObject]];
+            [strongSelf performSegueWithIdentifier:kMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
         }
     }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"MapToNotCurrentUserProfileSegue"]) {
+    if([segue.identifier isEqualToString:kMapToNotCurrentUserProfileSegueIdentifier]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
     }
