@@ -37,7 +37,7 @@
     [self.mapView addGestureRecognizer:longPressRecognizer];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation*>*)locations {
     self.currentUserLocation = [locations lastObject];
     
     MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
@@ -92,7 +92,7 @@
             if (succeeded) {
                 NSLog(@"The event was uploaded!");
                 
-                NSArray *viewControllers = [self.navigationController viewControllers];
+                NSArray<UIViewController*> *viewControllers = [self.navigationController viewControllers];
                 [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original map VC
             } else {
                 NSLog(@"Problem uploading the event: %@", error.localizedDescription);

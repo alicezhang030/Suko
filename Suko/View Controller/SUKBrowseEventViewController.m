@@ -57,7 +57,7 @@
     [self.spinner startAnimating];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation*>*)locations {
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:[locations lastObject]];
     [PFUser currentUser][@"current_coordinates"] = point;
     [[PFUser currentUser] saveInBackground];
@@ -86,7 +86,7 @@
 }
 
 - (void)browseEvents {
-    NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+    NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
     [mutableArrOfEvents removeAllObjects];
     self.arrOfEvents = mutableArrOfEvents;
     
@@ -102,22 +102,20 @@
         if(events.count == 0) {
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
-            //[self.spinner stopAnimating]; Commented out code
-        }
-        
-        for(PFUser *event in events) {
-            NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
-            [mutableArrOfEvents addObject:event];
+        } else {
+            NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+            for(SUKEvent *event in events) {
+                [mutableArrOfEvents addObject:event];
+            }
             strongSelf.arrOfEvents = [mutableArrOfEvents copy];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
-            //[self.spinner stopAnimating]; Commented out code
         }
     }];
 }
 
 - (void) registeredEvents {
-    NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+    NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
     [mutableArrOfEvents removeAllObjects];
     self.arrOfEvents = mutableArrOfEvents;
     
@@ -134,15 +132,14 @@
         if(events.count == 0) {
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
-            //[self.spinner stopAnimating]; Commented out code
-        }
-        for(PFUser *event in events) {
-            NSMutableArray *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
-            [mutableArrOfEvents addObject:event];
+        } else {
+            NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
+            for(SUKEvent *event in events) {
+                [mutableArrOfEvents addObject:event];
+            }
             strongSelf.arrOfEvents = [mutableArrOfEvents copy];
             [strongSelf.tableView reloadData];
             [strongSelf.refreshControl endRefreshing];
-            //[self.spinner stopAnimating]; Commented out code
         }
     }];
 }
@@ -155,8 +152,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SUKBrowseEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKBrowseEventTableViewCell"];
-    SUKEvent *eventToDisplay = self.arrOfEvents[indexPath.row];
-    [cell setEvent:eventToDisplay];
+    [cell setEvent:self.arrOfEvents[indexPath.row]];
     cell.delegate = self;
     return cell;
 }
@@ -165,8 +161,7 @@
     if([segue.identifier isEqualToString:@"BrowseEventsToEventDetailsSegue"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell: (SUKBrowseEventTableViewCell*) sender];
         SUKEventDetailsViewController *eventDetailsVC = [segue destinationViewController];
-        SUKEvent *event = self.arrOfEvents[indexPath.row];
-        [eventDetailsVC setEvent:event];
+        [eventDetailsVC setEvent:self.arrOfEvents[indexPath.row]];
     }
 }
 

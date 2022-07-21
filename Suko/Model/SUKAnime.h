@@ -20,13 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 /** The anime synopsis */
 @property (nonatomic) NSString *synopsis;
 /** The genres this anime fit into */
-@property (nonatomic) NSArray *genres;
+@property (nonatomic) NSArray<NSDictionary*> *genres;
 /** Episode count */
 @property (nonatomic) int episodes;
 /** Airing status ("Finished Airing," "Currently Airing," "Not yet aired")*/
 @property (nonatomic) NSString *status;
 
-+ (NSMutableArray *)animesWithArrayOfDictionaries:(NSArray *)dictionaries;
++ (NSMutableArray<SUKAnime*> *)animesWithArrayOfDictionaries:(NSArray<NSDictionary*> *)dictionaries;
 + (SUKAnime *)animeWithDictionary:(NSDictionary *)dictionary;
 
 @end

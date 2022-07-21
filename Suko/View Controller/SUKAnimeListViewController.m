@@ -54,7 +54,7 @@
         [[SUKAPIManager shared] fetchSpecificAnimeByID:malID completion:^(SUKAnime *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
             if (anime != nil) {
-                NSMutableArray *currentArrOfAnime = [self.arrOfAnime mutableCopy];
+                NSMutableArray<SUKAnime*> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
                 [currentArrOfAnime addObject:anime];
                 strongSelf.arrOfAnime = [currentArrOfAnime copy];
                 [strongSelf.tableView reloadData];

@@ -55,14 +55,14 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     }];
 }
 
-- (void)fetchGenreAnime:(NSString *) genre completion:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion {
+- (void)fetchGenreAnime:(NSString *) genre completion:(void(^)(NSArray<SUKAnime*> *arrofAnimeObjs, NSError *error))completion {
     NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
-        NSArray *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
+        NSArray<SUKAnime*> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
         
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
@@ -70,14 +70,14 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     }];
 }
 
-- (void)fetchTopAnime:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion {
+- (void)fetchTopAnime:(void(^)(NSArray<SUKAnime*> *arrofAnimeObjs, NSError *error))completion {
     NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/top/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
-        NSArray *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
+        NSArray<NSDictionary*> *arrOfAnimeDictionaries = dataDictionary[@"data"]; // array indices each contains a dictionary with info on an anime
+        NSArray<SUKAnime*> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
         
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
@@ -85,19 +85,19 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     }];
 }
 
-- (void)fetchGenreList:(void(^)(NSArray *genres, NSError *error))completion {
+- (void)fetchGenreList:(void(^)(NSArray<NSDictionary*> *genres, NSError *error))completion {
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/genres/anime"];
     
     [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray *genreList = dataDictionary[@"data"];
+        NSArray<NSDictionary*> *genreList = dataDictionary[@"data"];
         completion(genreList, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
 
-- (void)fetchAnimeSearchBySearchQuery:(NSString *) query completion:(void(^)(NSArray *arrofAnimeObjs, NSError *error))completion {
+- (void)fetchAnimeSearchBySearchQuery:(NSString *) query completion:(void(^)(NSArray<SUKAnime*> *arrofAnimeObjs, NSError *error))completion {
     NSDictionary *params = @{@"q": query, @"type": @"tv", @"sort": @"desc"};
     NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
     
@@ -117,7 +117,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
         
         arrOfAnimeDictionaries = (NSArray*)arrOfAnimeDictionariesMutable;
         
-        NSArray *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
+        NSArray<SUKAnime*> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:arrOfAnimeDictionaries]; // array indices each contain an Anime object
         
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {

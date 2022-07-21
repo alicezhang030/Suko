@@ -12,7 +12,7 @@
 
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *listTitles;
+@property (nonatomic, strong) NSArray<NSString*> *listTitles;
 
 @end
 

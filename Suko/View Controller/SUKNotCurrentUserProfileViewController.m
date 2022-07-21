@@ -15,7 +15,7 @@
 @interface SUKNotCurrentUserProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (nonatomic, strong) NSArray *listTitles;
+@property (nonatomic, strong) NSArray<NSString*> *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 

@@ -57,13 +57,11 @@
         __strong __typeof(self) strongSelf = weakSelf;
         CNPostalAddressFormatter *addressFormatter = [[CNPostalAddressFormatter alloc] init];
         NSString *multiLineAddress = [addressFormatter stringFromPostalAddress:placemarks[0].postalAddress];
-        NSArray *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
+        NSArray<NSString*> *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
         NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];
 
         strongSelf.addressLabel.text = singleLineAddress;
-        
         strongSelf.eventNameLabel.text = event.name;
-        
         strongSelf.decriptionLabel.text = event.eventDescription;
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -72,34 +70,26 @@
                                 stringByAppendingString:@" - "]
                                stringByAppendingString:[dateFormatter stringFromDate:event.endTime]];
         
-        [event.postedBy fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-            __strong __typeof(self) strongSelf = weakSelf;
-            if(object != nil) {
-                PFUser *eventPoster = (PFUser *) object;
-                strongSelf.usernameLabel.text = eventPoster.username;
-                
-                strongSelf.profileImageView.file = eventPoster[@"profile_image"];
-                [strongSelf.profileImageView loadInBackground];
-                strongSelf.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-                strongSelf.profileImageView.layer.masksToBounds = YES;
-                strongSelf.profileImageView.layer.borderWidth = 0;
-                
-                if([strongSelf.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
-                    [strongSelf.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
-                } else {
-                    [strongSelf.registerButton setTitle:@"Register" forState:UIControlStateNormal];
-                }
-                
-                [self.spinner stopAnimating];
-            } else {
-                NSLog(@"%@", error.localizedDescription);
-            }
-        }];
+        strongSelf.usernameLabel.text = event.postedBy.username;
+        
+        strongSelf.profileImageView.file = event.postedBy[@"profile_image"];
+        [strongSelf.profileImageView loadInBackground];
+        strongSelf.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+        strongSelf.profileImageView.layer.masksToBounds = YES;
+        strongSelf.profileImageView.layer.borderWidth = 0;
+        
+        if([strongSelf.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
+            [strongSelf.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
+        } else {
+            [strongSelf.registerButton setTitle:@"Register" forState:UIControlStateNormal];
+        }
+        
+        [strongSelf.spinner stopAnimating];
     }];
 }
 
 - (IBAction)tapRegister:(id)sender {
-    NSMutableArray *attendeesMutable = [self.event.attendees mutableCopy];
+    NSMutableArray<NSString*> *attendeesMutable = [self.event.attendees mutableCopy];
     
     if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
         [attendeesMutable removeObject:[PFUser currentUser].objectId];

@@ -19,7 +19,7 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void) setEvent:(SUKEvent*) event {
+- (void)setEvent:(SUKEvent*) event {
     _event = event;
     
     self.eventNameLabel.text = event.name;
@@ -30,17 +30,21 @@
                             stringByAppendingString:@" - "]
                            stringByAppendingString:[formatter stringFromDate:event.endTime]];
     
+    __weak __typeof(self) weakSelf = self;
     [event.postedBy fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(object != nil) {
             PFUser *eventPoster = (PFUser *) object;
-            self.usernameLabel.text = eventPoster.username;
-            self.profileImageView.file = eventPoster[@"profile_image"];
-            [self.profileImageView loadInBackground];
-            self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-            self.profileImageView.layer.masksToBounds = YES;
-            self.profileImageView.layer.borderWidth = 0;
+            strongSelf.usernameLabel.text = eventPoster.username;
+            strongSelf.profileImageView.file = eventPoster[@"profile_image"];
+            [strongSelf.profileImageView loadInBackground];
+            strongSelf.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+            strongSelf.profileImageView.layer.masksToBounds = YES;
+            strongSelf.profileImageView.layer.borderWidth = 0;
             
-            [self.delegate profileDoneLoading:self];
+            [strongSelf.delegate profileDoneLoading:self];
+        } else {
+            NSLog(@"%@", error.localizedDescription);
         }
     }];
 }

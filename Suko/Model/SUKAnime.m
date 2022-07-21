@@ -21,21 +21,19 @@
         self.title = [[titleWithMALFormatting componentsSeparatedByString:@"\\"] objectAtIndex:0];
         
         self.posterURL = dictionary[@"images"][@"jpg"][@"large_image_url"];
-        
         self.synopsis = dictionary[@"synopsis"];
         self.genres = dictionary[@"genres"];
-        
+        self.status = dictionary[@"status"];
+
         NSNumber *episodesNSNumber = dictionary[@"episodes"];
         self.episodes = [episodesNSNumber intValue];
-        
-        self.status = dictionary[@"status"];
     }
     
     return self;
 }
 
-+ (NSMutableArray *)animesWithArrayOfDictionaries:(NSArray *)dictionaries {
-    NSMutableArray *animes = [NSMutableArray array];
++ (NSMutableArray<SUKAnime*> *)animesWithArrayOfDictionaries:(NSArray<NSDictionary*> *)dictionaries {
+    NSMutableArray<SUKAnime*> *animes = [NSMutableArray array];
     for (NSDictionary *dictionary in dictionaries) {
         SUKAnime *anime = [[SUKAnime alloc] initWithDictionary:dictionary];
         [animes addObject:anime];

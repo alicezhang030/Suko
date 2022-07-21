@@ -19,9 +19,9 @@
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableDictionary *dictionaryOfAnime;
-@property (nonatomic, strong) NSMutableDictionary *dictOfGenres;
-@property (nonatomic, strong) NSMutableArray *headerTitlesBesidesTopAnime;
+@property (nonatomic, strong) NSMutableDictionary<NSString*, NSArray<SUKAnime*>*> *dictionaryOfAnime;
+@property (nonatomic, strong) NSMutableDictionary<NSString*, NSString*> *dictOfGenres;
+@property (nonatomic, strong) NSMutableArray<NSString*> *headerTitlesBesidesTopAnime;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
@@ -64,7 +64,7 @@
     
     __weak __typeof(self) weakSelf = self;
     
-    [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:searchText completion:^(NSArray *anime, NSError *error) {
+    [[SUKAPIManager shared] fetchAnimeSearchBySearchQuery:searchText completion:^(NSArray<SUKAnime*> *anime, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if (anime != nil) {
             NSMutableDictionary *senderDict = [[NSMutableDictionary alloc] init];
@@ -113,7 +113,7 @@
 - (void) topAnime {
     [self.spinner startAnimating];
     __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchTopAnime:^(NSArray *anime, NSError *error) {
+    [[SUKAPIManager shared] fetchTopAnime:^(NSArray<SUKAnime*> *anime, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if (anime != nil) {
             NSString *title = @"Top Anime";
@@ -126,13 +126,13 @@
     }];
 }
 
-- (void) genreAnime: (NSMutableArray *) genres {
+- (void) genreAnime: (NSMutableArray<NSString*> *) genres {
     [self.spinner startAnimating];
     NSString *genre = [genres lastObject];
     [genres removeLastObject];
     
     __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchGenreAnime:genre completion:^(NSArray *anime, NSError *error) {
+    [[SUKAPIManager shared] fetchGenreAnime:genre completion:^(NSArray<SUKAnime*> *anime, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if (anime != nil) {
             if(strongSelf.dictOfGenres != nil) {
@@ -162,11 +162,11 @@
 - (void) genreList {
     NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
     __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchGenreList:^(NSArray *genres, NSError *error) {
+    [[SUKAPIManager shared] fetchGenreList:^(NSArray<NSDictionary*> *genres, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if (genres != nil) {
             int maxID = 0;
-            NSMutableArray *arrOfIDs = [[NSMutableArray alloc] init];
+            NSMutableArray<NSString*> *arrOfIDs = [[NSMutableArray alloc] init];
                         
             for(NSDictionary *genreDict in genres) {
                 if(![genresToNotConsider containsObject:[genreDict valueForKey:@"name"]]) {
@@ -192,7 +192,7 @@
                 randomGenre2 = arc4random_uniform((int)self.dictOfGenres.count);
             }
             
-            NSMutableArray *genres = [@[arrOfIDs[randomGenre1], arrOfIDs[randomGenre2]] mutableCopy];
+            NSMutableArray<NSString*> *genres = [@[arrOfIDs[randomGenre1], arrOfIDs[randomGenre2]] mutableCopy];
             [strongSelf genreAnime:genres];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -214,7 +214,7 @@
     NSString *headerTitle = [self retriveDataForIndexPathRow:indexPath.row][@"header"];
     cell.rowHeaderLabel.text = headerTitle;
     
-    NSArray *animeData = [self retriveDataForIndexPathRow:indexPath.row][@"anime"];
+    NSArray<SUKAnime*> *animeData = [self retriveDataForIndexPathRow:indexPath.row][@"anime"];
     cell.arrOfAnime = animeData;
     
     return cell;
@@ -232,7 +232,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
-    NSArray *animeData = [self retriveDataForIndexPathRow:row][@"anime"];
+    NSArray<SUKAnime*> *animeData = [self retriveDataForIndexPathRow:row][@"anime"];
     return animeData.count;
 }
 
@@ -240,7 +240,7 @@
     SUKHomeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SUKHomeCollectionViewCell" forIndexPath:indexPath];
     
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
-    NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
+    NSArray<SUKAnime*> *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
     SUKAnime *animeToDisplay =  collectionViewArray[indexPath.item];
     
     [cell setAnime:animeToDisplay];
@@ -249,7 +249,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger row = [(SUKHomeCollectionView *)collectionView indexPath].row;
-    NSArray *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
+    NSArray<SUKAnime*> *collectionViewArray = [self retriveDataForIndexPathRow:row][@"anime"];
     SUKAnime *animeToDisplay =  collectionViewArray[indexPath.item];
     
     [self performSegueWithIdentifier:@"CollectionToDetailsSegue" sender:animeToDisplay];
