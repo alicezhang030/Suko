@@ -45,7 +45,6 @@ NSNumber *const kNumOfRows = @3;
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
-    [self.spinner startAnimating];
     
     self.searchBar.delegate = self;
     self.searchBar.showsCancelButton = true;
@@ -58,8 +57,9 @@ NSNumber *const kNumOfRows = @3;
 - (void)viewWillAppear:(BOOL)animated {
     // If not all desired data have been loaded yet (ex. initial load, used switched to a different tab before all data has loaded)
     if(self.dictOfAnime.count < [kNumOfRows intValue]) {
+        [self.spinner startAnimating];
         [self topAnime];
-        [self genreList:[NSNumber numberWithInt:([kNumOfRows intValue] - 1 - (int)self.dictOfAnime.count)]];
+        [self genreList:[NSNumber numberWithInt:([kNumOfRows intValue] - (int)self.dictOfAnime.count)]];
     }
 }
 

@@ -46,6 +46,11 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.spinner stopAnimating];
+    [[SUKAPIManager shared] cancelAllRequests]; // Reduce the number of requests made to external API
+}
+
 - (void)updateArrOfAnime {
     if(self.arrOfAnimeMALID.count == 0) {
         [self emptyTableView];
@@ -53,7 +58,6 @@
         
     for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
         NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
-        
         __weak __typeof(self) weakSelf = self;
         [[SUKAPIManager shared] fetchAnimeWithID:malID completion:^(SUKAnime *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
