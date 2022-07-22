@@ -42,6 +42,8 @@
 		53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */; };
 		53E1CDFF2881C80B00186E36 /* SUKCreateNewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */; };
 		53E1CE022881C8D400186E36 /* SUKEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E1CE012881C8D400186E36 /* SUKEvent.m */; };
+		53F80C0E288B41E500FFDB2D /* SUKKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53F80C0D288B41E500FFDB2D /* SUKKeys.plist */; };
+		53F80C11288B428800FFDB2D /* SUKMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F80C10288B428800FFDB2D /* SUKMovie.m */; };
 		F44E3E9609C45EF18E4508DE /* Pods_SukoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +130,9 @@
 		53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKCreateNewEventViewController.m; sourceTree = "<group>"; };
 		53E1CE002881C8D400186E36 /* SUKEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKEvent.h; sourceTree = "<group>"; };
 		53E1CE012881C8D400186E36 /* SUKEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKEvent.m; sourceTree = "<group>"; };
+		53F80C0D288B41E500FFDB2D /* SUKKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SUKKeys.plist; sourceTree = "<group>"; };
+		53F80C0F288B428800FFDB2D /* SUKMovie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKMovie.h; sourceTree = "<group>"; };
+		53F80C10288B428800FFDB2D /* SUKMovie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKMovie.m; sourceTree = "<group>"; };
 		85AA59F7210F419DD51460CD /* Pods-Suko-SukoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko-SukoUITests.debug.xcconfig"; path = "Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Suko_SukoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B661CD64106E019F4756CBA6 /* Pods-SukoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SukoTests.debug.xcconfig"; path = "Target Support Files/Pods-SukoTests/Pods-SukoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -194,6 +199,8 @@
 				53E1CE012881C8D400186E36 /* SUKEvent.m */,
 				53C81C892885D46500092A46 /* SUKFollow.h */,
 				53C81C8A2885D46500092A46 /* SUKFollow.m */,
+				53F80C0F288B428800FFDB2D /* SUKMovie.h */,
+				53F80C10288B428800FFDB2D /* SUKMovie.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -270,6 +277,7 @@
 				5397F5F2286B676900E9D894 /* Assets.xcassets */,
 				5397F5F4286B676900E9D894 /* LaunchScreen.storyboard */,
 				5397F5F7286B676900E9D894 /* Info.plist */,
+				53F80C0D288B41E500FFDB2D /* SUKKeys.plist */,
 				5397F5F8286B676900E9D894 /* main.m */,
 			);
 			path = Suko;
@@ -420,6 +428,7 @@
 			files = (
 				5397F5F6286B676900E9D894 /* LaunchScreen.storyboard in Resources */,
 				5397F5F3286B676900E9D894 /* Assets.xcassets in Resources */,
+				53F80C0E288B41E500FFDB2D /* SUKKeys.plist in Resources */,
 				5397F5F1286B676800E9D894 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -548,6 +557,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53F80C11288B428800FFDB2D /* SUKMovie.m in Sources */,
 				53ABF522288746DB0015F1DB /* SUKBrowseEventTableViewCell.m in Sources */,
 				53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */,
 				536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */,

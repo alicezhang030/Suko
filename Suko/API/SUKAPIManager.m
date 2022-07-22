@@ -10,6 +10,7 @@
 #import "SUKAnime.h"
 
 static NSString * const baseAnimeURLString = @"https://api.jikan.moe/v4";
+static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
 
 @interface SUKAPIManager ()
 @property (strong, nonatomic) AFHTTPSessionManager *manager;
@@ -115,6 +116,31 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)fetchMovieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
+    NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
+    NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/genre/movie/list?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US"];
+    
+    [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSDictionary *dataDictionary = responseObject;
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error.localizedDescription);
+    }];
+}
+
+- (void)fetchPopularMovieList:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion {
+    NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
+    NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/movie/popular?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US&page=1"];
+    
+    [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSDictionary *dataDictionary = responseObject;
+        NSArray<NSDictionary *> *topTwentyMovies = dataDictionary[@"results"];
+        NSArray<SUKMovie *> *arrOfMovieObjs = [SUKMovie movieWithArrayOfDictionaries:topTwentyMovies];
+        completion(arrOfMovieObjs, nil);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error.localizedDescription);
     }];
 }
 

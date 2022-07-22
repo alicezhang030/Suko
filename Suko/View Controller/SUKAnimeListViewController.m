@@ -15,6 +15,7 @@
 @interface SUKAnimeListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, assign) BOOL cancelTasks;
 
 @end
 
@@ -28,6 +29,8 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    [self setCancelTasks:NO];
     
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
@@ -48,6 +51,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
+    [self setCancelTasks:YES];
     [[SUKAPIManager shared] cancelAllRequests]; // Reduce the number of requests made to external API
 }
 
@@ -57,25 +61,27 @@
     }
         
     for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
-        NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
-        __weak __typeof(self) weakSelf = self;
-        [[SUKAPIManager shared] fetchAnimeWithID:malID completion:^(SUKAnime *anime, NSError *error) {
-            __strong __typeof(self) strongSelf = weakSelf;
-            if (error == nil) {
-                NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
-                [currentArrOfAnime addObject:anime];
-                strongSelf.arrOfAnime = [currentArrOfAnime copy];
-                [strongSelf.tableView reloadData];
-            } else {
-                NSLog(@"%@", error.localizedDescription);
-            }
+        if(!self.cancelTasks) {            
+            NSNumber *malID = [self.arrOfAnimeMALID objectAtIndex:i];
+            __weak __typeof(self) weakSelf = self;
+            [[SUKAPIManager shared] fetchAnimeWithID:malID completion:^(SUKAnime *anime, NSError *error) {
+                __strong __typeof(self) strongSelf = weakSelf;
+                if (error == nil) {
+                    NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
+                    [currentArrOfAnime addObject:anime];
+                    strongSelf.arrOfAnime = [currentArrOfAnime copy];
+                    [strongSelf.tableView reloadData];
+                } else {
+                    NSLog(@"%@", error.localizedDescription);
+                }
+                
+                if(i == strongSelf.arrOfAnimeMALID.count - 1) {
+                    [strongSelf.spinner stopAnimating];
+                }
+            }];
             
-            if(i == strongSelf.arrOfAnimeMALID.count - 1) {
-                [strongSelf.spinner stopAnimating];
-            }
-        }];
-        
-        [NSThread sleepForTimeInterval:1.2];
+            [NSThread sleepForTimeInterval:1.2];
+        }
     }
 }
 

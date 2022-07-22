@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SUKAnime.h"
+#import "SUKMovie.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchAnimeGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion;
 - (void)fetchAnimeSearchWithSearchQuery:(NSString *) query completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion;
 
+- (void)fetchMovieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion;
+- (void)fetchPopularMovieList:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 /** The search bar at the top of the screen*/
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, assign) BOOL cancelTasks;
 @end
 
 @implementation SUKHomeViewController
@@ -42,6 +43,8 @@ NSNumber *const kNumOfRows = @3;
     self.dictOfAnime = [NSMutableDictionary new];
     self.dictOfGenres = [NSMutableDictionary new];
     
+    [self setCancelTasks:NO];
+    
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
@@ -55,6 +58,8 @@ NSNumber *const kNumOfRows = @3;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self setCancelTasks:NO];
+    //[self topMovies]; // TEST!! TO BE DELETED
     // If not all desired data have been loaded yet (ex. initial load, used switched to a different tab before all data has loaded)
     if(self.dictOfAnime.count < [kNumOfRows intValue]) {
         [self.spinner startAnimating];
@@ -65,6 +70,7 @@ NSNumber *const kNumOfRows = @3;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
+    [self setCancelTasks:YES];
     [[SUKAPIManager shared] cancelAllRequests]; // Reduce the number of requests made to external API
 }
 
@@ -119,21 +125,23 @@ NSNumber *const kNumOfRows = @3;
 #pragma mark - Fetching Data using SUKAPIManager
 
 - (void)topAnime {
-    __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchTopAnimeList:^(NSArray<SUKAnime *> *anime, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        if (anime != nil) {
-            NSString *title = @"Top Anime";
-            [strongSelf.dictOfAnime setObject:anime forKey:title];
-            [strongSelf.tableView reloadData];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
+    if(!self.cancelTasks) {
+        __weak __typeof(self) weakSelf = self;
+        [[SUKAPIManager shared] fetchTopAnimeList:^(NSArray<SUKAnime *> *anime, NSError *error) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            if (anime != nil) {
+                NSString *title = @"Top Anime";
+                [strongSelf.dictOfAnime setObject:anime forKey:title];
+                [strongSelf.tableView reloadData];
+            } else {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];
+    }
 }
 
 - (void)genreAnime:(NSMutableArray<NSString *> *) genres {
-    if(genres.count > 0) {
+    if(genres.count > 0 && !self.cancelTasks) {
         NSString *genre = [genres lastObject];
         [genres removeLastObject];
         [NSThread sleepForTimeInterval:1.0];
@@ -163,36 +171,38 @@ NSNumber *const kNumOfRows = @3;
 }
 
 - (void)genreList:(NSNumber *)numberOfLists {
-    NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
-    
-    __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchAnimeGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        if (genres != nil) {
-            NSMutableArray<NSString *> *arrOfGenreIDs = [NSMutableArray new]; // Used to choose random genreIDs later
-            
-            for(NSDictionary *genreDict in genres) {
-                if(![genresToNotConsider containsObject:[genreDict valueForKey:@"name"]]) { // Checks if the genre the for-loop is on is SFW or not
-                    NSString *genreIDString = [NSString stringWithFormat:@"%d", [[genreDict valueForKey:@"mal_id"] intValue]];
-                    NSString *genreName = [genreDict valueForKey:@"name"];
-                    [arrOfGenreIDs addObject:genreIDString];
-                    [strongSelf.dictOfGenres setObject:genreName forKey:genreIDString];
+    if(!self.cancelTasks) {
+        NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
+        
+        __weak __typeof(self) weakSelf = self;
+        [[SUKAPIManager shared] fetchAnimeGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            if (genres != nil) {
+                NSMutableArray<NSString *> *arrOfGenreIDs = [NSMutableArray new]; // Used to choose random genreIDs later
+                
+                for(NSDictionary *genreDict in genres) {
+                    if(![genresToNotConsider containsObject:[genreDict valueForKey:@"name"]]) { // Checks if the genre the for-loop is on is SFW or not
+                        NSString *genreIDString = [NSString stringWithFormat:@"%d", [[genreDict valueForKey:@"mal_id"] intValue]];
+                        NSString *genreName = [genreDict valueForKey:@"name"];
+                        [arrOfGenreIDs addObject:genreIDString];
+                        [strongSelf.dictOfGenres setObject:genreName forKey:genreIDString];
+                    }
                 }
-            }
-            
-            NSMutableArray<NSString *> *chosenGenresToDisplay = [NSMutableArray new];
-            while(chosenGenresToDisplay.count != [numberOfLists intValue]) {
-                int randomGenre = arc4random_uniform((int)self.dictOfGenres.count);
-                if(![chosenGenresToDisplay containsObject:arrOfGenreIDs[randomGenre]]) { // Ensures the app doesn't display duplicate genres
-                    [chosenGenresToDisplay addObject:arrOfGenreIDs[randomGenre]];
+                
+                NSMutableArray<NSString *> *chosenGenresToDisplay = [NSMutableArray new];
+                while(chosenGenresToDisplay.count != [numberOfLists intValue]) {
+                    int randomGenre = arc4random_uniform((int)self.dictOfGenres.count);
+                    if(![chosenGenresToDisplay containsObject:arrOfGenreIDs[randomGenre]]) { // Ensures the app doesn't display duplicate genres
+                        [chosenGenresToDisplay addObject:arrOfGenreIDs[randomGenre]];
+                    }
                 }
+                
+                [strongSelf genreAnime:chosenGenresToDisplay];
+            } else {
+                NSLog(@"%@", error.localizedDescription);
             }
-            
-            [strongSelf genreAnime:chosenGenresToDisplay];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
+        }];
+    }
 }
 
 #pragma mark - TableView
