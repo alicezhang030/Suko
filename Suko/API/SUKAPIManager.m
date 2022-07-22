@@ -9,7 +9,8 @@
 #import "AFNetworking.h"
 #import "SUKAnime.h"
 
-static NSString * const baseURLString = @"https://api.jikan.moe/v4";
+static NSString * const baseAnimeAPIURLString = @"https://api.jikan.moe/v4";
+static NSString * const baseMovieAPIURLString = @"https://api.themoviedb.org/3/";
 
 @interface SUKAPIManager ()
 @property (strong, nonatomic) AFHTTPSessionManager *manager;
@@ -45,7 +46,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 - (void)fetchAnimeWithID:(NSNumber *) malID completion:(void(^)(SUKAnime* anime, NSError *error))completion {
     NSString *malIDString = [NSString stringWithFormat:@"%d",[malID intValue]];
     NSDictionary *params = @{@"id": malID};
-    NSString *fullURLString = [baseURLString stringByAppendingString:[@"/anime/" stringByAppendingString:[malIDString stringByAppendingString:@"/full"]]];
+    NSString *fullURLString = [baseAnimeAPIURLString stringByAppendingString:[@"/anime/" stringByAppendingString:[malIDString stringByAppendingString:@"/full"]]];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
@@ -58,7 +59,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 
 - (void)fetchAnimeListWithGenre:(NSString *) genre completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
     NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
-    NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
+    NSString *fullURLString = [baseAnimeAPIURLString stringByAppendingString:@"/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
@@ -71,7 +72,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 
 - (void)fetchTopAnimeList:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
     NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
-    NSString *fullURLString = [baseURLString stringByAppendingString:@"/top/anime"];
+    NSString *fullURLString = [baseAnimeAPIURLString stringByAppendingString:@"/top/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
@@ -82,8 +83,8 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     }];
 }
 
-- (void)fetchGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
-    NSString *fullURLString = [baseURLString stringByAppendingString:@"/genres/anime"];
+- (void)fetchAnimeGenreList:(void(^)(NSArray<NSDictionary *> *animeGenres, NSError *error))completion {
+    NSString *fullURLString = [baseAnimeAPIURLString stringByAppendingString:@"/genres/anime"];
     
     [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
@@ -95,7 +96,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 
 - (void)fetchAnimeSearchWithSearchQuery:(NSString *) query completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
     NSDictionary *params = @{@"q": query, @"type": @"tv", @"sort": @"desc"};
-    NSString *fullURLString = [baseURLString stringByAppendingString:@"/anime"];
+    NSString *fullURLString = [baseAnimeAPIURLString stringByAppendingString:@"/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
@@ -116,6 +117,10 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+}
+
+- (void)fetchMovieGenreList:(void(^)(NSArray<NSDictionary *> *movieGenres, NSError *error))completion {
+    
 }
 
 @end

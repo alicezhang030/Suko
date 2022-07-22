@@ -166,7 +166,7 @@ NSNumber *const kNumOfRows = @3;
     NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
     
     __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
+    [[SUKAPIManager shared] fetchAnimeGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if (genres != nil) {
             NSMutableArray<NSString *> *arrOfGenreIDs = [NSMutableArray new]; // Used to choose random genreIDs later
