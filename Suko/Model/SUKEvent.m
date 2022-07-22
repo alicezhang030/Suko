@@ -22,7 +22,7 @@
     return @"SUKEvent";
 }
 
-+ (void) postEventWithName:(NSString *) eventName eventDescription:(NSString *) eventDescription eventLocation:(CLLocation *) eventLocation startTime:(NSDate *) startTime endTime:(NSDate *) endTime postedBy:(PFUser *) user withCompletion: (PFBooleanResultBlock  _Nullable)completion {
++ (void)postEventWithName:(NSString *)eventName eventDescription:(NSString *)eventDescription eventLocation:(CLLocation *)eventLocation startTime:(NSDate *)startTime endTime:(NSDate *)endTime postedBy:(PFUser *)user withCompletion:(PFBooleanResultBlock  _Nullable)completion {
     SUKEvent *newEvent = [SUKEvent new];
     
     newEvent.name = eventName;
@@ -31,7 +31,7 @@
     newEvent.startTime = startTime;
     newEvent.endTime = endTime;
     newEvent.postedBy = user;
-    newEvent.attendees = [[NSArray alloc] init];
+    newEvent.attendees = [NSArray new];
     
     [newEvent saveInBackgroundWithBlock: completion];
 }

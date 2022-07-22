@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) UIBarButtonItem *logoutButton;
-@property (nonatomic, strong) NSArray *listTitles;
+@property (nonatomic, strong) NSArray<NSString *> *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -35,7 +35,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(tapLogout)];
-    NSMutableArray* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
+    NSMutableArray<UIBarButtonItem *>* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
     [currentRightBarItemsMutable addObject:self.logoutButton];
     self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];
         
@@ -47,7 +47,7 @@
     [self loadContents];
 }
 
--(void) loadContents {
+- (void)loadContents {
     // Load the user profile image
     self.profileImageView.file = [PFUser currentUser][@"profile_image"];
     [self.profileImageView loadInBackground];
@@ -61,7 +61,7 @@
 
 #pragma mark - TableView
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.listTitles count];
 }
 
@@ -72,14 +72,15 @@
     return cell;
 }
 
--(void) tapLogout {
+- (void)tapLogout {
     NSLog(@"User tapped log out");
     
-    // Reset view to the log in screen
+    __weak __typeof(self) weakSelf = self;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
-        self.view.window.rootViewController = loginVC;
+        strongSelf.view.window.rootViewController = loginVC;
     }];
 }
 
@@ -89,9 +90,8 @@
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.userToDisplay = [PFUser currentUser];
         animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
-        animeListVC.arrOfAnime = [NSMutableArray array];
+        animeListVC.arrOfAnime = [NSMutableArray new];
     }
 }
 

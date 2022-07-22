@@ -23,7 +23,7 @@
     [self loadViewContents];
 }
 
-- (void) loadViewContents {
+- (void)loadViewContents {
     // Load username
     self.usernameTextField.text = [PFUser currentUser].username;
     

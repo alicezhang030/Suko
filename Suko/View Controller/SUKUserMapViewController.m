@@ -21,12 +21,14 @@
 
 @implementation SUKUserMapViewController
 
+NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUserProfileSegue";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.mapView.delegate = self;
     
-    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -37,7 +39,7 @@
     [self.locationManager startUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     self.currentUserLocation = [locations lastObject];
     
     MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
@@ -57,17 +59,18 @@
     [query includeKey:@"current_coordinates"];
     [query whereKey:@"current_coordinates" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:2.0];
     
+    __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         for(PFUser *user in users) {
             if(![user.objectId isEqualToString:[PFUser currentUser].objectId]) {
-                [self.nearestUsersArr addObject:user];
+                [strongSelf.nearestUsersArr addObject:user];
                 
                 MKPointAnnotation *annotation = [MKPointAnnotation new];
                 PFGeoPoint *user_coordinates = user[@"current_coordinates"];
                 annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
                 annotation.title = user.username;
-                [self.mapView addAnnotation:annotation];
-                
+                [strongSelf.mapView addAnnotation:annotation];
             }
         }
     }];
@@ -79,18 +82,20 @@
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
     [query whereKey:@"username" equalTo:title];
     
+    __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(users.count > 1) {
             NSLog(@"Error: More than one user with the username");
         } else {
-            [self.mapView deselectAnnotation:view.annotation animated:YES];
-            [self performSegueWithIdentifier:@"MapToNotCurrentUserProfileSegue" sender:[users lastObject]];
+            [strongSelf.mapView deselectAnnotation:view.annotation animated:YES];
+            [strongSelf performSegueWithIdentifier:kMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
         }
     }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"MapToNotCurrentUserProfileSegue"]) {
+    if([segue.identifier isEqualToString:kMapToNotCurrentUserProfileSegueIdentifier]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
     }

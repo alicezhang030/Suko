@@ -11,16 +11,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKAnime : NSObject
 
-@property (nonatomic) int malID; // MyAnimeList ID
-@property (nonatomic) NSString *title; // The title of the anime (ex. "One Piece")
-@property (nonatomic) NSString *posterURL; // The URL for the poster of the anime
-@property (nonatomic) NSString *synopsis; // The anime synopsis
-@property (nonatomic) NSArray *genres; // The genres this anime fit into
+/** Corresponding MyAnimeList ID */
+@property (nonatomic) int malID;
+/** The title of the anime (ex. "One Piece") */
+@property (nonatomic) NSString *title;
+/** The URL for the poster of the anime */
+@property (nonatomic) NSString *posterURL;
+/** The anime synopsis */
+@property (nonatomic) NSString *synopsis;
+/** The genres this anime fit into */
+@property (nonatomic) NSArray<NSDictionary *> *genres;
+/** Episode count */
+@property (nonatomic) int numEpisodes;
+/** Airing status ("Finished Airing," "Currently Airing," "Not yet aired")*/
+@property (nonatomic) NSString *status;
 
-@property (nonatomic) int episodes; // Episode count
-@property (nonatomic) NSString *status; // Airing status ("Finished Airing," "Currently Airing," "Not yet aired")
-
-+ (NSMutableArray *)animesWithArrayOfDictionaries:(NSArray *)dictionaries;
++ (NSMutableArray<SUKAnime *> *)animesWithArrayOfDictionaries:(NSArray<NSDictionary *> *)dictionaries;
 + (SUKAnime *)animeWithDictionary:(NSDictionary *)dictionary;
 
 @end

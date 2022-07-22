@@ -11,6 +11,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKHomeViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
+extern NSString *const kHomeToAnimeListSegueIdentifier;
+extern NSString *const kHomeCollectionCellToDetailsSegueIdentifier;
+extern NSNumber *const kNumOfRows;
+
 @end
 
 NS_ASSUME_NONNULL_END

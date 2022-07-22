@@ -9,68 +9,93 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Contacts/CNPostalAddressFormatter.h>
 #import <Parse/PFImageView.h>
+#import "SUKNotCurrentUserProfileViewController.h"
 
 @interface SUKEventDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet PFImageView *userProfileImage;
+@property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *decriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
 @implementation SUKEventDetailsViewController
 
+NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotCurrentUserProfileSegue";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITapGestureRecognizer *profileImageTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profileImageView addGestureRecognizer:profileImageTapGestureRecognizer];
+    [self.profileImageView setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *usernameTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.usernameLabel setUserInteractionEnabled:YES];
+    [self.usernameLabel addGestureRecognizer:usernameTapGestureRecognizer];
+    
+    self.registerButton.layer.cornerRadius = 4;
+    self.registerButton.layer.masksToBounds = true;
+    
+    self.spinner.hidesWhenStopped = YES;
+    [self.spinner startAnimating];
 }
 
-- (void) setEvent:(SUKEvent*) event {
+- (void)setEvent:(SUKEvent *)event {
     _event = event;
     
-    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-    CLLocation *eventCoordinates = [[CLLocation alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
+    __weak __typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __strong __typeof(self) strongSelf = weakSelf;
+        [strongSelf setAddress];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            self.eventNameLabel.text = event.name;
+            self.decriptionLabel.text = event.eventDescription;
+            self.usernameLabel.text = event.postedBy.username;
+            self.profileImageView.file = event.postedBy[@"profile_image"];
+            [self.profileImageView loadInBackground];
+            self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+            self.profileImageView.layer.masksToBounds = YES;
+            self.profileImageView.layer.borderWidth = 0;
+            
+            if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
+                [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
+            } else {
+                [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
+            }
+            
+            NSDateFormatter *dateFormatter = [NSDateFormatter new];
+            dateFormatter.dateFormat = @"MM/dd/yyyy h:mm a";
+            self.dateLabel.text = [[[dateFormatter stringFromDate:event.startTime]
+                                    stringByAppendingString:@" - "]
+                                   stringByAppendingString:[dateFormatter stringFromDate:event.endTime]];
+        });
+    });
+}
+
+- (void)setAddress {
+    CLGeocoder *geoCoder = [CLGeocoder new];
+    CLLocation *eventCoordinates = [[CLLocation alloc] initWithLatitude:self.event.location.latitude longitude:self.event.location.longitude];
     
+    __weak __typeof(self) weakSelf = self;
     [geoCoder reverseGeocodeLocation:eventCoordinates completionHandler:^(NSArray<CLPlacemark *> * placemarks, NSError * error) {
-        CNPostalAddressFormatter *addressFormatter = [[CNPostalAddressFormatter alloc] init];
+        __strong __typeof(self) strongSelf = weakSelf;
+        CNPostalAddressFormatter *addressFormatter = [CNPostalAddressFormatter new];
         NSString *multiLineAddress = [addressFormatter stringFromPostalAddress:placemarks[0].postalAddress];
-        NSArray *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
+        NSArray<NSString *> *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
         NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];
 
-        self.addressLabel.text = singleLineAddress;
+        strongSelf.addressLabel.text = singleLineAddress;
         
-        self.eventNameLabel.text = event.name;
-        
-        self.decriptionLabel.text = event.eventDescription;
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"MM/dd/yyyy h:mm a";
-        self.dateLabel.text = [[[dateFormatter stringFromDate:event.startTime]
-                                stringByAppendingString:@" - "]
-                               stringByAppendingString:[dateFormatter stringFromDate:event.endTime]];
-        
-        PFUser *eventPoster = event.postedBy;
-        [eventPoster fetchIfNeeded];
-        self.usernameLabel.text = eventPoster.username;
-        
-        self.userProfileImage.file = eventPoster[@"profile_image"];
-        [self.userProfileImage loadInBackground];
-        self.userProfileImage.layer.cornerRadius = self.userProfileImage.frame.size.height /2;
-        self.userProfileImage.layer.masksToBounds = YES;
-        self.userProfileImage.layer.borderWidth = 0;
-        
-        if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
-            [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
-        } else {
-            [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
-        }
+        [strongSelf.spinner stopAnimating];
     }];
 }
 
 - (IBAction)tapRegister:(id)sender {
-    NSMutableArray *attendeesMutable = [self.event.attendees mutableCopy];
+    NSMutableArray<NSString *> *attendeesMutable = [self.event.attendees mutableCopy];
     
     if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
         [attendeesMutable removeObject:[PFUser currentUser].objectId];
@@ -84,14 +109,18 @@
     [self.event saveInBackground];
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender {
+    [self performSegueWithIdentifier:kEventDetailsToNotCurrentUserProfileSegue sender:self.event.postedBy];
 }
-*/
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:kEventDetailsToNotCurrentUserProfileSegue]) {
+        SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
+        notCurrentUserprofileVC.userToDisplay = sender;
+    }
+}
 
 @end

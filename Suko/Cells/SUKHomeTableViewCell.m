@@ -16,19 +16,18 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone; // Remove the gray highlight after you select a cell
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    // Add tap gesture recognizer to the see all label so that when a user taps, the app segue
     UITapGestureRecognizer *seeAllTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapSeeAll:)];
     [self.seeAllLabel addGestureRecognizer:seeAllTapGestureRecognizer];
     [self.seeAllLabel setUserInteractionEnabled:YES];
 }
 
-- (void) didTapSeeAll:(UITapGestureRecognizer *)sender{
+- (void)didTapSeeAll:(UITapGestureRecognizer *)sender {
     [self.delegate segueSUKHomeTableViewCell:self];
 }
 
-- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath{
+- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath {
     self.collectionView.dataSource = dataSourceDelegate;
     self.collectionView.delegate = dataSourceDelegate;
     self.collectionView.indexPath = indexPath;

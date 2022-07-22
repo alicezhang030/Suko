@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -37,7 +37,7 @@
     [self.mapView addGestureRecognizer:longPressRecognizer];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     self.currentUserLocation = [locations lastObject];
     
     MKCoordinateRegion currentUserRegion = MKCoordinateRegionMake(self.currentUserLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
@@ -86,12 +86,14 @@
         CLLocationCoordinate2D eventCoordinate = eventLocationAnnotation.coordinate;
         CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:eventCoordinate.latitude longitude:eventCoordinate.longitude];
         
+        __weak __typeof(self) weakSelf = self;
         [SUKEvent postEventWithName:self.eventName eventDescription:self.eventDescription eventLocation:eventLocation startTime:self.eventStartDate endTime:self.eventEndDate postedBy:[PFUser currentUser] withCompletion:^(BOOL succeeded, NSError * error) {
+            __strong __typeof(self) strongSelf = weakSelf;
             if (succeeded) {
                 NSLog(@"The event was uploaded!");
                 
-                NSArray *viewControllers = [self.navigationController viewControllers];
-                [self.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original map VC
+                NSArray<UIViewController *> *viewControllers = [self.navigationController viewControllers];
+                [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original map VC
             } else {
                 NSLog(@"Problem uploading the event: %@", error.localizedDescription);
             }

@@ -16,17 +16,16 @@
     return @"SUKFollow";
 }
 
-+ (void) postFollow:(PFUser*) follower userBeingFollowed:(PFUser*) followed withCompletion: (PFBooleanResultBlock  _Nullable)completion {
++ (void)postFollowWithFollower:(PFUser *)follower userBeingFollowed:(PFUser *)followed withCompletion:(PFBooleanResultBlock  _Nullable)completion {
     SUKFollow *newFollow = [SUKFollow new];
     
-    // Set up the columns
     newFollow.follower = follower;
     newFollow.userBeingFollowed = followed;
     
     [newFollow saveInBackgroundWithBlock: completion];
 }
 
-+ (void) deleteFollow: (SUKFollow * _Nullable) follow {
++ (void)deleteFollow:(SUKFollow * _Nullable)follow {
     [follow deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             NSLog(@"Successfully deleted the follow");

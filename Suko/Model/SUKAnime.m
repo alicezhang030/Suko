@@ -16,26 +16,24 @@
         NSNumber *malIDNSNumber = dictionary[@"mal_id"];
         self.malID = [malIDNSNumber intValue];
         
-        // MyAnimeList formats titles weirdly occasionally with "\" at the end, so we need to remove the formatting
+        // MyAnimeList formats titles occasionally with "\" at the end, so need to remove the formatting
         NSString *titleWithMALFormatting = dictionary[@"title"];
         self.title = [[titleWithMALFormatting componentsSeparatedByString:@"\\"] objectAtIndex:0];
         
         self.posterURL = dictionary[@"images"][@"jpg"][@"large_image_url"];
-        
         self.synopsis = dictionary[@"synopsis"];
         self.genres = dictionary[@"genres"];
-        
-        NSNumber *episodesNSNumber = dictionary[@"episodes"];
-        self.episodes = [episodesNSNumber intValue];
-        
         self.status = dictionary[@"status"];
+
+        NSNumber *episodesNSNumber = dictionary[@"episodes"];
+        self.numEpisodes = [episodesNSNumber intValue];
     }
     
     return self;
 }
 
-+ (NSMutableArray *)animesWithArrayOfDictionaries:(NSArray *)dictionaries {
-    NSMutableArray *animes = [NSMutableArray array];
++ (NSMutableArray<SUKAnime *> *)animesWithArrayOfDictionaries:(NSArray<NSDictionary *> *)dictionaries {
+    NSMutableArray<SUKAnime *> *animes = [NSMutableArray new];
     for (NSDictionary *dictionary in dictionaries) {
         SUKAnime *anime = [[SUKAnime alloc] initWithDictionary:dictionary];
         [animes addObject:anime];

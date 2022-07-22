@@ -36,11 +36,11 @@
                   forControlEvents:UIControlEventValueChanged];
 }
 
-- (void) startDateChanged:(id)sender{
+- (void)startDateChanged:(id)sender {
     self.endTimeDatePicker.minimumDate = self.startTimeDatePicker.date;
 }
 
--(void)dismissKeyboard{
+- (void)dismissKeyboard {
     [self.eventNameTextField resignFirstResponder];
     [self.eventDescriptionTextView resignFirstResponder];
 }

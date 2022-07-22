@@ -337,7 +337,7 @@
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GmA-lZ-2kB">
                                                         <size key="itemSize" width="185" height="252"/>
-                                                        <size key="estimatedItemSize" width="185" height="277"/>
+                                                        <size key="estimatedItemSize" width="185" height="252"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -368,6 +368,7 @@
                                                                 <constraints>
                                                                     <constraint firstItem="CWS-86-omw" firstAttribute="top" secondItem="GLQ-Dp-I2R" secondAttribute="top" id="Np9-ka-mPj"/>
                                                                     <constraint firstAttribute="trailing" secondItem="CWS-86-omw" secondAttribute="trailing" id="RGn-Lq-mqp"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="sZj-uM-5lc" secondAttribute="bottom" constant="8" id="V5Y-1E-jOX"/>
                                                                     <constraint firstItem="sZj-uM-5lc" firstAttribute="leading" secondItem="GLQ-Dp-I2R" secondAttribute="leading" constant="8" id="clp-bq-sfd"/>
                                                                     <constraint firstItem="CWS-86-omw" firstAttribute="leading" secondItem="GLQ-Dp-I2R" secondAttribute="leading" id="kVE-mk-FcY"/>
                                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sZj-uM-5lc" secondAttribute="trailing" constant="8" id="naE-xi-qXI"/>
@@ -412,8 +413,10 @@
                                 </prototypes>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="Y0o-p9-vyC">
-                                <rect key="frame" x="0.0" y="517" width="414" height="39"/>
+                                <rect key="frame" x="183" y="526" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -430,8 +433,8 @@
                         <outlet property="searchBar" destination="d03-rZ-Tgk" id="Dhd-UU-09r"/>
                         <outlet property="spinner" destination="Y0o-p9-vyC" id="iTX-bk-Ms5"/>
                         <outlet property="tableView" destination="IqB-dM-fLm" id="aOy-Kr-bFz"/>
-                        <segue destination="OiV-xg-5bj" kind="show" identifier="HomeToDetailsSegue" id="4vs-CO-2P5"/>
-                        <segue destination="7E0-o4-0mw" kind="show" identifier="CollectionToDetailsSegue" id="wz9-h9-cFl"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="HomeToAnimeListSegue" id="4vs-CO-2P5"/>
+                        <segue destination="7E0-o4-0mw" kind="show" identifier="HomeCollectionCellToDetailsSegue" id="wz9-h9-cFl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -499,8 +502,10 @@
                                 </prototypes>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="6x9-O9-7d8">
-                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="426" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IvK-Z4-S0e"/>
@@ -1041,9 +1046,31 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="k0i-jF-q1u">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="9UN-Ip-eNX">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="T80-LS-hV3">
+                                            <rect key="frame" x="0.0" y="12" width="414" height="32"/>
+                                            <segments>
+                                                <segment title="Discover"/>
+                                                <segment title="Registered"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="segmentChanged:" destination="SCL-JL-gSG" eventType="valueChanged" id="hQc-r6-1He"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="T80-LS-hV3" firstAttribute="leading" secondItem="9UN-Ip-eNX" secondAttribute="leading" id="0UB-Km-P8J"/>
+                                        <constraint firstItem="T80-LS-hV3" firstAttribute="centerY" secondItem="9UN-Ip-eNX" secondAttribute="centerY" id="2gj-Ub-cYh"/>
+                                        <constraint firstAttribute="trailing" secondItem="T80-LS-hV3" secondAttribute="trailing" id="cG5-gg-FDG"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKEventTableViewCell" rowHeight="128" id="ijO-jL-1gA" customClass="SUKEventTableViewCell">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="128"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SUKBrowseEventTableViewCell" rowHeight="128" id="ijO-jL-1gA" customClass="SUKBrowseEventTableViewCell">
+                                        <rect key="frame" x="0.0" y="99.5" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ijO-jL-1gA" id="7YT-ny-vaO">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
@@ -1102,13 +1129,19 @@
                                         <connections>
                                             <outlet property="dateLabel" destination="uV8-LG-DKP" id="1iT-GL-0Ig"/>
                                             <outlet property="eventNameLabel" destination="zNF-RK-n0r" id="VkP-nR-6DI"/>
-                                            <outlet property="userProfileImage" destination="1Xx-vi-fAy" id="9Vk-Pq-chX"/>
+                                            <outlet property="profileImageView" destination="1Xx-vi-fAy" id="9Vk-Pq-chX"/>
                                             <outlet property="usernameLabel" destination="xtp-VG-za1" id="lKV-g1-j3z"/>
                                             <segue destination="oIa-nP-6pt" kind="show" identifier="BrowseEventsToEventDetailsSegue" id="Ny8-eA-9as"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="M0l-T9-9PQ">
+                                <rect key="frame" x="0.0" y="426" width="39" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kRc-2x-ysI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1128,7 +1161,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="discoverRegisteredSegmentedControl" destination="T80-LS-hV3" id="qmX-pd-BVn"/>
+                        <outlet property="spinner" destination="M0l-T9-9PQ" id="zqY-73-Bu3"/>
                         <outlet property="tableView" destination="k0i-jF-q1u" id="Peb-dw-x74"/>
+                        <segue destination="561-x0-24T" kind="show" identifier="BrowseEventToNotCurrentUserProfileSegue" id="DYo-a4-zd2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MkY-1D-dQ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1441,6 +1477,10 @@
                                     </constraints>
                                 </view>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="qSu-q4-779">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3Iw-Yh-6iN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1457,9 +1497,11 @@
                         <outlet property="dateLabel" destination="sjt-Wp-IyL" id="D0D-wo-J9c"/>
                         <outlet property="decriptionLabel" destination="2ut-5u-oQ8" id="QEN-BO-dBG"/>
                         <outlet property="eventNameLabel" destination="SAG-ES-okg" id="tFv-G4-eK9"/>
+                        <outlet property="profileImageView" destination="YYc-p2-EMY" id="Ksy-9R-dBp"/>
                         <outlet property="registerButton" destination="0TZ-Zo-6mI" id="Ilc-6W-idO"/>
-                        <outlet property="userProfileImage" destination="YYc-p2-EMY" id="Ksy-9R-dBp"/>
+                        <outlet property="spinner" destination="qSu-q4-779" id="4Hv-W6-xf4"/>
                         <outlet property="usernameLabel" destination="ngn-le-IGH" id="t5g-eD-LC0"/>
+                        <segue destination="561-x0-24T" kind="show" identifier="EventDetailsToNotCurrentUserProfileSegue" id="rpV-XQ-NWa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dsK-AD-rKp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1524,8 +1566,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPf-X4-auV"/>
-        <segue reference="tAG-hY-s6j"/>
+        <segue reference="DYo-a4-zd2"/>
+        <segue reference="wz9-h9-cFl"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

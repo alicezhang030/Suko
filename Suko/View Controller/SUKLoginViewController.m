@@ -25,7 +25,7 @@
     [self.view addGestureRecognizer:tap];
 }
 
--(void)dismissKeyboard{
+- (void)dismissKeyboard {
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
 }
@@ -36,15 +36,26 @@
     
     [self checkEmptyField];
 
+    __weak __typeof(self) weakSelf = self;
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
+            NSString *title = @"Login failed";
+            NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                        preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {}];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:^{}];
+            
             NSLog(@"User log in failed: %@", error.localizedDescription);
         } else {
+            __strong __typeof(self) strongSelf = weakSelf;
             NSLog(@"User logged in successfully");
             // Display view controller that needs to shown after successful login
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             SUKHomeViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"SUKTabController"];
-            self.view.window.rootViewController = homeVC;
+            strongSelf.view.window.rootViewController = homeVC;
         }
     }];
 }
@@ -55,24 +66,15 @@
     self.view.window.rootViewController = signupVC;
 }
 
-- (void) checkEmptyField {
+- (void)checkEmptyField {
     if([self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
-        
         NSString *title = @"All fields required";
         NSString *message = @"Please enter a username and password and try again.";
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                    message:message
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
                                     preferredStyle:(UIAlertControllerStyleAlert)];
-        // Create an OK action
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                 style:UIAlertActionStyleDefault
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                  handler:^(UIAlertAction * _Nonnull action) {}];
-        
-        // Add the OK action to the alert controller
         [alert addAction:okAction];
-        
-        // Present the alert
         [self presentViewController:alert animated:YES completion:^{}];
     }
 }

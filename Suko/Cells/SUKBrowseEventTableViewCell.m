@@ -1,14 +1,14 @@
 //
-//  SUKEventTableViewCell.m
+//  SUKBrowseEventTableViewCell.m
 //  Suko
 //
 //  Created by Alice Zhang on 7/19/22.
 //
 
-#import "SUKEventTableViewCell.h"
+#import "SUKBrowseEventTableViewCell.h"
 #import <Parse/Parse.h>
 
-@implementation SUKEventTableViewCell
+@implementation SUKBrowseEventTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -19,26 +19,22 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void) setEvent:(SUKEvent*) event {
+- (void)setEvent:(SUKEvent *)event {
     _event = event;
     
     self.eventNameLabel.text = event.name;
+    self.usernameLabel.text = event.postedBy.username;
+    self.profileImageView.file = event.postedBy[@"profile_image"];
+    [self.profileImageView loadInBackground];
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
+    self.profileImageView.layer.masksToBounds = YES;
+    self.profileImageView.layer.borderWidth = 0;
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM/dd/yyyy h:mm a";
     self.dateLabel.text = [[[formatter stringFromDate:event.startTime]
                             stringByAppendingString:@" - "]
                            stringByAppendingString:[formatter stringFromDate:event.endTime]];
-    
-    PFUser *eventPoster = event.postedBy;
-    [eventPoster fetchIfNeeded];
-    self.usernameLabel.text = eventPoster.username;
-    
-    self.userProfileImage.file = eventPoster[@"profile_image"];
-    [self.userProfileImage loadInBackground];
-    self.userProfileImage.layer.cornerRadius = self.userProfileImage.frame.size.height /2;
-    self.userProfileImage.layer.masksToBounds = YES;
-    self.userProfileImage.layer.borderWidth = 0;
 }
 
 @end

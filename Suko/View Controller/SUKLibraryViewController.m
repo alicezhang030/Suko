@@ -12,7 +12,7 @@
 
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *listTitles;
+@property (nonatomic, strong) NSArray<NSString *> *listTitles;
 
 @end
 
@@ -31,12 +31,11 @@
 
 #pragma mark - TableView
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.listTitles count];
 }
 
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"SUKLibraryTableViewCell";
     SUKLibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.listTitleLabel.text = self.listTitles[indexPath.row];
@@ -51,9 +50,8 @@
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.userToDisplay = [PFUser currentUser];
         animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
-        animeListVC.arrOfAnime = [NSMutableArray array];
+        animeListVC.arrOfAnime = [NSMutableArray new];
     }
 }
 

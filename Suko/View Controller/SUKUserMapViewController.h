@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SUKUserMapViewController : UIViewController
 
+extern NSString *const kMapToNotCurrentUserProfileSegueIdentifier;
 @end
 
 NS_ASSUME_NONNULL_END

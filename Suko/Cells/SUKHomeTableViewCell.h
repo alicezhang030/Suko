@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** The label that says "see all" */
 @property (weak, nonatomic) IBOutlet UILabel *seeAllLabel;
 /** The anime being displayed in this cell's collection view */
-@property (nonatomic, strong) NSArray<SUKAnime*> *arrOfAnime;
+@property (nonatomic, strong) NSArray<SUKAnime *> *arrOfAnime;
 /** This cell's  SUKHomeTableViewCellDelegate delegate */
 @property (nonatomic, weak) id<SUKHomeTableViewCellDelegate> delegate;
 
@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
  * A delegate to handle segue from SUKHomeTableViewCell to some other view controller (ex. SUKAnimeListViewController)
  */
 @protocol SUKHomeTableViewCellDelegate
-- (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *) cell;
+- (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *)cell;
 @end
 
 NS_ASSUME_NONNULL_END
