@@ -71,7 +71,7 @@ NSNumber *const kNumOfRows = @3;
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
     [self setCancelTasks:YES];
-    [[SUKAPIManager shared] cancelAllRequests]; // Reduce the number of requests made to external API
+    //[[SUKAPIManager shared] cancelAllRequests]; // Reduce the number of requests made to external API
 }
 
 #pragma mark - Search Bar
