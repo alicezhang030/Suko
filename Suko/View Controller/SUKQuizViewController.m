@@ -40,7 +40,7 @@
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
     
-    [self topAnime];
+    [self topMovies];
 }
 
 #pragma mark - Collection View
@@ -75,7 +75,7 @@
 }
 
 #pragma mark - Fetching Data
-- (void)topAnime {
+- (void)topMovies {
     [self.spinner startAnimating];
     __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchPopularMovieList:^(NSArray<SUKMovie *> *movies, NSError *error) {

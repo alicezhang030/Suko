@@ -1,5 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
 ${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework
+${BUILT_PRODUCTS_DIR}/MDCSwipeToChoose/MDCSwipeToChoose.framework
 ${BUILT_PRODUCTS_DIR}/MKDropdownMenu/MKDropdownMenu.framework
 ${BUILT_PRODUCTS_DIR}/Parse/Parse.framework
