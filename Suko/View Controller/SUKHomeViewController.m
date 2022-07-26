@@ -68,14 +68,12 @@ NSNumber *const kNumOfRows = @3;
     if(self.dictOfAnime.count < [kNumOfRows intValue]) {
         [self.spinner startAnimating];
         [self genreAnime:[NSNumber numberWithInt:([kNumOfRows intValue] - 1 - (int)self.dictOfAnime.count)]];
-        //[self genreList:[NSNumber numberWithInt:([kNumOfRows intValue] - 1 - (int)self.dictOfAnime.count)]]; COMMENTED OUT CODE
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
     [self setCancelTasks:YES];
-    //[[SUKAPIManager shared] cancelAllRequests]; // COMMENTED OUT CODE
 }
 
 #pragma mark - Search Bar
