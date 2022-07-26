@@ -431,7 +431,7 @@
                     <navigationItem key="navigationItem" title="Home" id="Xl2-2N-nJo">
                         <barButtonItem key="rightBarButtonItem" title="Movies" id="edu-uY-oll">
                             <connections>
-                                <segue destination="zB2-Gw-VH9" kind="show" id="CLc-Kj-FFk"/>
+                                <segue destination="zB2-Gw-VH9" kind="show" identifier="HomeToQuizSegue" id="CLc-Kj-FFk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -717,6 +717,12 @@
                                     <action selector="tapSubmit:" destination="zB2-Gw-VH9" eventType="touchUpInside" id="LtI-hG-7QF"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="xhB-c7-YUl">
+                                <rect key="frame" x="184" y="821" width="39" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MGH-An-5DM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -733,11 +739,13 @@
                     <navigationItem key="navigationItem" id="y8D-9i-yov"/>
                     <connections>
                         <outlet property="collectionView" destination="C6v-Yx-Udg" id="2et-jU-ZS1"/>
+                        <outlet property="spinner" destination="xhB-c7-YUl" id="RU1-6n-5UB"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="QuizToListSegue" id="JeN-7L-lA2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xye-q6-u92" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5902.898550724638" y="-1280.3571428571429"/>
+            <point key="canvasLocation" x="5903" y="-1281"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="iHq-nf-Sbb">
@@ -1671,8 +1679,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="DYo-a4-zd2"/>
-        <segue reference="wz9-h9-cFl"/>
-        <segue reference="4vs-CO-2P5"/>
+        <segue reference="iPf-X4-auV"/>
+        <segue reference="JeN-7L-lA2"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

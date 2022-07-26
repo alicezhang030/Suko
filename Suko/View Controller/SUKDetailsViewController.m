@@ -75,7 +75,6 @@
     
     if(row == 0) { // User clicked on "remove from lists"
         for(int i = 0; i < [currentAllData count]; i++) {
-            // row - 1 because row 0 is "Remove from List"
             if([currentAllData[i] containsObject:malID]) {
                 [currentAllData[i] removeObject:malID];
                 break;
@@ -85,7 +84,7 @@
     } else {
         for(int i = 0; i < [currentAllData count]; i++) {
             // row - 1 because row 0 is "Remove from List"
-            if(i != row - 1 && [currentAllData[i] containsObject:malID]) {
+            if([currentAllData[i] containsObject:malID]) {
                 [currentAllData[i] removeObject:malID];
                 break;
             }

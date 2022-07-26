@@ -17,7 +17,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
 @end
 
 @implementation SUKAPIManager
-const NSNumber *knumOfAnimeDisplayedPerRow = @10;
+const NSNumber *knumOfAnimeDisplayedPerRow = @5;
 
 + (instancetype)shared {
     static SUKAPIManager *sharedManager = nil;
@@ -125,6 +125,8 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     
     [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
+        NSArray<NSDictionary *> *movieGenres = dataDictionary[@"genres"];
+        completion(movieGenres, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error.localizedDescription);
     }];
