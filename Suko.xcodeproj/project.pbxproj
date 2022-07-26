@@ -45,7 +45,6 @@
 		53E1CE022881C8D400186E36 /* SUKEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E1CE012881C8D400186E36 /* SUKEvent.m */; };
 		53F80C0E288B41E500FFDB2D /* SUKKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53F80C0D288B41E500FFDB2D /* SUKKeys.plist */; };
 		53F80C11288B428800FFDB2D /* SUKMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F80C10288B428800FFDB2D /* SUKMovie.m */; };
-		53F80C14288B65D300FFDB2D /* SUKMovieToAnimeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F80C13288B65D300FFDB2D /* SUKMovieToAnimeCollectionViewCell.m */; };
 		F44E3E9609C45EF18E4508DE /* Pods_SukoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA1AE7DBDA1457FC58F3022 /* Pods_SukoTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -137,8 +136,6 @@
 		53F80C0D288B41E500FFDB2D /* SUKKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SUKKeys.plist; sourceTree = "<group>"; };
 		53F80C0F288B428800FFDB2D /* SUKMovie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKMovie.h; sourceTree = "<group>"; };
 		53F80C10288B428800FFDB2D /* SUKMovie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKMovie.m; sourceTree = "<group>"; };
-		53F80C12288B65D300FFDB2D /* SUKMovieToAnimeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKMovieToAnimeCollectionViewCell.h; sourceTree = "<group>"; };
-		53F80C13288B65D300FFDB2D /* SUKMovieToAnimeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKMovieToAnimeCollectionViewCell.m; sourceTree = "<group>"; };
 		85AA59F7210F419DD51460CD /* Pods-Suko-SukoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Suko-SukoUITests.debug.xcconfig"; path = "Target Support Files/Pods-Suko-SukoUITests/Pods-Suko-SukoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D458C8ACA751B018C32B1CC /* Pods_Suko_SukoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Suko_SukoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B661CD64106E019F4756CBA6 /* Pods-SukoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SukoTests.debug.xcconfig"; path = "Target Support Files/Pods-SukoTests/Pods-SukoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -192,8 +189,6 @@
 				53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */,
 				53ABF520288746DB0015F1DB /* SUKBrowseEventTableViewCell.h */,
 				53ABF521288746DB0015F1DB /* SUKBrowseEventTableViewCell.m */,
-				53F80C12288B65D300FFDB2D /* SUKMovieToAnimeCollectionViewCell.h */,
-				53F80C13288B65D300FFDB2D /* SUKMovieToAnimeCollectionViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -603,7 +598,6 @@
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
 				53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */,
 				53291ED62878C6DF00B12469 /* SUKLoginViewController.m in Sources */,
-				53F80C14288B65D300FFDB2D /* SUKMovieToAnimeCollectionViewCell.m in Sources */,
 				53ABF51F28872F9D0015F1DB /* SUKBrowseEventViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
