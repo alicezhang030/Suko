@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray<SUKAnime *> *arrOfAnime;
 /** Array of anime in the list, with each anime stored as its MyAnimeList ID */
 @property (nonatomic, strong) NSArray<NSNumber *> *arrOfAnimeMALID;
-
 @end
 
 NS_ASSUME_NONNULL_END

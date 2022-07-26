@@ -18,58 +18,53 @@
 @end
 
 @implementation SUKSwipeMovieViewController
+CGFloat const kAnimeRecLimit = (CGFloat)20.0;
 
 #pragma mark - UIViewController Overrides
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Setup properties
     self.selectedMovies = [NSMutableArray new];
     self.animeRecommendations = [NSMutableArray new];
     self.animeRecommendationIDs = [NSMutableArray new];
     
+    // Spinner
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
     [self.spinner startAnimating];
     
+    // Fetch movies to initially display
     __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchPopularMovieList:^(NSArray<SUKMovie *> *movies, NSError *error) {
+    [[SUKAPIManager shared] fetchTopMovies:^(NSArray<SUKMovie *> *movies, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if(movies != nil) {
             strongSelf.movies = [movies mutableCopy];
-            
-            // Display the first ChoosePersonView in front. Users can swipe to indicate
-            // whether they like or dislike the person displayed.
+
             self.frontCardView = [self popMovieViewWithFrame:[self frontCardViewFrame]];
             [self.view addSubview:self.frontCardView];
-            
-            // Display the second ChoosePersonView in back. This view controller uses
-            // the MDCSwipeToChooseDelegate protocol methods to update the front and
-            // back views after each user swipe.
+
             self.backCardView = [self popMovieViewWithFrame:[self backCardViewFrame]];
             [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
-        
-        [self.spinner stopAnimating];
     }];
 }
 
 #pragma mark - MDCSwipeToChooseDelegate Protocol Methods
 
-// This is called when a user didn't fully swipe left or right.
+// Called when a user didn't fully swipe left or right.
 - (void)viewDidCancelSwipe:(UIView *)view {
     NSLog(@"You couldn't decide on %@.", self.currentMovie.title);
 }
 
-// This is called then a user swipes the view fully left or right.
+// Called then a user swipes the view fully left or right.
 - (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
-    // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
-    // and "LIKED" on swipes to the right.
     if (direction == MDCSwipeDirectionLeft) {
-        NSLog(@"You noped %@.", self.currentMovie.title);
+        NSLog(@"You disliked %@.", self.currentMovie.title);
     } else {
         NSLog(@"You liked %@.", self.currentMovie.title);
         [self.selectedMovies addObject:self.currentMovie];
@@ -92,19 +87,35 @@
                          } completion:nil];
     }
     
-    if(self.frontCardView == nil) {
-        [self.spinner startAnimating];
+    if(self.frontCardView == nil) { // There are no more movies to display.
         NSMutableDictionary<NSNumber *, NSNumber *> *genreCount = [self countGenreOfSelectedMovies:self.selectedMovies];
-        NSArray<NSNumber *> *sortedMovieGenreIDs = [self sortMovieGenreIDsBySelectionCount:genreCount];
-        [self animeRecommendationsGivenMovieGenreIDs:sortedMovieGenreIDs];
+        
+        __weak __typeof(self) weakSelf = self;
+        [self movieGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
+            if(error == nil) {
+                __strong __typeof(self) strongSelf = weakSelf;
+                
+                NSMutableDictionary<NSNumber *, NSString *> *movieGenres = [NSMutableDictionary new]; // Key: genre ID, Value: genre title
+                for(NSDictionary *genre in genres) {
+                    [movieGenres setObject:genre[@"name"] forKey:genre[@"id"]];
+                }
+                
+                [strongSelf animeRecsGivenFrequencyOfGenresInSelectedMovies:genreCount withMovieGenreOptions:movieGenres completion:^(NSError *error) {
+                    if(error == nil) {
+                        [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:self.animeRecommendations];
+                    }
+                }];
+            } else {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];
     }
 }
 
 #pragma mark - Internal Methods
 
 - (void)setFrontCardView:(ChooseMovieView *)frontCardView {
-    // Keep track of the person currently being chosen.
-    // Quick and dirty, just for the purposes of this sample app.
+    // Keep track of the movie currently being chosen.
     _frontCardView = frontCardView;
     self.currentMovie = frontCardView.movie;
 }
@@ -114,13 +125,13 @@
         return nil;
     }
 
-    // UIView+MDCSwipeToChoose and MDCSwipeToChooseView are heavily customizable.
-    // Each take an "options" argument. Here, we specify the view controller as
-    // a delegate, and provide a custom callback that moves the back card view
+    // UIView+MDCSwipeToChoose and MDCSwipeToChooseView each take an "options" argument.
+    // Here, we specify the view controller as a delegate,
+    // and provide a custom callback that moves the back card view
     // based on how far the user has panned the front card view.
     MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
     options.delegate = self;
-    options.threshold = 160.f; // distance in pixels that a view must be panned in order to constitue a selection
+    options.threshold = 160.f; // Distance in pixels that a view must be panned in order to constitue a selection
     options.onPan = ^(MDCPanState *state){
         CGRect frame = [self backCardViewFrame];
         self.backCardView.frame = CGRectMake(frame.origin.x,
@@ -128,12 +139,12 @@
                                              CGRectGetWidth(frame),
                                              CGRectGetHeight(frame));
     };
+    options.likedText = @"Like";
+    options.nopeText = @"Dislike";
 
     // Create a movieView with the top movie in the movies array, then pop
     // that movie off the stack.
-    ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame
-                                                                    movie:self.movies[0]
-                                                                   options:options];
+    ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame movie:self.movies[0] options:options];
     [self.movies removeObjectAtIndex:0];
     return movieView;
 }
@@ -175,39 +186,8 @@
     return genreCount;
 }
 
-- (NSArray<NSNumber *> *) sortMovieGenreIDsBySelectionCount:(NSMutableDictionary<NSNumber *, NSNumber *> *) genreCount {
-    NSArray<NSNumber *> *sortedMovieGenreIDs = [genreCount keysSortedByValueUsingComparator: ^(id obj1, id obj2) {
-        if ([obj1 intValue] > [obj2 intValue]) {
-            return (NSComparisonResult)NSOrderedDescending;
-        } else if ([obj1 intValue] < [obj2 intValue]) {
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        return (NSComparisonResult)NSOrderedSame;
-    }];
-    
-    return sortedMovieGenreIDs;
-}
-
-- (void) animeRecommendationsGivenMovieGenreIDs:(NSArray<NSNumber *> *) movieGenreIDs{
-    __weak __typeof(self) weakSelf = self;
-    [self movieGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        NSMutableDictionary<NSNumber *, NSString *> *movieGenres = [NSMutableDictionary new];
-        for(NSDictionary *genre in genres) {
-            [movieGenres setObject:genre[@"name"] forKey:genre[@"id"]];
-        }
-        
-        [strongSelf animeRecsGivenMovieGenreIDs:movieGenreIDs withMovieGenreOptions:movieGenres completion:^(NSError *error) {
-            if(error == nil) {
-                [self.spinner stopAnimating];
-                [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:self.animeRecommendations];
-            }
-        }];
-    }];
-}
-
 - (void)movieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
-    [[SUKAPIManager shared] fetchMovieGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
+    [[SUKAPIManager shared] fetchMovieGenres:^(NSArray<NSDictionary *> *genres, NSError *error) {
         if(genres != nil) {
             completion(genres, nil);
         } else {
@@ -216,18 +196,24 @@
     }];
 }
 
-- (void)animeRecsGivenMovieGenreIDs:(NSArray<NSNumber *> *) movieGenreIDs withMovieGenreOptions:(NSMutableDictionary<NSNumber *, NSString *> *) genreOptions completion:(void(^)(NSError *error)) completion {
-    
+- (void)animeRecsGivenFrequencyOfGenresInSelectedMovies:(NSMutableDictionary<NSNumber *, NSNumber *> *) genreIDsAndFrequency withMovieGenreOptions:(NSMutableDictionary<NSNumber *, NSString *> *) genreOptions completion:(void(^)(NSError *error)) completion {
     NSDictionary<NSString *,NSString *> *movieGenreToAnimeGenre = @{@"Family":@"Kids", @"Adventure":@"Adventure", @"Romance":@"Romance", @"Drama":@"Drama", @"Mystery":@"Mystery", @"Crime":@"Organized Crime", @"War":@"Military", @"Action":@"Action", @"Science Fiction":@"Sci-Fi", @"Music":@"Music", @"Western":@"None", @"History":@"Historical", @"Documentary":@"None", @"Comedy":@"Comedy", @"Fantasy":@"Fantasy", @"TV Movie":@"None", @"Animation":@"None", @"Thriller":@"Suspense", @"Horror":@"Horror"};
     
-    for(int i = 0; i < movieGenreIDs.count; i++) {
-        NSString *correspondingAnimeGenreName = [movieGenreToAnimeGenre objectForKey:[genreOptions objectForKey:movieGenreIDs[i]]];
+    NSArray<NSNumber *> *selectedMovieGenreIDs = [genreIDsAndFrequency allKeys];
+    NSNumber *totalGenreOccurences = [[genreIDsAndFrequency allValues] valueForKeyPath:@"@sum.self"];
+    
+    for(int i = 0; i < selectedMovieGenreIDs.count; i++) {
+        NSString *correspondingAnimeGenreName = [movieGenreToAnimeGenre objectForKey:[genreOptions objectForKey:selectedMovieGenreIDs[i]]];
         
-        if(correspondingAnimeGenreName != nil && ![correspondingAnimeGenreName isEqualToString:@"None"]) {
-            NSString *correspondingAnimeGenreID = [[self.animeGenres allKeysForObject:correspondingAnimeGenreName] lastObject];
+        if(correspondingAnimeGenreName != nil && ![correspondingAnimeGenreName isEqualToString:@"None"]) { // If there is a matching anime genre to this movie genre
+            // Calculate the number of recommendations to retrive from this genre based on its frequency
+            NSNumber *genreFrequency = [genreIDsAndFrequency objectForKey:selectedMovieGenreIDs[i]];
+            double roundedLimitDouble = round(([genreFrequency doubleValue] / [totalGenreOccurences doubleValue])  * kAnimeRecLimit);
+            NSNumber *roundedLimit = [NSNumber numberWithDouble:roundedLimitDouble];
             
+            NSString *correspondingAnimeGenreID = [[self.animeGenres allKeysForObject:correspondingAnimeGenreName] lastObject];
             __weak __typeof(self) weakSelf = self;
-            [[SUKAPIManager shared] fetchAnimeListWithGenre:correspondingAnimeGenreID completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
+            [[SUKAPIManager shared] fetchAnimeFromGenre:correspondingAnimeGenreID withLimit:roundedLimit completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
                 __strong __typeof(self) strongSelf = weakSelf;
                 if (animes != nil) {
                     for(SUKAnime *anime in animes) {
@@ -240,7 +226,7 @@
                     NSLog(@"%@", error.localizedDescription);
                 }
                 
-                if(i == movieGenreIDs.count - 1) {
+                if(i == selectedMovieGenreIDs.count - 1) {
                     NSLog(@"Recommendation algorithm finished.");
                     completion(nil);
                 }
@@ -249,7 +235,11 @@
             [NSThread sleepForTimeInterval:1.0];
         }
     }
+    
+    
 }
+
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString: @"SwipeQuizToListSegue"]) {

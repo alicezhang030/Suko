@@ -17,7 +17,6 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
 @end
 
 @implementation SUKAPIManager
-const NSNumber *knumOfAnimeDisplayedPerRow = @5;
 
 + (instancetype)shared {
     static SUKAPIManager *sharedManager = nil;
@@ -43,7 +42,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     [self.manager.tasks makeObjectsPerformSelector:@selector(cancel)];
 }
 
-- (void)fetchAnimeWithID:(NSNumber *) malID completion:(void(^)(SUKAnime* anime, NSError *error))completion {
+- (void)fetchAnimeWithID:(NSNumber *)malID completion:(void(^)(SUKAnime* anime, NSError *error))completion {
     NSString *malIDString = [NSString stringWithFormat:@"%d",[malID intValue]];
     NSDictionary *params = @{@"id": malID};
     NSString *fullURLString = [baseAnimeURLString stringByAppendingString:[@"/anime/" stringByAppendingString:[malIDString stringByAppendingString:@"/full"]]];
@@ -57,8 +56,8 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)fetchAnimeListWithGenre:(NSString *) genre completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
-    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
+- (void)fetchAnimeFromGenre:(NSString *)genre withLimit:(NSNumber *)limit completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
+    NSDictionary *params = @{@"type": @"tv", @"limit": limit, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
     NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
@@ -70,8 +69,8 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)fetchTopAnimeList:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
-    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
+- (void)fetchTopAnimeWithLimit:(NSNumber *)limit completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
+    NSDictionary *params = @{@"type": @"tv", @"limit": limit};
     NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/top/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
@@ -83,7 +82,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)fetchAnimeGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
+- (void)fetchAnimeGenres:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
     NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/genres/anime"];
     
     [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
@@ -94,7 +93,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)fetchAnimeSearchWithSearchQuery:(NSString *) query completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
+- (void)fetchAnimeSearchWithSearchQuery:(NSString *)query completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
     NSDictionary *params = @{@"q": query, @"type": @"tv", @"sort": @"desc"};
     NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/anime"];
     
@@ -119,7 +118,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)fetchMovieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
+- (void)fetchMovieGenres:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
     NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
     NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/genre/movie/list?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US"];
     
@@ -132,7 +131,7 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)fetchPopularMovieList:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion {
+- (void)fetchTopMovies:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion {
     NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
     NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/movie/popular?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US&page=1"];
     

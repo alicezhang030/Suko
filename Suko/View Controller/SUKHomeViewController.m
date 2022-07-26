@@ -38,21 +38,29 @@
 NSString *const kHomeToAnimeListSegueIdentifier = @"HomeToAnimeListSegue";
 NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCellToDetailsSegue";
 NSNumber *const kNumOfRows = @3;
+NSNumber *const knumOfAnimeDisplayedPerRow = @5;
+
+#pragma mark - UIViewController Overrides
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Property Set Up
     self.dictOfAnime = [NSMutableDictionary new];
     
+    // Fetching Set Up
     [self setCancelTasks:NO];
     
+    // Spinner
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
     
+    // Search Bar
     self.searchBar.delegate = self;
     self.searchBar.showsCancelButton = true;
     
+    // Table View
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -60,7 +68,7 @@ NSNumber *const kNumOfRows = @3;
 
 - (void)viewWillAppear:(BOOL)animated {
     [self setCancelTasks:NO];
-    // If not all desired data have been loaded yet (ex. initial load, used switched to a different tab before all data has loaded)
+    
     if([self.dictOfAnime objectForKey:@"Top Anime"] == nil) {
         [self topAnime];
     }
@@ -73,7 +81,13 @@ NSNumber *const kNumOfRows = @3;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
-    [self setCancelTasks:YES];
+    
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count < 1 && [viewControllers objectAtIndex:viewControllers.count-2] != self) {
+        // View is disappearing NOT because a new view controller was pushed onto the stack
+        [self setCancelTasks:YES];
+        [[SUKAPIManager shared] cancelAllRequests];
+    }
 }
 
 #pragma mark - Search Bar
@@ -102,48 +116,12 @@ NSNumber *const kNumOfRows = @3;
     }];
 }
 
-#pragma mark - Navigation
-
-- (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *) cell {
-    NSMutableDictionary *senderDict = [NSMutableDictionary new];
-    [senderDict setObject:cell.rowHeaderLabel.text forKey:@"title"];
-    [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
-    [self performSegueWithIdentifier:kHomeToAnimeListSegueIdentifier sender:senderDict];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:kHomeToAnimeListSegueIdentifier]) {
-        SUKAnimeListViewController *animeListVC = [segue destinationViewController];
-        animeListVC.listTitle = sender[@"title"];
-        animeListVC.arrOfAnime = sender[@"anime"];
-    }
-    
-    if([segue.identifier isEqualToString:kHomeCollectionCellToDetailsSegueIdentifier]) {
-        SUKDetailsViewController *detailsVC = [segue destinationViewController];
-        detailsVC.animeToDisplay = sender;
-    }
-    
-    if([segue.identifier isEqualToString:@"HomeToQuizSegue"]) {
-        SUKQuizViewController *quizVC = [segue destinationViewController];
-        [self genreList:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
-            quizVC.animeGenres = genreIDsAndName;
-        }];
-    }
-    
-    if([segue.identifier isEqualToString:@"HomeToSwipeQuizSegue"]) {
-        SUKSwipeMovieViewController *swipeVC = [segue destinationViewController];
-        [self genreList:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
-            swipeVC.animeGenres = genreIDsAndName;
-        }];
-    }
-}
-
 #pragma mark - Fetching Data using SUKAPIManager
 
 - (void)topAnime {
     if(!self.cancelTasks) {
         __weak __typeof(self) weakSelf = self;
-        [[SUKAPIManager shared] fetchTopAnimeList:^(NSArray<SUKAnime *> *anime, NSError *error) {
+        [[SUKAPIManager shared] fetchTopAnimeWithLimit:knumOfAnimeDisplayedPerRow completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
             if (anime != nil) {
                 NSString *title = @"Top Anime";
@@ -156,9 +134,32 @@ NSNumber *const kNumOfRows = @3;
     }
 }
 
+- (void)genreListWithCompletion:(void(^)(NSMutableDictionary<NSString *, NSString *> *genreIDsAndName, NSError *error))completion {
+    if(!self.cancelTasks) {
+        [[SUKAPIManager shared] fetchAnimeGenres:^(NSArray<NSDictionary *> *genres, NSError *error) {
+            if (genres != nil) {
+                NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
+                NSMutableDictionary<NSString *, NSString *> *dictOfGenres = [NSMutableDictionary new];
+                
+                for(NSDictionary *genreDict in genres) {
+                    if(![genresToNotConsider containsObject:[genreDict valueForKey:@"name"]]) {
+                        NSString *genreIDString = [NSString stringWithFormat:@"%d", [[genreDict valueForKey:@"mal_id"] intValue]];
+                        NSString *genreName = [genreDict valueForKey:@"name"];
+                        [dictOfGenres setObject:genreName forKey:genreIDString];
+                    }
+                }
+                
+                completion(dictOfGenres, nil);
+            } else {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];
+    }
+}
+
 - (void)genreAnime:(NSNumber *) numberOfLists {
     if(!self.cancelTasks) {
-        [self genreList:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
+        [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
             NSMutableArray<NSString *> *chosenGenresToDisplay = [NSMutableArray new];
             NSArray<NSString *> *genreIDs = [genreIDsAndName allKeys];
             while(chosenGenresToDisplay.count != [numberOfLists intValue]) { // Ensures the app doesn't display duplicate genres
@@ -180,13 +181,10 @@ NSNumber *const kNumOfRows = @3;
         [NSThread sleepForTimeInterval:1.0];
         
         __weak __typeof(self) weakSelf = self;
-        [[SUKAPIManager shared] fetchAnimeListWithGenre:genre completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
+        [[SUKAPIManager shared] fetchAnimeFromGenre:genre withLimit:knumOfAnimeDisplayedPerRow completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
             if (anime != nil) {
-                NSString *correspondingGenre = [genreIDsAndName objectForKey:genre];
-                NSString *title = [[@"Most Popular "
-                                    stringByAppendingString:correspondingGenre]
-                                   stringByAppendingString:@" Anime"];
+                NSString *title = [[@"Most Popular " stringByAppendingString:[genreIDsAndName objectForKey:genre]] stringByAppendingString:@" Anime"];
                 [strongSelf.dictOfAnime setObject:anime forKey:title];
                 
                 if([genres count] != 0) { // If there are other genre lists to load
@@ -196,29 +194,6 @@ NSNumber *const kNumOfRows = @3;
                     [strongSelf.spinner stopAnimating];
                     [strongSelf.tableView reloadData];
                 }
-            } else {
-                NSLog(@"%@", error.localizedDescription);
-            }
-        }];
-    }
-}
-
-- (void)genreList:(void(^)(NSMutableDictionary<NSString *, NSString *> *genreIDsAndName, NSError *error))completion {
-    if(!self.cancelTasks) {
-        [[SUKAPIManager shared] fetchAnimeGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
-            if (genres != nil) {
-                NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
-                NSMutableDictionary<NSString *, NSString *> *dictOfGenres = [NSMutableDictionary new];
-                
-                for(NSDictionary *genreDict in genres) {
-                    if(![genresToNotConsider containsObject:[genreDict valueForKey:@"name"]]) {
-                        NSString *genreIDString = [NSString stringWithFormat:@"%d", [[genreDict valueForKey:@"mal_id"] intValue]];
-                        NSString *genreName = [genreDict valueForKey:@"name"];
-                        [dictOfGenres setObject:genreName forKey:genreIDString];
-                    }
-                }
-                
-                completion(dictOfGenres, nil);
             } else {
                 NSLog(@"%@", error.localizedDescription);
             }
@@ -236,12 +211,8 @@ NSNumber *const kNumOfRows = @3;
     static NSString *cellIdentifier = @"SUKHomeTableViewCell";
     SUKHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
-    
-    NSString *headerTitle = [self retriveDataForIndexPathRow:indexPath.row][@"header"];
-    cell.rowHeaderLabel.text = headerTitle;
-    
-    NSArray<SUKAnime *> *animeData = [self retriveDataForIndexPathRow:indexPath.row][@"anime"];
-    cell.arrOfAnime = animeData;
+    cell.rowHeaderLabel.text = [self retriveDataForIndexPathRow:indexPath.row][@"header"];
+    cell.arrOfAnime = [self retriveDataForIndexPathRow:indexPath.row][@"anime"];
     
     return cell;
 }
@@ -257,8 +228,8 @@ NSNumber *const kNumOfRows = @3;
 #pragma mark - CollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSArray<SUKAnime *> *animeData = [self retriveDataForIndexPathRow:[(SUKHomeCollectionView *)collectionView indexPath].row][@"anime"];
-    return animeData.count;
+    NSArray<SUKAnime *> *animeDataForThisRow = [self retriveDataForIndexPathRow:[(SUKHomeCollectionView *)collectionView indexPath].row][@"anime"];
+    return animeDataForThisRow.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -286,6 +257,42 @@ NSNumber *const kNumOfRows = @3;
     }
     
     return rowData;
+}
+
+#pragma mark - Navigation
+
+- (void)segueSUKHomeTableViewCell:(SUKHomeTableViewCell *) cell {
+    NSMutableDictionary *senderDict = [NSMutableDictionary new];
+    [senderDict setObject:cell.rowHeaderLabel.text forKey:@"title"];
+    [senderDict setObject:cell.arrOfAnime forKey:@"anime"];
+    [self performSegueWithIdentifier:kHomeToAnimeListSegueIdentifier sender:senderDict];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:kHomeToAnimeListSegueIdentifier]) {
+        SUKAnimeListViewController *animeListVC = [segue destinationViewController];
+        animeListVC.listTitle = sender[@"title"];
+        animeListVC.arrOfAnime = sender[@"anime"];
+    }
+    
+    if([segue.identifier isEqualToString:kHomeCollectionCellToDetailsSegueIdentifier]) {
+        SUKDetailsViewController *detailsVC = [segue destinationViewController];
+        detailsVC.animeToDisplay = sender;
+    }
+    
+    if([segue.identifier isEqualToString:@"HomeToQuizSegue"]) {
+        SUKQuizViewController *quizVC = [segue destinationViewController];
+        [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
+            quizVC.animeGenres = genreIDsAndName;
+        }];
+    }
+    
+    if([segue.identifier isEqualToString:@"HomeToSwipeQuizSegue"]) {
+        SUKSwipeMovieViewController *swipeVC = [segue destinationViewController];
+        [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
+            swipeVC.animeGenres = genreIDsAndName;
+        }];
+    }
 }
 
 @end
