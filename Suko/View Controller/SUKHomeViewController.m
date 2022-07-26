@@ -17,6 +17,7 @@
 #import "Parse/Parse.h"
 #include <stdlib.h>
 #import "SUKQuizViewController.h"
+#import "SUKSwipeMovieViewController.h"
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
 /** The table view on the VC */
@@ -128,6 +129,13 @@ NSNumber *const kNumOfRows = @3;
         SUKQuizViewController *quizVC = [segue destinationViewController];
         [self genreList:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
             quizVC.animeGenres = genreIDsAndName;
+        }];
+    }
+    
+    if([segue.identifier isEqualToString:@"HomeToSwipeQuizSegue"]) {
+        SUKSwipeMovieViewController *swipeVC = [segue destinationViewController];
+        [self genreList:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
+            swipeVC.animeGenres = genreIDsAndName;
         }];
     }
 }

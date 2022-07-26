@@ -22,7 +22,6 @@
 		536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */; };
 		536AFC4F2887602500B01F95 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536AFC4E2887602500B01F95 /* CoreLocation.framework */; };
 		536AFC512887622300B01F95 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536AFC502887622300B01F95 /* Contacts.framework */; };
-		53785C2A2888A26B0047F5DC /* SUKQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53785C292888A26B0047F5DC /* SUKQuizViewController.m */; };
 		5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5E7286B676800E9D894 /* AppDelegate.m */; };
 		5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5EA286B676800E9D894 /* SceneDelegate.m */; };
 		5397F5F1286B676800E9D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5EF286B676800E9D894 /* Main.storyboard */; };
@@ -38,6 +37,8 @@
 		53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B330252877A31E0013F404 /* SUKAnimeListTableViewCell.m */; };
 		53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C81C8A2885D46500092A46 /* SUKFollow.m */; };
 		53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */; };
+		53D5A254289061D200BA203D /* SUKSwipeMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */; };
+		53D5A2582890636600BA203D /* ChooseMovieView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5A2572890636600BA203D /* ChooseMovieView.m */; };
 		53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */; };
 		53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */; };
 		53E1CDFF2881C80B00186E36 /* SUKCreateNewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */; };
@@ -91,8 +92,6 @@
 		536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKEventDetailsViewController.m; sourceTree = "<group>"; };
 		536AFC4E2887602500B01F95 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		536AFC502887622300B01F95 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
-		53785C282888A26B0047F5DC /* SUKQuizViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKQuizViewController.h; sourceTree = "<group>"; };
-		53785C292888A26B0047F5DC /* SUKQuizViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKQuizViewController.m; sourceTree = "<group>"; };
 		5397F5E3286B676800E9D894 /* Suko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F5E6286B676800E9D894 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5397F5E7286B676800E9D894 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -123,6 +122,10 @@
 		53C81C8A2885D46500092A46 /* SUKFollow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKFollow.m; sourceTree = "<group>"; };
 		53CCA6E828808E5900B217F5 /* SUKNotCurrentUserProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKNotCurrentUserProfileViewController.h; sourceTree = "<group>"; };
 		53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKNotCurrentUserProfileViewController.m; sourceTree = "<group>"; };
+		53D5A252289061D200BA203D /* SUKSwipeMovieViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKSwipeMovieViewController.h; sourceTree = "<group>"; };
+		53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKSwipeMovieViewController.m; sourceTree = "<group>"; };
+		53D5A2562890636600BA203D /* ChooseMovieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseMovieView.h; sourceTree = "<group>"; };
+		53D5A2572890636600BA203D /* ChooseMovieView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseMovieView.m; sourceTree = "<group>"; };
 		53E0D78D2878F72F00CFCF91 /* SUKLibraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryViewController.h; sourceTree = "<group>"; };
 		53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKLibraryViewController.m; sourceTree = "<group>"; };
 		53E0D7902878FAD900CFCF91 /* SUKLibraryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryTableViewCell.h; sourceTree = "<group>"; };
@@ -241,8 +244,8 @@
 				53ABF51E28872F9D0015F1DB /* SUKBrowseEventViewController.m */,
 				536AFC4B28875E6E00B01F95 /* SUKEventDetailsViewController.h */,
 				536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */,
-				53785C282888A26B0047F5DC /* SUKQuizViewController.h */,
-				53785C292888A26B0047F5DC /* SUKQuizViewController.m */,
+				53D5A252289061D200BA203D /* SUKSwipeMovieViewController.h */,
+				53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 		5397F5E5286B676800E9D894 /* Suko */ = {
 			isa = PBXGroup;
 			children = (
+				53D5A2552890634000BA203D /* Views */,
 				532AB02E28764F0500114DBA /* Model */,
 				531C39F62874A0BB002E80C4 /* Cells */,
 				5336424E286BD9CF00F3D270 /* View Controller */,
@@ -308,6 +312,15 @@
 				E775DE9441CA0D7440095B2C /* Pods-SukoTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		53D5A2552890634000BA203D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				53D5A2562890636600BA203D /* ChooseMovieView.h */,
+				53D5A2572890636600BA203D /* ChooseMovieView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6965F46BD519FBC257AD662C /* Frameworks */ = {
@@ -566,8 +579,10 @@
 				53ABF522288746DB0015F1DB /* SUKBrowseEventTableViewCell.m in Sources */,
 				53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */,
 				536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */,
+				53D5A254289061D200BA203D /* SUKSwipeMovieViewController.m in Sources */,
 				53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */,
 				53291ED32878C6C900B12469 /* SUKSignUpViewController.m in Sources */,
+				53D5A2582890636600BA203D /* ChooseMovieView.m in Sources */,
 				535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */,
 				5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */,
 				53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */,
@@ -583,7 +598,6 @@
 				53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */,
 				53A97520287DF9B400D163BF /* SUKProfileViewController.m in Sources */,
 				53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */,
-				53785C2A2888A26B0047F5DC /* SUKQuizViewController.m in Sources */,
 				53E1CE022881C8D400186E36 /* SUKEvent.m in Sources */,
 				5302D388287F7A280009018D /* SUKUserMapViewController.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
