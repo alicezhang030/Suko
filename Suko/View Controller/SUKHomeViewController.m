@@ -16,8 +16,7 @@
 #import "SUKLoginViewController.h"
 #import "Parse/Parse.h"
 #include <stdlib.h>
-#import "SUKQuizViewController.h"
-#import "SUKSwipeMovieViewController.h"
+#import "SUKQuizIntroViewController.h"
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
 /** The table view on the VC */
@@ -64,6 +63,11 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    UIBarButtonItem *movieBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Movies"
+                                 style:UIBarButtonItemStylePlain
+                                target:self action:@selector(movieBarButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = movieBarButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -281,18 +285,19 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
     }
     
     if([segue.identifier isEqualToString:@"HomeToQuizSegue"]) {
-        SUKQuizViewController *quizVC = [segue destinationViewController];
-        [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
-            quizVC.animeGenres = genreIDsAndName;
-        }];
+        SUKQuizIntroViewController *quizVC = [segue destinationViewController];
+        quizVC.animeGenres = sender;
     }
-    
-    if([segue.identifier isEqualToString:@"HomeToSwipeQuizSegue"]) {
-        SUKSwipeMovieViewController *swipeVC = [segue destinationViewController];
-        [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
-            swipeVC.animeGenres = genreIDsAndName;
-        }];
-    }
+}
+
+- (void)movieBarButtonClicked:(UIBarButtonItem *) barButton {
+    [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
+        if(error == nil) {
+            [self performSegueWithIdentifier:@"HomeToQuizSegue" sender:genreIDsAndName];
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
 }
 
 @end

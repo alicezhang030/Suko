@@ -28,6 +28,7 @@
 		5397F5F3286B676900E9D894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F2286B676900E9D894 /* Assets.xcassets */; };
 		5397F5F6286B676900E9D894 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5397F5F4286B676900E9D894 /* LaunchScreen.storyboard */; };
 		5397F5F9286B676900E9D894 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5397F5F8286B676900E9D894 /* main.m */; };
+		5399C1002891B59F00E765C5 /* SUKQuizIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5399C0FF2891B59F00E765C5 /* SUKQuizIntroViewController.m */; };
 		53A97520287DF9B400D163BF /* SUKProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A9751F287DF9B400D163BF /* SUKProfileViewController.m */; };
 		53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */; };
 		53ABF51A288717F00015F1DB /* SUKChooseEventLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABF519288717F00015F1DB /* SUKChooseEventLocationViewController.m */; };
@@ -103,6 +104,8 @@
 		5397F5F8286B676900E9D894 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5397F5FE286B676900E9D894 /* SukoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5397F608286B676900E9D894 /* SukoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SukoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5399C0FE2891B59F00E765C5 /* SUKQuizIntroViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKQuizIntroViewController.h; sourceTree = "<group>"; };
+		5399C0FF2891B59F00E765C5 /* SUKQuizIntroViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKQuizIntroViewController.m; sourceTree = "<group>"; };
 		53A9751E287DF9B400D163BF /* SUKProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKProfileViewController.h; sourceTree = "<group>"; };
 		53A9751F287DF9B400D163BF /* SUKProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKProfileViewController.m; sourceTree = "<group>"; };
 		53A97521287DFCF900D163BF /* SUKEditProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKEditProfileViewController.h; sourceTree = "<group>"; };
@@ -241,6 +244,8 @@
 				536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */,
 				53D5A252289061D200BA203D /* SUKSwipeMovieViewController.h */,
 				53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */,
+				5399C0FE2891B59F00E765C5 /* SUKQuizIntroViewController.h */,
+				5399C0FF2891B59F00E765C5 /* SUKQuizIntroViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -576,6 +581,7 @@
 				536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */,
 				53D5A254289061D200BA203D /* SUKSwipeMovieViewController.m in Sources */,
 				53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */,
+				5399C1002891B59F00E765C5 /* SUKQuizIntroViewController.m in Sources */,
 				53291ED32878C6C900B12469 /* SUKSignUpViewController.m in Sources */,
 				53D5A2582890636600BA203D /* ChooseMovieView.m in Sources */,
 				535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */,
