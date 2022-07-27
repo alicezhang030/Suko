@@ -79,19 +79,24 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
     
     if(self.dictOfAnime.count < [kNumOfRows intValue]) {
         [self.spinner startAnimating];
-        [self genreAnime:[NSNumber numberWithInt:([kNumOfRows intValue] - 1 - (int)self.dictOfAnime.count)]];
+        int numberOfListsLeft = 0;
+        
+        if(self.dictOfAnime.count == 0) {
+            numberOfListsLeft = [kNumOfRows intValue] - 1;
+        } else {
+            numberOfListsLeft = [kNumOfRows intValue] - (int)self.dictOfAnime.count;
+        }
+        
+        [self genreAnime:[NSNumber numberWithInt:numberOfListsLeft]];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
     
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    if (viewControllers.count < 1 && [viewControllers objectAtIndex:viewControllers.count-2] != self) {
-        // View is disappearing NOT because a new view controller was pushed onto the stack
-        [self setCancelTasks:YES];
-        [[SUKAPIManager shared] cancelAllRequests];
-    }
+    //NSArray *viewControllers = self.navigationController.viewControllers; Commented out code
+    [self setCancelTasks:YES];
+    [[SUKAPIManager shared] cancelAllJikanRequests];
 }
 
 #pragma mark - Search Bar

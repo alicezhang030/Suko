@@ -38,8 +38,12 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
     return self;
 }
 
-- (void)cancelAllRequests {
-    [self.manager.tasks makeObjectsPerformSelector:@selector(cancel)];
+- (void)cancelAllJikanRequests {
+    for(NSURLSessionTask *task in self.manager.tasks) {
+        if([task.originalRequest.URL.absoluteString containsString:@"jikan"]) {
+            [task cancel];
+        }
+    }
 }
 
 - (void)fetchAnimeWithID:(NSNumber *)malID completion:(void(^)(SUKAnime* anime, NSError *error))completion {

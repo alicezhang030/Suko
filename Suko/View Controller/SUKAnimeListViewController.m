@@ -52,7 +52,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
     [self setCancelTasks:YES];
-    [[SUKAPIManager shared] cancelAllRequests]; // Reduce the number of requests made to external API
+    [[SUKAPIManager shared] cancelAllJikanRequests]; // Reduce the number of requests made to external API
 }
 
 - (void)updateArrOfAnime {
