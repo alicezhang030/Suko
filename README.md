@@ -44,7 +44,7 @@ MVP:
 - [x] User can view and edit their profile.
 
 Ambiguous Problems:
-- [ ] User can see on a map what users near them are watching and create events with the others
+- [x] User can see on a map what users near them are watching and create events for other users
 - [ ] Users can take a quiz and receive anime recommendations based on their selections.
 
 **Optional Nice-to-have Stories**
@@ -117,3 +117,4 @@ https://www.figma.com/file/VEcbEb136UlVuK9X9XaAOR/suko-app-showcase?node-id=0%3A
 ## Credits
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
 - [MKDropdownMenu](https://github.com/maxkonovalov/MKDropdownMenu) - dropdown menu for iOS
+- [MDCSwipeToChoose](https://github.com/modocache/MDCSwipeToChoose) - swipe to "like" or "dislike" any view

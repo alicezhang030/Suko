@@ -33,7 +33,6 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     self.animeRecommendationIDs = [NSMutableArray new];
     
     // Spinner
-    // TO BE DELETED
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
