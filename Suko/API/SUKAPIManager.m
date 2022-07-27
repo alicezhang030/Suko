@@ -120,9 +120,10 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
 
 - (void)fetchMovieGenres:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
     NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
-    NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/genre/movie/list?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US"];
+    NSString *fullURLString = [baseMovieURLString stringByAppendingString:@"/genre/movie/list"];
     
-    [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    NSDictionary *params = @{@"api_key": movieAPIKey, @"language": @"en-US"};
+    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray<NSDictionary *> *movieGenres = dataDictionary[@"genres"];
         completion(movieGenres, nil);
@@ -131,11 +132,11 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
     }];
 }
 
-- (void)fetchTopMovies:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion {
+- (void)fetchTopMoviesFromPage:(NSNumber *)page completion:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion {
     NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
-    NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/movie/popular?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US&page=1"];
-    
-    [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    NSString *fullURLString = [baseMovieURLString stringByAppendingString:@"/movie/popular"];
+    NSDictionary *params = @{@"api_key": movieAPIKey, @"language": @"en-US", @"page": page};
+    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray<NSDictionary *> *topTwentyMovies = dataDictionary[@"results"];
         NSArray<SUKMovie *> *arrOfMovieObjs = [SUKMovie movieWithArrayOfDictionaries:topTwentyMovies];

@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSMutableArray<SUKAnime *> *animeRecommendations;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *animeRecommendationIDs;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
+@property (nonatomic, strong) NSNumber *topMoviePageCount;
 @end
 
 @implementation SUKSwipeMovieViewController
@@ -31,14 +33,18 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     self.animeRecommendationIDs = [NSMutableArray new];
     
     // Spinner
+    // TO BE DELETED
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
-    [self.spinner startAnimating];
     
-    // Fetch movies to initially display
+    self.topMoviePageCount = @1;
+    [self topMoviesFromPage:self.topMoviePageCount];
+}
+
+- (void)topMoviesFromPage:(NSNumber *)page {
     __weak __typeof(self) weakSelf = self;
-    [[SUKAPIManager shared] fetchTopMovies:^(NSArray<SUKMovie *> *movies, NSError *error) {
+    [[SUKAPIManager shared] fetchTopMoviesFromPage:page completion:^(NSArray<SUKMovie *> *movies, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if(movies != nil) {
             strongSelf.movies = [movies mutableCopy];
@@ -87,7 +93,78 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
                          } completion:nil];
     }
     
-    if(self.frontCardView == nil) { // There are no more movies to display.
+    if(self.frontCardView == nil && self.backCardView == nil) { // There are no more movies to display.
+        [self noMoreMoviesView];
+    }
+}
+
+- (void)noMoreMoviesView {
+    UIView *noMoreMoviesView = [[UIView alloc] initWithFrame:self.view.frame];
+    noMoreMoviesView.tag = 1000; // Set tag to assist in removing this view later
+    
+    UILabel *loadMoreMoviesLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, CGRectGetWidth(self.view.frame), 20)];
+    loadMoreMoviesLabel.backgroundColor = [UIColor clearColor];
+    loadMoreMoviesLabel.textAlignment = NSTextAlignmentCenter;
+    loadMoreMoviesLabel.textColor = [UIColor blackColor];
+    loadMoreMoviesLabel.numberOfLines = 0;
+    loadMoreMoviesLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    loadMoreMoviesLabel.text = @"Would you like to swipe on more movies?";
+    [loadMoreMoviesLabel setCenter:CGPointMake(CGRectGetWidth(self.view.frame)/2.0, CGRectGetHeight(self.view.frame)/2.0 - (40 + 10))];
+    
+    UIButton *loadMoreMoviesButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [loadMoreMoviesButton addTarget:self action:@selector(tappedLoadMore) forControlEvents:UIControlEventTouchUpInside];
+    [loadMoreMoviesButton setTitle:@"Load more" forState:UIControlStateNormal];
+    loadMoreMoviesButton.frame = CGRectMake((self.view.frame.size.width - 160)/2, (self.view.frame.size.height - 40)/2, 160, 40);
+    [loadMoreMoviesButton setBackgroundColor:[UIColor colorWithRed:0.76078431372 green:0.56470588235 blue:1.0 alpha:1.0]];
+    [loadMoreMoviesButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [recommendButton addTarget:self action:@selector(tappedRecommendAnimeButton) forControlEvents:UIControlEventTouchUpInside];
+    [recommendButton setTitle:@"Recommend anime" forState:UIControlStateNormal];
+    recommendButton.frame = CGRectMake((self.view.frame.size.width - 160)/2, (self.view.frame.size.height - 40)/2 + (40 + 10), 160, 40);
+    [recommendButton setBackgroundColor:[UIColor colorWithRed:0.76078431372 green:0.56470588235 blue:1.0 alpha:1.0]];
+    [recommendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    loadMoreMoviesButton.layer.cornerRadius = 4;
+    recommendButton.layer.cornerRadius = 4;
+    loadMoreMoviesButton.layer.masksToBounds = true;
+    recommendButton.layer.masksToBounds = true;
+
+    [noMoreMoviesView addSubview:loadMoreMoviesLabel];
+    [noMoreMoviesView addSubview:loadMoreMoviesButton];
+    [noMoreMoviesView addSubview:recommendButton];
+    
+    [self.view addSubview:noMoreMoviesView];
+}
+
+- (void)tappedLoadMore {
+    self.topMoviePageCount = [NSNumber numberWithInt:([self.topMoviePageCount intValue] + 1)];
+    [self topMoviesFromPage:self.topMoviePageCount];
+    
+    // Remove the no more movies subview
+    for(UIView *subView in self.view.subviews) {
+        if(subView.tag == 1000) {
+            [subView removeFromSuperview];
+        }
+    }
+}
+
+- (void)tappedRecommendAnimeButton {
+    if(self.selectedMovies.count == 0) {
+        NSString *title = @"Must select movies";
+        NSString *message = @"Please swipe right on at least one movie and then try again.";
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:message
+                                                                preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {}];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
+    } else {
+        [self.view bringSubviewToFront:self.spinner];
+        [self.spinner startAnimating];
+        
         NSMutableDictionary<NSNumber *, NSNumber *> *genreCount = [self countGenreOfSelectedMovies:self.selectedMovies];
         
         __weak __typeof(self) weakSelf = self;
@@ -102,6 +179,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
                 
                 [strongSelf animeRecsGivenFrequencyOfGenresInSelectedMovies:genreCount withMovieGenreOptions:movieGenres completion:^(NSError *error) {
                     if(error == nil) {
+                        [self.spinner stopAnimating];
                         [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:self.animeRecommendations];
                     }
                 }];
@@ -197,7 +275,8 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
 }
 
 - (void)animeRecsGivenFrequencyOfGenresInSelectedMovies:(NSMutableDictionary<NSNumber *, NSNumber *> *) genreIDsAndFrequency withMovieGenreOptions:(NSMutableDictionary<NSNumber *, NSString *> *) genreOptions completion:(void(^)(NSError *error)) completion {
-    NSDictionary<NSString *,NSString *> *movieGenreToAnimeGenre = @{@"Family":@"Kids", @"Adventure":@"Adventure", @"Romance":@"Romance", @"Drama":@"Drama", @"Mystery":@"Mystery", @"Crime":@"Organized Crime", @"War":@"Military", @"Action":@"Action", @"Science Fiction":@"Sci-Fi", @"Music":@"Music", @"Western":@"None", @"History":@"Historical", @"Documentary":@"None", @"Comedy":@"Comedy", @"Fantasy":@"Fantasy", @"TV Movie":@"None", @"Animation":@"None", @"Thriller":@"Suspense", @"Horror":@"Horror"};
+    // Western, Documentary, TV Movie, and Animation don't match well into any anime genre, so I put "Action" as default
+    NSDictionary<NSString *,NSString *> *movieGenreToAnimeGenre = @{@"Family":@"Kids", @"Adventure":@"Adventure", @"Romance":@"Romance", @"Drama":@"Drama", @"Mystery":@"Mystery", @"Crime":@"Organized Crime", @"War":@"Military", @"Action":@"Action", @"Science Fiction":@"Sci-Fi", @"Music":@"Music", @"Western":@"Action", @"History":@"Historical", @"Documentary":@"Action", @"Comedy":@"Comedy", @"Fantasy":@"Fantasy", @"TV Movie":@"Action", @"Animation":@"Action", @"Thriller":@"Suspense", @"Horror":@"Horror"};
     
     NSArray<NSNumber *> *selectedMovieGenreIDs = [genreIDsAndFrequency allKeys];
     NSNumber *totalGenreOccurences = [[genreIDsAndFrequency allValues] valueForKeyPath:@"@sum.self"];
@@ -205,7 +284,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     for(int i = 0; i < selectedMovieGenreIDs.count; i++) {
         NSString *correspondingAnimeGenreName = [movieGenreToAnimeGenre objectForKey:[genreOptions objectForKey:selectedMovieGenreIDs[i]]];
         
-        if(correspondingAnimeGenreName != nil && ![correspondingAnimeGenreName isEqualToString:@"None"]) { // If there is a matching anime genre to this movie genre
+        if(correspondingAnimeGenreName != nil) { // If there is a matching anime genre for this movie genre
             // Calculate the number of recommendations to retrive from this genre based on its frequency
             NSNumber *genreFrequency = [genreIDsAndFrequency objectForKey:selectedMovieGenreIDs[i]];
             double roundedLimitDouble = round(([genreFrequency doubleValue] / [totalGenreOccurences doubleValue])  * kAnimeRecLimit);

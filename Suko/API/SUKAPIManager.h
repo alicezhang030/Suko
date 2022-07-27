@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchAnimeSearchWithSearchQuery:(NSString *)query completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion;
 
 - (void)fetchMovieGenres:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion;
-- (void)fetchTopMovies:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion;
+- (void)fetchTopMoviesFromPage:(NSNumber *)page completion:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END
