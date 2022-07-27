@@ -94,7 +94,6 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
     
-    //NSArray *viewControllers = self.navigationController.viewControllers; Commented out code
     [self setCancelTasks:YES];
     [[SUKAPIManager shared] cancelAllJikanRequests];
 }

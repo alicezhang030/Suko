@@ -474,14 +474,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find your new favorite anime through your favorite movies." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itV-1s-y1x">
-                                <rect key="frame" x="31" y="386" width="324.5" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find your new favorite anime through your favorite movies. Swipe right on movies you like, and we'll do the rest." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itV-1s-y1x">
+                                <rect key="frame" x="31" y="386" width="362" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOC-b6-6wy">
-                                <rect key="frame" x="31" y="470" width="107" height="51"/>
+                                <rect key="frame" x="31" y="487" width="107" height="51"/>
                                 <color key="backgroundColor" red="0.76078431369999999" green="0.56470588239999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="107" id="9yv-c5-HpM"/>
@@ -510,7 +510,7 @@
                             <constraint firstItem="xJN-du-IXs" firstAttribute="leading" secondItem="fCV-fG-hie" secondAttribute="leading" id="efC-lX-oXZ"/>
                             <constraint firstItem="a7M-7H-h7k" firstAttribute="top" secondItem="AV5-7m-cwP" secondAttribute="top" constant="95" id="oMI-ug-MUk"/>
                             <constraint firstItem="xJN-du-IXs" firstAttribute="top" secondItem="fCV-fG-hie" secondAttribute="bottom" id="qQm-Oy-WpF"/>
-                            <constraint firstItem="AOC-b6-6wy" firstAttribute="top" secondItem="itV-1s-y1x" secondAttribute="bottom" constant="43" id="rdj-9g-ps2"/>
+                            <constraint firstItem="AOC-b6-6wy" firstAttribute="top" secondItem="itV-1s-y1x" secondAttribute="bottom" constant="40" id="rdj-9g-ps2"/>
                             <constraint firstItem="a7M-7H-h7k" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fCV-fG-hie" secondAttribute="trailing" constant="20" id="sd8-bW-KXb"/>
                             <constraint firstItem="a7M-7H-h7k" firstAttribute="leading" secondItem="AV5-7m-cwP" secondAttribute="leading" constant="6" id="tZV-Ny-O4e"/>
                         </constraints>
