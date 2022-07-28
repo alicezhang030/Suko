@@ -45,7 +45,7 @@ MVP:
 
 Ambiguous Problems:
 - [x] User can see on a map what users near them are watching and create events for other users
-- [ ] Users can take a quiz and receive anime recommendations based on their selections.
+- [x] Users can take a quiz and receive anime recommendations based on their selections.
 
 **Optional Nice-to-have Stories**
 - [ ] User can rate and review animes.
