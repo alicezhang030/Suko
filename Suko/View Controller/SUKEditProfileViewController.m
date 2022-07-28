@@ -11,10 +11,14 @@
 
 
 @interface SUKEditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet PFImageView *backdropImageView;
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 
 @end
+
+UIImagePickerController *profilePictureImagePicker;
+UIImagePickerController *backdropImagePicker;
 
 @implementation SUKEditProfileViewController
 
@@ -27,12 +31,20 @@
     // Load username
     self.usernameTextField.text = [PFUser currentUser].username;
     
-    // Load the user profile image
+    // Load the user profile image and backdrop image
     self.profileImageView.file = [PFUser currentUser][@"profile_image"];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
+    
+    self.backdropImageView.file = [PFUser currentUser][@"profile_backdrop"];
+    UITapGestureRecognizer *backdropTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapBackdrop:)];
+    [self.backdropImageView addGestureRecognizer:backdropTapRecognizer];
+    [self.backdropImageView setUserInteractionEnabled:YES];
+    
+    [self.profileImageView loadInBackground];
+    [self.backdropImageView loadInBackground];
 }
 
 - (IBAction)cancelEditProfile:(id)sender {
@@ -40,30 +52,43 @@
 }
 
 - (IBAction)tapChangePhoto:(id)sender {
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-    imagePickerVC.delegate = self;
-    imagePickerVC.allowsEditing = YES;
-    imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    profilePictureImagePicker = [UIImagePickerController new];
+    profilePictureImagePicker.delegate = self;
+    profilePictureImagePicker.allowsEditing = YES;
+    profilePictureImagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 
-    [self presentViewController:imagePickerVC animated:YES completion:nil];
+    [self presentViewController:profilePictureImagePicker animated:YES completion:nil];
+}
+
+- (void)tapBackdrop:(UITapGestureRecognizer *)sender {
+    backdropImagePicker = [UIImagePickerController new];
+    backdropImagePicker.delegate = self;
+    backdropImagePicker.allowsEditing = YES;
+    backdropImagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
+    [self presentViewController:backdropImagePicker animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     // Get the image captured by the UIImagePickerController
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     
-    // Resize image
-    CGRect bounds = UIScreen.mainScreen.bounds;      // Fetches device's screen
-    CGFloat width = bounds.size.width;               // Extracts width of bounds
-    CGSize imageSize = CGSizeMake(width, width);     // Creates square image
-    
-    self.profileImageView.image = [self resizeImage:originalImage withSize:imageSize];
-    
-    NSData *imageData = UIImagePNGRepresentation(self.profileImageView.image);
-    PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
-    
-    // Upload image to database
-    [PFUser currentUser][@"profile_image"] = imageFile;
+    if(picker == profilePictureImagePicker) {
+        // Resize image
+        CGRect bounds = UIScreen.mainScreen.bounds;      // Fetches device's screen
+        CGFloat width = bounds.size.width;               // Extracts width of bounds
+        CGSize imageSize = CGSizeMake(width, width);     // Creates square image
+        
+        self.profileImageView.image = [self resizeImage:originalImage withSize:imageSize];
+        NSData *imageData = UIImagePNGRepresentation(self.profileImageView.image);
+        PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
+        [PFUser currentUser][@"profile_image"] = imageFile;
+    } else {
+        self.backdropImageView.image = [self resizeImage:originalImage withSize:CGSizeMake(self.backdropImageView.frame.size.width, self.backdropImageView.frame.size.height)];
+        NSData *imageData = UIImagePNGRepresentation(self.backdropImageView.image);
+        PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"backdrop.png" data:imageData];
+        [PFUser currentUser][@"profile_backdrop"] = imageFile;
+    }
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];

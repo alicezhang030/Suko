@@ -16,6 +16,7 @@
 
 @interface SUKProfileViewController () <UITableViewDataSource, UITableViewDelegate, SUKEditProfileDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet PFImageView *backdropImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) UIBarButtonItem *logoutButton;
 @property (nonatomic, strong) NSArray<NSString *> *listTitles;
@@ -52,12 +53,15 @@
 }
 
 - (void)loadContents {
-    // Load the user profile image
+    // Load the user profile image and backdrop
     self.profileImageView.file = [PFUser currentUser][@"profile_image"];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
+    
+    self.backdropImageView.file = [PFUser currentUser][@"profile_backdrop"];
+    [self.backdropImageView loadInBackground];
     
     // Load the username
     self.usernameLabel.text = [@"@" stringByAppendingString:[PFUser currentUser].username];

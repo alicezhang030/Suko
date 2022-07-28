@@ -25,6 +25,8 @@
 
 @implementation SUKBrowseEventViewController
 
+int const kMileRadius = 40;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -89,7 +91,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
-    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:40.0];
+    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:kMileRadius];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
     __weak __typeof(self) weakSelf = self;
@@ -97,9 +99,6 @@
         __strong __typeof(self) strongSelf = weakSelf;
         if(events.count == 0) {
             [strongSelf emptyTableView];
-            [strongSelf.tableView reloadData];
-            [strongSelf.refreshControl endRefreshing];
-            [strongSelf.spinner stopAnimating];
         } else {
             [strongSelf restoreTableViewFromEmptyState];
             NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
@@ -107,10 +106,11 @@
                 [mutableArrOfEvents addObject:event];
             }
             strongSelf.arrOfEvents = [mutableArrOfEvents copy];
-            [strongSelf.tableView reloadData];
-            [strongSelf.refreshControl endRefreshing];
-            [strongSelf.spinner stopAnimating];
         }
+        
+        [strongSelf.tableView reloadData];
+        [strongSelf.refreshControl endRefreshing];
+        [strongSelf.spinner stopAnimating];
     }];
 }
 
@@ -122,7 +122,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
-    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:5.0];
+    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:kMileRadius];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
     NSString *currentUserID = [PFUser currentUser].objectId;
@@ -170,7 +170,7 @@
     emptyListMessageLabel.numberOfLines = 0;
     emptyListMessageLabel.lineBreakMode = NSLineBreakByWordWrapping;
     if(self.discoverRegisteredSegmentedControl.selectedSegmentIndex == 0) {
-        emptyListMessageLabel.text = @"No events within 5 miles of you.";
+        emptyListMessageLabel.text = [@"No events within " stringByAppendingString:[[@(kMileRadius) stringValue] stringByAppendingString:@" miles of you."]];
     } else {
         emptyListMessageLabel.text = @"No registered events yet.";
     }

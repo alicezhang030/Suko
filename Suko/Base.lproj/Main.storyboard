@@ -24,6 +24,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="215"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IOa-c1-esr" customClass="PFImageView">
+                                            <rect key="frame" x="0.0" y="-6" width="414" height="148"/>
+                                            <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
+                                        </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="G1b-Kf-ufx" customClass="PFImageView">
                                             <rect key="frame" x="142" y="31" width="130" height="130"/>
                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,9 +45,13 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="IOa-c1-esr" firstAttribute="leading" secondItem="jIW-Zj-xa6" secondAttribute="leading" id="3xo-aE-JxZ"/>
                                         <constraint firstItem="nIz-5C-cgt" firstAttribute="centerX" secondItem="G1b-Kf-ufx" secondAttribute="centerX" id="Bwr-4d-bjS"/>
                                         <constraint firstItem="nIz-5C-cgt" firstAttribute="top" secondItem="G1b-Kf-ufx" secondAttribute="bottom" constant="15" id="Ksp-oE-QUO"/>
                                         <constraint firstItem="G1b-Kf-ufx" firstAttribute="centerX" secondItem="jIW-Zj-xa6" secondAttribute="centerX" id="On9-zi-LYl"/>
+                                        <constraint firstAttribute="bottom" secondItem="IOa-c1-esr" secondAttribute="bottom" constant="73" id="RCE-6x-fYU"/>
+                                        <constraint firstAttribute="trailing" secondItem="IOa-c1-esr" secondAttribute="trailing" id="nQx-j6-ZsV"/>
+                                        <constraint firstItem="IOa-c1-esr" firstAttribute="top" secondItem="jIW-Zj-xa6" secondAttribute="top" constant="-6" id="pYJ-Nd-oJn"/>
                                         <constraint firstItem="G1b-Kf-ufx" firstAttribute="top" secondItem="jIW-Zj-xa6" secondAttribute="top" constant="31" id="zJ2-Q0-rdJ"/>
                                     </constraints>
                                 </view>
@@ -95,6 +103,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backdropImageView" destination="IOa-c1-esr" id="eYx-wM-OtI"/>
                         <outlet property="profileImageView" destination="G1b-Kf-ufx" id="koj-AC-l1C"/>
                         <outlet property="tableView" destination="M9b-UH-8cJ" id="DpS-ha-5DR"/>
                         <outlet property="usernameLabel" destination="nIz-5C-cgt" id="G0L-Zk-0En"/>
@@ -102,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8PJ-ND-Qg3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3725" y="1814"/>
+            <point key="canvasLocation" x="3724.6376811594205" y="1813.3928571428571"/>
         </scene>
         <!--Edit Profile-->
         <scene sceneID="g8u-Ug-uGY">
@@ -119,8 +128,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="791"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PI8-ca-uBm" customClass="PFImageView">
+                                            <rect key="frame" x="0.0" y="8" width="414" height="134"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
+                                        </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="wzE-hc-k6P" customClass="PFImageView">
-                                            <rect key="frame" x="124.5" y="193" width="165" height="165"/>
+                                            <rect key="frame" x="124.5" y="52" width="165" height="165"/>
                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="165" id="VUM-Lh-85k"/>
@@ -128,20 +142,20 @@
                                             </constraints>
                                         </imageView>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LM0-cE-AQG">
-                                            <rect key="frame" x="105" y="420" width="204" height="34"/>
+                                            <rect key="frame" x="105" y="287" width="204" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="204" id="6No-4t-KG5"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-RX-vw9">
-                                            <rect key="frame" x="149.5" y="366" width="115" height="31"/>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-RX-vw9">
+                                            <rect key="frame" x="109" y="243" width="186" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="pIN-wt-EuK"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Change photo"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Change Profile Picture"/>
                                             <connections>
                                                 <action selector="tapChangePhoto:" destination="OYb-2x-7NJ" eventType="touchUpInside" id="CaI-Je-zgK"/>
                                             </connections>
@@ -149,11 +163,11 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="LM0-cE-AQG" secondAttribute="bottom" constant="337" id="Fbo-0t-ezA"/>
-                                        <constraint firstItem="4wh-RX-vw9" firstAttribute="centerX" secondItem="aEQ-j4-xIM" secondAttribute="centerX" id="NRV-zX-71C"/>
-                                        <constraint firstItem="4wh-RX-vw9" firstAttribute="top" secondItem="wzE-hc-k6P" secondAttribute="bottom" constant="8" symbolic="YES" id="OZW-DZ-9CE"/>
+                                        <constraint firstAttribute="bottom" secondItem="LM0-cE-AQG" secondAttribute="bottom" constant="470" id="Fbo-0t-ezA"/>
+                                        <constraint firstItem="4wh-RX-vw9" firstAttribute="centerX" secondItem="aEQ-j4-xIM" secondAttribute="centerX" constant="-5" id="NRV-zX-71C"/>
+                                        <constraint firstItem="4wh-RX-vw9" firstAttribute="top" secondItem="wzE-hc-k6P" secondAttribute="bottom" constant="26" id="OZW-DZ-9CE"/>
                                         <constraint firstItem="LM0-cE-AQG" firstAttribute="centerX" secondItem="aEQ-j4-xIM" secondAttribute="centerX" id="UXq-hi-unq"/>
-                                        <constraint firstItem="LM0-cE-AQG" firstAttribute="top" secondItem="4wh-RX-vw9" secondAttribute="bottom" constant="23" id="cg8-Rm-7Nf"/>
+                                        <constraint firstItem="LM0-cE-AQG" firstAttribute="top" secondItem="4wh-RX-vw9" secondAttribute="bottom" constant="13" id="cg8-Rm-7Nf"/>
                                         <constraint firstItem="wzE-hc-k6P" firstAttribute="centerX" secondItem="aEQ-j4-xIM" secondAttribute="centerX" id="hiK-hZ-gUn"/>
                                     </constraints>
                                 </view>
@@ -181,13 +195,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backdropImageView" destination="PI8-ca-uBm" id="fGf-Xh-Yyh"/>
                         <outlet property="profileImageView" destination="wzE-hc-k6P" id="fMf-0R-Fo1"/>
                         <outlet property="usernameTextField" destination="LM0-cE-AQG" id="Qn2-6a-X2n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nkm-Xk-kam" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5406" y="1814"/>
+            <point key="canvasLocation" x="5405.7971014492759" y="1813.3928571428571"/>
         </scene>
         <!--Library-->
         <scene sceneID="Mg0-QW-T1y">
@@ -1060,6 +1075,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="267"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QLZ-xg-ZXR" customClass="PFImageView">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="134"/>
+                                            <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
+                                        </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="hwD-m2-jRY" customClass="PFImageView">
                                             <rect key="frame" x="142" y="31" width="130" height="130"/>
                                             <color key="backgroundColor" red="1" green="0.6705882353" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -1088,8 +1107,12 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="Si9-Sf-957" firstAttribute="top" secondItem="As9-yp-YfS" secondAttribute="bottom" constant="21" id="0Gg-20-kA5"/>
+                                        <constraint firstAttribute="bottom" secondItem="QLZ-xg-ZXR" secondAttribute="bottom" constant="133" id="1Iw-ck-FTq"/>
+                                        <constraint firstItem="QLZ-xg-ZXR" firstAttribute="leading" secondItem="eq7-jM-ydI" secondAttribute="leading" id="2bl-3F-Lop"/>
                                         <constraint firstItem="Si9-Sf-957" firstAttribute="leading" secondItem="eq7-jM-ydI" secondAttribute="leading" constant="142" id="3EP-X2-3ra"/>
                                         <constraint firstItem="As9-yp-YfS" firstAttribute="top" secondItem="hwD-m2-jRY" secondAttribute="bottom" constant="15" id="GKn-hw-b8h"/>
+                                        <constraint firstAttribute="trailing" secondItem="QLZ-xg-ZXR" secondAttribute="trailing" id="I5m-C7-ssb"/>
+                                        <constraint firstItem="QLZ-xg-ZXR" firstAttribute="top" secondItem="eq7-jM-ydI" secondAttribute="top" id="aB8-iw-HFW"/>
                                         <constraint firstItem="hwD-m2-jRY" firstAttribute="centerX" secondItem="eq7-jM-ydI" secondAttribute="centerX" id="baT-fO-QLG"/>
                                         <constraint firstItem="hwD-m2-jRY" firstAttribute="top" secondItem="eq7-jM-ydI" secondAttribute="top" constant="31" id="e8t-Ts-EFh"/>
                                         <constraint firstAttribute="trailing" secondItem="Si9-Sf-957" secondAttribute="trailing" constant="142" id="glP-Vi-ah2"/>
@@ -1138,6 +1161,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="DuZ-OK-kbY"/>
                     <connections>
+                        <outlet property="backdropImageView" destination="QLZ-xg-ZXR" id="TdI-jb-Rjd"/>
                         <outlet property="followButton" destination="Si9-Sf-957" id="8jJ-AU-XfH"/>
                         <outlet property="profileImageView" destination="hwD-m2-jRY" id="dym-nT-Vsc"/>
                         <outlet property="tableView" destination="6jk-8y-maN" id="bsZ-xa-0Hp"/>
@@ -1146,7 +1170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dod-X2-2Ix" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4570" y="1031"/>
+            <point key="canvasLocation" x="4569.5652173913049" y="1030.5803571428571"/>
         </scene>
         <!--Browse Event View Controller-->
         <scene sceneID="aca-lr-bNm">
@@ -1692,6 +1716,9 @@
         <image name="user-icon" width="256" height="256"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="quaternaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -13,6 +13,7 @@
 #import "SUKFollow.h"
 
 @interface SUKNotCurrentUserProfileViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet PFImageView *backdropImageView;
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) NSArray<NSString *> *listTitles;
@@ -42,6 +43,9 @@
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
+    
+    self.backdropImageView.file = self.userToDisplay[@"profile_backdrop"];
+    [self.backdropImageView loadInBackground];
     
     self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
     
