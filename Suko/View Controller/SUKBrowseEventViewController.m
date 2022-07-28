@@ -89,7 +89,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
-    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:5.0];
+    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:40.0];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
     __weak __typeof(self) weakSelf = self;

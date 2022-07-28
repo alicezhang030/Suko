@@ -1166,7 +1166,7 @@
                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="T80-LS-hV3">
                                             <rect key="frame" x="0.0" y="12" width="414" height="32"/>
                                             <segments>
-                                                <segment title="Discover"/>
+                                                <segment title="Near You"/>
                                                 <segment title="Registered"/>
                                             </segments>
                                             <connections>
@@ -1429,7 +1429,7 @@
             </objects>
             <point key="canvasLocation" x="4436" y="248"/>
         </scene>
-        <!--Choose Event Location View Controller-->
+        <!--Choose event location-->
         <scene sceneID="Dhj-sn-b8f">
             <objects>
                 <viewController id="VUh-PW-aEg" customClass="SUKChooseEventLocationViewController" sceneMemberID="viewController">
@@ -1471,7 +1471,7 @@
                             <constraint firstItem="KHe-xm-1Kl" firstAttribute="leading" secondItem="JnN-nX-Lfd" secondAttribute="leading" id="jHt-s4-UC8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="lEF-xh-hPM"/>
+                    <navigationItem key="navigationItem" title="Choose event location" id="lEF-xh-hPM"/>
                     <connections>
                         <outlet property="mapView" destination="KHe-xm-1Kl" id="q1k-E4-FHK"/>
                     </connections>
