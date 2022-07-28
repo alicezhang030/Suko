@@ -36,12 +36,20 @@
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
     [self.spinner startAnimating];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self setCancelTasks:NO];
     
-    if([self.arrOfAnime count] == 0 && self.arrOfAnimeMALID != nil && self.arrOfAnimeMALID.count > 0){
+    if(self.arrOfAnimeMALID != nil && self.arrOfAnimeMALID.count > 0){
         __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             __strong __typeof(self) strongSelf = weakSelf;
+            
             [strongSelf updateArrOfAnime];
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [self.spinner startAnimating];
+            });
         });
     } else {
         [self emptyTableView];
@@ -52,13 +60,17 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [self.spinner stopAnimating];
     [self setCancelTasks:YES];
-    [[SUKAPIManager shared] cancelAllJikanRequests]; // Reduce the number of requests made to external API
 }
 
 - (void)updateArrOfAnime {
     if(self.arrOfAnimeMALID.count == 0) {
         [self emptyTableView];
     }
+    
+    // Clear out current data
+    NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
+    [currentArrOfAnime removeAllObjects];
+    self.arrOfAnime = [currentArrOfAnime copy];
         
     for(int i = 0; i < self.arrOfAnimeMALID.count; i++) {
         if(!self.cancelTasks) {            
