@@ -14,13 +14,13 @@
 
 @interface SUKNotCurrentUserProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *backdropImageView;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *blurView;
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) NSArray<NSString *> *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-
-
+@property (nonatomic, strong) UIRefreshControl *refreshControl; //pull down and refresh the page
 @end
 
 @implementation SUKNotCurrentUserProfileViewController
@@ -28,47 +28,71 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Set up TableView
-    self.listTitles = [PFUser currentUser][@"list_titles"];
+    // TableView
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
         
+    // Blur view
+    self.blurView.alpha = 0;
+    
+    // Load contents
     [self loadContents];
+    
+    // Refresh control
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(loadContents) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
 }
 
 - (void)loadContents {
-    self.profileImageView.file = self.userToDisplay[@"profile_image"];
-    [self.profileImageView loadInBackground];
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
-    self.profileImageView.layer.masksToBounds = YES;
-    self.profileImageView.layer.borderWidth = 0;
-    
-    self.backdropImageView.file = self.userToDisplay[@"profile_backdrop"];
-    [self.backdropImageView loadInBackground];
-    
-    self.usernameLabel.text = [@"@" stringByAppendingString:self.userToDisplay.username];
-    
-    if([self.userToDisplay.objectId isEqualToString:[PFUser currentUser].objectId]) {
-        [self.followButton removeFromSuperview];
-    } else {
-        self.followButton.layer.cornerRadius = 4;
-        self.followButton.layer.masksToBounds = true;
-    }
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"SUKFollow"];
-    [query whereKey:@"follower" equalTo:[PFUser currentUser]];
-    [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"objectId" equalTo:self.userToDisplay.objectId];
     
     __weak __typeof(self) weakSelf = self;
-    [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow *> *follows, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
-        if([follows count] > 1) {
-            NSLog(@"Error: More than one follow relationship between current user and user being displayed");
-        } else if([follows count] == 1) {
-            [strongSelf.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        
+        if(users.count != 1) {
+            NSLog(@"Error: more than one user with this ID");
         } else {
-            [strongSelf.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            PFUser *displayedUser = [users lastObject];
+            
+            strongSelf.listTitles = displayedUser[@"list_titles"];
+            [strongSelf.tableView reloadData];
+            
+            strongSelf.profileImageView.file = displayedUser[@"profile_image"];
+            [strongSelf.profileImageView loadInBackground];
+            strongSelf.profileImageView.layer.cornerRadius = strongSelf.profileImageView.frame.size.height /2;
+            strongSelf.profileImageView.layer.masksToBounds = YES;
+            strongSelf.profileImageView.layer.borderWidth = 0;
+            
+            strongSelf.backdropImageView.file = displayedUser[@"profile_backdrop"];
+            [strongSelf.backdropImageView loadInBackground];
+            
+            strongSelf.usernameLabel.text = [@"@" stringByAppendingString:displayedUser.username];
+            
+            if([displayedUser.objectId isEqualToString:[PFUser currentUser].objectId]) {
+                [strongSelf.followButton removeFromSuperview];
+            } else {
+                strongSelf.followButton.layer.cornerRadius = 4;
+                strongSelf.followButton.layer.masksToBounds = true;
+            }
+            
+            PFQuery *query = [PFQuery queryWithClassName:@"SUKFollow"];
+            [query whereKey:@"follower" equalTo:[PFUser currentUser]];
+            [query whereKey:@"userBeingFollowed" equalTo:displayedUser];
+            
+            [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow *> *follows, NSError *error) {
+                if([follows count] > 1) {
+                    NSLog(@"Error: More than one follow relationship between current user and user being displayed");
+                } else if([follows count] == 1) {
+                    [strongSelf.followButton setTitle:@"Following" forState:UIControlStateNormal];
+                } else {
+                    [strongSelf.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+                }
+                [self.refreshControl endRefreshing];
+            }];
         }
     }];
 }
@@ -84,6 +108,7 @@
         __strong __typeof(self) strongSelf = weakSelf;
         if([follows count] > 1) {
             NSLog(@"Error: More than one follow relationship between current user and user being displayed");
+            [self.refreshControl endRefreshing];
         } else if([follows count] == 1) {
             [SUKFollow deleteFollow:[follows lastObject]];
             [strongSelf.followButton setTitle:@"Follow" forState:UIControlStateNormal];
@@ -98,6 +123,25 @@
                 }
             }];
         }
+    }];
+}
+
+#pragma mark - Animation
+
+- (void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    //self.blurView.alpha = 1;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.blurView.alpha = 1;
+        self.backdropImageView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        self.blurView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    }];
+}
+
+- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.blurView.alpha = 0;
+        self.backdropImageView.transform = CGAffineTransformIdentity;
+        self.blurView.transform = CGAffineTransformIdentity;
     }];
 }
 

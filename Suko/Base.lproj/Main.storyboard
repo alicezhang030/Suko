@@ -1079,6 +1079,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="134"/>
                                             <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
                                         </imageView>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIb-8N-gXt">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="134"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kH0-N0-X07">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="134"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <blurEffect style="regular"/>
+                                        </visualEffectView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon" translatesAutoresizingMaskIntoConstraints="NO" id="hwD-m2-jRY" customClass="PFImageView">
                                             <rect key="frame" x="142" y="31" width="130" height="130"/>
                                             <color key="backgroundColor" red="1" green="0.6705882353" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -1108,10 +1116,14 @@
                                     <constraints>
                                         <constraint firstItem="Si9-Sf-957" firstAttribute="top" secondItem="As9-yp-YfS" secondAttribute="bottom" constant="21" id="0Gg-20-kA5"/>
                                         <constraint firstAttribute="bottom" secondItem="QLZ-xg-ZXR" secondAttribute="bottom" constant="133" id="1Iw-ck-FTq"/>
+                                        <constraint firstItem="QIb-8N-gXt" firstAttribute="centerX" secondItem="QLZ-xg-ZXR" secondAttribute="centerX" id="1Yy-4H-a8d"/>
                                         <constraint firstItem="QLZ-xg-ZXR" firstAttribute="leading" secondItem="eq7-jM-ydI" secondAttribute="leading" id="2bl-3F-Lop"/>
                                         <constraint firstItem="Si9-Sf-957" firstAttribute="leading" secondItem="eq7-jM-ydI" secondAttribute="leading" constant="142" id="3EP-X2-3ra"/>
+                                        <constraint firstItem="QIb-8N-gXt" firstAttribute="width" secondItem="QLZ-xg-ZXR" secondAttribute="width" id="C3a-P6-NtY"/>
                                         <constraint firstItem="As9-yp-YfS" firstAttribute="top" secondItem="hwD-m2-jRY" secondAttribute="bottom" constant="15" id="GKn-hw-b8h"/>
+                                        <constraint firstItem="QIb-8N-gXt" firstAttribute="height" secondItem="QLZ-xg-ZXR" secondAttribute="height" id="HuH-j0-yLE"/>
                                         <constraint firstAttribute="trailing" secondItem="QLZ-xg-ZXR" secondAttribute="trailing" id="I5m-C7-ssb"/>
+                                        <constraint firstItem="QIb-8N-gXt" firstAttribute="centerY" secondItem="QLZ-xg-ZXR" secondAttribute="centerY" id="WZg-5C-xfK"/>
                                         <constraint firstItem="QLZ-xg-ZXR" firstAttribute="top" secondItem="eq7-jM-ydI" secondAttribute="top" id="aB8-iw-HFW"/>
                                         <constraint firstItem="hwD-m2-jRY" firstAttribute="centerX" secondItem="eq7-jM-ydI" secondAttribute="centerX" id="baT-fO-QLG"/>
                                         <constraint firstItem="hwD-m2-jRY" firstAttribute="top" secondItem="eq7-jM-ydI" secondAttribute="top" constant="31" id="e8t-Ts-EFh"/>
@@ -1162,6 +1174,7 @@
                     <navigationItem key="navigationItem" id="DuZ-OK-kbY"/>
                     <connections>
                         <outlet property="backdropImageView" destination="QLZ-xg-ZXR" id="TdI-jb-Rjd"/>
+                        <outlet property="blurView" destination="QIb-8N-gXt" id="hRx-uw-Fj6"/>
                         <outlet property="followButton" destination="Si9-Sf-957" id="8jJ-AU-XfH"/>
                         <outlet property="profileImageView" destination="hwD-m2-jRY" id="dym-nT-Vsc"/>
                         <outlet property="tableView" destination="6jk-8y-maN" id="bsZ-xa-0Hp"/>
@@ -1705,7 +1718,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="DYo-a4-zd2"/>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="EZ4-Jx-OHr"/>
+        <segue reference="tAG-hY-s6j"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
