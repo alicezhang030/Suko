@@ -53,6 +53,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         completion(animeObj, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        completion(nil, error);
     }];
 }
 
@@ -66,6 +67,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        completion(nil, error);
     }];
 }
 
@@ -79,6 +81,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        completion(nil, error);
     }];
 }
 
@@ -90,6 +93,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         completion(dataDictionary[@"data"], nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error.localizedDescription);
+        completion(nil, error);
     }];
 }
 
@@ -115,6 +119,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        completion(nil, error);
     }];
 }
 

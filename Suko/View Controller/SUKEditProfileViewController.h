@@ -10,8 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SUKEditProfileViewController : UIViewController
+@protocol SUKEditProfileDelegate
+- (void)userFinishedEditingProfile;
+@end
 
+@interface SUKEditProfileViewController : UIViewController
+@property (nonatomic, weak) id<SUKEditProfileDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -89,6 +89,7 @@
                     <navigationItem key="navigationItem" id="EuC-Kn-hy3">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="UeA-3h-Reo">
                             <connections>
+                                <action selector="tapEdit:" destination="LTY-O6-4Iu" id="WLl-vH-oUC"/>
                                 <segue destination="aGw-4m-89v" kind="presentation" identifier="ProfileToEditProfileSegue" id="wk9-p8-JYu"/>
                             </connections>
                         </barButtonItem>
@@ -1623,6 +1624,7 @@
         <!--Navigation Controller-->
         <scene sceneID="eZE-Wo-aLo">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MQf-jQ-qMH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aGw-4m-89v" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zjx-2y-oqQ">
@@ -1634,7 +1636,6 @@
                         <segue destination="OYb-2x-7NJ" kind="relationship" relationship="rootViewController" id="Nvv-gl-g4i"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MQf-jQ-qMH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4570" y="1814"/>
         </scene>
@@ -1680,7 +1681,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="DYo-a4-zd2"/>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="4vs-CO-2P5"/>
+        <segue reference="EZ4-Jx-OHr"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

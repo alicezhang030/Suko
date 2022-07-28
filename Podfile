@@ -11,6 +11,7 @@ target 'Suko' do
   pod 'AFNetworking'
   pod 'MKDropdownMenu'
   pod "MDCSwipeToChoose"
+  pod 'SVPullToRefresh'
 
   target 'SukoTests' do
     inherit! :search_paths

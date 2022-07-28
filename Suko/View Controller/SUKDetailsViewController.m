@@ -80,6 +80,9 @@
                 break;
             }
         }
+        
+        [PFUser currentUser][@"list_data"] = currentAllData;
+        [[PFUser currentUser] saveInBackground];
         [self.dropdownMenu closeAllComponentsAnimated:YES];
     } else {
         for(int i = 0; i < [currentAllData count]; i++) {

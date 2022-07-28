@@ -71,7 +71,11 @@
 
 - (IBAction)saveProfile:(id)sender {
     [PFUser currentUser][@"username"] = self.usernameTextField.text;
-    [[PFUser currentUser] saveInBackground];
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if(succeeded) {
+            [self.delegate userFinishedEditingProfile];
+        }
+    }];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 

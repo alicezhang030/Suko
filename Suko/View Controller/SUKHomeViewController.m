@@ -34,7 +34,7 @@
 NSString *const kHomeToAnimeListSegueIdentifier = @"HomeToAnimeListSegue";
 NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCellToDetailsSegue";
 NSNumber *const kNumOfRows = @3;
-NSNumber *const knumOfAnimeDisplayedPerRow = @5;
+NSNumber *const knumOfAnimeDisplayedPerRow = @8;
 
 #pragma mark - UIViewController Overrides
 
@@ -77,7 +77,7 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
             numberOfListsLeft = [kNumOfRows intValue] - (int)self.dictOfAnime.count;
         }
         
-        [self genreAnime:[NSNumber numberWithInt:numberOfListsLeft]];
+        [self randomGenresForNRows:[NSNumber numberWithInt:numberOfListsLeft]];
     }
 }
 
@@ -128,7 +128,7 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
     }];
 }
 
-- (void)genreListWithCompletion:(void(^)(NSMutableDictionary<NSString *, NSString *> *genreIDsAndName, NSError *error))completion {
+- (void)genreOptionsWithCompletion:(void(^)(NSMutableDictionary<NSString *, NSString *> *genreIDsAndName, NSError *error))completion {
     [[SUKAPIManager shared] fetchAnimeGenres:^(NSArray<NSDictionary *> *genres, NSError *error) {
         if (genres != nil) {
             NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
@@ -145,22 +145,29 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
             completion(dictOfGenres, nil);
         } else {
             NSLog(@"%@", error.localizedDescription);
+            completion(nil, error);
         }
     }];
 }
 
-- (void)genreAnime:(NSNumber *) numberOfLists {
-    [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
-        NSMutableArray<NSString *> *chosenGenresToDisplay = [NSMutableArray new];
-        NSArray<NSString *> *genreIDs = [genreIDsAndName allKeys];
-        while(chosenGenresToDisplay.count != [numberOfLists intValue]) { // Ensures the app doesn't display duplicate genres
-            int randomGenre = arc4random_uniform((int)genreIDsAndName.count);
-            if(![chosenGenresToDisplay containsObject:genreIDs[randomGenre]]) {
-                [chosenGenresToDisplay addObject:genreIDs[randomGenre]];
+- (void)randomGenresForNRows:(NSNumber *) numberOfLists {
+    [self genreOptionsWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
+        if(error == nil) {
+            NSMutableArray<NSString *> *chosenGenresToDisplay = [NSMutableArray new];
+            NSArray<NSString *> *genreIDs = [genreIDsAndName allKeys];
+            while(chosenGenresToDisplay.count != [numberOfLists intValue]) { // Ensures the app doesn't display duplicate genres
+                int randomGenre = arc4random_uniform((int)genreIDsAndName.count);
+                if(![chosenGenresToDisplay containsObject:genreIDs[randomGenre]]) {
+                    [chosenGenresToDisplay addObject:genreIDs[randomGenre]];
+                }
             }
+            
+            [self genresToDisplay:chosenGenresToDisplay withGenreOptions:genreIDsAndName];
+        } else {
+            NSLog(@"Error retriving the genre options: %@", error.localizedDescription);
+            [self.spinner stopAnimating];
+            [self.tableView reloadData];
         }
-        
-        [self genresToDisplay:chosenGenresToDisplay withGenreOptions:genreIDsAndName];
     }];
 }
 
@@ -185,7 +192,9 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
                     [strongSelf.tableView reloadData];
                 }
             } else {
-                NSLog(@"%@", error.localizedDescription);
+                NSLog(@"Error retriving anime from a specific genre: %@", error.localizedDescription);
+                [strongSelf.spinner stopAnimating];
+                [strongSelf.tableView reloadData];
             }
         }];
     }
@@ -277,7 +286,7 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @5;
 }
 
 - (void)movieBarButtonClicked:(UIBarButtonItem *) barButton {
-    [self genreListWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
+    [self genreOptionsWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
         if(error == nil) {
             [self performSegueWithIdentifier:@"HomeToQuizSegue" sender:genreIDsAndName];
         } else {

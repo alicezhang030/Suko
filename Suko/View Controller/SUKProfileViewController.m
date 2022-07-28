@@ -14,7 +14,7 @@
 #import "SUKAnimeListViewController.h"
 #import "SUKAPIManager.h"
 
-@interface SUKProfileViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SUKProfileViewController () <UITableViewDataSource, UITableViewDelegate, SUKEditProfileDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) UIBarButtonItem *logoutButton;
@@ -44,6 +44,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self loadContents];
+}
+
+- (void)userFinishedEditingProfile {
     [self loadContents];
 }
 
@@ -92,6 +96,12 @@
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];
+    }
+    
+    if([segue.identifier isEqualToString:@"ProfileToEditProfileSegue"]) {
+        UINavigationController *navController = [segue destinationViewController];
+        SUKEditProfileViewController *editProfileVC = (SUKEditProfileViewController *)([navController viewControllers][0]);
+        editProfileVC.delegate = self;
     }
 }
 
