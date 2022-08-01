@@ -9,8 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** The view controller for the page where users browse events. */
 @interface SUKBrowseEventViewController : UIViewController
-
 @end
 
 NS_ASSUME_NONNULL_END

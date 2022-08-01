@@ -9,8 +9,13 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface ChooseMovieView ()
+
+/** Subview of  ChooseMovieView that actually displays the movie information */
 @property (nonatomic, strong) UIView *informationView;
-@property (nonatomic, strong) UILabel *nameLabel;
+
+/** Label that displays the movie's title */
+@property (nonatomic, strong) UILabel *movieNameLabel;
+
 @end
 
 @implementation ChooseMovieView
@@ -28,9 +33,7 @@
             [self.imageView setImageWithURL:url];
         }
         
-        self.autoresizingMask = UIViewAutoresizingFlexibleHeight |
-                                UIViewAutoresizingFlexibleWidth |
-                                UIViewAutoresizingFlexibleBottomMargin;
+        self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         self.imageView.autoresizingMask = self.autoresizingMask;
 
         [self constructInformationView];
@@ -63,9 +66,9 @@
                               topPadding,
                               floorf(CGRectGetWidth(_informationView.frame) / 7 * 6),
                               CGRectGetHeight(_informationView.frame) - topPadding);
-    _nameLabel = [[UILabel alloc] initWithFrame:frame];
-    _nameLabel.text = [NSString stringWithFormat:@"%@", self.movie.title];
-    [_informationView addSubview:_nameLabel];
+    _movieNameLabel = [[UILabel alloc] initWithFrame:frame];
+    _movieNameLabel.text = [NSString stringWithFormat:@"%@", self.movie.title];
+    [_informationView addSubview:_movieNameLabel];
 }
 
 @end

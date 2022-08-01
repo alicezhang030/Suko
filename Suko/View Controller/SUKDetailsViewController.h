@@ -11,7 +11,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** A view controller for displaying the details of an anime. */
 @interface SUKDetailsViewController : UIViewController
+
+/** The anime whose details will be displayed. */
 @property (nonatomic, strong) SUKAnime *animeToDisplay;
 
 @end

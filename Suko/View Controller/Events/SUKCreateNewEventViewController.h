@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** View controller for the page where users fill out a form to create a new event. */
 @interface SUKCreateNewEventViewController : UIViewController
-
 @end
 
 NS_ASSUME_NONNULL_END

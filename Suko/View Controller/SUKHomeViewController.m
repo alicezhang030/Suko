@@ -19,14 +19,19 @@
 #import "SUKQuizIntroViewController.h"
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
+
 /** The table view on the VC */
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 /** Dictionary containing the data to be displayed. The key is the row title (ex. Top Anime) and the value is an NSArray with elements of SUKAnime type representing the data / anime to be displayed. */
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSArray<SUKAnime *> *> *dictOfAnime;
+
 /** The activity spinner shown on the screen while data is being fetched. */
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
 /** The search bar at the top of the screen */
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
 @end
 
 @implementation SUKHomeViewController
@@ -58,6 +63,7 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
+    // Movie Bar Button
     UIBarButtonItem *movieBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Movies" style:UIBarButtonItemStylePlain target:self action:@selector(movieBarButtonClicked:)];
     self.navigationItem.rightBarButtonItem = movieBarButton;
 }
@@ -69,15 +75,15 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
     
     if(self.dictOfAnime.count < [kNumOfRows intValue]) {
         [self.spinner startAnimating];
-        int numberOfListsLeft = 0;
+        int numGenreRowsLeft = 0;
         
         if(self.dictOfAnime.count == 0) {
-            numberOfListsLeft = [kNumOfRows intValue] - 1;
+            numGenreRowsLeft = [kNumOfRows intValue] - 1;
         } else {
-            numberOfListsLeft = [kNumOfRows intValue] - (int)self.dictOfAnime.count;
+            numGenreRowsLeft = [kNumOfRows intValue] - (int)self.dictOfAnime.count;
         }
         
-        [self randomGenresForNRows:[NSNumber numberWithInt:numberOfListsLeft]];
+        [self randomGenresForNRows:[NSNumber numberWithInt:numGenreRowsLeft]];
     }
 }
 

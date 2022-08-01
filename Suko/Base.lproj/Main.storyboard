@@ -1366,18 +1366,11 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="jRL-yP-68H">
-                                            <rect key="frame" x="21" y="567" width="216" height="31"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="216" id="6b4-ap-tPp"/>
-                                                <constraint firstAttribute="height" constant="31" id="avn-hV-sXd"/>
-                                            </constraints>
-                                        </datePicker>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="2qU-6u-tTE">
-                                            <rect key="frame" x="21" y="655" width="216" height="31"/>
+                                            <rect key="frame" x="31" y="655" width="193" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="2Fh-tJ-dkj"/>
-                                                <constraint firstAttribute="width" constant="216" id="RIw-aG-ArG"/>
+                                                <constraint firstAttribute="width" constant="193" id="RIw-aG-ArG"/>
                                             </constraints>
                                         </datePicker>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WzG-Ms-V0W">
@@ -1410,10 +1403,17 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="jRL-yP-68H">
+                                            <rect key="frame" x="31" y="567" width="196" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="196" id="6b4-ap-tPp"/>
+                                                <constraint firstAttribute="height" constant="31" id="avn-hV-sXd"/>
+                                            </constraints>
+                                        </datePicker>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstItem="2qU-6u-tTE" firstAttribute="leading" secondItem="ovy-iV-cFP" secondAttribute="leading" constant="-10" id="4FZ-BM-Wzj"/>
+                                        <constraint firstItem="2qU-6u-tTE" firstAttribute="leading" secondItem="ovy-iV-cFP" secondAttribute="leading" id="4FZ-BM-Wzj"/>
                                         <constraint firstItem="xMz-kw-0ny" firstAttribute="top" secondItem="vSC-17-XbL" secondAttribute="bottom" constant="8" symbolic="YES" id="4JX-gC-5EZ"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3TL-oL-FTR" secondAttribute="trailing" constant="261" id="4pY-dx-lcz"/>
                                         <constraint firstItem="3TL-oL-FTR" firstAttribute="top" secondItem="2qU-6u-tTE" secondAttribute="bottom" constant="48" id="Fyi-bC-6vA"/>
@@ -1439,7 +1439,7 @@
                                         <constraint firstItem="ccc-b2-ttz" firstAttribute="centerX" secondItem="V2O-g4-JzO" secondAttribute="centerX" id="nQA-mC-sy3"/>
                                         <constraint firstItem="gP6-Cw-fHt" firstAttribute="leading" secondItem="xMz-kw-0ny" secondAttribute="leading" id="psO-qg-CrT"/>
                                         <constraint firstItem="ovy-iV-cFP" firstAttribute="leading" secondItem="Y5a-gr-0GW" secondAttribute="leading" id="tvH-gk-ruf"/>
-                                        <constraint firstItem="jRL-yP-68H" firstAttribute="leading" secondItem="Y5a-gr-0GW" secondAttribute="leading" constant="-10" id="wcT-dh-Htq"/>
+                                        <constraint firstItem="jRL-yP-68H" firstAttribute="leading" secondItem="Y5a-gr-0GW" secondAttribute="leading" id="wcT-dh-Htq"/>
                                         <constraint firstItem="ccc-b2-ttz" firstAttribute="top" secondItem="V2O-g4-JzO" secondAttribute="top" constant="10" id="xqs-dZ-HhJ"/>
                                     </constraints>
                                 </view>
@@ -1464,7 +1464,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AhY-JT-QeO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4436" y="248"/>
+            <point key="canvasLocation" x="4434.7826086956529" y="247.76785714285714"/>
         </scene>
         <!--Choose event location-->
         <scene sceneID="Dhj-sn-b8f">
@@ -1661,7 +1661,6 @@
         <!--Navigation Controller-->
         <scene sceneID="eZE-Wo-aLo">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MQf-jQ-qMH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aGw-4m-89v" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zjx-2y-oqQ">
@@ -1673,6 +1672,7 @@
                         <segue destination="OYb-2x-7NJ" kind="relationship" relationship="rootViewController" id="Nvv-gl-g4i"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MQf-jQ-qMH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4570" y="1814"/>
         </scene>

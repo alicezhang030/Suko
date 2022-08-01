@@ -10,7 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** A view controller for the profile page of a user who is not the current user. */
 @interface SUKNotCurrentUserProfileViewController : UIViewController
+
+/** The user whose information will be displayed. */
 @property (nonatomic, strong) PFUser *userToDisplay;
 
 @end

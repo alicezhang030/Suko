@@ -30,7 +30,9 @@
     self.eventDescriptionTextView.layer.borderWidth = 0.5;
     
     self.startTimeDatePicker.minimumDate = [NSDate new];
+    self.startTimeDatePicker.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.endTimeDatePicker.minimumDate = self.startTimeDatePicker.date;
+    self.endTimeDatePicker.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     [self.startTimeDatePicker addTarget:self action:@selector(startDateChanged:)
                   forControlEvents:UIControlEventValueChanged];

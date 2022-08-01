@@ -7,11 +7,15 @@
 
 #import "SUKMovie.h"
 
+@interface SUKMovie ()
+@property (nonatomic) NSNumber *ID;
+@property (nonatomic) NSString *synopsis;
+@end
+
 @implementation SUKMovie
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
-
     if(self) {
         self.ID = dictionary[@"id"];
         self.title = dictionary[@"title"];
@@ -19,17 +23,16 @@
         self.synopsis = dictionary[@"overview"];
         self.genreIDs = dictionary[@"genre_ids"];
     }
-    
     return self;
 }
 
-+ (NSMutableArray *)movieWithArrayOfDictionaries:(NSArray<NSDictionary *> *)dictionaries {
++ (NSArray<SUKMovie *> *)movieWithArrayOfDictionaries:(NSArray<NSDictionary *> *)dictionaries {
     NSMutableArray<SUKMovie *> *movies = [NSMutableArray new];
     for (NSDictionary *dictionary in dictionaries) {
         SUKMovie *movie = [[SUKMovie alloc] initWithDictionary:dictionary];
         [movies addObject:movie];
     }
-    return movies;
+    return [movies copy];
 }
 
 @end

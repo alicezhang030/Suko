@@ -10,10 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** A view controller for displaying the details of an event. */
 @interface SUKEventDetailsViewController : UIViewController
+
+/** The event whose details will be displayed. */
 @property (nonatomic, strong) SUKEvent *event;
 
-extern NSString *const kEventDetailsToNotCurrentUserProfileSegue;
 @end
 
 NS_ASSUME_NONNULL_END

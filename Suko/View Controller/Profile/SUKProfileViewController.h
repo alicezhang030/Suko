@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** A view controller for the profile page of the current user. */
 @interface SUKProfileViewController : UIViewController
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,9 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** A view controller displaying a map pf nearby users. */
 @interface SUKUserMapViewController : UIViewController
-
-extern NSString *const kMapToNotCurrentUserProfileSegueIdentifier;
 @end
 
 NS_ASSUME_NONNULL_END

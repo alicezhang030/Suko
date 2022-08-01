@@ -1,5 +1,5 @@
 //
-//  SUKLoginViewController.h
+//  SUKSignUpViewController.h
 //  Suko
 //
 //  Created by Alice Zhang on 7/8/22.
@@ -9,8 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SUKLoginViewController : UIViewController
-
+/** A view controller for the sign up page. */
+@interface SUKSignUpViewController : UIViewController
 @end
 
 NS_ASSUME_NONNULL_END

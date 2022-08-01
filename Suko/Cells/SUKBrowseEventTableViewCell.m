@@ -24,8 +24,22 @@
     
     self.eventNameLabel.text = event.name;
     self.usernameLabel.text = event.postedBy.username;
+    
     self.profileImageView.file = event.postedBy[@"profile_image"];
-    [self.profileImageView loadInBackground];
+    [self.profileImageView loadInBackground:^(UIImage * _Nullable image, NSError * _Nullable error) {
+        if(image == nil) {
+            NSLog(@"Nil image");
+            if([UIImage imageNamed:@"user-icon"] != nil) {
+                NSData *imageData = UIImagePNGRepresentation([UIImage imageNamed:@"user-icon"]);
+                PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
+                event.postedBy[@"profile_image"] = imageFile;
+                [event.postedBy saveInBackground];
+            } else {
+                NSLog(@"Could not find default user icon image");
+            }
+        }
+    }];
+    
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;

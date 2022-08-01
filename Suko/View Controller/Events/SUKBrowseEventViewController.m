@@ -83,10 +83,6 @@ int const kMileRadius = 40;
 }
 
 - (void)browseEvents {
-    NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
-    [mutableArrOfEvents removeAllObjects];
-    self.arrOfEvents = mutableArrOfEvents;
-    
     // Default: sorted based on distance away from current coordinates
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
@@ -101,13 +97,8 @@ int const kMileRadius = 40;
             [strongSelf emptyTableView];
         } else {
             [strongSelf restoreTableViewFromEmptyState];
-            NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
-            for(SUKEvent *event in events) {
-                [mutableArrOfEvents addObject:event];
-            }
-            strongSelf.arrOfEvents = [mutableArrOfEvents copy];
         }
-        
+        strongSelf.arrOfEvents = events;
         [strongSelf.tableView reloadData];
         [strongSelf.refreshControl endRefreshing];
         [strongSelf.spinner stopAnimating];
@@ -115,10 +106,6 @@ int const kMileRadius = 40;
 }
 
 - (void)registeredEvents {
-    NSMutableArray<SUKEvent*> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
-    [mutableArrOfEvents removeAllObjects];
-    self.arrOfEvents = mutableArrOfEvents;
-    
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
@@ -133,20 +120,14 @@ int const kMileRadius = 40;
         __strong __typeof(self) strongSelf = weakSelf;
         if(events.count == 0) {
             [strongSelf emptyTableView];
-            [strongSelf.tableView reloadData];
-            [strongSelf.refreshControl endRefreshing];
-            [strongSelf.spinner stopAnimating];
         } else {
             [strongSelf restoreTableViewFromEmptyState];
-            NSMutableArray<SUKEvent *> *mutableArrOfEvents = [self.arrOfEvents mutableCopy];
-            for(SUKEvent *event in events) {
-                [mutableArrOfEvents addObject:event];
-            }
-            strongSelf.arrOfEvents = [mutableArrOfEvents copy];
-            [strongSelf.tableView reloadData];
-            [strongSelf.refreshControl endRefreshing];
-            [strongSelf.spinner stopAnimating];
         }
+        
+        strongSelf.arrOfEvents = events;
+        [strongSelf.tableView reloadData];
+        [strongSelf.refreshControl endRefreshing];
+        [strongSelf.spinner stopAnimating];
     }];
 }
 

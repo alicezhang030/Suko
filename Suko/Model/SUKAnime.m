@@ -7,11 +7,20 @@
 
 #import "SUKAnime.h"
 
+@interface SUKAnime ()
+
+/** The genres this anime fit into */
+@property (nonatomic) NSArray<NSDictionary *> *genres;
+
+/** Airing status ("Finished Airing," "Currently Airing," "Not yet aired")*/
+@property (nonatomic) NSString *status;
+
+@end
+
 @implementation SUKAnime
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
-
     if (self) {
         NSNumber *malIDNSNumber = dictionary[@"mal_id"];
         self.malID = [malIDNSNumber intValue];
@@ -28,7 +37,6 @@
         NSNumber *episodesNSNumber = dictionary[@"episodes"];
         self.numEpisodes = [episodesNSNumber intValue];
     }
-    
     return self;
 }
 

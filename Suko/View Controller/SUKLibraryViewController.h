@@ -9,8 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** A view controller for the library page. */
 @interface SUKLibraryViewController : UIViewController
-
 @end
 
 NS_ASSUME_NONNULL_END

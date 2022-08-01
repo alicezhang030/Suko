@@ -9,12 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** A view controller for the home page. */
 @interface SUKHomeViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
-
-extern NSString *const kHomeToAnimeListSegueIdentifier;
-extern NSString *const kHomeCollectionCellToDetailsSegueIdentifier;
-extern NSNumber *const kNumOfRows;
-
 @end
 
 NS_ASSUME_NONNULL_END

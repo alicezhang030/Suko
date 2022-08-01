@@ -214,38 +214,20 @@
 		5336424E286BD9CF00F3D270 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				539925AA28984DB3005CC114 /* Sign Up and Login */,
+				539925AB28984DDC005CC114 /* Movie-to-anime Quiz */,
+				539925AC28984DF4005CC114 /* Events */,
+				539925AD28984E07005CC114 /* Profile */,
 				531C3A032874C14B002E80C4 /* SUKHomeViewController.h */,
 				531C3A042874C14B002E80C4 /* SUKHomeViewController.m */,
 				53B3301E28779B070013F404 /* SUKAnimeListViewController.h */,
 				53B3301F28779B070013F404 /* SUKAnimeListViewController.m */,
 				535AE83E28789530007D6059 /* SUKDetailsViewController.h */,
 				535AE83F28789530007D6059 /* SUKDetailsViewController.m */,
-				53291ED12878C6C900B12469 /* SUKSignUpViewController.h */,
-				53291ED22878C6C900B12469 /* SUKSignUpViewController.m */,
-				53291ED42878C6DF00B12469 /* SUKLoginViewController.h */,
-				53291ED52878C6DF00B12469 /* SUKLoginViewController.m */,
 				53E0D78D2878F72F00CFCF91 /* SUKLibraryViewController.h */,
 				53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */,
-				53A9751E287DF9B400D163BF /* SUKProfileViewController.h */,
-				53A9751F287DF9B400D163BF /* SUKProfileViewController.m */,
-				53A97521287DFCF900D163BF /* SUKEditProfileViewController.h */,
-				53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */,
 				5302D386287F7A280009018D /* SUKUserMapViewController.h */,
 				5302D387287F7A280009018D /* SUKUserMapViewController.m */,
-				53CCA6E828808E5900B217F5 /* SUKNotCurrentUserProfileViewController.h */,
-				53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */,
-				53E1CDFD2881C80B00186E36 /* SUKCreateNewEventViewController.h */,
-				53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */,
-				53ABF518288717F00015F1DB /* SUKChooseEventLocationViewController.h */,
-				53ABF519288717F00015F1DB /* SUKChooseEventLocationViewController.m */,
-				53ABF51D28872F9D0015F1DB /* SUKBrowseEventViewController.h */,
-				53ABF51E28872F9D0015F1DB /* SUKBrowseEventViewController.m */,
-				536AFC4B28875E6E00B01F95 /* SUKEventDetailsViewController.h */,
-				536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */,
-				53D5A252289061D200BA203D /* SUKSwipeMovieViewController.h */,
-				53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */,
-				5399C0FE2891B59F00E765C5 /* SUKQuizIntroViewController.h */,
-				5399C0FF2891B59F00E765C5 /* SUKQuizIntroViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -299,6 +281,56 @@
 				530400FB286D2FA800B63138 /* SUKAPIManager.m */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		539925AA28984DB3005CC114 /* Sign Up and Login */ = {
+			isa = PBXGroup;
+			children = (
+				53291ED12878C6C900B12469 /* SUKSignUpViewController.h */,
+				53291ED22878C6C900B12469 /* SUKSignUpViewController.m */,
+				53291ED42878C6DF00B12469 /* SUKLoginViewController.h */,
+				53291ED52878C6DF00B12469 /* SUKLoginViewController.m */,
+			);
+			path = "Sign Up and Login";
+			sourceTree = "<group>";
+		};
+		539925AB28984DDC005CC114 /* Movie-to-anime Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				5399C0FE2891B59F00E765C5 /* SUKQuizIntroViewController.h */,
+				5399C0FF2891B59F00E765C5 /* SUKQuizIntroViewController.m */,
+				53D5A252289061D200BA203D /* SUKSwipeMovieViewController.h */,
+				53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */,
+			);
+			path = "Movie-to-anime Quiz";
+			sourceTree = "<group>";
+		};
+		539925AC28984DF4005CC114 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				53E1CDFD2881C80B00186E36 /* SUKCreateNewEventViewController.h */,
+				53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */,
+				53ABF518288717F00015F1DB /* SUKChooseEventLocationViewController.h */,
+				53ABF519288717F00015F1DB /* SUKChooseEventLocationViewController.m */,
+				53ABF51D28872F9D0015F1DB /* SUKBrowseEventViewController.h */,
+				53ABF51E28872F9D0015F1DB /* SUKBrowseEventViewController.m */,
+				536AFC4B28875E6E00B01F95 /* SUKEventDetailsViewController.h */,
+				536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		539925AD28984E07005CC114 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				53A9751E287DF9B400D163BF /* SUKProfileViewController.h */,
+				53A9751F287DF9B400D163BF /* SUKProfileViewController.m */,
+				53A97521287DFCF900D163BF /* SUKEditProfileViewController.h */,
+				53A97522287DFCF900D163BF /* SUKEditProfileViewController.m */,
+				53CCA6E828808E5900B217F5 /* SUKNotCurrentUserProfileViewController.h */,
+				53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		53CAF86E0161FDDE4AC07BD5 /* Pods */ = {
