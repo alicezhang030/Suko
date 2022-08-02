@@ -218,12 +218,21 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     };
     options.likedText = @"Like";
     options.nopeText = @"Dislike";
-
+    
     // Create a movieView with the top movie in the movies array, then pop
     // that movie off the stack.
     ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame movie:self.movies[0] options:options];
     [self.movies removeObjectAtIndex:0];
+    
+    UITapGestureRecognizer *cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTappedCard:)];
+    cardTapRecognizer.numberOfTapsRequired = 2;
+    [movieView addGestureRecognizer:cardTapRecognizer];
+    
     return movieView;
+}
+
+- (void)doubleTappedCard:(UITapGestureRecognizer *)sender {
+    [self.frontCardView mdc_swipe:MDCSwipeDirectionRight];
 }
 
 #pragma mark View Construction
