@@ -58,6 +58,7 @@
     
     __weak __typeof(self) weakSelf = self;
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if (error != nil) {
             NSString *title = @"Signup failed";
             NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
@@ -66,11 +67,10 @@
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
             
             NSLog(@"User sign up failed: %@", error.localizedDescription);
         } else {
-            __strong __typeof(self) strongSelf = weakSelf;
             NSLog(@"User registered successfully");
             // Display view controller that needs to shown after successful login
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

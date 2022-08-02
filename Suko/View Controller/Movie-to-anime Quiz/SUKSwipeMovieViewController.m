@@ -44,6 +44,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
 - (void)topMoviesFromPage:(NSNumber *)page {
     __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchTopMoviesFromPage:page completion:^(NSArray<SUKMovie *> *movies, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(error != nil) {
             NSString *title = @"Unable to load movies";
             NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
@@ -52,11 +53,10 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
             
             NSLog(@"Failed to retrive top movies: %@", error.localizedDescription);
         } else {
-            __strong __typeof(self) strongSelf = weakSelf;
             strongSelf.movies = [movies mutableCopy];
 
             self.frontCardView = [self popMovieViewWithFrame:[self frontCardViewFrame]];
@@ -177,6 +177,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
         
         __weak __typeof(self) weakSelf = self;
         [self movieGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
+            __strong __typeof(self) strongSelf = weakSelf;
             if(error != nil) {
                 NSString *title = @"Something went wrong...";
                 NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
@@ -185,12 +186,10 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
                 UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {}];
                 [alert addAction:okAction];
-                [self presentViewController:alert animated:YES completion:^{}];
+                [strongSelf presentViewController:alert animated:YES completion:^{}];
                 
                 NSLog(@"Failed to fetch movie genres: %@", error.localizedDescription);
             } else {
-                __strong __typeof(self) strongSelf = weakSelf;
-                
                 NSMutableDictionary<NSNumber *, NSString *> *movieGenres = [NSMutableDictionary new]; // Key: genre ID, Value: genre title
                 for(NSDictionary *genre in genres) {
                     [movieGenres setObject:genre[@"name"] forKey:genre[@"id"]];

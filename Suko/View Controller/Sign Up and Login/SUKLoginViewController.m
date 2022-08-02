@@ -38,6 +38,7 @@
 
     __weak __typeof(self) weakSelf = self;
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if (error != nil) {
             NSString *title = @"Login failed";
             NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
@@ -46,11 +47,10 @@
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
             
             NSLog(@"User log in failed: %@", error.localizedDescription);
         } else {
-            __strong __typeof(self) strongSelf = weakSelf;
             NSLog(@"User logged in successfully");
             // Display view controller that needs to shown after successful login
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

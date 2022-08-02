@@ -92,6 +92,7 @@ int const kMileRadius = 40;
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(error != nil) {
             NSString *title = @"Failed to load nearby events";
             NSString *message = error.localizedDescription;
@@ -100,11 +101,10 @@ int const kMileRadius = 40;
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
             
             NSLog(@"Failed to load nearby events: %@", error.localizedDescription);
         } else {
-            __strong __typeof(self) strongSelf = weakSelf;
             if(events.count == 0) {
                 [strongSelf emptyTableView];
             } else {
@@ -130,6 +130,7 @@ int const kMileRadius = 40;
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKEvent *> *events, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(error != nil) {
             NSString *title = @"Failed to load registered events";
             NSString *message = error.localizedDescription;
@@ -138,11 +139,10 @@ int const kMileRadius = 40;
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
             
             NSLog(@"Failed to load registered events: %@", error.localizedDescription);
         } else {
-            __strong __typeof(self) strongSelf = weakSelf;
             if(events.count == 0) {
                 [strongSelf emptyTableView];
             } else {

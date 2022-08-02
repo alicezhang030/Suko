@@ -96,7 +96,9 @@ UIImagePickerController *backdropImagePicker;
 
 - (IBAction)saveProfile:(id)sender {
     [PFUser currentUser][@"username"] = self.usernameTextField.text;
+    __weak __typeof(self) weakSelf = self;
     [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        __strong __typeof(self) strongSelf = weakSelf;
         if(error != nil) {
             NSString *title = @"Failed to save profile";
             NSString *message = error.localizedDescription;
@@ -105,11 +107,11 @@ UIImagePickerController *backdropImagePicker;
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {}];
             [alert addAction:okAction];
-            [self presentViewController:alert animated:YES completion:^{}];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
             
             NSLog(@"Failed to save profile: %@", error.localizedDescription);
         } else {
-            [self.delegate userFinishedEditingProfile];
+            [strongSelf.delegate userFinishedEditingProfile];
         }
     }];
     [self dismissViewControllerAnimated:true completion:nil];
