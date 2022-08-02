@@ -85,10 +85,23 @@
     
     __weak __typeof(self) weakSelf = self;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
-        strongSelf.view.window.rootViewController = loginVC;
+        if(error != nil) {
+            NSString *title = @"Failed to logout";
+            NSString *message = error.localizedDescription;
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                        preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {}];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:^{}];
+            
+            NSLog(@"Failed to logout: %@", error.localizedDescription);
+        } else {
+            __strong __typeof(self) strongSelf = weakSelf;
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            SUKLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
+            strongSelf.view.window.rootViewController = loginVC;
+        }
     }];
 }
 

@@ -106,14 +106,14 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
     
     __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchAnimeSearchWithSearchQuery:searchQuery completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        if (anime != nil) {
+        if(error != nil) {
+            NSLog(@"Failed to fetch anime with search query %@: %@", searchQuery, error.localizedDescription);
+        } else {
+            __strong __typeof(self) strongSelf = weakSelf;
             NSMutableDictionary *senderDict = [NSMutableDictionary new];
             [senderDict setObject:@"Results" forKey:@"title"];
             [senderDict setObject:anime forKey:@"anime"];
             [strongSelf performSegueWithIdentifier:kHomeToAnimeListSegueIdentifier sender:senderDict];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
         }
     }];
 }
@@ -123,20 +123,22 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
 - (void)topAnime {
     __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchTopAnimeWithLimit:knumOfAnimeDisplayedPerRow completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        if (anime != nil) {
+        if(error != nil) {
+            NSLog(@"Failed to fetch top anime: %@", error.localizedDescription);
+        } else {
+            __strong __typeof(self) strongSelf = weakSelf;
             NSString *title = @"Top Anime";
             [strongSelf.dictOfAnime setObject:anime forKey:title];
             [strongSelf.tableView reloadData];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
         }
     }];
 }
 
 - (void)genreOptionsWithCompletion:(void(^)(NSMutableDictionary<NSString *, NSString *> *genreIDsAndName, NSError *error))completion {
     [[SUKAPIManager shared] fetchAnimeGenres:^(NSArray<NSDictionary *> *genres, NSError *error) {
-        if (genres != nil) {
+        if(error != nil) {
+            completion(nil, error);
+        } else {
             NSArray<NSString *> *genresToNotConsider = @[@"Ecchi", @"Hentai", @"Erotica"];
             NSMutableDictionary<NSString *, NSString *> *dictOfGenres = [NSMutableDictionary new];
             
@@ -149,16 +151,17 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
             }
             
             completion(dictOfGenres, nil);
-        } else {
-            NSLog(@"%@", error.localizedDescription);
-            completion(nil, error);
         }
     }];
 }
 
 - (void)randomGenresForNRows:(NSNumber *) numberOfLists {
     [self genreOptionsWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
-        if(error == nil) {
+        if(error != nil) {
+            NSLog(@"Error retriving the genre options: %@", error.localizedDescription);
+            [self.spinner stopAnimating];
+            [self.tableView reloadData];
+        } else {
             NSMutableArray<NSString *> *chosenGenresToDisplay = [NSMutableArray new];
             NSArray<NSString *> *genreIDs = [genreIDsAndName allKeys];
             while(chosenGenresToDisplay.count != [numberOfLists intValue]) { // Ensures the app doesn't display duplicate genres
@@ -169,10 +172,6 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
             }
             
             [self genresToDisplay:chosenGenresToDisplay withGenreOptions:genreIDsAndName];
-        } else {
-            NSLog(@"Error retriving the genre options: %@", error.localizedDescription);
-            [self.spinner stopAnimating];
-            [self.tableView reloadData];
         }
     }];
 }
@@ -186,7 +185,11 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
         __weak __typeof(self) weakSelf = self;
         [[SUKAPIManager shared] fetchAnimeFromGenre:genre withLimit:knumOfAnimeDisplayedPerRow completion:^(NSArray<SUKAnime *> *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
-            if (anime != nil) {
+            if(error != nil) {
+                NSLog(@"Error retriving anime from genre %@: %@", genre, error.localizedDescription);
+                [strongSelf.spinner stopAnimating];
+                [strongSelf.tableView reloadData];
+            } else {
                 NSString *title = [[@"Most Popular " stringByAppendingString:[genreIDsAndName objectForKey:genre]] stringByAppendingString:@" Anime"];
                 [strongSelf.dictOfAnime setObject:anime forKey:title];
                 
@@ -197,10 +200,6 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
                     [strongSelf.spinner stopAnimating];
                     [strongSelf.tableView reloadData];
                 }
-            } else {
-                NSLog(@"Error retriving anime from a specific genre: %@", error.localizedDescription);
-                [strongSelf.spinner stopAnimating];
-                [strongSelf.tableView reloadData];
             }
         }];
     }
@@ -293,10 +292,10 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
 
 - (void)movieBarButtonClicked:(UIBarButtonItem *) barButton {
     [self genreOptionsWithCompletion:^(NSMutableDictionary<NSString *,NSString *> *genreIDsAndName, NSError *error) {
-        if(error == nil) {
-            [self performSegueWithIdentifier:@"HomeToQuizSegue" sender:genreIDsAndName];
+        if(error != nil) {
+            NSLog(@"Error retriving the genre options: %@", error.localizedDescription);
         } else {
-            NSLog(@"%@", error.localizedDescription);
+            [self performSegueWithIdentifier:@"HomeToQuizSegue" sender:genreIDsAndName];
         }
     }];
 }

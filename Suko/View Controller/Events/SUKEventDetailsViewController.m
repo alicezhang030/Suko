@@ -83,14 +83,21 @@ NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotC
     __weak __typeof(self) weakSelf = self;
     [geoCoder reverseGeocodeLocation:eventCoordinates completionHandler:^(NSArray<CLPlacemark *> * placemarks, NSError * error) {
         __strong __typeof(self) strongSelf = weakSelf;
-        CNPostalAddressFormatter *addressFormatter = [CNPostalAddressFormatter new];
-        NSString *multiLineAddress = [addressFormatter stringFromPostalAddress:placemarks[0].postalAddress];
-        NSArray<NSString *> *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
-        NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];
+        if(error != nil) {
+            strongSelf.addressLabel.text = @"Failed to load address";
+            [strongSelf.spinner stopAnimating];
+            
+            NSLog(@"Failed to load address: %@", error.localizedDescription);
+        } else {
+            CNPostalAddressFormatter *addressFormatter = [CNPostalAddressFormatter new];
+            NSString *multiLineAddress = [addressFormatter stringFromPostalAddress:placemarks[0].postalAddress];
+            NSArray<NSString *> *addressBrokenByLines = [multiLineAddress componentsSeparatedByString:@"\n"];
+            NSString *singleLineAddress = [addressBrokenByLines componentsJoinedByString:@" "];
 
-        strongSelf.addressLabel.text = singleLineAddress;
-        
-        [strongSelf.spinner stopAnimating];
+            strongSelf.addressLabel.text = singleLineAddress;
+            
+            [strongSelf.spinner stopAnimating];
+        }
     }];
 }
 

@@ -44,8 +44,19 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
 - (void)topMoviesFromPage:(NSNumber *)page {
     __weak __typeof(self) weakSelf = self;
     [[SUKAPIManager shared] fetchTopMoviesFromPage:page completion:^(NSArray<SUKMovie *> *movies, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        if(movies != nil) {
+        if(error != nil) {
+            NSString *title = @"Unable to load movies";
+            NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                        preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {}];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:^{}];
+            
+            NSLog(@"Failed to retrive top movies: %@", error.localizedDescription);
+        } else {
+            __strong __typeof(self) strongSelf = weakSelf;
             strongSelf.movies = [movies mutableCopy];
 
             self.frontCardView = [self popMovieViewWithFrame:[self frontCardViewFrame]];
@@ -53,8 +64,6 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
 
             self.backCardView = [self popMovieViewWithFrame:[self backCardViewFrame]];
             [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
-        } else {
-            NSLog(@"%@", error.localizedDescription);
         }
     }];
 }
@@ -168,7 +177,18 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
         
         __weak __typeof(self) weakSelf = self;
         [self movieGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
-            if(error == nil) {
+            if(error != nil) {
+                NSString *title = @"Something went wrong...";
+                NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                            preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {}];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:YES completion:^{}];
+                
+                NSLog(@"Failed to fetch movie genres: %@", error.localizedDescription);
+            } else {
                 __strong __typeof(self) strongSelf = weakSelf;
                 
                 NSMutableDictionary<NSNumber *, NSString *> *movieGenres = [NSMutableDictionary new]; // Key: genre ID, Value: genre title
@@ -177,13 +197,13 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
                 }
                 
                 [strongSelf animeRecsGivenFrequencyOfGenresInSelectedMovies:genreCount withMovieGenreOptions:movieGenres completion:^(NSError *error) {
-                    if(error == nil) {
+                    if(error != nil) {
+                        NSLog(@"Failed to load recommentations: %@", error.localizedDescription);
+                    } else {
                         [self.spinner stopAnimating];
                         [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:self.animeRecommendations];
                     }
                 }];
-            } else {
-                NSLog(@"%@", error.localizedDescription);
             }
         }];
     }
@@ -274,10 +294,10 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
 
 - (void)movieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
     [[SUKAPIManager shared] fetchMovieGenres:^(NSArray<NSDictionary *> *genres, NSError *error) {
-        if(genres != nil) {
-            completion(genres, nil);
+        if(error != nil) {
+            completion(nil, error);
         } else {
-            NSLog(@"%@", error.localizedDescription);
+            completion(genres, nil);
         }
     }];
 }
@@ -301,16 +321,16 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
             NSString *correspondingAnimeGenreID = [[self.animeGenres allKeysForObject:correspondingAnimeGenreName] lastObject];
             __weak __typeof(self) weakSelf = self;
             [[SUKAPIManager shared] fetchAnimeFromGenre:correspondingAnimeGenreID withLimit:roundedLimit completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
-                __strong __typeof(self) strongSelf = weakSelf;
-                if (animes != nil) {
+                if(error != nil) {
+                    NSLog(@"Failed fo fetch top anime from genre with ID %@: %@", correspondingAnimeGenreID, error.localizedDescription);
+                } else {
+                    __strong __typeof(self) strongSelf = weakSelf;
                     for(SUKAnime *anime in animes) {
                         if(![strongSelf.animeRecommendationIDs containsObject:[NSNumber numberWithInt:anime.malID]]) {
                             [strongSelf.animeRecommendationIDs addObject:[NSNumber numberWithInt:anime.malID]];
                             [strongSelf.animeRecommendations addObject:anime];
                         }
                     }
-                } else {
-                    NSLog(@"%@", error.localizedDescription);
                 }
                 
                 if(i == selectedMovieGenreIDs.count - 1) {

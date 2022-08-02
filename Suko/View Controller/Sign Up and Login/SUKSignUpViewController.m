@@ -59,7 +59,16 @@
     __weak __typeof(self) weakSelf = self;
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
+            NSString *title = @"Signup failed";
+            NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                        preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {}];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:^{}];
+            
+            NSLog(@"User sign up failed: %@", error.localizedDescription);
         } else {
             __strong __typeof(self) strongSelf = weakSelf;
             NSLog(@"User registered successfully");

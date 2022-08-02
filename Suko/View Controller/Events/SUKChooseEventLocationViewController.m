@@ -80,6 +80,15 @@
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:^{}];
     } else if([self.mapView.annotations count] > 1) {
+        NSString *title = @"Something happened on our end...";
+        NSString *message = @"There's more than one location selected. Please go back to the previous page and try again.";
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                    preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {}];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
+        
         NSLog(@"Error: more than one annotation on map");
     } else {
         id<MKAnnotation> eventLocationAnnotation = [self.mapView.annotations lastObject];
@@ -88,14 +97,13 @@
         
         __weak __typeof(self) weakSelf = self;
         [SUKEvent postEventWithName:self.eventName eventDescription:self.eventDescription eventLocation:eventLocation startTime:self.eventStartDate endTime:self.eventEndDate postedBy:[PFUser currentUser] withCompletion:^(BOOL succeeded, NSError * error) {
-            __strong __typeof(self) strongSelf = weakSelf;
-            if (succeeded) {
-                NSLog(@"The event was uploaded!");
-                
-                NSArray<UIViewController *> *viewControllers = [self.navigationController viewControllers];
-                [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original map VC
-            } else {
+            if(error != nil) {
                 NSLog(@"Problem uploading the event: %@", error.localizedDescription);
+            } else {
+                __strong __typeof(self) strongSelf = weakSelf;
+                NSLog(@"The event was uploaded!");
+                NSArray<UIViewController *> *viewControllers = [strongSelf.navigationController viewControllers];
+                [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original map VC
             }
         }];
     }

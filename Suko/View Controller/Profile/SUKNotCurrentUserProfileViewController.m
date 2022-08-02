@@ -51,11 +51,11 @@
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
-        __strong __typeof(self) strongSelf = weakSelf;
-        
         if(users.count != 1) {
-            NSLog(@"Error: more than one user with this ID");
+            NSLog(@"Error: The number of users with this ID isn't one. Number of users with this ID: %lu", users.count);
         } else {
+            __strong __typeof(self) strongSelf = weakSelf;
+
             PFUser *displayedUser = [users lastObject];
             
             strongSelf.listTitles = displayedUser[@"list_titles"];
@@ -84,13 +84,16 @@
             [query whereKey:@"userBeingFollowed" equalTo:displayedUser];
             
             [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow *> *follows, NSError *error) {
-                if([follows count] > 1) {
+                if(error != nil) {
+                    NSLog(@"Failed to fetch follow relationship: %@", error.localizedDescription);
+                } else if([follows count] > 1) {
                     NSLog(@"Error: More than one follow relationship between current user and user being displayed");
                 } else if([follows count] == 1) {
                     [strongSelf.followButton setTitle:@"Following" forState:UIControlStateNormal];
                 } else {
                     [strongSelf.followButton setTitle:@"Follow" forState:UIControlStateNormal];
                 }
+                
                 [self.refreshControl endRefreshing];
             }];
         }
@@ -114,12 +117,12 @@
             [strongSelf.followButton setTitle:@"Follow" forState:UIControlStateNormal];
         } else {
             [SUKFollow postFollowWithFollower:[PFUser currentUser] userBeingFollowed:self.userToDisplay withCompletion:^(BOOL succeeded, NSError * error) {
-                __strong __typeof(self) strongSelf = weakSelf;
-                if (succeeded) {
-                    NSLog(@"The follow was uploaded!");
-                    [strongSelf.followButton setTitle:@"Following" forState:UIControlStateNormal];
-                } else {
+                if(error != nil) {
                     NSLog(@"Problem uploading the event: %@", error.localizedDescription);
+                } else {
+                    NSLog(@"The follow was uploaded!");
+                    __strong __typeof(self) strongSelf = weakSelf;
+                    [strongSelf.followButton setTitle:@"Following" forState:UIControlStateNormal];
                 }
             }];
         }

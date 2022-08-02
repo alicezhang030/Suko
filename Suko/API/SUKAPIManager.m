@@ -52,7 +52,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         SUKAnime *animeObj = [SUKAnime animeWithDictionary:dataDictionary[@"data"]];
         completion(animeObj, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching anime with ID %@: %@", [malID stringValue], error);
         completion(nil, error);
     }];
 }
@@ -66,7 +66,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[@"data"]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching anime from genre %@: %@", genre, error);
         completion(nil, error);
     }];
 }
@@ -80,7 +80,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[@"data"]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching top anime: %@", error);
         completion(nil, error);
     }];
 }
@@ -92,7 +92,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         NSDictionary *dataDictionary = responseObject;
         completion(dataDictionary[@"data"], nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error.localizedDescription);
+        NSLog(@"Error fetching anime genres: %@", error.localizedDescription);
         completion(nil, error);
     }];
 }
@@ -118,7 +118,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:[arrOfAnimeDictionariesMutable copy]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching results to search query %@: %@", query, error);
         completion(nil, error);
     }];
 }
@@ -133,7 +133,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         NSArray<NSDictionary *> *movieGenres = dataDictionary[@"genres"];
         completion(movieGenres, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error.localizedDescription);
+        NSLog(@"Error fetching movie genres: %@", error.localizedDescription);
     }];
 }
 
@@ -147,7 +147,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
         NSArray<SUKMovie *> *arrOfMovieObjs = [SUKMovie movieWithArrayOfDictionaries:topTwentyMovies];
         completion(arrOfMovieObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error.localizedDescription);
+        NSLog(@"Error fetching top movies from page %@: %@", [page stringValue], error.localizedDescription);
     }];
 }
 

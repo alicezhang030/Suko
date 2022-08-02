@@ -100,13 +100,13 @@ int const kNumAnimePerLoad = 5;
         [[SUKAPIManager shared] fetchAnimeWithID:malID completion:^(SUKAnime *anime, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
             
-            if(error == nil && ![strongSelf.loadedMALIDs containsObject:[NSNumber numberWithInt:anime.malID]]) {
+            if(error != nil) {
+                NSLog(@"Error fetching anime with ID: %@, %@", [malID stringValue], error.localizedDescription);
+            } else if (![strongSelf.loadedMALIDs containsObject:[NSNumber numberWithInt:anime.malID]]) {
                 [strongSelf.loadedMALIDs addObject:[NSNumber numberWithInt:anime.malID]];
                 NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
                 [currentArrOfAnime addObject:anime];
                 strongSelf.arrOfAnime = [currentArrOfAnime copy];
-            } else {
-                NSLog(@"%@", error.localizedDescription);
             }
             
             if(i == endingLoopIndex - 1) {
