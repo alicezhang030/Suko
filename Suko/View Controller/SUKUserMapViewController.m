@@ -11,6 +11,7 @@
 #import "Parse/Parse.h"
 #import "SUKNotCurrentUserProfileViewController.h"
 #import "SUKCreateNewEventViewController.h"
+#import "SUKConstants.h"
 
 @interface SUKUserMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -20,9 +21,6 @@
 @end
 
 @implementation SUKUserMapViewController
-
-NSString * const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUserProfileSegue";
-NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +45,7 @@ NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
     [self.mapView setRegion:currentUserRegion animated:false];
     
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentUserLocation];
-    [PFUser currentUser][kCurrentCoordinatesDictionaryKey] = point;
+    [PFUser currentUser][kPFUserCurrentCoordinatesKey] = point;
     [[PFUser currentUser] saveInBackground];
     
     [self nearestUsers];
@@ -57,8 +55,8 @@ NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
 
 - (void) nearestUsers {
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query includeKey:kCurrentCoordinatesDictionaryKey];
-    [query whereKey:kCurrentCoordinatesDictionaryKey nearGeoPoint:[PFUser currentUser][kCurrentCoordinatesDictionaryKey] withinMiles:2.0];
+    [query includeKey:kPFUserCurrentCoordinatesKey];
+    [query whereKey:kPFUserCurrentCoordinatesKey nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:2.0];
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
@@ -80,7 +78,7 @@ NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
                     [strongSelf.nearestUsersArr addObject:user];
                     
                     MKPointAnnotation *annotation = [MKPointAnnotation new];
-                    PFGeoPoint *user_coordinates = user[kCurrentCoordinatesDictionaryKey];
+                    PFGeoPoint *user_coordinates = user[kPFUserCurrentCoordinatesKey];
                     annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
                     annotation.title = user.username;
                     [strongSelf.mapView addAnnotation:annotation];
@@ -114,13 +112,13 @@ NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
             NSLog(@"Error: More than one user with the username");
         } else {
             [strongSelf.mapView deselectAnnotation:view.annotation animated:YES];
-            [strongSelf performSegueWithIdentifier:kMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
+            [strongSelf performSegueWithIdentifier:kUserMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
         }
     }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:kMapToNotCurrentUserProfileSegueIdentifier]) {
+    if([segue.identifier isEqualToString:kUserMapToNotCurrentUserProfileSegueIdentifier]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
     }

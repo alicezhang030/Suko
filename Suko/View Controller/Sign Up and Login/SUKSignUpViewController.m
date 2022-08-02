@@ -9,6 +9,7 @@
 #import "Parse/Parse.h"
 #import "SUKHomeViewController.h"
 #import "SUKLoginViewController.h"
+#import "SUKConstants.h"
 
 @interface SUKSignUpViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -19,10 +20,6 @@
 @end
 
 @implementation SUKSignUpViewController
-
-NSString * const kListTitlesDictionaryKey = @"list_titles";
-NSString * const kListDataDictionaryKey = @"list_data";
-NSString * const kFollowerArrDictionaryKey = @"follower_arr";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,16 +43,16 @@ NSString * const kFollowerArrDictionaryKey = @"follower_arr";
     newUser.username = self.usernameField.text;
     newUser.password = self.passwordField.text;
     
-    newUser[kListTitlesDictionaryKey] = [NSMutableArray new];
-    [newUser[kListTitlesDictionaryKey] addObject:@"Want to Watch"];
-    [newUser[kListTitlesDictionaryKey] addObject:@"Watching"];
-    [newUser[kListTitlesDictionaryKey] addObject:@"Watched"];
+    newUser[kPFUserListTitlesKey] = [NSMutableArray new];
+    [newUser[kPFUserListTitlesKey] addObject:@"Want to Watch"];
+    [newUser[kPFUserListTitlesKey] addObject:@"Watching"];
+    [newUser[kPFUserListTitlesKey] addObject:@"Watched"];
     
-    newUser[kFollowerArrDictionaryKey] = [NSArray new];
+    newUser[kPFUserFollowersKey] = [NSArray new];
     
-    newUser[kListDataDictionaryKey] = [NSMutableArray new];
-    for(int i = 0; i < [newUser[kListTitlesDictionaryKey] count]; i++) {
-        [newUser[kListDataDictionaryKey] addObject:[NSMutableArray new]];
+    newUser[kPFUserListDataKey] = [NSMutableArray new];
+    for(int i = 0; i < [newUser[kPFUserListTitlesKey] count]; i++) {
+        [newUser[kPFUserListDataKey] addObject:[NSMutableArray new]];
     }
     
     [self checkEmptyField];

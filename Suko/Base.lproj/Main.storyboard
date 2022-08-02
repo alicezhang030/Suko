@@ -160,6 +160,12 @@
                                                 <action selector="tapChangePhoto:" destination="OYb-2x-7NJ" eventType="touchUpInside" id="CaI-Je-zgK"/>
                                             </connections>
                                         </button>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="gFP-Sh-NUH">
+                                            <rect key="frame" x="197" y="385.5" width="39" height="39"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
@@ -197,6 +203,7 @@
                     <connections>
                         <outlet property="backdropImageView" destination="PI8-ca-uBm" id="fGf-Xh-Yyh"/>
                         <outlet property="profileImageView" destination="wzE-hc-k6P" id="fMf-0R-Fo1"/>
+                        <outlet property="spinner" destination="gFP-Sh-NUH" id="971-dA-8Lg"/>
                         <outlet property="usernameTextField" destination="LM0-cE-AQG" id="Qn2-6a-X2n"/>
                     </connections>
                 </viewController>
@@ -1628,8 +1635,10 @@
                                 </view>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="qSu-q4-779">
-                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <rect key="frame" x="197" y="438" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3Iw-Yh-6iN"/>
@@ -1716,9 +1725,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="DYo-a4-zd2"/>
+        <segue reference="rpV-XQ-NWa"/>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="tAG-hY-s6j"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

@@ -17,6 +17,7 @@
 #import "Parse/Parse.h"
 #include <stdlib.h>
 #import "SUKQuizIntroViewController.h"
+#import "SUKConstants.h"
 
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
 
@@ -36,8 +37,6 @@
 
 @implementation SUKHomeViewController
 
-NSString *const kHomeToAnimeListSegueIdentifier = @"HomeToAnimeListSegue";
-NSString *const kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCellToDetailsSegue";
 NSNumber *const kNumOfRows = @3;
 NSNumber *const knumOfAnimeDisplayedPerRow = @8;
 

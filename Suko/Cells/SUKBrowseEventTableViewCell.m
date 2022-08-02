@@ -7,11 +7,9 @@
 
 #import "SUKBrowseEventTableViewCell.h"
 #import <Parse/Parse.h>
+#import "SUKConstants.h"
 
 @implementation SUKBrowseEventTableViewCell
-
-NSString * const kProfileImageDictionaryKey = @"profile_image";
-NSString * const kDefaultUserIconName = @"user-icon";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -28,16 +26,16 @@ NSString * const kDefaultUserIconName = @"user-icon";
     self.eventNameLabel.text = event.name;
     self.usernameLabel.text = event.postedBy.username;
     
-    self.profileImageView.file = event.postedBy[kProfileImageDictionaryKey];
+    self.profileImageView.file = event.postedBy[kPFUserProfileImageKey];
     [self.profileImageView loadInBackground:^(UIImage * _Nullable image, NSError * _Nullable error) {
         if(error != nil) {
             NSLog(@"Failed to load the profile image: %@", error.localizedDescription);
         } else if (image == nil) {
             NSLog(@"This user doesn't have a custom profile image. Loading default user icon...");
-            if([UIImage imageNamed:kDefaultUserIconName] != nil) {
-                NSData *imageData = UIImagePNGRepresentation([UIImage imageNamed:kDefaultUserIconName]);
+            if([UIImage imageNamed:kDefaultUserIconFileName] != nil) {
+                NSData *imageData = UIImagePNGRepresentation([UIImage imageNamed:kDefaultUserIconFileName]);
                 PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
-                event.postedBy[kProfileImageDictionaryKey] = imageFile;
+                event.postedBy[kPFUserProfileImageKey] = imageFile;
                 [event.postedBy saveInBackground];
             } else {
                 NSLog(@"Error: Could not find default user icon.");

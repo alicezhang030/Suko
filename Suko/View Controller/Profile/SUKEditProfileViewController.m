@@ -8,12 +8,13 @@
 #import "SUKEditProfileViewController.h"
 #import "Parse/Parse.h"
 #import "Parse/PFImageView.h"
-
+#import "SUKConstants.h"
 
 @interface SUKEditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *backdropImageView;
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -21,13 +22,14 @@ UIImagePickerController *profilePictureImagePicker;
 UIImagePickerController *backdropImagePicker;
 
 @implementation SUKEditProfileViewController
-NSString * const kProfileImageDictionaryKey = @"profile_image";
-NSString * const kProfileBackdropDictionaryKey = @"profile_backdrop";
-NSString * const kUsernameDictionaryKey = @"username";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadViewContents];
+    
+    self.spinner.hidesWhenStopped = YES;
+    self.spinner.layer.cornerRadius = 10;
+    [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
 }
 
 - (void)loadViewContents {
@@ -35,13 +37,13 @@ NSString * const kUsernameDictionaryKey = @"username";
     self.usernameTextField.text = [PFUser currentUser].username;
     
     // Load the user profile image and backdrop image
-    self.profileImageView.file = [PFUser currentUser][kProfileImageDictionaryKey];
+    self.profileImageView.file = [PFUser currentUser][kPFUserProfileImageKey];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
     
-    self.backdropImageView.file = [PFUser currentUser][kProfileBackdropDictionaryKey];
+    self.backdropImageView.file = [PFUser currentUser][kPFUserProfileBackdropKey];
     UITapGestureRecognizer *backdropTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapBackdrop:)];
     [self.backdropImageView addGestureRecognizer:backdropTapRecognizer];
     [self.backdropImageView setUserInteractionEnabled:YES];
@@ -85,12 +87,12 @@ NSString * const kUsernameDictionaryKey = @"username";
         self.profileImageView.image = [self resizeImage:originalImage withSize:imageSize];
         NSData *imageData = UIImagePNGRepresentation(self.profileImageView.image);
         PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
-        [PFUser currentUser][kProfileImageDictionaryKey] = imageFile;
+        [PFUser currentUser][kPFUserProfileImageKey] = imageFile;
     } else {
         self.backdropImageView.image = [self resizeImage:originalImage withSize:CGSizeMake(self.backdropImageView.frame.size.width, self.backdropImageView.frame.size.height)];
         NSData *imageData = UIImagePNGRepresentation(self.backdropImageView.image);
         PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"backdrop.png" data:imageData];
-        [PFUser currentUser][kProfileBackdropDictionaryKey] = imageFile;
+        [PFUser currentUser][kPFUserProfileBackdropKey] = imageFile;
     }
     
     // Dismiss UIImagePickerController to go back to your original view controller
@@ -98,7 +100,9 @@ NSString * const kUsernameDictionaryKey = @"username";
 }
 
 - (IBAction)saveProfile:(id)sender {
-    [PFUser currentUser][kUsernameDictionaryKey] = self.usernameTextField.text;
+    [PFUser currentUser][kPFUserUsernameKey] = self.usernameTextField.text;
+    [self.spinner startAnimating];
+    
     __weak __typeof(self) weakSelf = self;
     [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         __strong __typeof(self) strongSelf = weakSelf;
@@ -113,11 +117,14 @@ NSString * const kUsernameDictionaryKey = @"username";
             [strongSelf presentViewController:alert animated:YES completion:^{}];
             
             NSLog(@"Failed to save profile: %@", error.localizedDescription);
+            
+            [self.spinner stopAnimating];
         } else {
             [strongSelf.delegate userFinishedEditingProfile];
+            [self dismissViewControllerAnimated:true completion:nil];
+            [self.spinner stopAnimating];
         }
     }];
-    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {

@@ -12,6 +12,7 @@
 #import <MapKit/MapKit.h>
 #import "SUKNotCurrentUserProfileViewController.h"
 #import "Parse/Parse.h"
+#import "SUKConstants.h"
 
 @interface SUKBrowseEventViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,7 +27,6 @@
 @implementation SUKBrowseEventViewController
 
 int const kMileRadius = 40;
-NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,7 +64,7 @@ NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:[locations lastObject]];
-    [PFUser currentUser][kCurrentCoordinatesDictionaryKey] = point;
+    [PFUser currentUser][kPFUserCurrentCoordinatesKey] = point;
     [[PFUser currentUser] saveInBackground];
     
     [self.locationManager stopUpdatingLocation];
@@ -88,7 +88,7 @@ NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
-    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][kCurrentCoordinatesDictionaryKey] withinMiles:kMileRadius];
+    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:kMileRadius];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
     __weak __typeof(self) weakSelf = self;
@@ -123,7 +123,7 @@ NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
-    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][kCurrentCoordinatesDictionaryKey] withinMiles:kMileRadius];
+    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:kMileRadius];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
     NSString *currentUserID = [PFUser currentUser].objectId;

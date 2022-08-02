@@ -10,6 +10,7 @@
 #import <Contacts/CNPostalAddressFormatter.h>
 #import <Parse/PFImageView.h>
 #import "SUKNotCurrentUserProfileViewController.h"
+#import "SUKConstants.h"
 
 @interface SUKEventDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
@@ -25,10 +26,6 @@
 
 @implementation SUKEventDetailsViewController
 
-NSString * const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotCurrentUserProfileSegue";
-NSString * const kProfileImageDictionaryKey = @"profile_image";
-NSString * const kAttendeesDictionaryKey = @"attendees";
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -43,7 +40,7 @@ NSString * const kAttendeesDictionaryKey = @"attendees";
     self.registerButton.layer.masksToBounds = true;
     
     self.spinner.hidesWhenStopped = YES;
-    [self.spinner startAnimating];
+    [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
 }
 
 - (void)setEvent:(SUKEvent *)event {
@@ -57,13 +54,13 @@ NSString * const kAttendeesDictionaryKey = @"attendees";
             self.eventNameLabel.text = event.name;
             self.decriptionLabel.text = event.eventDescription;
             self.usernameLabel.text = event.postedBy.username;
-            self.profileImageView.file = event.postedBy[kProfileImageDictionaryKey];
+            self.profileImageView.file = event.postedBy[kPFUserProfileImageKey];
             [self.profileImageView loadInBackground];
             self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
             self.profileImageView.layer.masksToBounds = YES;
             self.profileImageView.layer.borderWidth = 0;
             
-            if([self.event[kAttendeesDictionaryKey] containsObject:[PFUser currentUser].objectId]) {
+            if([self.event[kSUKEventAttendeesKey] containsObject:[PFUser currentUser].objectId]) {
                 [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
             } else {
                 [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
@@ -81,6 +78,8 @@ NSString * const kAttendeesDictionaryKey = @"attendees";
 - (void)setAddress {
     CLGeocoder *geoCoder = [CLGeocoder new];
     CLLocation *eventCoordinates = [[CLLocation alloc] initWithLatitude:self.event.location.latitude longitude:self.event.location.longitude];
+    
+    [self.spinner startAnimating];
     
     __weak __typeof(self) weakSelf = self;
     [geoCoder reverseGeocodeLocation:eventCoordinates completionHandler:^(NSArray<CLPlacemark *> * placemarks, NSError * error) {
@@ -106,7 +105,7 @@ NSString * const kAttendeesDictionaryKey = @"attendees";
 - (IBAction)tapRegister:(id)sender {
     NSMutableArray<NSString *> *attendeesMutable = [self.event.attendees mutableCopy];
     
-    if([self.event[kAttendeesDictionaryKey] containsObject:[PFUser currentUser].objectId]) {
+    if([self.event[kSUKEventAttendeesKey] containsObject:[PFUser currentUser].objectId]) {
         [attendeesMutable removeObject:[PFUser currentUser].objectId];
         [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
     } else {
@@ -122,11 +121,11 @@ NSString * const kAttendeesDictionaryKey = @"attendees";
 #pragma mark - Navigation
 
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender {
-    [self performSegueWithIdentifier:kEventDetailsToNotCurrentUserProfileSegue sender:self.event.postedBy];
+    [self performSegueWithIdentifier:kEventDetailsToNotCurrentUserProfileSegueIdentifier sender:self.event.postedBy];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:kEventDetailsToNotCurrentUserProfileSegue]) {
+    if([segue.identifier isEqualToString:kEventDetailsToNotCurrentUserProfileSegueIdentifier]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
     }

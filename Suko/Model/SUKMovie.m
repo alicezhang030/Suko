@@ -6,6 +6,7 @@
 //
 
 #import "SUKMovie.h"
+#import "SUKConstants.h"
 
 @interface SUKMovie ()
 @property (nonatomic) NSNumber *ID;
@@ -14,24 +15,16 @@
 
 @implementation SUKMovie
 
-#pragma mark - Constants
-NSString * const kMovieIDDictionaryKey = @"id";
-NSString * const kMovieTitleDictionaryKey = @"title";
-NSString * const kPosterBaseURL = @"https://image.tmdb.org/t/p/w500";
-NSString * const kMoviePosterPathDictionaryKey = @"poster_path";
-NSString * const kMovieOverviewDictionaryKey = @"overview";
-NSString * const kMovieGenreIDsDictionaryKey = @"genre_ids";
-
 #pragma mark - Initialization methods
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if(self) {
-        self.ID = dictionary[kMovieIDDictionaryKey];
-        self.title = dictionary[kMovieTitleDictionaryKey];
-        self.posterURL = [kPosterBaseURL stringByAppendingString:dictionary[kMoviePosterPathDictionaryKey]];
-        self.synopsis = dictionary[kMovieOverviewDictionaryKey];
-        self.genreIDs = dictionary[kMovieGenreIDsDictionaryKey];
+        self.ID = dictionary[kMovieDBAPIMovieDictIDKey];
+        self.title = dictionary[kMovieDBAPIMovieDictTitleKey];
+        self.posterURL = [kMovieDBAPIPosterBaseURL stringByAppendingString:dictionary[kMovieDBAPIMovieDictPosterPathKey]];
+        self.synopsis = dictionary[kMovieDBAPIMovieDictOverviewKey];
+        self.genreIDs = dictionary[kMovieDBAPIMovieDictGenresKey];
     }
     return self;
 }

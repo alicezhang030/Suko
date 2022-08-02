@@ -13,6 +13,7 @@
 #import "SUKLibraryTableViewCell.h"
 #import "SUKAnimeListViewController.h"
 #import "SUKAPIManager.h"
+#import "SUKConstants.h"
 
 @interface SUKProfileViewController () <UITableViewDataSource, UITableViewDelegate, SUKEditProfileDelegate>
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
@@ -25,16 +26,12 @@
 @end
 
 @implementation SUKProfileViewController
-NSString * const kListTitlesDictionaryKey = @"list_titles";
-NSString * const kListDataDictionaryKey = @"list_data";
-NSString * const kProfileImageDictionaryKey = @"profile_image";
-NSString * const kProfileBackdropDictionaryKey = @"profile_backdrop";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     // Set up TableView
-    self.listTitles = [PFUser currentUser][kListTitlesDictionaryKey];
+    self.listTitles = [PFUser currentUser][kPFUserListTitlesKey];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -58,13 +55,13 @@ NSString * const kProfileBackdropDictionaryKey = @"profile_backdrop";
 
 - (void)loadContents {
     // Load the user profile image and backdrop
-    self.profileImageView.file = [PFUser currentUser][kProfileImageDictionaryKey];
+    self.profileImageView.file = [PFUser currentUser][kPFUserProfileImageKey];
     [self.profileImageView loadInBackground];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
     self.profileImageView.layer.masksToBounds = YES;
     self.profileImageView.layer.borderWidth = 0;
     
-    self.backdropImageView.file = [PFUser currentUser][kProfileBackdropDictionaryKey];
+    self.backdropImageView.file = [PFUser currentUser][kPFUserProfileBackdropKey];
     [self.backdropImageView loadInBackground];
     
     // Load the username
@@ -115,7 +112,7 @@ NSString * const kProfileBackdropDictionaryKey = @"profile_backdrop";
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.arrOfAnimeMALID = [PFUser currentUser][kListDataDictionaryKey][indexPath.row];
+        animeListVC.arrOfAnimeMALID = [PFUser currentUser][kPFUserListDataKey][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];
     }
     

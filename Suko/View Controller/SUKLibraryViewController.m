@@ -9,6 +9,7 @@
 #import "SUKLibraryTableViewCell.h"
 #import "SUKAnimeListViewController.h"
 #import "SUKAPIManager.h"
+#import "SUKConstants.h"
 
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -17,8 +18,6 @@
 @end
 
 @implementation SUKLibraryViewController
-NSString * const kListTitlesDictionaryKey = @"list_titles";
-NSString * const kListDataDictionaryKey = @"list_data";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +27,7 @@ NSString * const kListDataDictionaryKey = @"list_data";
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.listTitles = [PFUser currentUser][kListTitlesDictionaryKey];
+    self.listTitles = [PFUser currentUser][kPFUserListTitlesKey];
 }
 
 #pragma mark - TableView
@@ -52,7 +51,7 @@ NSString * const kListDataDictionaryKey = @"list_data";
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.arrOfAnimeMALID = [PFUser currentUser][kListDataDictionaryKey][indexPath.row];
+        animeListVC.arrOfAnimeMALID = [PFUser currentUser][kPFUserListDataKey][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];
     }
 }

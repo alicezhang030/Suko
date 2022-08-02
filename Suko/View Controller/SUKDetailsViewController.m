@@ -7,6 +7,7 @@
 
 #import "SUKDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "SUKConstants.h"
 
 @interface SUKDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
@@ -19,7 +20,6 @@
 @end
 
 @implementation SUKDetailsViewController
-NSString * const kListDataDictionaryKey = @"list_data";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,7 +71,7 @@ NSString * const kListDataDictionaryKey = @"list_data";
 }
 
 - (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSMutableArray<NSMutableArray *> *currentAllData = [PFUser currentUser][kListDataDictionaryKey];
+    NSMutableArray<NSMutableArray *> *currentAllData = [PFUser currentUser][kPFUserListDataKey];
     NSNumber *malID = [NSNumber numberWithInt:self.animeToDisplay.malID];
     
     if(row == 0) { // User clicked on "remove from lists"
@@ -82,7 +82,7 @@ NSString * const kListDataDictionaryKey = @"list_data";
             }
         }
         
-        [PFUser currentUser][kListDataDictionaryKey] = currentAllData;
+        [PFUser currentUser][kPFUserListDataKey] = currentAllData;
         [[PFUser currentUser] saveInBackground];
         [self.dropdownMenu closeAllComponentsAnimated:YES];
     } else {
@@ -95,7 +95,7 @@ NSString * const kListDataDictionaryKey = @"list_data";
         }
         
         [currentAllData[row-1] addObject:malID];
-        [PFUser currentUser][kListDataDictionaryKey] = currentAllData;
+        [PFUser currentUser][kPFUserListDataKey] = currentAllData;
         [[PFUser currentUser] saveInBackground];
         [self.dropdownMenu closeAllComponentsAnimated:YES];
     }
