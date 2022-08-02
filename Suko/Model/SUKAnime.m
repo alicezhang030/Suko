@@ -19,22 +19,32 @@
 
 @implementation SUKAnime
 
+#pragma mark - Constants
+NSString * const kMalIDDictionaryKey = @"mal_id";
+NSString * const kAnimeTitleDictionaryKey = @"title";
+NSString * const kAnimeSynopsisDictionaryKey = @"synopsis";
+NSString * const kAnimeGenresDictionaryKey = @"genres";
+NSString * const kAnimeStatusDictionaryKey = @"status";
+NSString * const kAnimeEpisodeCountDictionaryKey = @"episodes";
+
+#pragma mark - Initialization methods
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        NSNumber *malIDNSNumber = dictionary[@"mal_id"];
+        NSNumber *malIDNSNumber = dictionary[kMalIDDictionaryKey];
         self.malID = [malIDNSNumber intValue];
         
         // MyAnimeList formats titles occasionally with "\" at the end, so need to remove the formatting
-        NSString *titleWithMALFormatting = dictionary[@"title"];
+        NSString *titleWithMALFormatting = dictionary[kAnimeTitleDictionaryKey];
         self.title = [[titleWithMALFormatting componentsSeparatedByString:@"\\"] objectAtIndex:0];
         
         self.posterURL = dictionary[@"images"][@"jpg"][@"large_image_url"];
-        self.synopsis = dictionary[@"synopsis"];
-        self.genres = dictionary[@"genres"];
-        self.status = dictionary[@"status"];
+        self.synopsis = dictionary[kAnimeSynopsisDictionaryKey];
+        self.genres = dictionary[kAnimeGenresDictionaryKey];
+        self.status = dictionary[kAnimeStatusDictionaryKey];
 
-        NSNumber *episodesNSNumber = dictionary[@"episodes"];
+        NSNumber *episodesNSNumber = dictionary[kAnimeEpisodeCountDictionaryKey];
         self.numEpisodes = [episodesNSNumber intValue];
     }
     return self;

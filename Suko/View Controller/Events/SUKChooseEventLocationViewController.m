@@ -17,6 +17,8 @@
 
 @implementation SUKChooseEventLocationViewController
 
+NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -44,7 +46,7 @@
     [self.mapView setRegion:currentUserRegion animated:false];
     
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentUserLocation];
-    [PFUser currentUser][@"current_coordinates"] = point;
+    [PFUser currentUser][kCurrentCoordinatesDictionaryKey] = point;
     [[PFUser currentUser] saveInBackground];
     
     [self.locationManager stopUpdatingLocation];

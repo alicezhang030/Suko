@@ -17,6 +17,8 @@
 @end
 
 @implementation SUKLibraryViewController
+NSString * const kListTitlesDictionaryKey = @"list_titles";
+NSString * const kListDataDictionaryKey = @"list_data";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,7 +28,7 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.listTitles = [PFUser currentUser][@"list_titles"];
+    self.listTitles = [PFUser currentUser][kListTitlesDictionaryKey];
 }
 
 #pragma mark - TableView
@@ -50,7 +52,7 @@
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
+        animeListVC.arrOfAnimeMALID = [PFUser currentUser][kListDataDictionaryKey][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];
     }
 }

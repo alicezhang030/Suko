@@ -14,14 +14,24 @@
 
 @implementation SUKMovie
 
+#pragma mark - Constants
+NSString * const kMovieIDDictionaryKey = @"id";
+NSString * const kMovieTitleDictionaryKey = @"title";
+NSString * const kPosterBaseURL = @"https://image.tmdb.org/t/p/w500";
+NSString * const kMoviePosterPathDictionaryKey = @"poster_path";
+NSString * const kMovieOverviewDictionaryKey = @"overview";
+NSString * const kMovieGenreIDsDictionaryKey = @"genre_ids";
+
+#pragma mark - Initialization methods
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if(self) {
-        self.ID = dictionary[@"id"];
-        self.title = dictionary[@"title"];
-        self.posterURL = [@"https://image.tmdb.org/t/p/w500" stringByAppendingString:dictionary[@"poster_path"]];
-        self.synopsis = dictionary[@"overview"];
-        self.genreIDs = dictionary[@"genre_ids"];
+        self.ID = dictionary[kMovieIDDictionaryKey];
+        self.title = dictionary[kMovieTitleDictionaryKey];
+        self.posterURL = [kPosterBaseURL stringByAppendingString:dictionary[kMoviePosterPathDictionaryKey]];
+        self.synopsis = dictionary[kMovieOverviewDictionaryKey];
+        self.genreIDs = dictionary[kMovieGenreIDsDictionaryKey];
     }
     return self;
 }

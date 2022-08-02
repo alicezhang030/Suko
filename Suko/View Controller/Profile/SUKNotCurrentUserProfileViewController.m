@@ -24,6 +24,13 @@
 @end
 
 @implementation SUKNotCurrentUserProfileViewController
+NSString * const kProfileImageDictionaryKey = @"profile_image";
+NSString * const kProfileBackdropDictionaryKey = @"profile_backdrop";
+NSString * const kListTitlesDictionaryKey = @"list_titles";
+NSString * const kListDataDictionaryKey = @"list_data";
+
+NSString * const kSUKFollowFollowerKey = @"follower";
+NSString * const kSUKFollowUserBeingFollowedKey = @"userBeingFollowed";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,16 +65,16 @@
 
             PFUser *displayedUser = [users lastObject];
             
-            strongSelf.listTitles = displayedUser[@"list_titles"];
+            strongSelf.listTitles = displayedUser[kListTitlesDictionaryKey];
             [strongSelf.tableView reloadData];
             
-            strongSelf.profileImageView.file = displayedUser[@"profile_image"];
+            strongSelf.profileImageView.file = displayedUser[kProfileImageDictionaryKey];
             [strongSelf.profileImageView loadInBackground];
             strongSelf.profileImageView.layer.cornerRadius = strongSelf.profileImageView.frame.size.height /2;
             strongSelf.profileImageView.layer.masksToBounds = YES;
             strongSelf.profileImageView.layer.borderWidth = 0;
             
-            strongSelf.backdropImageView.file = displayedUser[@"profile_backdrop"];
+            strongSelf.backdropImageView.file = displayedUser[kProfileBackdropDictionaryKey];
             [strongSelf.backdropImageView loadInBackground];
             
             strongSelf.usernameLabel.text = [@"@" stringByAppendingString:displayedUser.username];
@@ -80,8 +87,8 @@
             }
             
             PFQuery *query = [PFQuery queryWithClassName:@"SUKFollow"];
-            [query whereKey:@"follower" equalTo:[PFUser currentUser]];
-            [query whereKey:@"userBeingFollowed" equalTo:displayedUser];
+            [query whereKey:kSUKFollowFollowerKey equalTo:[PFUser currentUser]];
+            [query whereKey:kSUKFollowUserBeingFollowedKey equalTo:displayedUser];
             
             [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow *> *follows, NSError *error) {
                 if(error != nil) {
@@ -104,7 +111,7 @@
     // Check if current user is already following self.userToDisplay
     PFQuery *query = [PFQuery queryWithClassName:@"SUKFollow"];
     [query whereKey:@"follower" equalTo:[PFUser currentUser]];
-    [query whereKey:@"userBeingFollowed" equalTo:self.userToDisplay];
+    [query whereKey:kSUKFollowUserBeingFollowedKey equalTo:self.userToDisplay];
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKFollow *> *follows, NSError *error) {
@@ -169,7 +176,7 @@
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.arrOfAnimeMALID = self.userToDisplay[@"list_data"][indexPath.row];
+        animeListVC.arrOfAnimeMALID = self.userToDisplay[kListDataDictionaryKey][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];
     }
 }

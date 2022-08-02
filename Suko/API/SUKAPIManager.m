@@ -10,13 +10,15 @@
 #import "SUKAnime.h"
 
 static NSString * const baseAnimeURLString = @"https://api.jikan.moe/v4";
-static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
+static NSString * const baseMovieURLString = @"https://api.themoviedb.org/3";
 
 @interface SUKAPIManager ()
 @property (strong, nonatomic) AFHTTPSessionManager *manager;
 @end
 
 @implementation SUKAPIManager
+
+NSString * const animeAPIResponseDataDictionaryKey = @"data";
 
 + (instancetype)shared {
     static SUKAPIManager *sharedManager = nil;
@@ -49,7 +51,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        SUKAnime *animeObj = [SUKAnime animeWithDictionary:dataDictionary[@"data"]];
+        SUKAnime *animeObj = [SUKAnime animeWithDictionary:dataDictionary[animeAPIResponseDataDictionaryKey]];
         completion(animeObj, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error fetching anime with ID %@: %@", [malID stringValue], error);
@@ -63,7 +65,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[@"data"]];
+        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[animeAPIResponseDataDictionaryKey]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error fetching anime from genre %@: %@", genre, error);
@@ -77,7 +79,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[@"data"]];
+        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[animeAPIResponseDataDictionaryKey]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error fetching top anime: %@", error);
@@ -90,7 +92,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
     
     [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        completion(dataDictionary[@"data"], nil);
+        completion(dataDictionary[animeAPIResponseDataDictionaryKey], nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error fetching anime genres: %@", error.localizedDescription);
         completion(nil, error);
@@ -103,7 +105,7 @@ static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray<NSDictionary *> *arrOfAnimeDictionaries = dataDictionary[@"data"];
+        NSArray<NSDictionary *> *arrOfAnimeDictionaries = dataDictionary[animeAPIResponseDataDictionaryKey];
         
         // Currently, Jikan API returns data that has been deleted by MyAnimeList already
         // Ex. If you search "One Piece," you will receive 3 One Piece's, and only one of them has a valid URL and with information filled

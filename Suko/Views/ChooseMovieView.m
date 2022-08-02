@@ -20,6 +20,11 @@
 
 @implementation ChooseMovieView
 
+#pragma mark - Constants
+CGFloat const kInfoViewBottomHeight = 60.f;
+CGFloat const kMovieLabelLeftPadding = 12.f;
+CGFloat const kMovieLabelTopPadding = 17.f;
+
 #pragma mark - Object Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame movie:(SUKMovie *)movie options:(MDCSwipeToChooseViewOptions *)options {
@@ -44,11 +49,10 @@
 #pragma mark - Internal Methods
 
 - (void)constructInformationView {
-    CGFloat bottomHeight = 60.f;
     CGRect bottomFrame = CGRectMake(0,
-                                    CGRectGetHeight(self.bounds) - bottomHeight,
+                                    CGRectGetHeight(self.bounds) - kInfoViewBottomHeight,
                                     CGRectGetWidth(self.bounds),
-                                    bottomHeight);
+                                    kInfoViewBottomHeight);
     _informationView = [[UIView alloc] initWithFrame:bottomFrame];
     _informationView.backgroundColor = [UIColor whiteColor];
     _informationView.clipsToBounds = YES;
@@ -60,12 +64,10 @@
 }
 
 - (void)constructMovieNameLabel {
-    CGFloat leftPadding = 12.f;
-    CGFloat topPadding = 17.f;
-    CGRect frame = CGRectMake(leftPadding,
-                              topPadding,
+    CGRect frame = CGRectMake(kMovieLabelLeftPadding,
+                              kMovieLabelTopPadding,
                               floorf(CGRectGetWidth(_informationView.frame) / 7 * 6),
-                              CGRectGetHeight(_informationView.frame) - topPadding);
+                              CGRectGetHeight(_informationView.frame) - kMovieLabelTopPadding);
     _movieNameLabel = [[UILabel alloc] initWithFrame:frame];
     _movieNameLabel.text = [NSString stringWithFormat:@"%@", self.movie.title];
     [_informationView addSubview:_movieNameLabel];

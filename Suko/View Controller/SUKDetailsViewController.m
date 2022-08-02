@@ -19,6 +19,7 @@
 @end
 
 @implementation SUKDetailsViewController
+NSString * const kListDataDictionaryKey = @"list_data";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,7 +71,7 @@
 }
 
 - (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSMutableArray<NSMutableArray *> *currentAllData = [PFUser currentUser][@"list_data"];
+    NSMutableArray<NSMutableArray *> *currentAllData = [PFUser currentUser][kListDataDictionaryKey];
     NSNumber *malID = [NSNumber numberWithInt:self.animeToDisplay.malID];
     
     if(row == 0) { // User clicked on "remove from lists"
@@ -81,7 +82,7 @@
             }
         }
         
-        [PFUser currentUser][@"list_data"] = currentAllData;
+        [PFUser currentUser][kListDataDictionaryKey] = currentAllData;
         [[PFUser currentUser] saveInBackground];
         [self.dropdownMenu closeAllComponentsAnimated:YES];
     } else {
@@ -94,7 +95,7 @@
         }
         
         [currentAllData[row-1] addObject:malID];
-        [PFUser currentUser][@"list_data"] = currentAllData;
+        [PFUser currentUser][kListDataDictionaryKey] = currentAllData;
         [[PFUser currentUser] saveInBackground];
         [self.dropdownMenu closeAllComponentsAnimated:YES];
     }

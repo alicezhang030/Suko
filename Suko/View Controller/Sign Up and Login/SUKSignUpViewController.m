@@ -20,6 +20,10 @@
 
 @implementation SUKSignUpViewController
 
+NSString * const kListTitlesDictionaryKey = @"list_titles";
+NSString * const kListDataDictionaryKey = @"list_data";
+NSString * const kFollowerArrDictionaryKey = @"follower_arr";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,16 +46,16 @@
     newUser.username = self.usernameField.text;
     newUser.password = self.passwordField.text;
     
-    newUser[@"list_titles"] = [NSMutableArray new];
-    [newUser[@"list_titles"] addObject:@"Want to Watch"];
-    [newUser[@"list_titles"] addObject:@"Watching"];
-    [newUser[@"list_titles"] addObject:@"Watched"];
+    newUser[kListTitlesDictionaryKey] = [NSMutableArray new];
+    [newUser[kListTitlesDictionaryKey] addObject:@"Want to Watch"];
+    [newUser[kListTitlesDictionaryKey] addObject:@"Watching"];
+    [newUser[kListTitlesDictionaryKey] addObject:@"Watched"];
     
-    newUser[@"follower_arr"] = [NSArray new];
+    newUser[kFollowerArrDictionaryKey] = [NSArray new];
     
-    newUser[@"list_data"] = [NSMutableArray new];
-    for(int i = 0; i < [newUser[@"list_titles"] count]; i++) {
-        [newUser[@"list_data"] addObject:[NSMutableArray new]];
+    newUser[kListDataDictionaryKey] = [NSMutableArray new];
+    for(int i = 0; i < [newUser[kListTitlesDictionaryKey] count]; i++) {
+        [newUser[kListDataDictionaryKey] addObject:[NSMutableArray new]];
     }
     
     [self checkEmptyField];

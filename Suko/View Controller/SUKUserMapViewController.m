@@ -21,7 +21,8 @@
 
 @implementation SUKUserMapViewController
 
-NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUserProfileSegue";
+NSString * const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUserProfileSegue";
+NSString * const kCurrentCoordinatesDictionaryKey = @"current_coordinates";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,7 +47,7 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
     [self.mapView setRegion:currentUserRegion animated:false];
     
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentUserLocation];
-    [PFUser currentUser][@"current_coordinates"] = point;
+    [PFUser currentUser][kCurrentCoordinatesDictionaryKey] = point;
     [[PFUser currentUser] saveInBackground];
     
     [self nearestUsers];
@@ -56,8 +57,8 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
 
 - (void) nearestUsers {
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query includeKey:@"current_coordinates"];
-    [query whereKey:@"current_coordinates" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:2.0];
+    [query includeKey:kCurrentCoordinatesDictionaryKey];
+    [query whereKey:kCurrentCoordinatesDictionaryKey nearGeoPoint:[PFUser currentUser][kCurrentCoordinatesDictionaryKey] withinMiles:2.0];
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
@@ -79,7 +80,7 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
                     [strongSelf.nearestUsersArr addObject:user];
                     
                     MKPointAnnotation *annotation = [MKPointAnnotation new];
-                    PFGeoPoint *user_coordinates = user[@"current_coordinates"];
+                    PFGeoPoint *user_coordinates = user[kCurrentCoordinatesDictionaryKey];
                     annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
                     annotation.title = user.username;
                     [strongSelf.mapView addAnnotation:annotation];

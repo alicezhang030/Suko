@@ -25,7 +25,9 @@
 
 @implementation SUKEventDetailsViewController
 
-NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotCurrentUserProfileSegue";
+NSString * const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotCurrentUserProfileSegue";
+NSString * const kProfileImageDictionaryKey = @"profile_image";
+NSString * const kAttendeesDictionaryKey = @"attendees";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,13 +57,13 @@ NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotC
             self.eventNameLabel.text = event.name;
             self.decriptionLabel.text = event.eventDescription;
             self.usernameLabel.text = event.postedBy.username;
-            self.profileImageView.file = event.postedBy[@"profile_image"];
+            self.profileImageView.file = event.postedBy[kProfileImageDictionaryKey];
             [self.profileImageView loadInBackground];
             self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height /2;
             self.profileImageView.layer.masksToBounds = YES;
             self.profileImageView.layer.borderWidth = 0;
             
-            if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
+            if([self.event[kAttendeesDictionaryKey] containsObject:[PFUser currentUser].objectId]) {
                 [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
             } else {
                 [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
@@ -104,7 +106,7 @@ NSString *const kEventDetailsToNotCurrentUserProfileSegue = @"EventDetailsToNotC
 - (IBAction)tapRegister:(id)sender {
     NSMutableArray<NSString *> *attendeesMutable = [self.event.attendees mutableCopy];
     
-    if([self.event[@"attendees"] containsObject:[PFUser currentUser].objectId]) {
+    if([self.event[kAttendeesDictionaryKey] containsObject:[PFUser currentUser].objectId]) {
         [attendeesMutable removeObject:[PFUser currentUser].objectId];
         [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
     } else {
