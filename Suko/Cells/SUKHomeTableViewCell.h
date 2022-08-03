@@ -33,9 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** The header label (ex. Top Anime) */
 @property (weak, nonatomic) IBOutlet UILabel *rowHeaderLabel;
 
-/** The label that says "see all" */
-@property (weak, nonatomic) IBOutlet UILabel *seeAllLabel;
-
 /** The anime being displayed in this cell's collection view */
 @property (nonatomic, strong) NSArray<SUKAnime *> *arrOfAnime;
 

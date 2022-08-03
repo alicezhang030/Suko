@@ -158,7 +158,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"SUKLibraryTableViewCell";
     SUKLibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.listTitleLabel.text = self.listTitles[indexPath.row];
+    [cell configureCellWithListTitle:self.listTitles[indexPath.row]];
     return cell;
 }
 

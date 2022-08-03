@@ -18,7 +18,6 @@ NSString *kJikanAPIAnimeDictMALIDKey = @"mal_id";
 NSString *kJikanAPIAnimeDictTitleKey = @"title";
 NSString *kJikanAPIAnimeDictSynopsisKey = @"synopsis";
 NSString *kJikanAPIAnimeDictGenresKey = @"genres";
-NSString *kJikanAPIAnimeDictStatusKey = @"status";
 NSString *kJikanAPIAnimeDictEpCountKey = @"episodes";
 
 #pragma mark - Movie Database API's keys

@@ -14,25 +14,27 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface SUKMovie : NSObject
 
+/** The ID of the movie */
+@property (nonatomic, readonly) NSNumber *ID;
+
 /** The title of the movie */
-@property (nonatomic) NSString *title;
+@property (nonatomic, readonly) NSString *title;
 
 /** The IDs of the genres this movie fits into */
-@property (nonatomic) NSArray<NSNumber *> *genreIDs;
+@property (nonatomic, readonly) NSArray<NSNumber *> *genreIDs;
 
 /** The URL of this movie's poster */
-@property (nonatomic) NSString *posterURL;
+@property (nonatomic, readonly) NSString *posterURL;
 
 /** The synopsis of the movie */
 @property (nonatomic, readonly) NSString *synopsis;
-
 
 /**
  *  Creates an array of SUKMovie objects using the information provided in each dictionary and returns it.
  *
  *  @param arrOfDictionaries Array of dictionaries where each dictionary contains a movie's information
  */
-+ (NSArray<SUKMovie *> *)movieWithArrayOfDictionaries:(NSArray<NSDictionary *> *)arrOfDictionaries;
++ (NSArray<SUKMovie *> *)moviesWithArrayOfDictionaries:(NSArray<NSDictionary *> *)arrOfDictionaries;
 
 @end
 

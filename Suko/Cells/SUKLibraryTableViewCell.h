@@ -15,7 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SUKLibraryTableViewCell : UITableViewCell
 
 /** Label that displays the title of the list */
-@property (weak, nonatomic) IBOutlet UILabel *listTitleLabel;
+@property (weak, nonatomic) UILabel *listTitleLabel;
+
+/**
+ * Internally configure this cell's subviews given this title.
+ *
+ * @param title The list title that the cell will use to configure its subviews.
+ */
+- (void)configureCellWithListTitle:(NSString *) title;
 
 @end
 

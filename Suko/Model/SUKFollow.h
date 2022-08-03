@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SUKFollow : PFObject<PFSubclassing>
 
 /** The user who is doing the following */
-@property (nonatomic, strong) PFUser *follower;
+@property (nonatomic, strong, readonly) PFUser *follower;
 
 /** The user who is being followed */
-@property (nonatomic, strong) PFUser *userBeingFollowed;
+@property (nonatomic, strong, readonly) PFUser *userBeingFollowed;
 
 /**
  * Creates a SUKFollow object using the information provided by the parameters and posts the SUKFollow to the app's Parse server.
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param follow The SUKFollow object to be deleted from the database.
  */
-+ (void)deleteFollow:(SUKFollow * _Nullable)follow;
++ (void)deleteFollow:(SUKFollow *)follow;
 
 @end
 

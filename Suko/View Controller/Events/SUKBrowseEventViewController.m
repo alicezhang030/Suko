@@ -166,7 +166,7 @@ int const kMileRadius = 40;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SUKBrowseEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SUKBrowseEventTableViewCell"];
-    [cell setEvent:self.arrOfEvents[indexPath.row]];
+    [cell configureCellWithEvent:self.arrOfEvents[indexPath.row]];
     return cell;
 }
 

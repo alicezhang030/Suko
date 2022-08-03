@@ -7,6 +7,11 @@
 
 #import "SUKFollow.h"
 
+@interface SUKFollow ()
+@property (nonatomic, strong, readwrite) PFUser *follower;
+@property (nonatomic, strong, readwrite) PFUser *userBeingFollowed;
+@end
+
 @implementation SUKFollow
 
 @dynamic follower;
@@ -25,7 +30,7 @@
     [newFollow saveInBackgroundWithBlock: completion];
 }
 
-+ (void)deleteFollow:(SUKFollow * _Nullable)follow {
++ (void)deleteFollow:(SUKFollow *)follow {
     [follow deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"Failed to delete the follow: %@", error.localizedDescription);

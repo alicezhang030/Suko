@@ -7,7 +7,22 @@
 
 #import "SUKBrowseEventTableViewCell.h"
 #import <Parse/Parse.h>
+#import "Parse/PFImageView.h"
 #import "SUKConstants.h"
+
+@interface SUKBrowseEventTableViewCell ()
+/** The profile image of the user who posted this event */
+@property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
+
+/** Label displaying the username of the user who posted this event */
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+
+/** Label displaying the name of the event */
+@property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
+
+/** Label displaying the date and time of the event */
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@end
 
 @implementation SUKBrowseEventTableViewCell
 
@@ -20,9 +35,7 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void)setEvent:(SUKEvent *)event {
-    _event = event;
-    
+- (void)configureCellWithEvent:(SUKEvent *)event {
     self.eventNameLabel.text = event.name;
     self.usernameLabel.text = event.postedBy.username;
     
@@ -49,9 +62,7 @@
     
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM/dd/yyyy h:mm a";
-    self.dateLabel.text = [[[formatter stringFromDate:event.startTime]
-                            stringByAppendingString:@" - "]
-                           stringByAppendingString:[formatter stringFromDate:event.endTime]];
+    self.dateLabel.text = [[[formatter stringFromDate:event.startTime] stringByAppendingString:@" - "] stringByAppendingString:[formatter stringFromDate:event.endTime]];
 }
 
 @end

@@ -77,7 +77,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"SUKLibraryTableViewCell";
     SUKLibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.listTitleLabel.text = self.listTitles[indexPath.row];
+    [cell configureCellWithListTitle:self.listTitles[indexPath.row]];
     return cell;
 }
 
@@ -111,6 +111,9 @@
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        
+        cell.listTitleLabel.text = @"Trial";
+        
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.arrOfAnimeMALID = [PFUser currentUser][kPFUserListDataKey][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];

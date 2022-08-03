@@ -44,7 +44,7 @@ MVP:
 - [x] User can view and edit their profile.
 
 Ambiguous Problems:
-- [x] User can see on a map what users near them are watching and create events for other users
+- [x] User can see on a map what users near them are watching and create events for nearby users.
 - [x] Users can take a quiz and receive anime recommendations based on their selections.
 
 **Optional Nice-to-have Stories**

@@ -11,6 +11,11 @@
 @implementation SUKHomeCollectionView
 @end
 
+@interface SUKHomeTableViewCell ()
+/** The label that says "see all" */
+@property (weak, nonatomic) IBOutlet UILabel *seeAllLabel;
+@end
+
 @implementation SUKHomeTableViewCell
 
 - (void)awakeFromNib {

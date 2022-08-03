@@ -103,18 +103,14 @@
 }
 
 - (IBAction)tapRegister:(id)sender {
-    NSMutableArray<NSString *> *attendeesMutable = [self.event.attendees mutableCopy];
-    
     if([self.event[kSUKEventAttendeesKey] containsObject:[PFUser currentUser].objectId]) {
-        [attendeesMutable removeObject:[PFUser currentUser].objectId];
         [self.registerButton setTitle:@"Register" forState:UIControlStateNormal];
     } else {
-        [attendeesMutable addObject:[PFUser currentUser].objectId];
         [self.registerButton setTitle:@"Registered" forState:UIControlStateNormal];
     }
     
-    self.event.attendees = [attendeesMutable copy];
-    [self.event saveInBackground];
+    [self.event addOrRemoveAttendee:[PFUser currentUser]];
+
 }
 
 

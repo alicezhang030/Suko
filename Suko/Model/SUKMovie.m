@@ -9,8 +9,11 @@
 #import "SUKConstants.h"
 
 @interface SUKMovie ()
-@property (nonatomic) NSNumber *ID;
-@property (nonatomic) NSString *synopsis;
+@property (nonatomic, readwrite) NSNumber *ID;
+@property (nonatomic, readwrite) NSString *title;
+@property (nonatomic, readwrite) NSArray<NSNumber *> *genreIDs;
+@property (nonatomic, readwrite) NSString *posterURL;
+@property (nonatomic, readwrite) NSString *synopsis;
 @end
 
 @implementation SUKMovie
@@ -29,7 +32,7 @@
     return self;
 }
 
-+ (NSArray<SUKMovie *> *)movieWithArrayOfDictionaries:(NSArray<NSDictionary *> *)dictionaries {
++ (NSArray<SUKMovie *> *)moviesWithArrayOfDictionaries:(NSArray<NSDictionary *> *)dictionaries {
     NSMutableArray<SUKMovie *> *movies = [NSMutableArray new];
     for (NSDictionary *dictionary in dictionaries) {
         SUKMovie *movie = [[SUKMovie alloc] initWithDictionary:dictionary];

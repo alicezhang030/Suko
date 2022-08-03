@@ -19,7 +19,6 @@ extern NSString *kJikanAPIAnimeDictMALIDKey;
 extern NSString *kJikanAPIAnimeDictTitleKey;
 extern NSString *kJikanAPIAnimeDictSynopsisKey;
 extern NSString *kJikanAPIAnimeDictGenresKey;
-extern NSString *kJikanAPIAnimeDictStatusKey;
 extern NSString *kJikanAPIAnimeDictEpCountKey;
 
 #pragma mark - Movie Database API's keys

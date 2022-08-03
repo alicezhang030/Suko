@@ -7,7 +7,6 @@
 
 #import "SUKAnimeListViewController.h"
 #import "SUKAPIManager.h"
-#import "UIImageView+AFNetworking.h"
 #import "SUKAnimeListTableViewCell.h"
 #import "SUKAnime.h"
 #import "SUKDetailsViewController.h"
@@ -130,18 +129,7 @@ int const kNumAnimePerLoad = 5;
     static NSString *cellIdentifier = @"SUKAnimeListTableViewCell";
     SUKAnimeListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     SUKAnime *animeToDisplay = self.arrOfAnime[indexPath.row];
-    
-    cell.titleLabel.text = animeToDisplay.title;
-    
-    NSString *numOfEpString = [NSString stringWithFormat:@"%d", animeToDisplay.numEpisodes];
-    cell.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
-    
-    NSString *animePosterURLString = animeToDisplay.posterURL;
-    NSURL *url = [NSURL URLWithString:animePosterURLString];
-    if (url != nil) {
-        [cell.posterView setImageWithURL:url];
-    }
-    
+    [cell configureCellWithAnime:animeToDisplay];
     return cell;
 }
 

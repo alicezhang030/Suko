@@ -71,34 +71,30 @@
 }
 
 - (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSMutableArray<NSMutableArray *> *currentAllData = [PFUser currentUser][kPFUserListDataKey];
+    NSMutableArray<NSMutableArray *> *currentUserListData = [PFUser currentUser][kPFUserListDataKey];
     NSNumber *malID = [NSNumber numberWithInt:self.animeToDisplay.malID];
     
     if(row == 0) { // User clicked on "remove from lists"
-        for(int i = 0; i < [currentAllData count]; i++) {
-            if([currentAllData[i] containsObject:malID]) {
-                [currentAllData[i] removeObject:malID];
+        for(int i = 0; i < [currentUserListData count]; i++) {
+            if([currentUserListData[i] containsObject:malID]) {
+                [currentUserListData[i] removeObject:malID];
                 break;
             }
         }
-        
-        [PFUser currentUser][kPFUserListDataKey] = currentAllData;
-        [[PFUser currentUser] saveInBackground];
-        [self.dropdownMenu closeAllComponentsAnimated:YES];
     } else {
-        for(int i = 0; i < [currentAllData count]; i++) {
+        for(int i = 0; i < [currentUserListData count]; i++) {
             // row - 1 because row 0 is "Remove from List"
-            if([currentAllData[i] containsObject:malID]) {
-                [currentAllData[i] removeObject:malID];
+            if([currentUserListData[i] containsObject:malID]) {
+                [currentUserListData[i] removeObject:malID];
                 break;
             }
         }
-        
-        [currentAllData[row-1] addObject:malID];
-        [PFUser currentUser][kPFUserListDataKey] = currentAllData;
-        [[PFUser currentUser] saveInBackground];
-        [self.dropdownMenu closeAllComponentsAnimated:YES];
+        [currentUserListData[row-1] addObject:malID];
     }
+    
+    [PFUser currentUser][kPFUserListDataKey] = currentUserListData;
+    [[PFUser currentUser] saveInBackground];
+    [self.dropdownMenu closeAllComponentsAnimated:YES];
 }
 
 @end

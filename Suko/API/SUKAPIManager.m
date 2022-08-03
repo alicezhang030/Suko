@@ -142,7 +142,7 @@
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray<NSDictionary *> *topTwentyMovies = dataDictionary[@"results"];
-        NSArray<SUKMovie *> *arrOfMovieObjs = [SUKMovie movieWithArrayOfDictionaries:topTwentyMovies];
+        NSArray<SUKMovie *> *arrOfMovieObjs = [SUKMovie moviesWithArrayOfDictionaries:topTwentyMovies];
         completion(arrOfMovieObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error fetching top movies from page %@: %@", [page stringValue], error.localizedDescription);
