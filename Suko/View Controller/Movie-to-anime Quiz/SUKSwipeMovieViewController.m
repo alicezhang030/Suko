@@ -13,11 +13,14 @@
 
 @interface SUKSwipeMovieViewController ()
 @property (nonatomic, strong) NSMutableArray<SUKMovie *> *topMovies;
+@property (nonatomic, strong) NSNumber *topMoviePageCount;
+
 @property (nonatomic, strong) NSMutableArray<SUKMovie *> *selectedMovies;
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<SUKMovie *> *>*selectedMoviesWithinGenreID;
+//@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *>*selectedMoviesConglomerateSynopsisByGenreID; Commented out code
+@property (nonatomic, strong) NSString *conglomerateSynopsis;
+
 @property (nonatomic, strong) NSMutableSet<SUKAnime *> *animeRecommendations;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, strong) NSNumber *topMoviePageCount;
 @end
 
 @implementation SUKSwipeMovieViewController
@@ -31,7 +34,8 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     // Setup Properties
     self.selectedMovies = [NSMutableArray new];
     self.animeRecommendations = [NSMutableSet new];
-    self.selectedMoviesWithinGenreID = [NSMutableDictionary new];
+    self.conglomerateSynopsis = @"";
+    //self.selectedMoviesConglomerateSynopsisByGenreID = [NSMutableDictionary new]; Commented out code
     
     // Spinner
     self.spinner.hidesWhenStopped = YES;
@@ -76,28 +80,18 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 
 #pragma mark - MDCSwipeToChoose Methods
 
-// Called when a user didn't fully swipe left or right.
-- (void)viewDidCancelSwipe:(UIView *)view {
+- (void)viewDidCancelSwipe:(UIView *)view { // When a user didn't fully swipe left or right.
     NSLog(@"You couldn't decide on %@.", self.currentMovie.title);
 }
 
-// Called then a user swipes the view fully left or right.
-- (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
+- (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction { // When user swipes the view fully left or right.
     if (direction == MDCSwipeDirectionLeft) {
         NSLog(@"You disliked %@.", self.currentMovie.title);
     } else {
         NSLog(@"You liked %@.", self.currentMovie.title);
         [self.selectedMovies addObject:self.currentMovie];
         
-        for(NSNumber *genreID in self.currentMovie.genreIDs) {
-            if([self.selectedMoviesWithinGenreID objectForKey:genreID] != nil) {
-                [[self.selectedMoviesWithinGenreID objectForKey:genreID] addObject:self.currentMovie];
-            } else {
-                NSMutableArray *moviesArrWithinGenre = [NSMutableArray new];
-                [moviesArrWithinGenre addObject:self.currentMovie];
-                [self.selectedMoviesWithinGenreID setObject:moviesArrWithinGenre forKey:genreID];
-            }
-        }
+        self.conglomerateSynopsis = [self.conglomerateSynopsis stringByAppendingString:self.currentMovie.synopsis];
     }
     
     self.frontCardView = self.backCardView;
@@ -243,8 +237,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     for(int i = 0; i < selectedMovieGenreIDs.count; i++) {
         // Movie genre
         NSNumber *movieGenreID = selectedMovieGenreIDs[i];
-        NSArray<SUKMovie *> *moviesWithinGenre = [self.selectedMoviesWithinGenreID objectForKey:movieGenreID];
-        
+                        
         // Corresponding anime genre
         NSString *correspondingAnimeGenreID;
         if([movieGenreOptions objectForKey:movieGenreID] == nil) { // If this movie's genre ID isn't a possible movie genre ID
@@ -265,11 +258,12 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
             if(error != nil) {
                 NSLog(@"Failed fo fetch top anime from genre with ID %@: %@", correspondingAnimeGenreID, error.localizedDescription);
             } else {
-                [self.animeRecommendations addObjectsFromArray:[strongSelf rankByTextSimilarityBetweenAnime:animes andMovies:moviesWithinGenre]];
+                [strongSelf.animeRecommendations addObjectsFromArray:animes];
             }
             
             if(i == selectedMovieGenreIDs.count - 1) {
                 NSLog(@"Recommendation algorithm finished.");
+                [strongSelf rankByTextSimilarityBetweenAnimeRecsAndConglomerateSynopsis];
                 completion(nil);
             }
         }];
@@ -278,30 +272,23 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     }
 }
 
-- (NSArray<SUKAnime *> *)rankByTextSimilarityBetweenAnime:(NSArray<SUKAnime *> *) animes andMovies:(NSArray<SUKMovie *> *) movies {
+- (NSArray<SUKAnime *> *)rankByTextSimilarityBetweenAnimeRecsAndConglomerateSynopsis {
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:kStopWordsRegExPattern options:NSRegularExpressionCaseInsensitive error:&error];
     NLEmbedding *embedding = [NLEmbedding sentenceEmbeddingForLanguage:NLLanguageEnglish];
     
-    NSMutableDictionary<SUKAnime *, NSNumber *> *animeDistancesSummed = [NSMutableDictionary new];
+    NSString *movieConglomerateSynopsisNoStopWords = [regex stringByReplacingMatchesInString:self.conglomerateSynopsis options:0 range:NSMakeRange(0,[self.conglomerateSynopsis length]) withTemplate:@""];
     
-    for(int k = 0; k < movies.count; k++) {
-        NSString *movieSynopsisNoStopwords = [regex stringByReplacingMatchesInString:movies[k].synopsis options:0 range:NSMakeRange(0,[movies[k].synopsis length]) withTemplate:@""];
+    NSMutableDictionary<SUKAnime *, NSNumber *> *animeDistances = [NSMutableDictionary new];
+    
+    for(SUKAnime *anime in self.animeRecommendations) {
+        NSString *animeSynopsisNoStopwords = [regex stringByReplacingMatchesInString:anime.synopsis options:0 range:NSMakeRange(0,[anime.synopsis length]) withTemplate:@""];
+        NLDistance distance = [embedding distanceBetweenString:movieConglomerateSynopsisNoStopWords andString:animeSynopsisNoStopwords distanceType:NLDistanceTypeCosine];
         
-        for(SUKAnime *anime in animes) {
-            NSString *animeSynopsisNoStopwords = [regex stringByReplacingMatchesInString:anime.synopsis options:0 range:NSMakeRange(0,[anime.synopsis length]) withTemplate:@""];
-            NLDistance distance = [embedding distanceBetweenString:movieSynopsisNoStopwords andString:animeSynopsisNoStopwords distanceType:NLDistanceTypeCosine];
-            
-            if(k > 0) {
-                double newDistance = [[animeDistancesSummed objectForKey:anime] doubleValue] + distance;
-                [animeDistancesSummed setObject:[NSNumber numberWithDouble:newDistance] forKey:anime];
-            } else {
-                [animeDistancesSummed setObject:[NSNumber numberWithDouble:distance] forKey:anime];
-            }
-        }
+        [animeDistances setObject:[NSNumber numberWithDouble:distance] forKey:anime];
     }
     
-    return [animeDistancesSummed keysSortedByValueUsingComparator:^(id first, id second) {
+    return [animeDistances keysSortedByValueUsingComparator:^(id first, id second) {
         return [first compare:second];
     }];
 }
