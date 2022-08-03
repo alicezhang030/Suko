@@ -8,16 +8,13 @@
 #import "SUKAPIManager.h"
 #import "AFNetworking.h"
 #import "SUKAnime.h"
-
-static NSString * const baseAnimeURLString = @"https://api.jikan.moe/v4";
-static NSString *const baseMovieURLString = @"https://api.themoviedb.org/3";
+#import "SUKConstants.h"
 
 @interface SUKAPIManager ()
 @property (strong, nonatomic) AFHTTPSessionManager *manager;
 @end
 
 @implementation SUKAPIManager
-const NSNumber *knumOfAnimeDisplayedPerRow = @10;
 
 + (instancetype)shared {
     static SUKAPIManager *sharedManager = nil;
@@ -43,64 +40,68 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
     [self.manager.tasks makeObjectsPerformSelector:@selector(cancel)];
 }
 
-- (void)fetchAnimeWithID:(NSNumber *) malID completion:(void(^)(SUKAnime* anime, NSError *error))completion {
+- (void)fetchAnimeWithID:(NSNumber *)malID completion:(void(^)(SUKAnime* anime, NSError *error))completion {
     NSString *malIDString = [NSString stringWithFormat:@"%d",[malID intValue]];
     NSDictionary *params = @{@"id": malID};
-    NSString *fullURLString = [baseAnimeURLString stringByAppendingString:[@"/anime/" stringByAppendingString:[malIDString stringByAppendingString:@"/full"]]];
+    NSString *fullURLString = [kJikanBaseURLString stringByAppendingString:[@"/anime/" stringByAppendingString:[malIDString stringByAppendingString:@"/full"]]];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        SUKAnime *animeObj = [SUKAnime animeWithDictionary:dataDictionary[@"data"]];
+        SUKAnime *animeObj = [SUKAnime animeWithDictionary:dataDictionary[kJikanResponseDataKey]];
         completion(animeObj, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching anime with ID %@: %@", [malID stringValue], error);
+        completion(nil, error);
     }];
 }
 
-- (void)fetchAnimeListWithGenre:(NSString *) genre completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
-    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
-    NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/anime"];
+- (void)fetchAnimeFromGenre:(NSString *)genre withLimit:(NSNumber *)limit completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
+    NSDictionary *params = @{@"type": @"tv", @"limit": limit, @"order_by": @"score", @"sort": @"desc", @"genres":genre};
+    NSString *fullURLString = [kJikanBaseURLString stringByAppendingString:@"/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[@"data"]];
+        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[kJikanResponseDataKey]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching anime from genre %@: %@", genre, error);
+        completion(nil, error);
     }];
 }
 
-- (void)fetchTopAnimeList:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
-    NSDictionary *params = @{@"type": @"tv", @"limit": knumOfAnimeDisplayedPerRow};
-    NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/top/anime"];
+- (void)fetchTopAnimeWithLimit:(NSNumber *)limit completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
+    NSDictionary *params = @{@"type": @"tv", @"limit": limit};
+    NSString *fullURLString = [kJikanBaseURLString stringByAppendingString:@"/top/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[@"data"]];
+        NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:dataDictionary[kJikanResponseDataKey]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching top anime: %@", error);
+        completion(nil, error);
     }];
 }
 
-- (void)fetchAnimeGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
-    NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/genres/anime"];
+- (void)fetchAnimeGenres:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
+    NSString *fullURLString = [kJikanBaseURLString stringByAppendingString:@"/genres/anime"];
     
     [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        completion(dataDictionary[@"data"], nil);
+        completion(dataDictionary[kJikanResponseDataKey], nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching anime genres: %@", error.localizedDescription);
+        completion(nil, error);
     }];
 }
 
-- (void)fetchAnimeSearchWithSearchQuery:(NSString *) query completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
+- (void)fetchAnimeSearchWithSearchQuery:(NSString *)query completion:(void(^)(NSArray<SUKAnime *> *arrofAnime, NSError *error))completion {
     NSDictionary *params = @{@"q": query, @"type": @"tv", @"sort": @"desc"};
-    NSString *fullURLString = [baseAnimeURLString stringByAppendingString:@"/anime"];
+    NSString *fullURLString = [kJikanBaseURLString stringByAppendingString:@"/anime"];
     
     [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
-        NSArray<NSDictionary *> *arrOfAnimeDictionaries = dataDictionary[@"data"];
+        NSArray<NSDictionary *> *arrOfAnimeDictionaries = dataDictionary[kJikanResponseDataKey];
         
         // Currently, Jikan API returns data that has been deleted by MyAnimeList already
         // Ex. If you search "One Piece," you will receive 3 One Piece's, and only one of them has a valid URL and with information filled
@@ -115,32 +116,36 @@ const NSNumber *knumOfAnimeDisplayedPerRow = @10;
         NSArray<SUKAnime *> *arrOfAnimeObjs = [SUKAnime animesWithArrayOfDictionaries:[arrOfAnimeDictionariesMutable copy]];
         completion(arrOfAnimeObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error fetching results to search query %@: %@", query, error);
+        completion(nil, error);
     }];
 }
 
-- (void)fetchMovieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
+- (void)fetchMovieGenres:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
     NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
-    NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/genre/movie/list?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US"];
+    NSString *fullURLString = [kMovieDBBaseURLString stringByAppendingString:@"/genre/movie/list"];
     
-    [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    NSDictionary *params = @{@"api_key": movieAPIKey, @"language": @"en-US"};
+    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
+        NSArray<NSDictionary *> *movieGenres = dataDictionary[@"genres"];
+        completion(movieGenres, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error.localizedDescription);
+        NSLog(@"Error fetching movie genres: %@", error.localizedDescription);
     }];
 }
 
-- (void)fetchPopularMovieList:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion {
+- (void)fetchTopMoviesFromPage:(NSNumber *)page completion:(void(^)(NSArray<SUKMovie *> *movies, NSError *error))completion {
     NSString *movieAPIKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SUKKeys" ofType:@"plist"]] objectForKey:@"movie_api_key"];
-    NSString *fullURLString = [[[baseMovieURLString stringByAppendingString:@"/movie/popular?api_key="] stringByAppendingString:movieAPIKey] stringByAppendingString:@"&language=en-US&page=1"];
-    
-    [self.manager GET:fullURLString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    NSString *fullURLString = [kMovieDBBaseURLString stringByAppendingString:@"/movie/popular"];
+    NSDictionary *params = @{@"api_key": movieAPIKey, @"language": @"en-US", @"page": page};
+    [self.manager GET:fullURLString parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *dataDictionary = responseObject;
         NSArray<NSDictionary *> *topTwentyMovies = dataDictionary[@"results"];
-        NSArray<SUKMovie *> *arrOfMovieObjs = [SUKMovie movieWithArrayOfDictionaries:topTwentyMovies];
+        NSArray<SUKMovie *> *arrOfMovieObjs = [SUKMovie moviesWithArrayOfDictionaries:topTwentyMovies];
         completion(arrOfMovieObjs, nil);
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error.localizedDescription);
+        NSLog(@"Error fetching top movies from page %@: %@", [page stringValue], error.localizedDescription);
     }];
 }
 

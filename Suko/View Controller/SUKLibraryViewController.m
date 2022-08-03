@@ -9,6 +9,7 @@
 #import "SUKLibraryTableViewCell.h"
 #import "SUKAnimeListViewController.h"
 #import "SUKAPIManager.h"
+#import "SUKConstants.h"
 
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,7 +27,7 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.listTitles = [PFUser currentUser][@"list_titles"];
+    self.listTitles = [PFUser currentUser][kPFUserListTitlesKey];
 }
 
 #pragma mark - TableView
@@ -38,7 +39,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"SUKLibraryTableViewCell";
     SUKLibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.listTitleLabel.text = self.listTitles[indexPath.row];
+    [cell configureCellWithListTitle:self.listTitles[indexPath.row]];
     return cell;
 }
 
@@ -50,7 +51,7 @@
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         animeListVC.listTitle = cell.listTitleLabel.text;
-        animeListVC.arrOfAnimeMALID = [PFUser currentUser][@"list_data"][indexPath.row];
+        animeListVC.arrOfAnimeMALID = [PFUser currentUser][kPFUserListDataKey][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];
     }
 }

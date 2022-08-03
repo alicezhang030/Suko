@@ -8,10 +8,19 @@
 #import "SUKHomeCollectionViewCell.h"
 #import "UIImageView+AFNetworking.h"
 
+@interface SUKHomeCollectionViewCell ()
+
+/** The ImageView used to display the anime's poster */
+@property (weak, nonatomic) IBOutlet UIImageView *posterView;
+
+/** The label displaying the anime's title */
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
+@end
+
 @implementation SUKHomeCollectionViewCell
 
-- (void)setAnime:(SUKAnime *)anime {
-    _anime = anime;
+- (void)configureCellWithAnime:(SUKAnime *)anime {
     self.titleLabel.text = anime.title;
     
     NSString *animePosterURLString = anime.posterURL;

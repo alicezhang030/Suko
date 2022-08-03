@@ -7,17 +7,21 @@
 
 #import <UIKit/UIKit.h>
 #import "SUKEvent.h"
-#import "Parse/PFImageView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * Custom TableViewCell used within the browse events view that displays an event's information.
+ */
 @interface SUKBrowseEventTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) SUKEvent *event;
-@property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+/**
+ * Internally configure this cell's subviews given this event.
+ *
+ * @param event The event that the cell will use to configure its subviews.
+ */
+- (void)configureCellWithEvent:(SUKEvent *)event;
+
 @end
 
 NS_ASSUME_NONNULL_END

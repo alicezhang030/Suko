@@ -9,8 +9,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * Custom TableViewCell within the library view that displays a list title.
+ */
 @interface SUKLibraryTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *listTitleLabel;
+
+/** Label that displays the title of the list */
+@property (weak, nonatomic) UILabel *listTitleLabel;
+
+/**
+ * Internally configure this cell's subviews given this title.
+ *
+ * @param title The list title that the cell will use to configure its subviews.
+ */
+- (void)configureCellWithListTitle:(NSString *) title;
 
 @end
 

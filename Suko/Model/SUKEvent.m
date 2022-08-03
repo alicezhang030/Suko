@@ -8,6 +8,16 @@
 #import "SUKEvent.h"
 #import <MapKit/MapKit.h>
 
+@interface SUKEvent ()
+@property (nonatomic, strong, readwrite) NSString *name;
+@property (nonatomic, strong, readwrite) NSString *eventDescription;
+@property (nonatomic, strong, readwrite) PFGeoPoint *location;
+@property (nonatomic, strong, readwrite) NSDate *startTime;
+@property (nonatomic, strong, readwrite) NSDate *endTime;
+@property (nonatomic, strong, readwrite) PFUser *postedBy;
+@property (nonatomic, strong, readwrite) NSArray<NSString *> *attendees;
+@end
+
 @implementation SUKEvent
 
 @dynamic name;
@@ -22,7 +32,7 @@
     return @"SUKEvent";
 }
 
-+ (void)postEventWithName:(NSString *)eventName eventDescription:(NSString *)eventDescription eventLocation:(CLLocation *)eventLocation startTime:(NSDate *)startTime endTime:(NSDate *)endTime postedBy:(PFUser *)user withCompletion:(PFBooleanResultBlock  _Nullable)completion {
++ (void)postEventWithName:(NSString *)eventName eventDescription:(NSString *)eventDescription eventLocation:(CLLocation *)eventLocation startTime:(NSDate *)startTime endTime:(NSDate *)endTime postedBy:(PFUser *)user withCompletion:(PFBooleanResultBlock _Nonnull)completion {
     SUKEvent *newEvent = [SUKEvent new];
     
     newEvent.name = eventName;
@@ -36,5 +46,17 @@
     [newEvent saveInBackgroundWithBlock: completion];
 }
 
+- (void)addOrRemoveAttendee:(PFUser *)attendee {
+    NSMutableArray<NSString *> *attendeesMutable = [self.attendees mutableCopy];
+
+    if([self.attendees containsObject:attendee.objectId]) {
+        [attendeesMutable removeObject:attendee.objectId];
+    } else {
+        [attendeesMutable addObject:attendee.objectId];
+    }
+    
+    self.attendees = [attendeesMutable copy];
+    [self saveInBackground];
+}
 
 @end

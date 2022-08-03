@@ -11,6 +11,7 @@
 #import "Parse/Parse.h"
 #import "SUKNotCurrentUserProfileViewController.h"
 #import "SUKCreateNewEventViewController.h"
+#import "SUKConstants.h"
 
 @interface SUKUserMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -20,8 +21,6 @@
 @end
 
 @implementation SUKUserMapViewController
-
-NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUserProfileSegue";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,7 +45,7 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
     [self.mapView setRegion:currentUserRegion animated:false];
     
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentUserLocation];
-    [PFUser currentUser][@"current_coordinates"] = point;
+    [PFUser currentUser][kPFUserCurrentCoordinatesKey] = point;
     [[PFUser currentUser] saveInBackground];
     
     [self nearestUsers];
@@ -56,21 +55,34 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
 
 - (void) nearestUsers {
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query includeKey:@"current_coordinates"];
-    [query whereKey:@"current_coordinates" nearGeoPoint:[PFUser currentUser][@"current_coordinates"] withinMiles:2.0];
+    [query includeKey:kPFUserCurrentCoordinatesKey];
+    [query whereKey:kPFUserCurrentCoordinatesKey nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:2.0];
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
-        for(PFUser *user in users) {
-            if(![user.objectId isEqualToString:[PFUser currentUser].objectId]) {
-                [strongSelf.nearestUsersArr addObject:user];
-                
-                MKPointAnnotation *annotation = [MKPointAnnotation new];
-                PFGeoPoint *user_coordinates = user[@"current_coordinates"];
-                annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
-                annotation.title = user.username;
-                [strongSelf.mapView addAnnotation:annotation];
+        if(error != nil) {
+            NSString *title = @"Failed to load nearby users";
+            NSString *message = error.localizedDescription;
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                        preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {}];
+            [alert addAction:okAction];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
+            
+            NSLog(@"Failed to load nearby users: %@", error.localizedDescription);
+        } else {
+            for(PFUser *user in users) {
+                if(![user.objectId isEqualToString:[PFUser currentUser].objectId]) {
+                    [strongSelf.nearestUsersArr addObject:user];
+                    
+                    MKPointAnnotation *annotation = [MKPointAnnotation new];
+                    PFGeoPoint *user_coordinates = user[kPFUserCurrentCoordinatesKey];
+                    annotation.coordinate = CLLocationCoordinate2DMake(user_coordinates.latitude, user_coordinates.longitude);
+                    annotation.title = user.username;
+                    [strongSelf.mapView addAnnotation:annotation];
+                }
             }
         }
     }];
@@ -85,17 +97,28 @@ NSString *const kMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUs
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
-        if(users.count > 1) {
+        if(error != nil) {
+            NSString *title = @"Failed to load profile";
+            NSString *message = error.localizedDescription;
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
+                                        preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {}];
+            [alert addAction:okAction];
+            [strongSelf presentViewController:alert animated:YES completion:^{}];
+            
+            NSLog(@"Failed to %@'s profile: %@", title, error.localizedDescription);
+        } else if(users.count > 1) {
             NSLog(@"Error: More than one user with the username");
         } else {
             [strongSelf.mapView deselectAnnotation:view.annotation animated:YES];
-            [strongSelf performSegueWithIdentifier:kMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
+            [strongSelf performSegueWithIdentifier:kUserMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
         }
     }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:kMapToNotCurrentUserProfileSegueIdentifier]) {
+    if([segue.identifier isEqualToString:kUserMapToNotCurrentUserProfileSegueIdentifier]) {
         SUKNotCurrentUserProfileViewController *notCurrentUserprofileVC = [segue destinationViewController];
         notCurrentUserprofileVC.userToDisplay = sender;
     }

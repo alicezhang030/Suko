@@ -18,4 +18,8 @@
     [super setSelected:selected animated:animated];
 }
 
+- (void)configureCellWithListTitle:(NSString *) title {
+    self.listTitleLabel.text = title;
+}
+
 @end
