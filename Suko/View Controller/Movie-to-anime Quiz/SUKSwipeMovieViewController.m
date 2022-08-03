@@ -12,16 +12,11 @@
 #import "NaturalLanguage/NLEmbedding.h"
 
 @interface SUKSwipeMovieViewController ()
-@property (nonatomic, strong) NSMutableArray<SUKMovie *> *movies;
-
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<SUKMovie *> *>*moviesWithinGenre;
+@property (nonatomic, strong) NSMutableArray<SUKMovie *> *topMovies;
 @property (nonatomic, strong) NSMutableArray<SUKMovie *> *selectedMovies;
-
-@property (nonatomic, strong) NSMutableArray<SUKAnime *> *animeRecommendations;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *animeRecommendationIDs;
-
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<SUKMovie *> *>*selectedMoviesWithinGenreID;
+@property (nonatomic, strong) NSMutableSet<SUKAnime *> *animeRecommendations;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-
 @property (nonatomic, strong) NSNumber *topMoviePageCount;
 @end
 
@@ -33,17 +28,17 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Setup properties
+    // Setup Properties
     self.selectedMovies = [NSMutableArray new];
-    self.animeRecommendations = [NSMutableArray new];
-    self.animeRecommendationIDs = [NSMutableArray new];
-    self.moviesWithinGenre = [NSMutableDictionary new];
+    self.animeRecommendations = [NSMutableSet new];
+    self.selectedMoviesWithinGenreID = [NSMutableDictionary new];
     
     // Spinner
     self.spinner.hidesWhenStopped = YES;
     self.spinner.layer.cornerRadius = 10;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
     
+    // Top Movie page Count
     self.topMoviePageCount = @1;
     [self topMoviesFromPage:self.topMoviePageCount];
 }
@@ -55,22 +50,14 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     [[SUKAPIManager shared] fetchTopMoviesFromPage:page completion:^(NSArray<SUKMovie *> *movies, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if(error != nil) {
-            NSString *title = @"Unable to load movies";
-            NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
-                                        preferredStyle:(UIAlertControllerStyleAlert)];
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * _Nonnull action) {}];
-            [alert addAction:okAction];
-            [strongSelf presentViewController:alert animated:YES completion:^{}];
-            
+            [strongSelf alertWithTitle:@"Unable to load movies" andMessage:[error.localizedDescription stringByAppendingString:@" Please try again."] andActionTitle:@"OK"];
             NSLog(@"Failed to retrive top movies: %@", error.localizedDescription);
         } else {
-            strongSelf.movies = [movies mutableCopy];
-
+            strongSelf.topMovies = [movies mutableCopy];
+            
             self.frontCardView = [self popMovieViewWithFrame:[self frontCardViewFrame]];
             [self.view addSubview:self.frontCardView];
-
+            
             self.backCardView = [self popMovieViewWithFrame:[self backCardViewFrame]];
             [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
         }
@@ -103,31 +90,24 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
         [self.selectedMovies addObject:self.currentMovie];
         
         for(NSNumber *genreID in self.currentMovie.genreIDs) {
-            if([self.moviesWithinGenre objectForKey:genreID] != nil) {
-                [[self.moviesWithinGenre objectForKey:genreID] addObject:self.currentMovie];
+            if([self.selectedMoviesWithinGenreID objectForKey:genreID] != nil) {
+                [[self.selectedMoviesWithinGenreID objectForKey:genreID] addObject:self.currentMovie];
             } else {
                 NSMutableArray *moviesArrWithinGenre = [NSMutableArray new];
                 [moviesArrWithinGenre addObject:self.currentMovie];
-                [self.moviesWithinGenre setObject:moviesArrWithinGenre forKey:genreID];
+                [self.selectedMoviesWithinGenreID setObject:moviesArrWithinGenre forKey:genreID];
             }
         }
     }
-
-    // MDCSwipeToChooseView removes the view from the view hierarchy
-    // after it is swiped (this behavior can be customized via the
-    // MDCSwipeOptions class). Since the front card view is gone, we
-    // move the back card to the front, and create a new back card.
+    
     self.frontCardView = self.backCardView;
     if ((self.backCardView = [self popMovieViewWithFrame:[self backCardViewFrame]])) {
         // Fade the back card into view.
         self.backCardView.alpha = 0.f;
         [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
-        [UIView animateWithDuration:0.5
-                              delay:0.0
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             self.backCardView.alpha = 1.f;
-                         } completion:nil];
+        [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.backCardView.alpha = 1.f;
+        } completion:nil];
     }
     
     if(self.frontCardView == nil && self.backCardView == nil) { // There are no more movies to display.
@@ -142,14 +122,10 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 }
 
 - (ChooseMovieView *)popMovieViewWithFrame:(CGRect)frame {
-    if ([self.movies count] == 0) {
+    if ([self.topMovies count] == 0) {
         return nil;
     }
-
-    // UIView+MDCSwipeToChoose and MDCSwipeToChooseView each take an "options" argument.
-    // Here, we specify the view controller as a delegate,
-    // and provide a custom callback that moves the back card view
-    // based on how far the user has panned the front card view.
+    
     MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
     options.delegate = self;
     options.threshold = 160.f; // Distance in pixels that a view must be panned in order to constitue a selection
@@ -163,10 +139,8 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     options.likedText = @"Like";
     options.nopeText = @"Dislike";
     
-    // Create a movieView with the top movie in the movies array, then pop
-    // that movie off the stack.
-    ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame movie:self.movies[0] options:options];
-    [self.movies removeObjectAtIndex:0];
+    ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame movie:self.topMovies[0] options:options];
+    [self.topMovies removeObjectAtIndex:0];
     
     UITapGestureRecognizer *cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTappedCard:)];
     cardTapRecognizer.numberOfTapsRequired = 2;
@@ -185,8 +159,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     self.topMoviePageCount = [NSNumber numberWithInt:([self.topMoviePageCount intValue] + 1)];
     [self topMoviesFromPage:self.topMoviePageCount];
     
-    // Remove the no more movies subview
-    for(UIView *subView in self.view.subviews) {
+    for(UIView *subView in self.view.subviews) { // Remove the no more movies subview
         if(subView.tag == 1000) {
             [subView removeFromSuperview];
         }
@@ -195,16 +168,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 
 - (void)tappedRecommendAnimeButton {
     if(self.selectedMovies.count == 0) {
-        NSString *title = @"Must select movies";
-        NSString *message = @"Please swipe right on at least one movie and then try again.";
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                                                       message:message
-                                                                preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {}];
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:YES completion:^{}];
+        [self alertWithTitle:@"Must select movies" andMessage:@"Please swipe right on at least one movie and try again" andActionTitle:@"OK"];
     } else {
         [self.view bringSubviewToFront:self.spinner];
         [self.spinner startAnimating];
@@ -215,15 +179,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
         [self movieGenreList:^(NSArray<NSDictionary *> *genres, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
             if(error != nil) {
-                NSString *title = @"Something went wrong...";
-                NSString *message = [error.localizedDescription stringByAppendingString:@" Please try again."];
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message
-                                            preferredStyle:(UIAlertControllerStyleAlert)];
-                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {}];
-                [alert addAction:okAction];
-                [strongSelf presentViewController:alert animated:YES completion:^{}];
-                
+                [strongSelf alertWithTitle:@"Something went wrong..." andMessage:[error.localizedDescription stringByAppendingString:@" Please try again."] andActionTitle:@"OK"];
                 NSLog(@"Failed to fetch movie genres: %@", error.localizedDescription);
             } else {
                 NSMutableDictionary<NSNumber *, NSString *> *movieGenres = [NSMutableDictionary new]; // Key: genre ID, Value: genre title
@@ -236,7 +192,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
                         NSLog(@"Failed to load recommentations: %@", error.localizedDescription);
                     } else {
                         [self.spinner stopAnimating];
-                        [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:self.animeRecommendations];
+                        [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:[self.animeRecommendations allObjects]];
                     }
                 }];
             }
@@ -287,13 +243,12 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     for(int i = 0; i < selectedMovieGenreIDs.count; i++) {
         // Movie genre
         NSNumber *movieGenreID = selectedMovieGenreIDs[i];
-        NSString *correspondingMovieGenreName = [movieGenreOptions objectForKey:movieGenreID];
-        NSArray<SUKMovie *> *moviesWithinGenre = [self.moviesWithinGenre objectForKey:movieGenreID];
-
+        NSArray<SUKMovie *> *moviesWithinGenre = [self.selectedMoviesWithinGenreID objectForKey:movieGenreID];
+        
         // Corresponding anime genre
         NSString *correspondingAnimeGenreID;
-        if(correspondingMovieGenreName == nil) {
-            correspondingAnimeGenreID = @"1";
+        if([movieGenreOptions objectForKey:movieGenreID] == nil) { // If this movie's genre ID isn't a possible movie genre ID
+            correspondingAnimeGenreID = @"1"; // Default genre is action
         } else {
             NSString *correspondingAnimeGenreName = [kMovieGenreTitleToAnimeGenreTitle objectForKey:[movieGenreOptions objectForKey:selectedMovieGenreIDs[i]]];
             correspondingAnimeGenreID = [[self.animeGenres allKeysForObject:correspondingAnimeGenreName] lastObject];
@@ -310,14 +265,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
             if(error != nil) {
                 NSLog(@"Failed fo fetch top anime from genre with ID %@: %@", correspondingAnimeGenreID, error.localizedDescription);
             } else {
-                NSMutableArray<SUKAnime *> *animesWithinGenre = [NSMutableArray new];
-                for(SUKAnime *anime in animes) {
-                    if(![strongSelf.animeRecommendationIDs containsObject:[NSNumber numberWithInt:anime.malID]]) {
-                        [strongSelf.animeRecommendationIDs addObject:[NSNumber numberWithInt:anime.malID]];
-                        [animesWithinGenre addObject:anime];
-                    }
-                }
-                [self.animeRecommendations addObjectsFromArray:[strongSelf rankByTextSimilarityBetweenAnime:animesWithinGenre andMovies:moviesWithinGenre]];
+                [self.animeRecommendations addObjectsFromArray:[strongSelf rankByTextSimilarityBetweenAnime:animes andMovies:moviesWithinGenre]];
             }
             
             if(i == selectedMovieGenreIDs.count - 1) {
@@ -335,32 +283,27 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:kStopWordsRegExPattern options:NSRegularExpressionCaseInsensitive error:&error];
     NLEmbedding *embedding = [NLEmbedding sentenceEmbeddingForLanguage:NLLanguageEnglish];
     
-    NSMutableDictionary<SUKAnime *, NSNumber *> *animeDistanceSum = [NSMutableDictionary new];
+    NSMutableDictionary<SUKAnime *, NSNumber *> *animeDistancesSummed = [NSMutableDictionary new];
     
     for(int k = 0; k < movies.count; k++) {
-        SUKMovie *movie = movies[k];
-        NSString *movieSynopsisNoStopwords = [regex stringByReplacingMatchesInString:movie.synopsis options:0 range:NSMakeRange(0,[movie.synopsis length]) withTemplate:@""];
+        NSString *movieSynopsisNoStopwords = [regex stringByReplacingMatchesInString:movies[k].synopsis options:0 range:NSMakeRange(0,[movies[k].synopsis length]) withTemplate:@""];
         
-        for(int i = 0; i < animes.count; i++) {
-            SUKAnime *anime = animes[i];
-            
+        for(SUKAnime *anime in animes) {
             NSString *animeSynopsisNoStopwords = [regex stringByReplacingMatchesInString:anime.synopsis options:0 range:NSMakeRange(0,[anime.synopsis length]) withTemplate:@""];
             NLDistance distance = [embedding distanceBetweenString:movieSynopsisNoStopwords andString:animeSynopsisNoStopwords distanceType:NLDistanceTypeCosine];
             
             if(k > 0) {
-                double newDistance = [[animeDistanceSum objectForKey:anime] doubleValue] + distance;
-                [animeDistanceSum setObject:[NSNumber numberWithDouble:newDistance] forKey:anime];
+                double newDistance = [[animeDistancesSummed objectForKey:anime] doubleValue] + distance;
+                [animeDistancesSummed setObject:[NSNumber numberWithDouble:newDistance] forKey:anime];
             } else {
-                [animeDistanceSum setObject:[NSNumber numberWithDouble:distance] forKey:anime];
+                [animeDistancesSummed setObject:[NSNumber numberWithDouble:distance] forKey:anime];
             }
         }
     }
     
-    NSArray<SUKAnime *> *results = [animeDistanceSum keysSortedByValueUsingComparator:^(id first, id second) {
+    return [animeDistancesSummed keysSortedByValueUsingComparator:^(id first, id second) {
         return [first compare:second];
     }];
-    
-    return results;
 }
 
 #pragma mark - Navigation
@@ -374,6 +317,13 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 }
 
 #pragma mark - MISC
+
+- (void)alertWithTitle:(NSString *)title andMessage:(NSString *)message andActionTitle:(NSString *)actionTitle {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:actionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:^{}];
+}
 
 - (void)noMoreMoviesView {
     UIView *noMoreMoviesView = [[UIView alloc] initWithFrame:self.view.frame];
@@ -406,7 +356,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     recommendButton.layer.cornerRadius = 4;
     loadMoreMoviesButton.layer.masksToBounds = true;
     recommendButton.layer.masksToBounds = true;
-
+    
     [noMoreMoviesView addSubview:loadMoreMoviesLabel];
     [noMoreMoviesView addSubview:loadMoreMoviesButton];
     [noMoreMoviesView addSubview:recommendButton];
