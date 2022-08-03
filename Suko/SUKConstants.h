@@ -57,7 +57,8 @@ extern NSString *kUserMapToNotCurrentUserProfileSegueIdentifier;
 
 #pragma mark - MISC
 extern NSString *kDefaultUserIconFileName;
-
+extern NSDictionary<NSString *, NSString *> *kMovieGenreTitleToAnimeGenreTitle;
+extern NSString *kStopWordsRegExPattern;
 
 @end
 

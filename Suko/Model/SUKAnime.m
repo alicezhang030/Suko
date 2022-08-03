@@ -55,4 +55,46 @@
     return anime;
 }
 
+- (id)copyWithZone:(NSZone*)zone {
+    SUKAnime* animeCopy = [[[self class] allocWithZone:zone] init];
+
+    if (animeCopy) {
+        animeCopy.malID = _malID;
+        animeCopy.title = _title;
+        animeCopy.posterURL = _posterURL;
+        animeCopy.synopsis = _synopsis;
+        animeCopy.numEpisodes = _numEpisodes;
+        animeCopy.genres = _genres;
+        animeCopy.status = _status;
+    }
+
+    return animeCopy;
+}
+
+- (BOOL)isEqual:(id)other {
+    if (other == self)
+        return YES;
+    if (!other || ![other isKindOfClass:[self class]])
+        return NO;
+    return [self isEqualToAnime:other];
+}
+
+- (BOOL)isEqualToAnime:(SUKAnime *)otherAnime {
+    if (self == otherAnime) {
+        return YES;
+    }
+    if (self.malID != otherAnime.malID) {
+        return NO;
+    }
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger prime = 31;
+    NSUInteger result = 1;
+        
+    result = prime * result + self.malID;
+    return result;
+}
+
 @end

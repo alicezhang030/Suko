@@ -19,6 +19,7 @@
 		53291ED62878C6DF00B12469 /* SUKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53291ED52878C6DF00B12469 /* SUKLoginViewController.m */; };
 		532AB031287752DC00114DBA /* SUKAnime.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AB030287752DC00114DBA /* SUKAnime.m */; };
 		535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535AE83F28789530007D6059 /* SUKDetailsViewController.m */; };
+		536220FD289A13250045EF58 /* stop_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 536220FC289A13250045EF58 /* stop_words.txt */; };
 		536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */; };
 		536AFC4F2887602500B01F95 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536AFC4E2887602500B01F95 /* CoreLocation.framework */; };
 		536AFC512887622300B01F95 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536AFC502887622300B01F95 /* Contacts.framework */; };
@@ -89,6 +90,7 @@
 		532AB030287752DC00114DBA /* SUKAnime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnime.m; sourceTree = "<group>"; };
 		535AE83E28789530007D6059 /* SUKDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKDetailsViewController.h; sourceTree = "<group>"; };
 		535AE83F28789530007D6059 /* SUKDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKDetailsViewController.m; sourceTree = "<group>"; };
+		536220FC289A13250045EF58 /* stop_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = stop_words.txt; path = Suko/stop_words.txt; sourceTree = SOURCE_ROOT; };
 		536AFC4B28875E6E00B01F95 /* SUKEventDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKEventDetailsViewController.h; sourceTree = "<group>"; };
 		536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKEventDetailsViewController.m; sourceTree = "<group>"; };
 		536AFC4E2887602500B01F95 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -275,6 +277,7 @@
 				5397F5F8286B676900E9D894 /* main.m */,
 				537AF6612899B49A00F0C212 /* SUKConstants.h */,
 				537AF6622899B49A00F0C212 /* SUKConstants.m */,
+				536220FC289A13250045EF58 /* stop_words.txt */,
 			);
 			path = Suko;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 			files = (
 				5397F5F6286B676900E9D894 /* LaunchScreen.storyboard in Resources */,
 				5397F5F3286B676900E9D894 /* Assets.xcassets in Resources */,
+				536220FD289A13250045EF58 /* stop_words.txt in Resources */,
 				53F80C0E288B41E500FFDB2D /* SUKKeys.plist in Resources */,
 				5397F5F1286B676800E9D894 /* Main.storyboard in Resources */,
 			);

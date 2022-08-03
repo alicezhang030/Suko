@@ -19,6 +19,8 @@
 #import "SUKQuizIntroViewController.h"
 #import "SUKConstants.h"
 
+#import "NaturalLanguage/NLEmbedding.h"
+
 @interface SUKHomeViewController () <SUKHomeTableViewCellDelegate, UISearchBarDelegate>
 
 /** The table view on the VC */
@@ -65,6 +67,37 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
     // Movie Bar Button
     UIBarButtonItem *movieBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Movies" style:UIBarButtonItemStylePlain target:self action:@selector(movieBarButtonClicked:)];
     self.navigationItem.rightBarButtonItem = movieBarButton;
+    
+    /* Commented out code
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"stop_words" ofType:@"txt"];
+    NSString* stopWordsContent = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    NSArray<NSString *> *stopWordsArr = [stopWordsContent componentsSeparatedByString:@"\n"];
+    
+    NSString *regExPattern = @"";
+    if(stopWordsArr.count > 0) {
+        for(int i = 0; i < stopWordsArr.count - 2; i++) {
+            regExPattern = [[[regExPattern stringByAppendingString:@"(\\\\b"] stringByAppendingString:stopWordsArr[i]] stringByAppendingString:@"\\\\b)|"];
+        }
+        regExPattern = [[[regExPattern stringByAppendingString:@"(\\\\b"] stringByAppendingString:stopWordsArr[stopWordsArr.count - 2]] stringByAppendingString:@"\\\\b)"];
+    }*/
+    
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:kStopWordsRegExPattern options:NSRegularExpressionCaseInsensitive error:&error];
+    
+    NSString *closest = @"All of a sudden again, they arrived: parasitic aliens that descended upon Earth and quickly infiltrated humanity by burrowing into the brains of vulnerable targets. These insatiable beings acquire full control of their host and are able to morph into a variety of forms in order to feed on unsuspecting prey.";
+    NSString *secondClosest = @"Surrounded by a forest and a gated entrance, the Grace Field House is inhabited by orphans happily living together as one big family, looked after by their Mama, Isabella. Although they are required to take tests daily, the children are free to spend their time as they see fit, usually playing outside, as long as they do not venture too far from the orphanage—a rule they are expected to follow no matter what. However, all good times must come to an end, as every few months, a child is adopted and sent to live with their new family, never to be heard from again.";
+    NSString *notClose = @"Ryuuji Takasu is a gentle high school student with a love for housework; but in contrast to his kind nature, he has an intimidating face that often gets him labeled as a delinquent. On the other hand is Taiga Aisaka, a small, doll-like student, who is anything but a cute and fragile girl. Equipped with a wooden katana and feisty personality, Taiga is known throughout the school as the Palmtop Tiger.";
+    NSString *movie = @"Dangerously ill with a rare blood disorder, and determined to save others suffering his same fate, Dr. Michael Morbius attempts a desperate gamble. What at first appears to be a radical success soon reveals itself to be a remedy potentially worse than the disease.";
+    
+    NSString *modifiedClosestString = [regex stringByReplacingMatchesInString:closest options:0 range:NSMakeRange(0,[closest length]) withTemplate:@""];
+    NSString *modifiedSecondClosestString = [regex stringByReplacingMatchesInString:secondClosest options:0 range:NSMakeRange(0,[secondClosest length]) withTemplate:@""];
+    NSString *modifiedNotCloseString = [regex stringByReplacingMatchesInString:notClose options:0 range:NSMakeRange(0,[notClose length]) withTemplate:@""];
+    NSString *modifiedMovieString = [regex stringByReplacingMatchesInString:movie options:0 range:NSMakeRange(0,[movie length]) withTemplate:@""];
+    
+    NLEmbedding *embedding = [NLEmbedding sentenceEmbeddingForLanguage:NLLanguageEnglish];
+    NLDistance closestDistance = [embedding distanceBetweenString:modifiedClosestString andString:modifiedMovieString distanceType:NLDistanceTypeCosine];
+    NLDistance secondClosestDistance = [embedding distanceBetweenString:modifiedSecondClosestString andString:modifiedMovieString distanceType:NLDistanceTypeCosine];
+    NLDistance notCloseDistance = [embedding distanceBetweenString:modifiedNotCloseString andString:modifiedMovieString distanceType:NLDistanceTypeCosine];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

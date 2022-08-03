@@ -8,19 +8,25 @@
 #import "SUKSwipeMovieViewController.h"
 #import "SUKAPIManager.h"
 #import "SUKAnimeListViewController.h"
+#import "SUKConstants.h"
+#import "NaturalLanguage/NLEmbedding.h"
 
 @interface SUKSwipeMovieViewController ()
 @property (nonatomic, strong) NSMutableArray<SUKMovie *> *movies;
+
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSMutableArray<SUKMovie *> *>*moviesWithinGenre;
 @property (nonatomic, strong) NSMutableArray<SUKMovie *> *selectedMovies;
+
 @property (nonatomic, strong) NSMutableArray<SUKAnime *> *animeRecommendations;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *animeRecommendationIDs;
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSNumber *topMoviePageCount;
 @end
 
 @implementation SUKSwipeMovieViewController
-CGFloat const kAnimeRecLimit = (CGFloat)20.0;
+CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 
 #pragma mark - UIViewController Overrides
 
@@ -31,6 +37,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     self.selectedMovies = [NSMutableArray new];
     self.animeRecommendations = [NSMutableArray new];
     self.animeRecommendationIDs = [NSMutableArray new];
+    self.moviesWithinGenre = [NSMutableDictionary new];
     
     // Spinner
     self.spinner.hidesWhenStopped = YES;
@@ -40,6 +47,8 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     self.topMoviePageCount = @1;
     [self topMoviesFromPage:self.topMoviePageCount];
 }
+
+# pragma mark - Fetch Data
 
 - (void)topMoviesFromPage:(NSNumber *)page {
     __weak __typeof(self) weakSelf = self;
@@ -68,7 +77,17 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     }];
 }
 
-#pragma mark - MDCSwipeToChooseDelegate Protocol Methods
+- (void)movieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
+    [[SUKAPIManager shared] fetchMovieGenres:^(NSArray<NSDictionary *> *genres, NSError *error) {
+        if(error != nil) {
+            completion(nil, error);
+        } else {
+            completion(genres, nil);
+        }
+    }];
+}
+
+#pragma mark - MDCSwipeToChoose Methods
 
 // Called when a user didn't fully swipe left or right.
 - (void)viewDidCancelSwipe:(UIView *)view {
@@ -82,6 +101,16 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     } else {
         NSLog(@"You liked %@.", self.currentMovie.title);
         [self.selectedMovies addObject:self.currentMovie];
+        
+        for(NSNumber *genreID in self.currentMovie.genreIDs) {
+            if([self.moviesWithinGenre objectForKey:genreID] != nil) {
+                [[self.moviesWithinGenre objectForKey:genreID] addObject:self.currentMovie];
+            } else {
+                NSMutableArray *moviesArrWithinGenre = [NSMutableArray new];
+                [moviesArrWithinGenre addObject:self.currentMovie];
+                [self.moviesWithinGenre setObject:moviesArrWithinGenre forKey:genreID];
+            }
+        }
     }
 
     // MDCSwipeToChooseView removes the view from the view hierarchy
@@ -106,43 +135,50 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     }
 }
 
-- (void)noMoreMoviesView {
-    UIView *noMoreMoviesView = [[UIView alloc] initWithFrame:self.view.frame];
-    noMoreMoviesView.tag = 1000; // Set tag to assist in removing this view later
-    
-    UILabel *loadMoreMoviesLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, CGRectGetWidth(self.view.frame), 20)];
-    loadMoreMoviesLabel.backgroundColor = [UIColor clearColor];
-    loadMoreMoviesLabel.textAlignment = NSTextAlignmentCenter;
-    loadMoreMoviesLabel.textColor = [UIColor blackColor];
-    loadMoreMoviesLabel.numberOfLines = 0;
-    loadMoreMoviesLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    loadMoreMoviesLabel.text = @"Would you like to swipe on more movies?";
-    [loadMoreMoviesLabel setCenter:CGPointMake(CGRectGetWidth(self.view.frame)/2.0, CGRectGetHeight(self.view.frame)/2.0 - (40 + 10))];
-    
-    UIButton *loadMoreMoviesButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [loadMoreMoviesButton addTarget:self action:@selector(tappedLoadMore) forControlEvents:UIControlEventTouchUpInside];
-    [loadMoreMoviesButton setTitle:@"Load more" forState:UIControlStateNormal];
-    loadMoreMoviesButton.frame = CGRectMake((self.view.frame.size.width - 160)/2, (self.view.frame.size.height - 40)/2, 160, 40);
-    [loadMoreMoviesButton setBackgroundColor:[UIColor colorWithRed:0.76078431372 green:0.56470588235 blue:1.0 alpha:1.0]];
-    [loadMoreMoviesButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
-    UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [recommendButton addTarget:self action:@selector(tappedRecommendAnimeButton) forControlEvents:UIControlEventTouchUpInside];
-    [recommendButton setTitle:@"Recommend anime" forState:UIControlStateNormal];
-    recommendButton.frame = CGRectMake((self.view.frame.size.width - 160)/2, (self.view.frame.size.height - 40)/2 + (40 + 10), 160, 40);
-    [recommendButton setBackgroundColor:[UIColor colorWithRed:0.76078431372 green:0.56470588235 blue:1.0 alpha:1.0]];
-    [recommendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
-    loadMoreMoviesButton.layer.cornerRadius = 4;
-    recommendButton.layer.cornerRadius = 4;
-    loadMoreMoviesButton.layer.masksToBounds = true;
-    recommendButton.layer.masksToBounds = true;
+- (void)setFrontCardView:(ChooseMovieView *)frontCardView {
+    // Keep track of the movie currently being chosen.
+    _frontCardView = frontCardView;
+    self.currentMovie = frontCardView.movie;
+}
 
-    [noMoreMoviesView addSubview:loadMoreMoviesLabel];
-    [noMoreMoviesView addSubview:loadMoreMoviesButton];
-    [noMoreMoviesView addSubview:recommendButton];
+- (ChooseMovieView *)popMovieViewWithFrame:(CGRect)frame {
+    if ([self.movies count] == 0) {
+        return nil;
+    }
+
+    // UIView+MDCSwipeToChoose and MDCSwipeToChooseView each take an "options" argument.
+    // Here, we specify the view controller as a delegate,
+    // and provide a custom callback that moves the back card view
+    // based on how far the user has panned the front card view.
+    MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
+    options.delegate = self;
+    options.threshold = 160.f; // Distance in pixels that a view must be panned in order to constitue a selection
+    options.onPan = ^(MDCPanState *state){
+        CGRect frame = [self backCardViewFrame];
+        self.backCardView.frame = CGRectMake(frame.origin.x,
+                                             frame.origin.y - (state.thresholdRatio * 10.f),
+                                             CGRectGetWidth(frame),
+                                             CGRectGetHeight(frame));
+    };
+    options.likedText = @"Like";
+    options.nopeText = @"Dislike";
     
-    [self.view addSubview:noMoreMoviesView];
+    // Create a movieView with the top movie in the movies array, then pop
+    // that movie off the stack.
+    ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame movie:self.movies[0] options:options];
+    [self.movies removeObjectAtIndex:0];
+    
+    UITapGestureRecognizer *cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTappedCard:)];
+    cardTapRecognizer.numberOfTapsRequired = 2;
+    [movieView addGestureRecognizer:cardTapRecognizer];
+    
+    return movieView;
+}
+
+#pragma mark - Tap Handlers
+
+- (void)doubleTappedCard:(UITapGestureRecognizer *)sender {
+    [self.frontCardView mdc_swipe:MDCSwipeDirectionRight];
 }
 
 - (void)tappedLoadMore {
@@ -208,54 +244,6 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     }
 }
 
-#pragma mark - Internal Methods
-
-- (void)setFrontCardView:(ChooseMovieView *)frontCardView {
-    // Keep track of the movie currently being chosen.
-    _frontCardView = frontCardView;
-    self.currentMovie = frontCardView.movie;
-}
-
-- (ChooseMovieView *)popMovieViewWithFrame:(CGRect)frame {
-    if ([self.movies count] == 0) {
-        return nil;
-    }
-
-    // UIView+MDCSwipeToChoose and MDCSwipeToChooseView each take an "options" argument.
-    // Here, we specify the view controller as a delegate,
-    // and provide a custom callback that moves the back card view
-    // based on how far the user has panned the front card view.
-    MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
-    options.delegate = self;
-    options.threshold = 160.f; // Distance in pixels that a view must be panned in order to constitue a selection
-    options.onPan = ^(MDCPanState *state){
-        CGRect frame = [self backCardViewFrame];
-        self.backCardView.frame = CGRectMake(frame.origin.x,
-                                             frame.origin.y - (state.thresholdRatio * 10.f),
-                                             CGRectGetWidth(frame),
-                                             CGRectGetHeight(frame));
-    };
-    options.likedText = @"Like";
-    options.nopeText = @"Dislike";
-    
-    // Create a movieView with the top movie in the movies array, then pop
-    // that movie off the stack.
-    ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame movie:self.movies[0] options:options];
-    [self.movies removeObjectAtIndex:0];
-    
-    UITapGestureRecognizer *cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTappedCard:)];
-    cardTapRecognizer.numberOfTapsRequired = 2;
-    [movieView addGestureRecognizer:cardTapRecognizer];
-    
-    return movieView;
-}
-
-- (void)doubleTappedCard:(UITapGestureRecognizer *)sender {
-    [self.frontCardView mdc_swipe:MDCSwipeDirectionRight];
-}
-
-#pragma mark View Construction
-
 - (CGRect)frontCardViewFrame {
     CGFloat horizontalPadding = 20.f;
     CGFloat topPadding = 100.f;
@@ -291,58 +279,88 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
     return genreCount;
 }
 
-- (void)movieGenreList:(void(^)(NSArray<NSDictionary *> *genres, NSError *error))completion {
-    [[SUKAPIManager shared] fetchMovieGenres:^(NSArray<NSDictionary *> *genres, NSError *error) {
-        if(error != nil) {
-            completion(nil, error);
-        } else {
-            completion(genres, nil);
-        }
-    }];
-}
-
-- (void)animeRecsGivenFrequencyOfGenresInSelectedMovies:(NSMutableDictionary<NSNumber *, NSNumber *> *) genreIDsAndFrequency withMovieGenreOptions:(NSMutableDictionary<NSNumber *, NSString *> *) genreOptions completion:(void(^)(NSError *error)) completion {
-    // Western, Documentary, TV Movie, and Animation don't match well into any anime genre, so I put "Action" as default
-    NSDictionary<NSString *,NSString *> *movieGenreToAnimeGenre = @{@"Family":@"Kids", @"Adventure":@"Adventure", @"Romance":@"Romance", @"Drama":@"Drama", @"Mystery":@"Mystery", @"Crime":@"Organized Crime", @"War":@"Military", @"Action":@"Action", @"Science Fiction":@"Sci-Fi", @"Music":@"Music", @"Western":@"Action", @"History":@"Historical", @"Documentary":@"Action", @"Comedy":@"Comedy", @"Fantasy":@"Fantasy", @"TV Movie":@"Action", @"Animation":@"Action", @"Thriller":@"Suspense", @"Horror":@"Horror"};
+- (void)animeRecsGivenFrequencyOfGenresInSelectedMovies:(NSMutableDictionary<NSNumber *, NSNumber *> *) genreIDsAndFrequency withMovieGenreOptions:(NSMutableDictionary<NSNumber *, NSString *> *) movieGenreOptions completion:(void(^)(NSError *error)) completion {
     
     NSArray<NSNumber *> *selectedMovieGenreIDs = [genreIDsAndFrequency allKeys];
     NSNumber *totalGenreOccurences = [[genreIDsAndFrequency allValues] valueForKeyPath:@"@sum.self"];
     
     for(int i = 0; i < selectedMovieGenreIDs.count; i++) {
-        NSString *correspondingAnimeGenreName = [movieGenreToAnimeGenre objectForKey:[genreOptions objectForKey:selectedMovieGenreIDs[i]]];
+        // Movie genre
+        NSNumber *movieGenreID = selectedMovieGenreIDs[i];
+        NSString *correspondingMovieGenreName = [movieGenreOptions objectForKey:movieGenreID];
+        NSArray<SUKMovie *> *moviesWithinGenre = [self.moviesWithinGenre objectForKey:movieGenreID];
+
+        // Corresponding anime genre
+        NSString *correspondingAnimeGenreID;
+        if(correspondingMovieGenreName == nil) {
+            correspondingAnimeGenreID = @"1";
+        } else {
+            NSString *correspondingAnimeGenreName = [kMovieGenreTitleToAnimeGenreTitle objectForKey:[movieGenreOptions objectForKey:selectedMovieGenreIDs[i]]];
+            correspondingAnimeGenreID = [[self.animeGenres allKeysForObject:correspondingAnimeGenreName] lastObject];
+        }
         
-        if(correspondingAnimeGenreName != nil) { // If there is a matching anime genre for this movie genre
-            // Calculate the number of recommendations to retrive from this genre based on its frequency
-            NSNumber *genreFrequency = [genreIDsAndFrequency objectForKey:selectedMovieGenreIDs[i]];
-            double roundedLimitDouble = round(([genreFrequency doubleValue] / [totalGenreOccurences doubleValue])  * kAnimeRecLimit);
-            NSNumber *roundedLimit = [NSNumber numberWithDouble:roundedLimitDouble];
-            
-            NSString *correspondingAnimeGenreID = [[self.animeGenres allKeysForObject:correspondingAnimeGenreName] lastObject];
-            __weak __typeof(self) weakSelf = self;
-            [[SUKAPIManager shared] fetchAnimeFromGenre:correspondingAnimeGenreID withLimit:roundedLimit completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
-                if(error != nil) {
-                    NSLog(@"Failed fo fetch top anime from genre with ID %@: %@", correspondingAnimeGenreID, error.localizedDescription);
-                } else {
-                    __strong __typeof(self) strongSelf = weakSelf;
-                    for(SUKAnime *anime in animes) {
-                        if(![strongSelf.animeRecommendationIDs containsObject:[NSNumber numberWithInt:anime.malID]]) {
-                            [strongSelf.animeRecommendationIDs addObject:[NSNumber numberWithInt:anime.malID]];
-                            [strongSelf.animeRecommendations addObject:anime];
-                        }
+        // Number of recommendations to retrive from this genre based on frequency
+        NSNumber *genreFrequency = [genreIDsAndFrequency objectForKey:selectedMovieGenreIDs[i]];
+        double roundedLimitDouble = round(([genreFrequency doubleValue] / [totalGenreOccurences doubleValue])  * kAnimeRecLimit);
+        NSNumber *roundedLimit = [NSNumber numberWithDouble:roundedLimitDouble];
+        
+        __weak __typeof(self) weakSelf = self;
+        [[SUKAPIManager shared] fetchAnimeFromGenre:correspondingAnimeGenreID withLimit:roundedLimit completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            if(error != nil) {
+                NSLog(@"Failed fo fetch top anime from genre with ID %@: %@", correspondingAnimeGenreID, error.localizedDescription);
+            } else {
+                NSMutableArray<SUKAnime *> *animesWithinGenre = [NSMutableArray new];
+                for(SUKAnime *anime in animes) {
+                    if(![strongSelf.animeRecommendationIDs containsObject:[NSNumber numberWithInt:anime.malID]]) {
+                        [strongSelf.animeRecommendationIDs addObject:[NSNumber numberWithInt:anime.malID]];
+                        [animesWithinGenre addObject:anime];
                     }
                 }
-                
-                if(i == selectedMovieGenreIDs.count - 1) {
-                    NSLog(@"Recommendation algorithm finished.");
-                    completion(nil);
-                }
-            }];
+                [self.animeRecommendations addObjectsFromArray:[strongSelf rankByTextSimilarityBetweenAnime:animesWithinGenre andMovies:moviesWithinGenre]];
+            }
             
-            [NSThread sleepForTimeInterval:1.0];
+            if(i == selectedMovieGenreIDs.count - 1) {
+                NSLog(@"Recommendation algorithm finished.");
+                completion(nil);
+            }
+        }];
+        
+        [NSThread sleepForTimeInterval:1.0];
+    }
+}
+
+- (NSArray<SUKAnime *> *)rankByTextSimilarityBetweenAnime:(NSArray<SUKAnime *> *) animes andMovies:(NSArray<SUKMovie *> *) movies {
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:kStopWordsRegExPattern options:NSRegularExpressionCaseInsensitive error:&error];
+    NLEmbedding *embedding = [NLEmbedding sentenceEmbeddingForLanguage:NLLanguageEnglish];
+    
+    NSMutableDictionary<SUKAnime *, NSNumber *> *animeDistanceSum = [NSMutableDictionary new];
+    
+    for(int k = 0; k < movies.count; k++) {
+        SUKMovie *movie = movies[k];
+        NSString *movieSynopsisNoStopwords = [regex stringByReplacingMatchesInString:movie.synopsis options:0 range:NSMakeRange(0,[movie.synopsis length]) withTemplate:@""];
+        
+        for(int i = 0; i < animes.count; i++) {
+            SUKAnime *anime = animes[i];
+            
+            NSString *animeSynopsisNoStopwords = [regex stringByReplacingMatchesInString:anime.synopsis options:0 range:NSMakeRange(0,[anime.synopsis length]) withTemplate:@""];
+            NLDistance distance = [embedding distanceBetweenString:movieSynopsisNoStopwords andString:animeSynopsisNoStopwords distanceType:NLDistanceTypeCosine];
+            
+            if(k > 0) {
+                double newDistance = [[animeDistanceSum objectForKey:anime] doubleValue] + distance;
+                [animeDistanceSum setObject:[NSNumber numberWithDouble:newDistance] forKey:anime];
+            } else {
+                [animeDistanceSum setObject:[NSNumber numberWithDouble:distance] forKey:anime];
+            }
         }
     }
     
+    NSArray<SUKAnime *> *results = [animeDistanceSum keysSortedByValueUsingComparator:^(id first, id second) {
+        return [first compare:second];
+    }];
     
+    return results;
 }
 
 #pragma mark - Navigation
@@ -353,6 +371,47 @@ CGFloat const kAnimeRecLimit = (CGFloat)20.0;
         listVC.listTitle = @"Recommendations";
         listVC.arrOfAnime = sender;
     }
+}
+
+#pragma mark - MISC
+
+- (void)noMoreMoviesView {
+    UIView *noMoreMoviesView = [[UIView alloc] initWithFrame:self.view.frame];
+    noMoreMoviesView.tag = 1000; // Set tag to assist in removing this view later
+    
+    UILabel *loadMoreMoviesLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, CGRectGetWidth(self.view.frame), 20)];
+    loadMoreMoviesLabel.backgroundColor = [UIColor clearColor];
+    loadMoreMoviesLabel.textAlignment = NSTextAlignmentCenter;
+    loadMoreMoviesLabel.textColor = [UIColor blackColor];
+    loadMoreMoviesLabel.numberOfLines = 0;
+    loadMoreMoviesLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    loadMoreMoviesLabel.text = @"Would you like to swipe on more movies?";
+    [loadMoreMoviesLabel setCenter:CGPointMake(CGRectGetWidth(self.view.frame)/2.0, CGRectGetHeight(self.view.frame)/2.0 - (40 + 10))];
+    
+    UIButton *loadMoreMoviesButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [loadMoreMoviesButton addTarget:self action:@selector(tappedLoadMore) forControlEvents:UIControlEventTouchUpInside];
+    [loadMoreMoviesButton setTitle:@"Load more" forState:UIControlStateNormal];
+    loadMoreMoviesButton.frame = CGRectMake((self.view.frame.size.width - 160)/2, (self.view.frame.size.height - 40)/2, 160, 40);
+    [loadMoreMoviesButton setBackgroundColor:[UIColor colorWithRed:0.76078431372 green:0.56470588235 blue:1.0 alpha:1.0]];
+    [loadMoreMoviesButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [recommendButton addTarget:self action:@selector(tappedRecommendAnimeButton) forControlEvents:UIControlEventTouchUpInside];
+    [recommendButton setTitle:@"Recommend anime" forState:UIControlStateNormal];
+    recommendButton.frame = CGRectMake((self.view.frame.size.width - 160)/2, (self.view.frame.size.height - 40)/2 + (40 + 10), 160, 40);
+    [recommendButton setBackgroundColor:[UIColor colorWithRed:0.76078431372 green:0.56470588235 blue:1.0 alpha:1.0]];
+    [recommendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    loadMoreMoviesButton.layer.cornerRadius = 4;
+    recommendButton.layer.cornerRadius = 4;
+    loadMoreMoviesButton.layer.masksToBounds = true;
+    recommendButton.layer.masksToBounds = true;
+
+    [noMoreMoviesView addSubview:loadMoreMoviesLabel];
+    [noMoreMoviesView addSubview:loadMoreMoviesButton];
+    [noMoreMoviesView addSubview:recommendButton];
+    
+    [self.view addSubview:noMoreMoviesView];
 }
 
 

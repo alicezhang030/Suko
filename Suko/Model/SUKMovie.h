@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** The URL of this movie's poster */
 @property (nonatomic) NSString *posterURL;
 
+/** The synopsis of the movie */
+@property (nonatomic, readonly) NSString *synopsis;
+
+
 /**
  *  Creates an array of SUKMovie objects using the information provided in each dictionary and returns it.
  *

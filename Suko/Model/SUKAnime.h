@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Model used to represent an anime.
  */
-@interface SUKAnime : NSObject
+@interface SUKAnime : NSObject <NSCopying>
 
 /** Corresponding MyAnimeList ID */
 @property (nonatomic) int malID;
