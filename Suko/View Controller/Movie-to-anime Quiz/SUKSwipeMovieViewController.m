@@ -277,7 +277,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     }
 }
 
-- (NSArray<SUKAnime *> *)rankByTextSimilarityBetweenAnimeRecsAndConglomerateSynopsis {
+- (void)rankByTextSimilarityBetweenAnimeRecsAndConglomerateSynopsis {
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:kStopWordsRegExPattern options:NSRegularExpressionCaseInsensitive error:&error];
     NLEmbedding *embedding = [NLEmbedding sentenceEmbeddingForLanguage:NLLanguageEnglish];
@@ -293,9 +293,9 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
         [animeDistances setObject:[NSNumber numberWithDouble:distance] forKey:anime];
     }
     
-    return [animeDistances keysSortedByValueUsingComparator:^(id first, id second) {
+    self.animeRecommendations = [[animeDistances keysSortedByValueUsingComparator:^(id first, id second) {
         return [first compare:second];
-    }];
+    }] mutableCopy];
 }
 
 #pragma mark - Navigation
