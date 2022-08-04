@@ -5,10 +5,10 @@
 //  Created by Alice Zhang on 7/26/22.
 //
 
-#import "ChooseMovieView.h"
+#import "SUKChooseMovieView.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface ChooseMovieView ()
+@interface SUKChooseMovieView ()
 
 /** Subview of  ChooseMovieView that actually displays the movie information */
 @property (nonatomic, strong) UIView *informationView;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation ChooseMovieView
+@implementation SUKChooseMovieView
 
 #pragma mark - Constants
 CGFloat const kInfoViewBottomHeight = 60.f;
