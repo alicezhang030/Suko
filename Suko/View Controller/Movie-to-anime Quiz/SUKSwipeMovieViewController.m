@@ -249,8 +249,10 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
         
         // Number of recommendations to retrive from this genre based on frequency
         NSNumber *genreFrequency = [genreIDsAndFrequency objectForKey:selectedMovieGenreIDs[i]];
-        double roundedLimitDouble = round(([genreFrequency doubleValue] / [totalGenreOccurences doubleValue])  * kAnimeRecLimit);
-        NSNumber *roundedLimit = [NSNumber numberWithDouble:roundedLimitDouble];
+        int roundedLimitInt = (int)round(([genreFrequency doubleValue] / [totalGenreOccurences doubleValue])  * kAnimeRecLimit);
+        if(roundedLimitInt == 0)
+            roundedLimitInt = 1;
+        NSNumber *roundedLimit = [NSNumber numberWithInt:roundedLimitInt];
         
         __weak __typeof(self) weakSelf = self;
         [[SUKAPIManager shared] fetchAnimeFromGenre:correspondingAnimeGenreID withLimit:roundedLimit completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
