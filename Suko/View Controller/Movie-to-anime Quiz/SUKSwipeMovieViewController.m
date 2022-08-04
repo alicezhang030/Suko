@@ -78,17 +78,9 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 
 #pragma mark - MDCSwipeToChoose Methods
 
-- (void)viewDidCancelSwipe:(UIView *)view { // When a user didn't fully swipe left or right.
-    NSLog(@"You couldn't decide on %@.", self.currentMovie.title);
-}
-
 - (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction { // When user swipes the view fully left or right.
-    if (direction == MDCSwipeDirectionLeft) {
-        NSLog(@"You disliked %@.", self.currentMovie.title);
-    } else {
-        NSLog(@"You liked %@.", self.currentMovie.title);
+    if (direction != MDCSwipeDirectionLeft) {
         [self.selectedMovies addObject:self.currentMovie];
-        
         self.conglomerateSynopsis = [self.conglomerateSynopsis stringByAppendingString:self.currentMovie.synopsis];
     }
     
@@ -107,13 +99,13 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     }
 }
 
-- (void)setFrontCardView:(ChooseMovieView *)frontCardView {
+- (void)setFrontCardView:(SUKChooseMovieView *)frontCardView {
     // Keep track of the movie currently being chosen.
     _frontCardView = frontCardView;
     self.currentMovie = frontCardView.movie;
 }
 
-- (ChooseMovieView *)popMovieViewWithFrame:(CGRect)frame {
+- (SUKChooseMovieView *)popMovieViewWithFrame:(CGRect)frame {
     if ([self.topMovies count] == 0) {
         return nil;
     }
@@ -131,7 +123,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     options.likedText = @"Like";
     options.nopeText = @"Dislike";
     
-    ChooseMovieView *movieView = [[ChooseMovieView alloc] initWithFrame:frame movie:self.topMovies[0] options:options];
+    SUKChooseMovieView *movieView = [[SUKChooseMovieView alloc] initWithFrame:frame movie:self.topMovies[0] options:options];
     [self.topMovies removeObjectAtIndex:0];
     
     UITapGestureRecognizer *cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTappedCard:)];

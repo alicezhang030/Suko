@@ -123,7 +123,6 @@ int const kMileRadius = 40;
     PFQuery *query = [PFQuery queryWithClassName:@"SUKEvent"];
     [query includeKey:@"postedBy"];
     [query includeKey:@"location"];
-    [query whereKey:@"location" nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:kMileRadius];
     [query whereKey:@"endTime" greaterThan:[NSDate now]];
     
     NSString *currentUserID = [PFUser currentUser].objectId;
