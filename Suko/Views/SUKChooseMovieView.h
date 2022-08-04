@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Reusable rectangular view used in the movies-to-anime feature. Displays movie poster and movie title.
  */
-@interface ChooseMovieView : MDCSwipeToChooseView
+@interface SUKChooseMovieView : MDCSwipeToChooseView
 
 /** The movie whose information will be displayed in this view */
 @property (nonatomic, strong, readonly) SUKMovie *movie;

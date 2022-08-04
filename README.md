@@ -9,11 +9,11 @@
 ## Overview
 ### Description
 
-Suko allows users to discover new anime and keep track of the anime they want to watch, are watching, and have watched. 
+Suko allows users to discover new anime, keep track of the anime they want to watch, and connect with other anime fans.
 
 ### App Evaluation
 - **Category:** Entertainment, Social
-- **Mobile:** Most anime enjoyers watch on their laptop, so it's more convenient for them if they could discover new shows and update their progress on a show without having to leave the website they're watching from. Thus, making Suko a mobile-first experience is crucial.
+- **Mobile:** Most people watch anime on their laptop, so it's more convenient for them if they could discover new shows and update their progress on a show without having to leave the website they're watching from. Thus, making Suko a mobile-first experience is crucial.
 - **Story:** 
     - Anime series are often finished within a week, so it becomes very hard to remember the shows one has seen over time. Suko helps anime watchers keep track.
     - There are over 20,000 anime out there, so it's hard finding a good anime to watch. Suko helps anime watchers discover the perfect anime for them.
@@ -27,8 +27,9 @@ Suko allows users to discover new anime and keep track of the anime they want to
         - Search for an anime,
         - Mark an anime as want to watch, watching, or watched.
     - V2 (Ambiguous Problems) should allow users to
-        - See what users near them are watching and create events,
-        - Take a quiz and receive anime recommendations based on their selections
+        - See what users near them are watching,
+        - Create events for nearby users,
+        - Take a quiz and receive tailored anime recommendations.
 
 ## Product Spec
 
@@ -44,36 +45,45 @@ MVP:
 - [x] User can view and edit their profile.
 
 Ambiguous Problems:
-- [x] User can see on a map what users near them are watching and create events for nearby users.
-- [x] Users can take a quiz and receive anime recommendations based on their selections.
+- [x] User can see on a map where nearby users are and their profiles.
+- [x] Users can create events for nearby users.
+- [x] Users can take a quiz and receive tailored anime recommendations.
 
 **Optional Nice-to-have Stories**
-- [ ] User can rate and review animes.
-- [ ] User can reply to anime reviews.
+- [x] User can follow other users.
+- [ ] User can rate and review anime.
 - [ ] Users can create custom lists.
 - [ ] Users can set privacy settings for lists (i.e. visible to the public or not).
-- [x] User can follow other users.
 - [ ] User can share anime to other users in-app.
-- [ ] Users can follow public anime lists.
-- [ ] User can post a recommendation request, and others can submit recommendations.
 
 ### 2. Screen Archetypes
 
 * Login Screen
 * Sign Up Screen
 * Home Screen
-    * Users are able to see what's trending overall and what's trending within specific genres. 
-    * Users are able to search for a specific anime.
+    * Displays what's trending overall and what's trending within specific genres.
+    * User can search for a specific anime.
 * Library Screen
-    * Users are able to see (and click into) the three default lists: want to watch, watching, and watched
-* List Screen
-    * List of anime of a specific type (ex. want to watch, romance, etc.)
-* Detail Screen
-    * Users are able to see all relevant information about a specific anime
+    * Displays user's anime list titles.
+* Anime List Screen
+    * Displays anime belonging into this list.
+* Anime Details Screen
+    * Display all relevant information about the anime.
+    * Users can add it to an anime list.
+* Quiz Screen
+    * Display trending movies.
+    * Users can swipe on said trending movies.
+* Browse Events Screen
+    * Display nearby events and the events the user has registered for.
+* Create Event Screen
+    * Users can enter event information and select precise event location.
+* Event Details Screen
+    * Display all relevant information about the event
+    * Users can register for the event.
 * Profile Screen
-    * Users are able to see and edit their profile picture
-    * Users are able to see their lists
-    * Users are able to log out from the application
+    * Display user's profile informaton and anime lists.
+    * User can edit the profile information if they are the profile owner.
+    * User can log out from the application.
 
 ### 3. Navigation 
 
@@ -81,38 +91,102 @@ Ambiguous Problems:
 
 * Home
 * Library
-* Map
+* Events
+* Community Map
 * Profile
 
 **Flow Navigation** (Screen to Screen)
 
 * Home Screen
-   * Click on specific anime ->  Detail Screen of an anime
-   * Click on the see all button -> List Screen (ex. of the trending anime)
+   * Search for an anime ->  Anime List Screen
+   * Click on the see all button -> Anime List Screen 
+   * Click on specific anime ->  Anime Detail Screen
+   * Click on movies bar button -> Quiz Screen
+* Quiz Screen
+    * Finish the quiz -> Anime List Screen
 * Library Screen
-   * Click on a list -> List Screen of that list
+   * Click on a list title -> Anime List Screen
 * Anime List Screen
-    * Click on specific anime ->  Detail Screen of an anime
-
-[**TODO:** Add what the flow navigation is for the map screen]
+    * Click on specific anime -> Anime Detail Screen
+* Browse Events Screen
+    * Click on a specific event -> Event Details Screen
+    * Click on create event bar button -> Create Event Screen
+* User Map Screen
+    * Click on a pin on the map -> Profile Screen
+* Profile Screen
+    * Click on a list title -> Anime List Screen
 
 ## Wireframes 
 https://www.figma.com/file/VEcbEb136UlVuK9X9XaAOR/suko-app-showcase?node-id=0%3A1
 
-[**TODO:** Add actual pictures of the wireframes.]
-
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
-
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+**SUKAnime**
+
+|Property|Type|Description|
+|---|---|---|
+|malID|int|unique ID in MyAnimeList|
+|title|NSString|title|
+|posterURL|NSString|poster URL|
+|synopsis|NSString|synopsis|
+|numEpisodes|int|episode count|
+|genres|NSArray<NSDictionary *>|genres this anime belongs to|
+
+**SUKEvent**
+
+|Property|Type|Description|
+|---|---|---|
+|name|NSString|event name|
+|eventDescription|NSString|event description|
+|location|PFGeoPoint|event coordinates|
+|startTime|NSDate|event start day and time|
+|endTime|NSDate|end day and time |
+|postedBy|PFUser|user posting the event|
+|attendees|NSArray<NSString *>|event attendees represented by an array containing their unique user object IDs|
+
+**SUKFollow**
+
+|Property|Type|Description|
+|---|---|---|
+|follower|PFUser|the user who is doing the following|
+|userBeingFollowed|PFUser|the user being followed|
+
+**SUKMovie**
+
+|Property|Type|Description|
+|---|---|---|
+|ID|NSNumber|unique ID|
+|title|NSString|title|
+|genreIDs|NSArray<NSNumber *>|the IDs of the genres this movie belongs into|
+|posterURL|NSString|poster URL|
+|synopsis|NSString|synopsis|
+
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+**External APIs:** [Jikan API](https://jikan.moe/) and [Movie Database API](https://developers.themoviedb.org/)
+* Home Screen
+    * (GET) Retrive trending anime from Jikan API
+    * (GET) Retrive genre options from Jikan API
+    * (GET) Retrive top anime from a specific genre from Jikan API
+    * (GET) Retrive search results from Jikan API
+* Anime List Screen
+    * (GET) Retrive information on a specific anime from Jikan API
+* Quiz Screen
+    * (GET) Retrive trending movies from Movie Database API
+    * (GET) Retrive genre options from Movie Database API
+    * (GET) Retrive top anime from a specific genre from Jikan API
+
+**Parse:**
+* Browse Event Screen
+    * (GET) Retrive the events within a 40 mile radius of the user's current location
+    * (GET) Retrive the events the user has registered for
+* User Map Screen
+    * (GET) Retrive the users within a 3 mile radius of the user's current location.
+* Create Event Screen
+    * (POST) Create a new SUKEvent
+* Profile Screen
+    * (POST) Create a new SUKFollow 
 
 ## Credits
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library

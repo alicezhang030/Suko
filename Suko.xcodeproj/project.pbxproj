@@ -41,7 +41,7 @@
 		53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C81C8A2885D46500092A46 /* SUKFollow.m */; };
 		53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */; };
 		53D5A254289061D200BA203D /* SUKSwipeMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */; };
-		53D5A2582890636600BA203D /* ChooseMovieView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5A2572890636600BA203D /* ChooseMovieView.m */; };
+		53D5A2582890636600BA203D /* SUKChooseMovieView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5A2572890636600BA203D /* SUKChooseMovieView.m */; };
 		53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */; };
 		53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */; };
 		53E1CDFF2881C80B00186E36 /* SUKCreateNewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E1CDFE2881C80B00186E36 /* SUKCreateNewEventViewController.m */; };
@@ -131,8 +131,8 @@
 		53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKNotCurrentUserProfileViewController.m; sourceTree = "<group>"; };
 		53D5A252289061D200BA203D /* SUKSwipeMovieViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKSwipeMovieViewController.h; sourceTree = "<group>"; };
 		53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKSwipeMovieViewController.m; sourceTree = "<group>"; };
-		53D5A2562890636600BA203D /* ChooseMovieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseMovieView.h; sourceTree = "<group>"; };
-		53D5A2572890636600BA203D /* ChooseMovieView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseMovieView.m; sourceTree = "<group>"; };
+		53D5A2562890636600BA203D /* SUKChooseMovieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKChooseMovieView.h; sourceTree = "<group>"; };
+		53D5A2572890636600BA203D /* SUKChooseMovieView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKChooseMovieView.m; sourceTree = "<group>"; };
 		53E0D78D2878F72F00CFCF91 /* SUKLibraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryViewController.h; sourceTree = "<group>"; };
 		53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKLibraryViewController.m; sourceTree = "<group>"; };
 		53E0D7902878FAD900CFCF91 /* SUKLibraryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKLibraryTableViewCell.h; sourceTree = "<group>"; };
@@ -357,8 +357,8 @@
 		53D5A2552890634000BA203D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				53D5A2562890636600BA203D /* ChooseMovieView.h */,
-				53D5A2572890636600BA203D /* ChooseMovieView.m */,
+				53D5A2562890636600BA203D /* SUKChooseMovieView.h */,
+				53D5A2572890636600BA203D /* SUKChooseMovieView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -625,7 +625,7 @@
 				53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */,
 				5399C1002891B59F00E765C5 /* SUKQuizIntroViewController.m in Sources */,
 				53291ED32878C6C900B12469 /* SUKSignUpViewController.m in Sources */,
-				53D5A2582890636600BA203D /* ChooseMovieView.m in Sources */,
+				53D5A2582890636600BA203D /* SUKChooseMovieView.m in Sources */,
 				535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */,
 				5397F5E8286B676800E9D894 /* AppDelegate.m in Sources */,
 				53B3302028779B070013F404 /* SUKAnimeListViewController.m in Sources */,

@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "SUKAnime.h"
 #import "MKDropdownMenu.h"
+#import <Parse/Parse.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
