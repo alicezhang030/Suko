@@ -16,10 +16,9 @@
 @property (nonatomic, strong) NSNumber *topMoviePageCount;
 
 @property (nonatomic, strong) NSMutableArray<SUKMovie *> *selectedMovies;
-//@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *>*selectedMoviesConglomerateSynopsisByGenreID; Commented out code
 @property (nonatomic, strong) NSString *conglomerateSynopsis;
 
-@property (nonatomic, strong) NSMutableSet<SUKAnime *> *animeRecommendations;
+@property (nonatomic, strong) NSMutableArray<SUKAnime *> *animeRecommendations;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @end
 
@@ -33,9 +32,8 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
     
     // Setup Properties
     self.selectedMovies = [NSMutableArray new];
-    self.animeRecommendations = [NSMutableSet new];
+    self.animeRecommendations = [NSMutableArray new];
     self.conglomerateSynopsis = @"";
-    //self.selectedMoviesConglomerateSynopsisByGenreID = [NSMutableDictionary new]; Commented out code
     
     // Spinner
     self.spinner.hidesWhenStopped = YES;
@@ -186,7 +184,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
                         NSLog(@"Failed to load recommentations: %@", error.localizedDescription);
                     } else {
                         [self.spinner stopAnimating];
-                        [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:[self.animeRecommendations allObjects]];
+                        [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:self.animeRecommendations];
                     }
                 }];
             }
@@ -230,41 +228,46 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 }
 
 - (void)animeRecsGivenFrequencyOfGenresInSelectedMovies:(NSMutableDictionary<NSNumber *, NSNumber *> *) genreIDsAndFrequency withMovieGenreOptions:(NSMutableDictionary<NSNumber *, NSString *> *) movieGenreOptions completion:(void(^)(NSError *error)) completion {
+    [self.animeRecommendations removeAllObjects];
     
-    NSArray<NSNumber *> *selectedMovieGenreIDs = [genreIDsAndFrequency allKeys];
-    NSNumber *totalGenreOccurences = [[genreIDsAndFrequency allValues] valueForKeyPath:@"@sum.self"];
+    NSArray *genreIDsSortedByFrequency = [genreIDsAndFrequency keysSortedByValueUsingComparator:^(id first, id second) {
+        return [second compare:first];
+    }];
     
-    for(int i = 0; i < selectedMovieGenreIDs.count; i++) {
+    int numOfConsideredGenres = 5;
+    int topLimit = 5;
+    if(genreIDsAndFrequency.count < 5) {
+        numOfConsideredGenres = (int)genreIDsAndFrequency.count;
+        topLimit = 9 - numOfConsideredGenres;
+    }
+    
+    for(int i = 0; i < numOfConsideredGenres; i++) {
         // Movie genre
-        NSNumber *movieGenreID = selectedMovieGenreIDs[i];
-                        
+        NSNumber *movieGenreID = genreIDsSortedByFrequency[i];
+        
         // Corresponding anime genre
         NSString *correspondingAnimeGenreID;
         if([movieGenreOptions objectForKey:movieGenreID] == nil) { // If this movie's genre ID isn't a possible movie genre ID
             correspondingAnimeGenreID = @"1"; // Default genre is action
         } else {
-            NSString *correspondingAnimeGenreName = [kMovieGenreTitleToAnimeGenreTitle objectForKey:[movieGenreOptions objectForKey:selectedMovieGenreIDs[i]]];
+            NSString *correspondingAnimeGenreName = [kMovieGenreTitleToAnimeGenreTitle objectForKey:[movieGenreOptions objectForKey:movieGenreID]];
             correspondingAnimeGenreID = [[self.animeGenres allKeysForObject:correspondingAnimeGenreName] lastObject];
+            NSLog(@"Number %d Anime Genre: %@ with ID %@", (i + 1), correspondingAnimeGenreName, correspondingAnimeGenreID);
         }
         
-        // Number of recommendations to retrive from this genre based on frequency
-        NSNumber *genreFrequency = [genreIDsAndFrequency objectForKey:selectedMovieGenreIDs[i]];
-        int roundedLimitInt = (int)round(([genreFrequency doubleValue] / [totalGenreOccurences doubleValue])  * kAnimeRecLimit);
-        if(roundedLimitInt == 0)
-            roundedLimitInt = 1;
-        NSNumber *roundedLimit = [NSNumber numberWithInt:roundedLimitInt];
-        
         __weak __typeof(self) weakSelf = self;
-        [[SUKAPIManager shared] fetchAnimeFromGenre:correspondingAnimeGenreID withLimit:roundedLimit completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
+        [[SUKAPIManager shared] fetchAnimeFromGenre:correspondingAnimeGenreID withLimit:[NSNumber numberWithInt:(topLimit-i)] completion:^(NSArray<SUKAnime *> *animes, NSError *error) {
             __strong __typeof(self) strongSelf = weakSelf;
             if(error != nil) {
                 NSLog(@"Failed fo fetch top anime from genre with ID %@: %@", correspondingAnimeGenreID, error.localizedDescription);
             } else {
-                [strongSelf.animeRecommendations addObjectsFromArray:animes];
+                for(int i = 0; i < animes.count; i++) {
+                    if(![strongSelf.animeRecommendations containsObject:animes[i]])
+                        [strongSelf.animeRecommendations addObject:animes[i]];
+                }
             }
             
-            if(i == selectedMovieGenreIDs.count - 1) {
-                NSLog(@"Recommendation algorithm finished.");
+            if(i == numOfConsideredGenres - 1) {
                 [strongSelf rankByTextSimilarityBetweenAnimeRecsAndConglomerateSynopsis];
                 completion(nil);
             }

@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSArray<NSString *> *listTitles;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-@property (nonatomic, strong) UIRefreshControl *refreshControl; //pull down and refresh the page
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation SUKNotCurrentUserProfileViewController
