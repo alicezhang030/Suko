@@ -10,6 +10,7 @@
 #import "SUKAnimeListViewController.h"
 #import "SUKAPIManager.h"
 #import "SUKConstants.h"
+#import <Parse/Parse.h>
 
 @interface SUKLibraryViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

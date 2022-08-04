@@ -22,7 +22,7 @@
 
 @implementation SUKUserMapViewController
 
-int const kMileRadius = 3.0;
+int const kUserMileRadius = 3.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,7 +58,7 @@ int const kMileRadius = 3.0;
 - (void)nearestUsers {
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
     [query includeKey:kPFUserCurrentCoordinatesKey];
-    [query whereKey:kPFUserCurrentCoordinatesKey nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:kMileRadius];
+    [query whereKey:kPFUserCurrentCoordinatesKey nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:kUserMileRadius];
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {

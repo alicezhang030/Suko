@@ -41,6 +41,11 @@
     
     self.spinner.hidesWhenStopped = YES;
     [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
+    
+    if([self.event.postedBy.objectId isEqualToString:[PFUser currentUser].objectId]) {
+        self.registerButton.userInteractionEnabled = NO;
+        self.registerButton.backgroundColor = [UIColor colorWithRed:0.78823529411 green:0.78823529411 blue:0.78823529411 alpha:1.0];
+    }
 }
 
 - (void)setEvent:(SUKEvent *)event {
