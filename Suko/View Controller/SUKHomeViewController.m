@@ -296,7 +296,7 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
         if(error != nil) {
             NSLog(@"Error retriving the genre options: %@", error.localizedDescription);
         } else {
-            [self performSegueWithIdentifier:@"HomeToQuizSegue" sender:genreIDsAndName];
+            [self performSegueWithIdentifier:kHomeToQuizSegue sender:genreIDsAndName];
         }
     }];
 }

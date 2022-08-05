@@ -35,10 +35,16 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(tapLogout)];
+    self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(tapSettings)];
     NSMutableArray<UIBarButtonItem *>* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
     [currentRightBarItemsMutable addObject:self.logoutButton];
     self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];
+    
+    /*
+    self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(tapLogout)];
+    NSMutableArray<UIBarButtonItem *>* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
+    [currentRightBarItemsMutable addObject:self.logoutButton];
+    self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];*/
         
     [self loadContents];
 }
@@ -76,11 +82,17 @@
     return [self.listTitles count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"SUKLibraryTableViewCell";
     SUKLibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     [cell configureCellWithListTitle:self.listTitles[indexPath.row]];
     return cell;
+}
+
+#pragma mark - Tap
+
+- (void)tapSettings {
+    [self performSegueWithIdentifier:kProfileToSettingsSegue sender:nil];
 }
 
 - (void)tapLogout {
@@ -107,6 +119,8 @@
         }
     }];
 }
+
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"ProfileToListSegue"]) {

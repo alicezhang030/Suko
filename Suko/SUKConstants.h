@@ -55,6 +55,9 @@ extern NSString *kHomeCollectionCellToDetailsSegueIdentifier;
 extern NSString *kUserMapToNotCurrentUserProfileSegueIdentifier;
 extern NSString *kCreateListToAnimeListSegueIdentifier;
 extern NSString *kPFUserUserMapPrivacyKey;
+extern NSString *kSwipeQuizToListSegueIdentifier;
+extern NSString *kProfileToSettingsSegue;
+extern NSString *kHomeToQuizSegue;
 
 #pragma mark - MISC
 extern NSString *kDefaultUserIconFileName;

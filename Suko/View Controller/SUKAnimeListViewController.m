@@ -158,38 +158,6 @@ int const kNumAnimePerLoad = 5;
 #pragma mark - Trash
 
 - (IBAction)tappedTrash:(id)sender {
-    /*
-     [follow deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-         if (error != nil) {
-             NSLog(@"Failed to delete the follow: %@", error.localizedDescription);
-         } else {
-             NSLog(@"Successfully deleted the follow");
-         }
-     }];
-     
-     NSMutableArray<NSString *> *currentListTitles = [PFUser currentUser][kPFUserListTitlesKey];
-     NSMutableArray<NSMutableArray *> *currentListData = [PFUser currentUser][kPFUserListDataKey];
-     
-     [currentListTitles addObject:self.listNameTextField.text];
-     [currentListData addObject:[NSMutableArray new]];
-     
-     [PFUser currentUser][kPFUserListTitlesKey] = currentListTitles;
-     [PFUser currentUser][kPFUserListDataKey] = currentListData;
-     
-     __weak __typeof(self) weakSelf = self;
-     [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-         __strong __typeof(self) strongSelf = weakSelf;
-         if(error != nil) {
-             NSLog(@"Error creating new list: %@", error.localizedDescription);
-         } else {
-             NSLog(@"Successfully saved new list %@", self.listNameTextField.text);
-             
-             NSArray<UIViewController *> *viewControllers = [strongSelf.navigationController viewControllers];
-             [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original library VC
-         }
-     }];
-     */
-    
     NSMutableArray<NSString *> *currentListTitles = [PFUser currentUser][kPFUserListTitlesKey];
     NSMutableArray<NSMutableArray *> *currentListData = [PFUser currentUser][kPFUserListDataKey];
     

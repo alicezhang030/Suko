@@ -10,7 +10,6 @@
 #import "Parse/PFGeoPoint.h"
 #import "Parse/Parse.h"
 #import "SUKNotCurrentUserProfileViewController.h"
-#import "SUKCreateNewEventViewController.h"
 #import "SUKConstants.h"
 
 @interface SUKUserMapViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
@@ -18,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
-@property (weak, nonatomic) IBOutlet UISwitch *privacySwitch;
 @end
 
 @implementation SUKUserMapViewController
@@ -39,9 +37,6 @@ int const kUserMileRadius = 3.0;
         [self.locationManager requestWhenInUseAuthorization];
 
     [self.locationManager startUpdatingLocation];
-    
-    NSNumber * currentSetting = [PFUser currentUser][kPFUserUserMapPrivacyKey];
-    self.privacySwitch.on = [currentSetting isEqualToNumber:@1] ? YES : NO;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
@@ -120,16 +115,6 @@ int const kUserMileRadius = 3.0;
         } else {
             [strongSelf.mapView deselectAnnotation:view.annotation animated:YES];
             [strongSelf performSegueWithIdentifier:kUserMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
-        }
-    }];
-}
-
-- (IBAction)didTogglePrivacySwitch:(id)sender {
-    NSNumber * currentSetting = [PFUser currentUser][kPFUserUserMapPrivacyKey];
-    [PFUser currentUser][kPFUserUserMapPrivacyKey] = [currentSetting isEqualToNumber:@1] ? @0 : @1;
-    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if(error != nil) {
-            NSLog(@"Error saving user's user map privacy settings: %@", error.localizedDescription);
         }
     }];
 }

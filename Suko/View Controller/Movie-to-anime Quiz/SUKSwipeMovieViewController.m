@@ -176,7 +176,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
                         NSLog(@"Failed to load recommentations: %@", error.localizedDescription);
                     } else {
                         [self.spinner stopAnimating];
-                        [strongSelf performSegueWithIdentifier:@"SwipeQuizToListSegue" sender:self.animeRecommendations];
+                        [strongSelf performSegueWithIdentifier:kSwipeQuizToListSegueIdentifier sender:self.animeRecommendations];
                     }
                 }];
             }
@@ -293,7 +293,7 @@ CGFloat const kAnimeRecLimit = (CGFloat)15.0;
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString: @"SwipeQuizToListSegue"]) {
+    if([segue.identifier isEqualToString:kSwipeQuizToListSegueIdentifier]) {
         SUKAnimeListViewController *listVC = [segue destinationViewController];
         listVC.listTitle = @"Recommendations";
         listVC.arrOfAnime = sender;

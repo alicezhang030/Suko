@@ -107,11 +107,82 @@
                         <outlet property="profileImageView" destination="G1b-Kf-ufx" id="koj-AC-l1C"/>
                         <outlet property="tableView" destination="M9b-UH-8cJ" id="DpS-ha-5DR"/>
                         <outlet property="usernameLabel" destination="nIz-5C-cgt" id="G0L-Zk-0En"/>
+                        <segue destination="8CL-mG-Rt1" kind="show" identifier="ProfileToSettingsSegue" id="2nH-bI-zDs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8PJ-ND-Qg3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3724.6376811594205" y="1813.3928571428571"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="IWI-DZ-3XO">
+            <objects>
+                <viewController id="8CL-mG-Rt1" customClass="SUKSettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3wi-zu-PPQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="JVx-ih-yHv">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="ZvY-N1-Ax4">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="318"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display me on user map" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XxX-8C-MvU">
+                                            <rect key="frame" x="34" y="43" width="183" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUI-WX-WOa">
+                                            <rect key="frame" x="22" y="82" width="78" height="34.5"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Logout">
+                                                <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="tapLogout:" destination="8CL-mG-Rt1" eventType="touchUpInside" id="jFH-PG-u32"/>
+                                            </connections>
+                                        </button>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w6I-ma-GxL">
+                                            <rect key="frame" x="340" y="38" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="tapUserMapSwitch:" destination="8CL-mG-Rt1" eventType="valueChanged" id="b7I-Rm-AcH"/>
+                                            </connections>
+                                        </switch>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="uUI-WX-WOa" firstAttribute="top" secondItem="XxX-8C-MvU" secondAttribute="bottom" constant="18" id="GNX-aU-qwR"/>
+                                        <constraint firstItem="uUI-WX-WOa" firstAttribute="leading" secondItem="ZvY-N1-Ax4" secondAttribute="leading" constant="22" id="Xm7-oz-e9B"/>
+                                        <constraint firstAttribute="trailing" secondItem="w6I-ma-GxL" secondAttribute="trailing" constant="25" id="Z2t-Ab-VfA"/>
+                                        <constraint firstItem="w6I-ma-GxL" firstAttribute="centerY" secondItem="XxX-8C-MvU" secondAttribute="centerY" id="clb-GT-VeT"/>
+                                        <constraint firstItem="XxX-8C-MvU" firstAttribute="top" secondItem="ZvY-N1-Ax4" secondAttribute="top" constant="43" id="eQh-1J-nCn"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uUI-WX-WOa" secondAttribute="bottom" constant="20" id="i0L-Q0-gr8"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uUI-WX-WOa" secondAttribute="trailing" constant="20" id="jJj-0l-f1y"/>
+                                        <constraint firstItem="XxX-8C-MvU" firstAttribute="leading" secondItem="ZvY-N1-Ax4" secondAttribute="leading" constant="34" id="ls4-ug-IGA"/>
+                                    </constraints>
+                                </view>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="t8v-QI-g7T"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JVx-ih-yHv" firstAttribute="top" secondItem="t8v-QI-g7T" secondAttribute="top" id="8HK-pw-rX1"/>
+                            <constraint firstAttribute="bottom" secondItem="JVx-ih-yHv" secondAttribute="bottom" id="Y79-FZ-lEr"/>
+                            <constraint firstItem="JVx-ih-yHv" firstAttribute="trailing" secondItem="t8v-QI-g7T" secondAttribute="trailing" id="YQ9-lB-BDw"/>
+                            <constraint firstItem="JVx-ih-yHv" firstAttribute="leading" secondItem="t8v-QI-g7T" secondAttribute="leading" id="dNG-aO-6qS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="0GI-Xd-y8A"/>
+                    <connections>
+                        <outlet property="privacySwitch" destination="w6I-ma-GxL" id="gb8-mk-fhN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g4g-pX-X0E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3724.6376811594205" y="2501.7857142857142"/>
         </scene>
         <!--Edit Profile-->
         <scene sceneID="g8u-Ug-uGY">
@@ -379,20 +450,9 @@
                             <constraint firstItem="9YL-om-FxK" firstAttribute="leading" secondItem="Sog-Ve-FEc" secondAttribute="leading" id="hYW-Jo-z3l"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="rAa-I5-w5h">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="6Vo-rx-vfo">
-                            <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Private" id="Rto-SZ-Sim">
-                                <rect key="frame" x="343" y="6.5" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="didTogglePrivacySwitch:" destination="SFY-Kq-Lxh" eventType="valueChanged" id="VLf-YP-v5l"/>
-                                </connections>
-                            </switch>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="rAa-I5-w5h"/>
                     <connections>
                         <outlet property="mapView" destination="9YL-om-FxK" id="plp-0V-Uk4"/>
-                        <outlet property="privacySwitch" destination="Rto-SZ-Sim" id="LGH-Kw-LzB"/>
                         <segue destination="561-x0-24T" kind="show" identifier="MapToNotCurrentUserProfileSegue" id="Nbh-Mj-j20"/>
                     </connections>
                 </viewController>
@@ -1811,8 +1871,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="DYo-a4-zd2"/>
-        <segue reference="iPf-X4-auV"/>
+        <segue reference="Nbh-Mj-j20"/>
+        <segue reference="wz9-h9-cFl"/>
         <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
