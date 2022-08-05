@@ -12,7 +12,7 @@
 
 @interface SUKCreateListViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *listNameTextField;
-
+@property (weak, nonatomic) IBOutlet UIButton *createButton;
 @end
 
 @implementation SUKCreateListViewController
@@ -22,6 +22,9 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
+    self.createButton.layer.cornerRadius = 4;
+    self.createButton.layer.masksToBounds = true;
 }
 
 - (void)dismissKeyboard{

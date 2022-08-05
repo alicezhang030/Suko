@@ -284,23 +284,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Give your list a name." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUn-Lk-Akh">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Give your list a name." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUn-Lk-Akh">
                                 <rect key="frame" x="84" y="381" width="246" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ozx-uc-4hg">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ozx-uc-4hg">
                                 <rect key="frame" x="84" y="428" width="246" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="246" id="ojr-Pe-Iba"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fZ-jB-rhn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fZ-jB-rhn">
                                 <rect key="frame" x="156" y="489" width="102" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.6705882353" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="RrZ-2Q-sB1"/>
+                                    <constraint firstAttribute="width" constant="102" id="g6Y-9v-nm0"/>
+                                </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Create">
@@ -313,9 +317,18 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vOJ-pe-erx"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ozx-uc-4hg" firstAttribute="top" secondItem="cUn-Lk-Akh" secondAttribute="bottom" constant="17" id="1yz-5L-tI8"/>
+                            <constraint firstItem="8fZ-jB-rhn" firstAttribute="centerX" secondItem="vOJ-pe-erx" secondAttribute="centerX" id="61t-CE-OrN"/>
+                            <constraint firstItem="8fZ-jB-rhn" firstAttribute="top" secondItem="Ozx-uc-4hg" secondAttribute="bottom" constant="27" id="Ipx-eT-o4J"/>
+                            <constraint firstItem="Ozx-uc-4hg" firstAttribute="centerX" secondItem="vOJ-pe-erx" secondAttribute="centerX" id="OcV-hI-Uak"/>
+                            <constraint firstItem="cUn-Lk-Akh" firstAttribute="top" secondItem="vOJ-pe-erx" secondAttribute="top" constant="293" id="Yt0-an-iKA"/>
+                            <constraint firstItem="cUn-Lk-Akh" firstAttribute="centerX" secondItem="vOJ-pe-erx" secondAttribute="centerX" id="l5r-Vc-eS0"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Lcn-MR-JAu"/>
                     <connections>
+                        <outlet property="createButton" destination="8fZ-jB-rhn" id="OgB-rp-vRF"/>
                         <outlet property="listNameTextField" destination="Ozx-uc-4hg" id="Oyu-U0-aXE"/>
                         <segue destination="OiV-xg-5bj" kind="show" identifier="CreateListToAnimeListSegue" id="KKH-Ad-2As"/>
                     </connections>

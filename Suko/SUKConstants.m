@@ -39,6 +39,7 @@ NSString *kPFUserListTitlesKey = @"list_titles";
 NSString *kPFUserListDataKey = @"list_data";
 NSString *kPFUserFollowersKey = @"follower_arr";
 NSString *kPFUserCurrentCoordinatesKey = @"current_coordinates";
+NSString *kPFUserUserMapPrivacyKey = @"usermap_private";
 
 #pragma mark - SUKEvent Keys
 NSString *kSUKEventAttendeesKey = @"attendees";
