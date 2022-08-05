@@ -31,11 +31,13 @@
       "size" : "40x40"
     },
     {
+      "filename" : "Frame 1.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
+      "filename" : "Frame 2.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
@@ -71,11 +73,13 @@
       "size" : "40x40"
     },
     {
+      "filename" : "Frame 3-1.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "76x76"
     },
     {
+      "filename" : "Frame 4-1.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "76x76"

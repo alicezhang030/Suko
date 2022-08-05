@@ -12,6 +12,8 @@ target 'Suko' do
   pod 'MKDropdownMenu'
   pod "MDCSwipeToChoose"
   pod 'SVPullToRefresh'
+  pod 'HCSStarRatingView', '~> 1.5'
+  pod 'DateTools'
 
   target 'SukoTests' do
     inherit! :search_paths

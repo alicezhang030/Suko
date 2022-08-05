@@ -57,6 +57,7 @@ NSString *kCreateListToAnimeListSegueIdentifier = @"CreateListToAnimeListSegue";
 NSString *kSwipeQuizToListSegueIdentifier = @"SwipeQuizToListSegue";
 NSString *kProfileToSettingsSegue = @"ProfileToSettingsSegue";
 NSString *kHomeToQuizSegue = @"HomeToQuizSegue";
+NSString *kDetailsToCreateReviewSegue = @"DetailsToCreateReviewSegue";
 
 #pragma mark - MISC
 NSString *kDefaultUserIconFileName = @"user-icon";

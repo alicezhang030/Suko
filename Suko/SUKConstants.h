@@ -58,6 +58,7 @@ extern NSString *kPFUserUserMapPrivacyKey;
 extern NSString *kSwipeQuizToListSegueIdentifier;
 extern NSString *kProfileToSettingsSegue;
 extern NSString *kHomeToQuizSegue;
+extern NSString *kDetailsToCreateReviewSegue;
 
 #pragma mark - MISC
 extern NSString *kDefaultUserIconFileName;

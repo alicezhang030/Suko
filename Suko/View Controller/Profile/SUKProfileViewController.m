@@ -39,12 +39,6 @@
     NSMutableArray<UIBarButtonItem *>* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
     [currentRightBarItemsMutable addObject:self.logoutButton];
     self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];
-    
-    /*
-    self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(tapLogout)];
-    NSMutableArray<UIBarButtonItem *>* currentRightBarItemsMutable = [self.navigationItem.rightBarButtonItems mutableCopy];
-    [currentRightBarItemsMutable addObject:self.logoutButton];
-    self.navigationItem.rightBarButtonItems = [currentRightBarItemsMutable copy];*/
         
     [self loadContents];
 }

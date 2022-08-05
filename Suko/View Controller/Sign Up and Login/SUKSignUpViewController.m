@@ -28,7 +28,7 @@
     [self.view addGestureRecognizer:tap];
 }
 
-- (void)dismissKeyboard{
+- (void)dismissKeyboard {
     [self.emailField resignFirstResponder];
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];

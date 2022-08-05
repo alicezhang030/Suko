@@ -53,7 +53,6 @@
             [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original library VC
         }
     }];
-    
 }
 
 #pragma mark - Navigation

@@ -46,7 +46,7 @@ NSNumber *const knumOfAnimeDisplayedPerRow = @8;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+        
     // Property Set Up
     self.dictOfAnime = [NSMutableDictionary new];
     

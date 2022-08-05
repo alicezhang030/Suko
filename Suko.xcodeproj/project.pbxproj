@@ -42,6 +42,9 @@
 		53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C81C8A2885D46500092A46 /* SUKFollow.m */; };
 		53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */; };
 		53D58D88289D9341003B6A6D /* SUKSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D58D87289D9341003B6A6D /* SUKSettingsViewController.m */; };
+		53D58D8B289DB843003B6A6D /* SUKReviewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D58D8A289DB843003B6A6D /* SUKReviewTableViewCell.m */; };
+		53D58D8E289DC02B003B6A6D /* SUKReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D58D8D289DC02B003B6A6D /* SUKReview.m */; };
+		53D58D91289DCB37003B6A6D /* SUKCreateReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D58D90289DCB37003B6A6D /* SUKCreateReviewViewController.m */; };
 		53D5A254289061D200BA203D /* SUKSwipeMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */; };
 		53D5A2582890636600BA203D /* SUKChooseMovieView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D5A2572890636600BA203D /* SUKChooseMovieView.m */; };
 		53E0D78F2878F72F00CFCF91 /* SUKLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */; };
@@ -135,6 +138,12 @@
 		53CCA6E928808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKNotCurrentUserProfileViewController.m; sourceTree = "<group>"; };
 		53D58D86289D9341003B6A6D /* SUKSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKSettingsViewController.h; sourceTree = "<group>"; };
 		53D58D87289D9341003B6A6D /* SUKSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKSettingsViewController.m; sourceTree = "<group>"; };
+		53D58D89289DB843003B6A6D /* SUKReviewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKReviewTableViewCell.h; sourceTree = "<group>"; };
+		53D58D8A289DB843003B6A6D /* SUKReviewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKReviewTableViewCell.m; sourceTree = "<group>"; };
+		53D58D8C289DC02B003B6A6D /* SUKReview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKReview.h; sourceTree = "<group>"; };
+		53D58D8D289DC02B003B6A6D /* SUKReview.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKReview.m; sourceTree = "<group>"; };
+		53D58D8F289DCB37003B6A6D /* SUKCreateReviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKCreateReviewViewController.h; sourceTree = "<group>"; };
+		53D58D90289DCB37003B6A6D /* SUKCreateReviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKCreateReviewViewController.m; sourceTree = "<group>"; };
 		53D5A252289061D200BA203D /* SUKSwipeMovieViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKSwipeMovieViewController.h; sourceTree = "<group>"; };
 		53D5A253289061D200BA203D /* SUKSwipeMovieViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKSwipeMovieViewController.m; sourceTree = "<group>"; };
 		53D5A2562890636600BA203D /* SUKChooseMovieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKChooseMovieView.h; sourceTree = "<group>"; };
@@ -203,6 +212,8 @@
 				53E0D7912878FAD900CFCF91 /* SUKLibraryTableViewCell.m */,
 				53ABF520288746DB0015F1DB /* SUKBrowseEventTableViewCell.h */,
 				53ABF521288746DB0015F1DB /* SUKBrowseEventTableViewCell.m */,
+				53D58D89289DB843003B6A6D /* SUKReviewTableViewCell.h */,
+				53D58D8A289DB843003B6A6D /* SUKReviewTableViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -218,6 +229,8 @@
 				53C81C8A2885D46500092A46 /* SUKFollow.m */,
 				53F80C0F288B428800FFDB2D /* SUKMovie.h */,
 				53F80C10288B428800FFDB2D /* SUKMovie.m */,
+				53D58D8C289DC02B003B6A6D /* SUKReview.h */,
+				53D58D8D289DC02B003B6A6D /* SUKReview.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -241,6 +254,8 @@
 				5302D387287F7A280009018D /* SUKUserMapViewController.m */,
 				532E517E289C9820009D671A /* SUKCreateListViewController.h */,
 				532E517F289C9820009D671A /* SUKCreateListViewController.m */,
+				53D58D8F289DCB37003B6A6D /* SUKCreateReviewViewController.h */,
+				53D58D90289DCB37003B6A6D /* SUKCreateReviewViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -629,8 +644,10 @@
 				53F80C11288B428800FFDB2D /* SUKMovie.m in Sources */,
 				53ABF522288746DB0015F1DB /* SUKBrowseEventTableViewCell.m in Sources */,
 				53A97523287DFCF900D163BF /* SUKEditProfileViewController.m in Sources */,
+				53D58D8B289DB843003B6A6D /* SUKReviewTableViewCell.m in Sources */,
 				536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */,
 				537AF6632899B49A00F0C212 /* SUKConstants.m in Sources */,
+				53D58D91289DCB37003B6A6D /* SUKCreateReviewViewController.m in Sources */,
 				53D5A254289061D200BA203D /* SUKSwipeMovieViewController.m in Sources */,
 				53CCA6EA28808E5900B217F5 /* SUKNotCurrentUserProfileViewController.m in Sources */,
 				5399C1002891B59F00E765C5 /* SUKQuizIntroViewController.m in Sources */,
@@ -649,6 +666,7 @@
 				532AB031287752DC00114DBA /* SUKAnime.m in Sources */,
 				5397F5F9286B676900E9D894 /* main.m in Sources */,
 				530400FC286D2FA800B63138 /* SUKAPIManager.m in Sources */,
+				53D58D8E289DC02B003B6A6D /* SUKReview.m in Sources */,
 				53B330262877A31E0013F404 /* SUKAnimeListTableViewCell.m in Sources */,
 				53A97520287DF9B400D163BF /* SUKProfileViewController.m in Sources */,
 				53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */,
