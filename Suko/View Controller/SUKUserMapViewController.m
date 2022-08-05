@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLLocation *currentUserLocation;
 @property (nonatomic, strong) NSMutableArray<PFUser *> *nearestUsersArr;
+@property (weak, nonatomic) IBOutlet UISwitch *privacySwitch;
 @end
 
 @implementation SUKUserMapViewController
@@ -38,6 +39,9 @@ int const kUserMileRadius = 3.0;
         [self.locationManager requestWhenInUseAuthorization];
 
     [self.locationManager startUpdatingLocation];
+    
+    NSNumber * currentSetting = [PFUser currentUser][@"usermap_private"];
+    self.privacySwitch.on = [currentSetting isEqualToNumber:@1] ? YES : NO;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
@@ -59,6 +63,7 @@ int const kUserMileRadius = 3.0;
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
     [query includeKey:kPFUserCurrentCoordinatesKey];
     [query whereKey:kPFUserCurrentCoordinatesKey nearGeoPoint:[PFUser currentUser][kPFUserCurrentCoordinatesKey] withinMiles:kUserMileRadius];
+    [query whereKey:@"usermap_private" equalTo:@0];
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<PFUser *> *users, NSError *error) {
@@ -115,6 +120,16 @@ int const kUserMileRadius = 3.0;
         } else {
             [strongSelf.mapView deselectAnnotation:view.annotation animated:YES];
             [strongSelf performSegueWithIdentifier:kUserMapToNotCurrentUserProfileSegueIdentifier sender:[users lastObject]];
+        }
+    }];
+}
+
+- (IBAction)didTogglePrivacySwitch:(id)sender {
+    NSNumber * currentSetting = [PFUser currentUser][@"usermap_private"];
+    [PFUser currentUser][@"usermap_private"] = [currentSetting isEqualToNumber:@1] ? @0 : @1;
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if(error != nil) {
+            NSLog(@"Error saving user's user map privacy settings: %@", error.localizedDescription);
         }
     }];
 }
