@@ -51,6 +51,7 @@ Ambiguous Problems:
 
 **Optional Nice-to-have Stories**
 - [x] User can follow other users.
+- [x] Users can set User Map privacy settings for themselves (i.e. if they are displayed to others or not).
 - [ ] User can rate and review anime.
 - [ ] Users can create custom lists.
 - [ ] Users can set privacy settings for lists (i.e. visible to the public or not).
