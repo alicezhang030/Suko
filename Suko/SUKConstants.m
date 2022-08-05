@@ -52,6 +52,7 @@ NSString *kEventDetailsToNotCurrentUserProfileSegueIdentifier = @"EventDetailsTo
 NSString *kHomeToAnimeListSegueIdentifier = @"HomeToAnimeListSegue";
 NSString *kHomeCollectionCellToDetailsSegueIdentifier = @"HomeCollectionCellToDetailsSegue";
 NSString *kUserMapToNotCurrentUserProfileSegueIdentifier = @"MapToNotCurrentUserProfileSegue";
+NSString *kCreateListToAnimeListSegueIdentifier = @"CreateListToAnimeListSegue";
 
 #pragma mark - MISC
 NSString *kDefaultUserIconFileName = @"user-icon";

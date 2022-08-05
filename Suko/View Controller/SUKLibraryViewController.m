@@ -31,6 +31,11 @@
     self.listTitles = [PFUser currentUser][kPFUserListTitlesKey];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.listTitles = [PFUser currentUser][kPFUserListTitlesKey];
+    [self.tableView reloadData];
+}
+
 #pragma mark - TableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

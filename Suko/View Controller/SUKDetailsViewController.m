@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
 @property (weak, nonatomic) IBOutlet MKDropdownMenu *dropdownMenu;
 
-@property (strong, nonatomic) NSArray<NSString *> *listOptions;
+@property (strong, nonatomic) NSMutableArray<NSString *> *listOptions;
 @end
 
 @implementation SUKDetailsViewController
@@ -36,11 +36,17 @@
     NSString *numOfEpString = [NSString stringWithFormat:@"%d", self.animeToDisplay.numEpisodes];
     self.numOfEpLabel.text = [numOfEpString stringByAppendingString:@" Episodes"];
     
-    self.listOptions = @[@"Remove from lists", @"Want to Watch", @"Watching", @"Watched"];
+    self.listOptions = [@[@"Remove from lists"] mutableCopy];
+    [self.listOptions addObjectsFromArray: [PFUser currentUser][kPFUserListTitlesKey]];
     self.dropdownMenu.backgroundDimmingOpacity = 0.00;
     self.dropdownMenu.dropdownCornerRadius = 4.0;
     self.dropdownMenu.layer.cornerRadius = 4;
     self.dropdownMenu.layer.masksToBounds = true;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.listOptions = [@[@"Remove from lists"] mutableCopy];
+    [self.listOptions addObjectsFromArray: [PFUser currentUser][kPFUserListTitlesKey]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

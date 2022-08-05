@@ -261,7 +261,13 @@
                             <constraint firstItem="FS1-BX-d26" firstAttribute="leading" secondItem="Tas-gM-geB" secondAttribute="leading" id="rlC-gl-IsS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Library" id="SR4-Xh-3k6"/>
+                    <navigationItem key="navigationItem" title="Library" id="SR4-Xh-3k6">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="uPu-4h-9gC">
+                            <connections>
+                                <segue destination="FRW-mO-TX2" kind="show" id="RW8-z1-yo8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="FS1-BX-d26" id="WJD-ha-UM8"/>
                     </connections>
@@ -269,6 +275,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VNR-ut-uil" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3609" y="-585"/>
+        </scene>
+        <!--Create List View Controller-->
+        <scene sceneID="cHh-Cp-Qxw">
+            <objects>
+                <viewController id="FRW-mO-TX2" customClass="SUKCreateListViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yqd-RW-gOa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Give your list a name." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUn-Lk-Akh">
+                                <rect key="frame" x="84" y="381" width="246" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ozx-uc-4hg">
+                                <rect key="frame" x="84" y="428" width="246" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fZ-jB-rhn">
+                                <rect key="frame" x="156" y="489" width="102" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.6705882353" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Create">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="16"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="pressCreate:" destination="FRW-mO-TX2" eventType="touchUpInside" id="HNs-JU-m9k"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vOJ-pe-erx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Lcn-MR-JAu"/>
+                    <connections>
+                        <outlet property="listNameTextField" destination="Ozx-uc-4hg" id="Oyu-U0-aXE"/>
+                        <segue destination="OiV-xg-5bj" kind="show" identifier="CreateListToAnimeListSegue" id="KKH-Ad-2As"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4vs-qo-a2F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4347.826086956522" y="-585.26785714285711"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wcX-ga-lzD">
@@ -1736,9 +1790,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Nbh-Mj-j20"/>
+        <segue reference="DYo-a4-zd2"/>
         <segue reference="wz9-h9-cFl"/>
-        <segue reference="EZ4-Jx-OHr"/>
+        <segue reference="KKH-Ad-2As"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>

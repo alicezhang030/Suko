@@ -18,6 +18,7 @@
 		53291ED32878C6C900B12469 /* SUKSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53291ED22878C6C900B12469 /* SUKSignUpViewController.m */; };
 		53291ED62878C6DF00B12469 /* SUKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53291ED52878C6DF00B12469 /* SUKLoginViewController.m */; };
 		532AB031287752DC00114DBA /* SUKAnime.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AB030287752DC00114DBA /* SUKAnime.m */; };
+		532E5180289C9820009D671A /* SUKCreateListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532E517F289C9820009D671A /* SUKCreateListViewController.m */; };
 		535AE84028789530007D6059 /* SUKDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535AE83F28789530007D6059 /* SUKDetailsViewController.m */; };
 		536220FD289A13250045EF58 /* stop_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 536220FC289A13250045EF58 /* stop_words.txt */; };
 		536AFC4D28875E6E00B01F95 /* SUKEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536AFC4C28875E6E00B01F95 /* SUKEventDetailsViewController.m */; };
@@ -88,6 +89,8 @@
 		53291ED52878C6DF00B12469 /* SUKLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKLoginViewController.m; sourceTree = "<group>"; };
 		532AB02F287752DC00114DBA /* SUKAnime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKAnime.h; sourceTree = "<group>"; };
 		532AB030287752DC00114DBA /* SUKAnime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKAnime.m; sourceTree = "<group>"; };
+		532E517E289C9820009D671A /* SUKCreateListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKCreateListViewController.h; sourceTree = "<group>"; };
+		532E517F289C9820009D671A /* SUKCreateListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKCreateListViewController.m; sourceTree = "<group>"; };
 		535AE83E28789530007D6059 /* SUKDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUKDetailsViewController.h; sourceTree = "<group>"; };
 		535AE83F28789530007D6059 /* SUKDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUKDetailsViewController.m; sourceTree = "<group>"; };
 		536220FC289A13250045EF58 /* stop_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = stop_words.txt; path = Suko/stop_words.txt; sourceTree = SOURCE_ROOT; };
@@ -233,6 +236,8 @@
 				53E0D78E2878F72F00CFCF91 /* SUKLibraryViewController.m */,
 				5302D386287F7A280009018D /* SUKUserMapViewController.h */,
 				5302D387287F7A280009018D /* SUKUserMapViewController.m */,
+				532E517E289C9820009D671A /* SUKCreateListViewController.h */,
+				532E517F289C9820009D671A /* SUKCreateListViewController.m */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -642,6 +647,7 @@
 				53A97520287DF9B400D163BF /* SUKProfileViewController.m in Sources */,
 				53E0D7922878FAD900CFCF91 /* SUKLibraryTableViewCell.m in Sources */,
 				53E1CE022881C8D400186E36 /* SUKEvent.m in Sources */,
+				532E5180289C9820009D671A /* SUKCreateListViewController.m in Sources */,
 				5302D388287F7A280009018D /* SUKUserMapViewController.m in Sources */,
 				5397F5EB286B676800E9D894 /* SceneDelegate.m in Sources */,
 				53C81C8B2885D46500092A46 /* SUKFollow.m in Sources */,

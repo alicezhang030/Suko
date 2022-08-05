@@ -53,6 +53,7 @@ extern NSString *kEventDetailsToNotCurrentUserProfileSegueIdentifier;
 extern NSString *kHomeToAnimeListSegueIdentifier;
 extern NSString *kHomeCollectionCellToDetailsSegueIdentifier;
 extern NSString *kUserMapToNotCurrentUserProfileSegueIdentifier;
+extern NSString *kCreateListToAnimeListSegueIdentifier;
 
 #pragma mark - MISC
 extern NSString *kDefaultUserIconFileName;
