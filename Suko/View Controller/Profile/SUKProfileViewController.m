@@ -31,7 +31,6 @@
     [super viewDidLoad];
     
     // Set up TableView
-    self.listTitles = [PFUser currentUser][kPFUserListTitlesKey];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -54,6 +53,9 @@
 }
 
 - (void)loadContents {
+    self.listTitles = [PFUser currentUser][kPFUserListTitlesKey];
+    [self.tableView reloadData];
+    
     // Load the user profile image and backdrop
     self.profileImageView.file = [PFUser currentUser][kPFUserProfileImageKey];
     [self.profileImageView loadInBackground];
@@ -111,9 +113,7 @@
         SUKAnimeListViewController *animeListVC = [segue destinationViewController];
         SUKLibraryTableViewCell *cell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        
-        cell.listTitleLabel.text = @"Trial";
-        
+                
         animeListVC.listTitle = cell.listTitleLabel.text;
         animeListVC.arrOfAnimeMALID = [PFUser currentUser][kPFUserListDataKey][indexPath.row];
         animeListVC.arrOfAnime = [NSMutableArray new];

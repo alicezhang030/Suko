@@ -41,13 +41,17 @@
     [PFUser currentUser][kPFUserListTitlesKey] = currentListTitles;
     [PFUser currentUser][kPFUserListDataKey] = currentListData;
     
+    __weak __typeof(self) weakSelf = self;
     [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            if(error != nil) {
-                NSLog(@"Error creating new list: %@", error.localizedDescription);
-            } else {
-                NSLog(@"Successfully saved new list %@", self.listNameTextField.text);
-                [self performSegueWithIdentifier:kCreateListToAnimeListSegueIdentifier sender:nil];
-            }
+        __strong __typeof(self) strongSelf = weakSelf;
+        if(error != nil) {
+            NSLog(@"Error creating new list: %@", error.localizedDescription);
+        } else {
+            NSLog(@"Successfully saved new list %@", self.listNameTextField.text);
+            
+            NSArray<UIViewController *> *viewControllers = [strongSelf.navigationController viewControllers];
+            [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original library VC
+        }
     }];
     
 }
