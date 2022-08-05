@@ -11,12 +11,16 @@
 #import "SUKAnime.h"
 #import "SUKDetailsViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "SUKHomeViewController.h"
+#import "SUKConstants.h"
+#import "Parse/Parse.h"
 
 @interface SUKAnimeListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, assign) int currentLoadStartingIndex;
 @property (nonatomic, strong) NSMutableSet<NSNumber *> *loadedMALIDs;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *trashBarButton;
 @end
 
 @implementation SUKAnimeListViewController
@@ -63,6 +67,14 @@ int const kNumAnimePerLoad = 5;
     // Since the app adds to the data arr even when the page is not visible,
     // we need to reload the table view to display the anime that were loaded while the page wasn't visible
     [self.tableView reloadData];
+    
+    // Trash Bar Button
+    NSArray<UIViewController *> *viewControllers = [self.navigationController viewControllers];
+    NSArray<NSString *> *defaultListTitles = [NSArray arrayWithObjects: @"want to watch", @"watching", @"watched", nil];
+    if([viewControllers[0] isKindOfClass:[SUKHomeViewController class]] || [defaultListTitles containsObject: self.listTitle.lowercaseString]) {
+        [self.trashBarButton setEnabled:NO];
+        [self.trashBarButton setTintColor: [UIColor clearColor]];
+    }
     
     if ((self.arrOfAnimeMALID != nil && self.arrOfAnimeMALID.count <= 0) || (self.arrOfAnimeMALID == nil && self.arrOfAnime != nil && self.arrOfAnime.count <= 0)) {
         [self emptyTableView];
@@ -141,6 +153,65 @@ int const kNumAnimePerLoad = 5;
     emptyListMessageLabel.text = @"No anime to display.";
     self.tableView.backgroundView = emptyListMessageLabel;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+#pragma mark - Trash
+
+- (IBAction)tappedTrash:(id)sender {
+    /*
+     [follow deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+         if (error != nil) {
+             NSLog(@"Failed to delete the follow: %@", error.localizedDescription);
+         } else {
+             NSLog(@"Successfully deleted the follow");
+         }
+     }];
+     
+     NSMutableArray<NSString *> *currentListTitles = [PFUser currentUser][kPFUserListTitlesKey];
+     NSMutableArray<NSMutableArray *> *currentListData = [PFUser currentUser][kPFUserListDataKey];
+     
+     [currentListTitles addObject:self.listNameTextField.text];
+     [currentListData addObject:[NSMutableArray new]];
+     
+     [PFUser currentUser][kPFUserListTitlesKey] = currentListTitles;
+     [PFUser currentUser][kPFUserListDataKey] = currentListData;
+     
+     __weak __typeof(self) weakSelf = self;
+     [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+         __strong __typeof(self) strongSelf = weakSelf;
+         if(error != nil) {
+             NSLog(@"Error creating new list: %@", error.localizedDescription);
+         } else {
+             NSLog(@"Successfully saved new list %@", self.listNameTextField.text);
+             
+             NSArray<UIViewController *> *viewControllers = [strongSelf.navigationController viewControllers];
+             [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original library VC
+         }
+     }];
+     */
+    
+    NSMutableArray<NSString *> *currentListTitles = [PFUser currentUser][kPFUserListTitlesKey];
+    NSMutableArray<NSMutableArray *> *currentListData = [PFUser currentUser][kPFUserListDataKey];
+    
+    int indexOfList = (int)[currentListTitles indexOfObject:self.listTitle];
+    [currentListTitles removeObjectAtIndex:indexOfList];
+    [currentListData removeObjectAtIndex:indexOfList];
+    
+    [PFUser currentUser][kPFUserListTitlesKey] = currentListTitles;
+    [PFUser currentUser][kPFUserListDataKey] = currentListData;
+    
+    __weak __typeof(self) weakSelf = self;
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        __strong __typeof(self) strongSelf = weakSelf;
+        if(error != nil) {
+            NSLog(@"Error creating new list: %@", error.localizedDescription);
+        } else {
+            NSLog(@"Successfully deleted list.");
+            
+            NSArray<UIViewController *> *viewControllers = [strongSelf.navigationController viewControllers];
+            [strongSelf.navigationController popToViewController:viewControllers[0] animated:YES]; // Navigate back to original library VC
+        }
+    }];
 }
 
 #pragma mark - Navigation

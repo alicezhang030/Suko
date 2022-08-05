@@ -400,10 +400,10 @@
             </objects>
             <point key="canvasLocation" x="3726" y="1031"/>
         </scene>
-        <!--Home-->
+        <!--Home VC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SUKHomeViewController" sceneMemberID="viewController">
+                <viewController title="Home VC" id="BYZ-38-t0r" customClass="SUKHomeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -730,10 +730,18 @@
                             <constraint firstItem="XVl-nz-EZC" firstAttribute="bottom" secondItem="IvK-Z4-S0e" secondAttribute="bottom" id="t6M-lW-I9j"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="nmB-EQ-Y6W"/>
+                    <navigationItem key="navigationItem" id="nmB-EQ-Y6W">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="trash.fill" catalog="system" id="q3s-MG-PCe">
+                            <color key="tintColor" systemColor="systemRedColor"/>
+                            <connections>
+                                <action selector="tappedTrash:" destination="OiV-xg-5bj" id="onK-G5-DXE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="spinner" destination="6x9-O9-7d8" id="B1z-UC-4na"/>
                         <outlet property="tableView" destination="XVl-nz-EZC" id="phc-6I-2I0"/>
+                        <outlet property="trashBarButton" destination="q3s-MG-PCe" id="vtR-7M-2VT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cS6-f8-ZWu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1804,8 +1812,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="DYo-a4-zd2"/>
-        <segue reference="wz9-h9-cFl"/>
-        <segue reference="KKH-Ad-2As"/>
+        <segue reference="iPf-X4-auV"/>
+        <segue reference="4vs-CO-2P5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
@@ -1813,6 +1821,7 @@
         <image name="location-icon" width="39" height="39.5"/>
         <image name="new-event-graphics" width="1086" height="811.3699951171875"/>
         <image name="quiz-intro-header" width="640" height="360"/>
+        <image name="trash.fill" catalog="system" width="121" height="128"/>
         <image name="user-icon" width="256" height="256"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1825,6 +1834,9 @@
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
