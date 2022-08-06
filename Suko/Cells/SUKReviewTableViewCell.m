@@ -12,6 +12,8 @@
 #import "DateTools/DateTools.h"
 
 @interface SUKReviewTableViewCell ()
+@property (nonatomic, strong) SUKReview *review;
+
 @property (weak, nonatomic) IBOutlet PFImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reviewLabel;
@@ -28,6 +30,14 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile)];
+    [self.profileImage addGestureRecognizer:profileTapGestureRecognizer];
+    [self.profileImage setUserInteractionEnabled:YES];
+}
+
+- (void)didTapUserProfile {
+    [self.delegate tappedUserProfileOnCell:self withReview:self.review];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,6 +45,8 @@
 }
 
 - (void)configureCellWithReview:(SUKReview *)review {
+    self.review = review;
+    
     self.usernameLabel.text = review.author.username;
     self.reviewLabel.text = review.reviewText;
     

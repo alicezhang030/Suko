@@ -11,8 +11,9 @@
 #import "SUKReviewTableViewCell.h"
 #import "SUKReview.h"
 #import "SUKCreateReviewViewController.h"
+#import "SUKNotCurrentUserProfileViewController.h"
 
-@interface SUKDetailsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SUKDetailsViewController () <UITableViewDataSource, UITableViewDelegate, SUKReviewCellDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numOfEpLabel;
@@ -55,6 +56,7 @@
     // Tableview
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // Leave a review Button
     self.leaveReviewButton.layer.cornerRadius = 4;
@@ -68,6 +70,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"SUKReview"];
     [query includeKey:@"author"];
     [query whereKey:@"animeID" equalTo:[NSNumber numberWithInt:self.animeToDisplay.malID]];
+    [query orderByDescending:@"createdAt"];
     
     __weak __typeof(self) weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray<SUKReview *> *reviews, NSError *error) {
@@ -77,6 +80,21 @@
         } else {
             strongSelf.reviews = reviews;
             [strongSelf.tableView reloadData];
+        }
+    }];
+    
+    PFQuery *queryForCurrentUser = [PFQuery queryWithClassName:@"SUKReview"];
+    [queryForCurrentUser includeKey:@"author"];
+    [queryForCurrentUser whereKey:@"author" equalTo:[PFUser currentUser]];
+    [queryForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray<SUKReview *> *reviewsByCurrentUser, NSError *error) {
+        __strong __typeof(self) strongSelf = weakSelf;
+        if(error != nil) {
+            NSLog(@"Error fetching whether or not current user has left a review already: %@", error.localizedDescription);
+        } else if(reviewsByCurrentUser.count > 0){
+            if(reviewsByCurrentUser.count > 1)
+                NSLog(@"Error: there is more than one review by this user");
+            strongSelf.leaveReviewButton.userInteractionEnabled = NO;
+            strongSelf.leaveReviewButton.backgroundColor = [UIColor colorWithRed:0.78823529411 green:0.78823529411 blue:0.78823529411 alpha:1.0];
         }
     }];
 }
@@ -100,6 +118,8 @@
     static NSString *cellIdentifier = @"SUKReviewTableViewCell";
     SUKReviewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     [cell configureCellWithReview:self.reviews[indexPath.row]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.delegate = self;
     return cell;
 }
 
@@ -157,6 +177,15 @@
         SUKCreateReviewViewController *createReviewVC = [segue destinationViewController];
         [createReviewVC configureViewWithAnime:self.animeToDisplay];
     }
+    
+    if([segue.identifier isEqualToString:kReviewToNotCurrentUserProfileSegueIdentifier]) {
+        SUKNotCurrentUserProfileViewController *profileVC = [segue destinationViewController];
+        profileVC.userToDisplay = sender;
+    }
+}
+
+- (void)tappedUserProfileOnCell:(SUKReviewTableViewCell *)cell withReview:(SUKReview *) review {
+    [self performSegueWithIdentifier:kReviewToNotCurrentUserProfileSegueIdentifier sender:review.author];
 }
 
 @end

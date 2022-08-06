@@ -53,7 +53,7 @@ Ambiguous Problems:
 - [x] User can follow other users.
 - [x] Users can set User Map privacy settings for themselves (i.e. if they are displayed to others or not).
 - [x] Users can create custom lists.
-- [ ] User can rate and review anime.
+- [x] User can rate and review anime.
 - [ ] User can share anime to other users in-app.
 
 ### 2. Screen Archetypes
