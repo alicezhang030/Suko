@@ -86,6 +86,7 @@
     PFQuery *queryForCurrentUser = [PFQuery queryWithClassName:@"SUKReview"];
     [queryForCurrentUser includeKey:@"author"];
     [queryForCurrentUser whereKey:@"author" equalTo:[PFUser currentUser]];
+    [queryForCurrentUser whereKey:@"animeID" equalTo:[NSNumber numberWithInt:self.animeToDisplay.malID]];
     [queryForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray<SUKReview *> *reviewsByCurrentUser, NSError *error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if(error != nil) {
