@@ -122,11 +122,13 @@ Ambiguous Problems:
 | Feature | Demo |
 | -------------------------- | -----:|
 | (MVP) Sign up + Login + Logout | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/signup_login_logout.gif" width=45% height=45%> | 
-| (MVP) Home + Search | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/home_search.gif" width=45% height=45%> | 
+| (MVP) Home + Search | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/home_and_search.gif" width=45% height=45%> | 
 | (MVP) Library + Add to List | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/library_add.gif" width=45% height=45%> | 
 | (MVP) Profile | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/custom_profile.gif" width=45% height=45%> | 
 
 ### Complex + Nice-to-have Features
+| Feature | Demo |
+| -------------------------- | -----:|
 | (Complex) Events for Nearby Users | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/events.gif" width=45% height=45%> | 
 | (Complex) Movie-to-anime Quiz | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/movies.gif" width=45% height=45%> | 
 | (Complex) Community Map + (Nice-to-have) Follow | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/community_map_follow.gif" width=45% height=45%> | 
