@@ -161,6 +161,14 @@ https://www.figma.com/file/VEcbEb136UlVuK9X9XaAOR/suko-app-showcase?node-id=0%3A
 |posterURL|NSString|poster URL|
 |synopsis|NSString|synopsis|
 
+**SUKReview**
+
+|Property|Type|Description|
+|---|---|---|
+|author|PFUser|the user who wrote this review|
+|reviewText|NSString|the content of the review|
+|rating|NSNumber|the rating of the anime|
+|animeID|NSNumber|the unique ID of the anime being reviewed|
 
 ### Networking
 
