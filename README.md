@@ -200,3 +200,4 @@ https://www.figma.com/file/VEcbEb136UlVuK9X9XaAOR/suko-app-showcase?node-id=0%3A
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
 - [MKDropdownMenu](https://github.com/maxkonovalov/MKDropdownMenu) - dropdown menu for iOS
 - [MDCSwipeToChoose](https://github.com/modocache/MDCSwipeToChoose) - swipe to "like" or "dislike" any view
+- [HCSStarRatingView](https://github.com/hsousa/HCSStarRatingView) - star rating view
