@@ -116,13 +116,6 @@ Ambiguous Problems:
     * Click on a pin on the map -> Profile Screen
 * Profile Screen
     * Click on a list title -> Anime List Screen
-    
-## Demo
-| Functionality / Screen | Demo |
-| -------------------------- | -----:|
-| Sign up + Login + Logout | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/signup_login_logout.MP4" width=50% height=50%> | 
-| Home + Search | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/home.MP4" width=50% height=50%> | 
-
 
 ## Wireframes 
 https://www.figma.com/file/VEcbEb136UlVuK9X9XaAOR/suko-app-showcase?node-id=0%3A1
