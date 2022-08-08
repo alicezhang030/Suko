@@ -184,7 +184,7 @@ int const kNumAnimePerLoad = 5;
     [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         __strong __typeof(self) strongSelf = weakSelf;
         if(error != nil) {
-            NSLog(@"Error creating new list: %@", error.localizedDescription);
+            NSLog(@"Error deleting list: %@", error.localizedDescription);
         } else {
             NSLog(@"Successfully deleted list.");
             
