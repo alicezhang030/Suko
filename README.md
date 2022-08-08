@@ -46,8 +46,8 @@ MVP:
 - [x] User can view and edit their profile.
 
 Ambiguous Problems:
-- [x] User can see on a map where nearby users are and their profiles.
 - [x] Users can create events for nearby users.
+- [x] User can see on a map where nearby users are and their profiles.
 - [x] Users can take a quiz and receive tailored anime recommendations.
 
 **Optional Nice-to-have Stories**
@@ -118,10 +118,21 @@ Ambiguous Problems:
     * Click on a list title -> Anime List Screen
 
 ## Demo
-| Functionality / Screen | Demo |
+### MVP Features
+| Feature | Demo |
 | -------------------------- | -----:|
-| Sign up + Login + Logout | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/signup_login_logout.gif" width=50% height=50%> | 
-| Home + Search | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/home_search.gif" width=50% height=50%> | 
+| (MVP) Sign up + Login + Logout | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/signup_login_logout.gif" width=45% height=45%> | 
+| (MVP) Home + Search | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/home_search.gif" width=45% height=45%> | 
+| (MVP) Library + Add to List | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/library_add.gif" width=45% height=45%> | 
+| (MVP) Profile | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/custom_list.gif" width=45% height=45%> | 
+
+### Complex + Nice-to-have Features
+| (Complex) Events for Nearby Users | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/events.gif" width=45% height=45%> | 
+| (Complex) Movie-to-anime Quiz | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/movies.gif" width=45% height=45%> | 
+| (Complex) Community Map + (Nice-to-have) Follow | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/community_map_follow.gif" width=45% height=45%> | 
+| (Nice-to-have) Community Map Privacy Settings | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/map_privacy.gif" width=45% height=45%> |
+| (Nice-to-have) Create and Add to Custom List | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/custom_list.gif" width=45% height=45%> |
+| (Nice-to-have) Rate and Review | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/review.gif" width=45% height=45%> |
 
 ## Wireframes 
 https://www.figma.com/file/VEcbEb136UlVuK9X9XaAOR/suko-app-showcase?node-id=0%3A1
