@@ -77,9 +77,16 @@ int const kNumAnimePerLoad = 5;
     }
     
     if ((self.arrOfAnimeMALID != nil && self.arrOfAnimeMALID.count <= 0) || (self.arrOfAnimeMALID == nil && self.arrOfAnime != nil && self.arrOfAnime.count <= 0)) {
+        NSMutableArray<SUKAnime *> *currentArrOfAnime = [self.arrOfAnime mutableCopy];
+        [currentArrOfAnime removeAllObjects];
+        self.arrOfAnime = currentArrOfAnime;
+        [self.loadedMALIDs removeAllObjects];
+        
         [self emptyTableView];
+        [self.tableView reloadData];
     } else if(self.arrOfAnime.count < (int)self.arrOfAnimeMALID.count){
         [self.spinner startAnimating];
+        self.tableView.backgroundView = nil;
         __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             __strong __typeof(self) strongSelf = weakSelf;
@@ -121,6 +128,11 @@ int const kNumAnimePerLoad = 5;
             }
             
             if(i == endingLoopIndex - 1) {
+                if (strongSelf.arrOfAnime.count <= 0) {
+                    [strongSelf emptyTableView];
+                    [strongSelf.tableView reloadData];
+                }
+                
                 [strongSelf.tableView reloadData];
                 [strongSelf.spinner stopAnimating];
                 [strongSelf.tableView.infiniteScrollingView stopAnimating];
