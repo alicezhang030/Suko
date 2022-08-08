@@ -18,12 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reviewLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-
-@property (weak, nonatomic) IBOutlet UIImageView *starOne;
-@property (weak, nonatomic) IBOutlet UIImageView *starTwo;
-@property (weak, nonatomic) IBOutlet UIImageView *starThree;
-@property (weak, nonatomic) IBOutlet UIImageView *starFour;
-@property (weak, nonatomic) IBOutlet UIImageView *starFive;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
 @end
 
 @implementation SUKReviewTableViewCell
@@ -49,15 +44,7 @@
     
     self.usernameLabel.text = review.author.username;
     self.reviewLabel.text = review.reviewText;
-    
-    if ([review.rating doubleValue] <= [@4 doubleValue])
-        self.starFive.hidden = YES;
-    if ([review.rating doubleValue] <= [@3 doubleValue])
-        self.starFour.hidden = YES;
-    if ([review.rating doubleValue] <= [@2 doubleValue])
-        self.starThree.hidden = YES;
-    if ([review.rating doubleValue] <= [@1 doubleValue])
-        self.starTwo.hidden = YES;
+    self.ratingLabel.text = [[review.rating stringValue] stringByAppendingString:@"/5"];
     
     // Date
     NSDate *originalDate = review.createdAt;

@@ -932,13 +932,13 @@
                                                         <constraint firstAttribute="width" constant="35" id="Jh9-Jt-Dbk"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="@username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="643-95-al0">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="643-95-al0">
                                                     <rect key="frame" x="67" y="15.5" width="87" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Review" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDc-lp-j6Y">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDc-lp-j6Y">
                                                     <rect key="frame" x="26" y="79" width="54.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -952,43 +952,32 @@
                                                         <constraint firstAttribute="width" constant="15" id="d0G-Am-mWk"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="kW8-YH-yle">
-                                                    <rect key="frame" x="41" y="53.5" width="15" height="15"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" systemColor="systemYellowColor"/>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-Jp-gbj">
-                                                    <rect key="frame" x="73" y="53.5" width="15" height="15"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" systemColor="systemYellowColor"/>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="DBs-YZ-tmH">
-                                                    <rect key="frame" x="89" y="53.5" width="15" height="15"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" systemColor="systemYellowColor"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="June 14" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Snd-Ng-HqL">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="June 14" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Snd-Ng-HqL">
                                                     <rect key="frame" x="26" y="111" width="48" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="kZe-z1-vx4">
-                                                    <rect key="frame" x="57" y="53.5" width="15" height="15"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" systemColor="systemYellowColor"/>
-                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5/5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmf-Po-ofs">
+                                                    <rect key="frame" x="45" y="52.5" width="20" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="gmf-Po-ofs" firstAttribute="centerY" secondItem="qaU-7O-Kgr" secondAttribute="centerY" constant="-1" id="2T7-mJ-ZAc"/>
                                                 <constraint firstItem="643-95-al0" firstAttribute="leading" secondItem="IMo-vT-St1" secondAttribute="trailing" constant="6" id="3dq-Va-m5v"/>
                                                 <constraint firstAttribute="bottom" secondItem="Snd-Ng-HqL" secondAttribute="bottom" constant="10" id="6KA-r6-EZg"/>
                                                 <constraint firstItem="WDc-lp-j6Y" firstAttribute="leading" secondItem="IMo-vT-St1" secondAttribute="leading" id="CtL-pL-uzr"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WDc-lp-j6Y" secondAttribute="trailing" constant="20" id="DMH-hc-76e"/>
+                                                <constraint firstItem="gmf-Po-ofs" firstAttribute="leading" secondItem="qaU-7O-Kgr" secondAttribute="trailing" constant="4" id="DSr-cG-915"/>
                                                 <constraint firstItem="IMo-vT-St1" firstAttribute="leading" secondItem="Je8-Rw-xg9" secondAttribute="leading" constant="26" id="DjF-sK-W0v"/>
                                                 <constraint firstItem="qaU-7O-Kgr" firstAttribute="top" secondItem="IMo-vT-St1" secondAttribute="bottom" constant="11" id="ETK-0W-0h1"/>
                                                 <constraint firstItem="WDc-lp-j6Y" firstAttribute="top" secondItem="qaU-7O-Kgr" secondAttribute="bottom" constant="10" id="Jm4-rt-5ju"/>
                                                 <constraint firstItem="IMo-vT-St1" firstAttribute="top" secondItem="Je8-Rw-xg9" secondAttribute="top" constant="8" id="WAP-Ku-LWN"/>
                                                 <constraint firstItem="Snd-Ng-HqL" firstAttribute="leading" secondItem="IMo-vT-St1" secondAttribute="leading" id="d4A-FD-ajb"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gmf-Po-ofs" secondAttribute="trailing" constant="20" id="dDo-Vj-jRA"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Snd-Ng-HqL" secondAttribute="trailing" constant="20" id="mGp-np-DvT"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="643-95-al0" secondAttribute="trailing" constant="20" id="mSH-kc-CPi"/>
                                                 <constraint firstItem="qaU-7O-Kgr" firstAttribute="leading" secondItem="IMo-vT-St1" secondAttribute="leading" id="nGT-XP-VPo"/>
@@ -999,12 +988,8 @@
                                         <connections>
                                             <outlet property="dateLabel" destination="Snd-Ng-HqL" id="7Kr-wV-zkJ"/>
                                             <outlet property="profileImage" destination="IMo-vT-St1" id="tZu-Fc-lRd"/>
+                                            <outlet property="ratingLabel" destination="gmf-Po-ofs" id="lxD-OD-TJL"/>
                                             <outlet property="reviewLabel" destination="WDc-lp-j6Y" id="csq-Z4-G9i"/>
-                                            <outlet property="starFive" destination="DBs-YZ-tmH" id="HRF-bZ-pWQ"/>
-                                            <outlet property="starFour" destination="xrd-Jp-gbj" id="ZhP-SW-QsV"/>
-                                            <outlet property="starOne" destination="qaU-7O-Kgr" id="biw-Y1-2NN"/>
-                                            <outlet property="starThree" destination="kZe-z1-vx4" id="CFX-XH-Gnm"/>
-                                            <outlet property="starTwo" destination="kW8-YH-yle" id="4WL-oD-g5E"/>
                                             <outlet property="usernameLabel" destination="643-95-al0" id="m5U-cI-XMr"/>
                                         </connections>
                                     </tableViewCell>
@@ -2067,11 +2052,6 @@
             <point key="canvasLocation" x="2815.9420289855075" y="248.4375"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="eD8-ep-3up">
-            <size key="intrinsicContentSize" width="236" height="44"/>
-        </designable>
-    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="Mi0-53-1sY"/>
         <segue reference="iPf-X4-auV"/>
@@ -2080,8 +2060,8 @@
     <resources>
         <image name="LoginScreen" width="1944.5" height="2916.5"/>
         <image name="book" catalog="system" width="128" height="99"/>
-        <image name="calendar" width="33" height="33"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="calendar" width="33" height="33"/>
         <image name="homekit" catalog="system" width="128" height="106"/>
         <image name="location-icon" width="39" height="39.5"/>
         <image name="new-event-graphics" width="1086" height="811.3699951171875"/>
