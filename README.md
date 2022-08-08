@@ -133,7 +133,7 @@ Ambiguous Problems:
 | (Complex) Movie-to-anime Quiz | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/movies.gif" width=45% height=45%> | 
 | (Complex) Community Map + (Nice-to-have) Follow | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/community_map_follow.gif" width=45% height=45%> | 
 | (Nice-to-have) Community Map Privacy Settings | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/map_privacy.gif" width=45% height=45%> |
-| (Nice-to-have) Create and Add to Custom List | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/custom_list.gif" width=45% height=45%> |
+| (Nice-to-have) Create and Add to Custom List | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/custom_list_add_create.gif" width=45% height=45%> |
 | (Nice-to-have) Rate and Review | <img src="https://github.com/alicezhang030/Suko/blob/main/Demo/review.gif" width=45% height=45%> |
 
 ## Wireframes 
